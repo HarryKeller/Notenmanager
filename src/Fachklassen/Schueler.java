@@ -3,6 +3,7 @@ package Fachklassen;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ public class Schueler
 {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id; 			// eindeutige Schüler-ID (index 0)
 	
 	// ---------------------------------------------------------------------------------
@@ -23,12 +24,13 @@ public class Schueler
 	private LocalDate gebdat;	// Geburtstag (index 3)
 	private String geschl;		// Geschlecht (index 4)
 	private String konfession;	// wegen Religion (index 5)
-	private Klasse klasseid;	//Fremdschlüssel
+	@ManyToOne
+	private Klasse klasse;	//Fremdschlüssel
 	
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
-	@JoinColumn(name="leistung_schueler") 
-	private ArrayList<Leistung> leistung = new ArrayList<Leistung>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)	
+	@JoinColumn(name="schueler") 
+	private List<Leistung> leistung = new ArrayList<Leistung>();
 	
 	
 	
@@ -126,11 +128,11 @@ public class Schueler
 	}
 
 	public Klasse getKlasseid() {
-		return klasseid;
+		return klasse;
 	}
 
-	public void setKlasseid(Klasse klasseid) {
-		this.klasseid = klasseid;
+	public void setKlasseid(Klasse klasse) {
+		this.klasse = klasse;
 	}
 	
 	
