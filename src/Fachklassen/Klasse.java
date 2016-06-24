@@ -47,9 +47,9 @@ public class Klasse
 	
 	public Klasse(){}
 	
-	public Klasse(int s_id)
+	public Klasse(int sid)
 	{
-		DBZugriff.lesen(this, s_id);
+		DBZugriff.lesen(this, sid);
 	}
 	
 		

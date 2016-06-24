@@ -20,35 +20,35 @@ public class Lehrer
 	private String vorname;
 	private String dienstbezeichnung;
 	
-	public int get_Id() {
+	public int getId() {
 		return id;
 	}
-	public void set_Id(int _id) {
-		this.id = _id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String get_Kürzel() {
+	public String getKürzel() {
 		return kürzel;
 	}
-	public void set_Kürzel(String _kürzel) {
-		this.kürzel = _kürzel;
+	public void setKürzel(String kürzel) {
+		this.kürzel = kürzel;
 	}
-	public String get_Nachname() {
+	public String getNachname() {
 		return nachname;
 	}
-	public void set_Nachname(String _nachname) {
-		this.nachname = _nachname;
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
 	}
-	public String get_Vorname() {
+	public String getVorname() {
 		return vorname;
 	}
-	public void set_Vorname(String _vorname) {
-		this.vorname = _vorname;
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
 	}
-	public String get_Dienstbezeichnung() {
+	public String getDienstbezeichnung() {
 		return dienstbezeichnung;
 	}
-	public void set_Dienstbezeichnung(String _dienstbezeichnung) {
-		this.dienstbezeichnung = _dienstbezeichnung;
+	public void setDienstbezeichnung(String dienstbezeichnung) {
+		this.dienstbezeichnung = dienstbezeichnung;
 	}
 	
 	public Lehrer(int id)

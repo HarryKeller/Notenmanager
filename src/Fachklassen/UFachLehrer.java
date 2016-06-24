@@ -18,37 +18,37 @@ public class UFachLehrer
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private LocalDate edatum;
-	private LocalDate adatum;
+	private LocalDate eintrittsdatum;
+	private LocalDate austrittsdatum;
 	private int stunden;
 	@ManyToOne
 	private Unterrichtsfach ufach;
 	@ManyToOne
 	private Lehrer lehrer;
 	
-	public int get_id() {
+	public int getid() {
 		return id;
 	}
-	public void set_id(int _id) {
-		this.id = _id;
+	public void setid(int id) {
+		this.id = id;
 	}
-	public LocalDate get_edatum() {
-		return edatum;
+	public LocalDate getedatum() {
+		return eintrittsdatum;
 	}
-	public void set_edatum(LocalDate _edatum) {
-		this.edatum = _edatum;
+	public void setedatum(LocalDate edatum) {
+		this.eintrittsdatum = edatum;
 	}
-	public LocalDate get_adatum() {
-		return adatum;
+	public LocalDate getadatum() {
+		return austrittsdatum;
 	}
-	public void set_adatum(LocalDate _adatum) {
-		this.adatum = _adatum;
+	public void setadatum(LocalDate adatum) {
+		this.austrittsdatum = adatum;
 	}
-	public int get_stunden() {
+	public int getstunden() {
 		return stunden;
 	}
-	public void set_stunden(int _stunden) {
-		this.stunden = _stunden;
+	public void setstunden(int stunden) {
+		this.stunden = stunden;
 	}
 	
 	public Unterrichtsfach getUfach() {
