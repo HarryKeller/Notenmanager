@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import Persistenz.DBZugriff;
 
@@ -23,14 +22,12 @@ public class Leistung
 	private char tendenz;
 	
 	@ManyToOne
-	private Leistungsart art;
+	private Leistungsart leistungsart;
 	@ManyToOne
-	private UFachLehrer ufachlehrer;
-	
+	private UFachLehrer ufachlehrer;	
 	@ManyToOne
 	private Schueler schueler;
-	
-	
+		
 	private LocalDate letzteaenderung;
 	
 	public Leistung()
@@ -100,25 +97,10 @@ public class Leistung
 	}
 	public Leistungsart getArt()
 	{
-		return art;
+		return leistungsart;
 	}
 	public UFachLehrer getUfachlehrer()
 	{
 		return ufachlehrer;
-	}
-	
-//	public int getIdart()
-//	{
-//		return idart;
-//	}
-//	public int getIdschuelerklasse()
-//	{
-//		return idschuelerklasse;
-//	}
-//	public int getIdfachlehrer()
-//	{
-//		return idfachlehrer;
-//	}
-	
-	
+	}	
 }
