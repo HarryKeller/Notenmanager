@@ -23,6 +23,7 @@ public class Leistung
 	
 	@ManyToOne
 	private Leistungsart leistungsart;
+	
 	@ManyToOne
 	private UFachLehrer ufachlehrer;	
 	@ManyToOne
@@ -102,5 +103,20 @@ public class Leistung
 	public UFachLehrer getUfachlehrer()
 	{
 		return ufachlehrer;
+	}
+	public Leistungsart getLeistungsart() {
+		return leistungsart;
+	}
+	public void setLeistungsart(Leistungsart leistungsart) {
+		this.leistungsart = leistungsart;
+	}
+	public Schueler getSchueler() {
+		return schueler;
+	}
+	public void setSchueler(Schueler schueler) {
+		this.schueler = schueler;
+	}
+	public void setUfachlehrer(UFachLehrer ufachlehrer) {
+		this.ufachlehrer = ufachlehrer;
 	}	
 }

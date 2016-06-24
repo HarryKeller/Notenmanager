@@ -13,47 +13,47 @@ public class Lehrer
 {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private int _id;
+	private int id;
 	
-	private String _kürzel;
-	private String _nachname;
-	private String _vorname;
-	private String _dienstbezeichnung;
+	private String kürzel;
+	private String nachname;
+	private String vorname;
+	private String dienstbezeichnung;
 	
 	public int get_Id() {
-		return _id;
+		return id;
 	}
 	public void set_Id(int _id) {
-		this._id = _id;
+		this.id = _id;
 	}
 	public String get_Kürzel() {
-		return _kürzel;
+		return kürzel;
 	}
 	public void set_Kürzel(String _kürzel) {
-		this._kürzel = _kürzel;
+		this.kürzel = _kürzel;
 	}
 	public String get_Nachname() {
-		return _nachname;
+		return nachname;
 	}
 	public void set_Nachname(String _nachname) {
-		this._nachname = _nachname;
+		this.nachname = _nachname;
 	}
 	public String get_Vorname() {
-		return _vorname;
+		return vorname;
 	}
 	public void set_Vorname(String _vorname) {
-		this._vorname = _vorname;
+		this.vorname = _vorname;
 	}
 	public String get_Dienstbezeichnung() {
-		return _dienstbezeichnung;
+		return dienstbezeichnung;
 	}
 	public void set_Dienstbezeichnung(String _dienstbezeichnung) {
-		this._dienstbezeichnung = _dienstbezeichnung;
+		this.dienstbezeichnung = _dienstbezeichnung;
 	}
 	
 	public Lehrer(int id)
 	{
-		
+		DBZugriff.lesen(this, id);
 	}
 	
 	public Lehrer()

@@ -24,12 +24,13 @@ public class Schueler
 	private LocalDate gebdat;	// Geburtstag (index 3)
 	private String geschl;		// Geschlecht (index 4)
 	private String konfession;	// wegen Religion (index 5)
+	
 	@ManyToOne
 	private Klasse klasse;	//Fremdschlüssel
 	
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)	
-	@JoinColumn(name="schueler") 
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
+	@JoinColumn(name="schueler_id") 
 	private List<Leistung> leistung = new ArrayList<Leistung>();
 	
 	
@@ -37,6 +38,7 @@ public class Schueler
 	// ----- CONSTRUCTOR ---------------------------------------------------------------
 	// ---------------------------------------------------------------------------------
 	
+
 	public Schueler()
 	{
 	}

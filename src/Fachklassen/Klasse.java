@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import Persistenz.DBZugriff;
@@ -23,9 +24,15 @@ public class Klasse
 	
 	private String bez;
 	private int sj;
-	private int idSchule;
-	private int idKlassenleiter;
-	private int idStvKlassenleiter;
+	
+	@ManyToOne
+	private Schule schule;			//FS
+	
+	@ManyToOne
+	private Lehrer klassenleiter;	//FS
+	
+	@ManyToOne
+	private Lehrer stvklassenleiter;	//FS
 	
 	//Liste aller Zeugnisfächer
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -55,12 +62,7 @@ public class Klasse
 	{
 		DBZugriff.loeschen(this);
 	}
-	public void laden(int s_id)
-	{
-		DBZugriff.lesen(this, s_id);
-	}
-	
-	
+		
 	public int getid()
 	{
 		return id;
@@ -82,33 +84,33 @@ public class Klasse
 		this.sj = sj;
 	}
 
-	public int getIdSchule() {
-		return idSchule;
+	public Schule getIdSchule() {
+		return schule;
 	}
 
-	public void setIdSchule(int idSchule) {
-		this.idSchule = idSchule;
+	public void setIdSchule(Schule idSchule) {
+		this.schule = idSchule;
 	}
 
-	public int getIdKlassenleiter() {
-		return idKlassenleiter;
+	public Lehrer getIdKlassenleiter() {
+		return klassenleiter;
 	}
 
-	public void setIdKlassenleiter(int idKlassenleiter) {
-		this.idKlassenleiter = idKlassenleiter;
+	public void setIdKlassenleiter(Lehrer idKlassenleiter) {
+		this.klassenleiter = idKlassenleiter;
 	}
 
-	public int getIdStvKlassenleiter() {
-		return idStvKlassenleiter;
+	public Lehrer getIdStvKlassenleiter() {
+		return stvklassenleiter;
 	}
 
-	public void setIdStvKlassenleiter(int idStvKlassenleiter) {
-		this.idStvKlassenleiter = idStvKlassenleiter;
+	public void setIdStvKlassenleiter(Lehrer idStvKlassenleiter) {
+		this.stvklassenleiter = idStvKlassenleiter;
 	}
 	
 	public String toString()
 	{
-		return this.id + " "+ this.bez + " " + this.sj + " " + this.idKlassenleiter + " " + this.idStvKlassenleiter;
+		return this.id + " "+ this.bez + " " + this.sj + " " + this.klassenleiter + " " + this.stvklassenleiter;
 	}
 
 }
