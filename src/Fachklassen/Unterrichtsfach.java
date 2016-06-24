@@ -21,7 +21,7 @@ public class Unterrichtsfach {
 	private int stunden;
 	private int pos;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	private Zeugnisfach zfach;
 	
 	//Getter + Setter

@@ -25,7 +25,7 @@ public class Schule
 	//EAGER -> beim Laden einer Schule sofort alle Klassen dazu laden
 	// Je nach Anwendungsfall (--> Klassen in ListBox --> LAZY)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="schueler")
+	@JoinColumn(name="schueler_id")
 	private List<Klasse> klassenlist = new ArrayList<Klasse>();
 	
 	

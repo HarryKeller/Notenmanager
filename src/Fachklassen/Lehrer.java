@@ -13,47 +13,47 @@ public class Lehrer
 {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private int _id;
+	private int id;
 	
-	private String _kürzel;
-	private String _nachname;
-	private String _vorname;
-	private String _dienstbezeichnung;
+	private String kürzel;
+	private String nachname;
+	private String vorname;
+	private String dienstbezeichnung;
 	
-	public int get_Id() {
-		return _id;
+	public int getId() {
+		return id;
 	}
-	public void set_Id(int _id) {
-		this._id = _id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String get_Kürzel() {
-		return _kürzel;
+	public String getKürzel() {
+		return kürzel;
 	}
-	public void set_Kürzel(String _kürzel) {
-		this._kürzel = _kürzel;
+	public void setKürzel(String kürzel) {
+		this.kürzel = kürzel;
 	}
-	public String get_Nachname() {
-		return _nachname;
+	public String getNachname() {
+		return nachname;
 	}
-	public void set_Nachname(String _nachname) {
-		this._nachname = _nachname;
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
 	}
-	public String get_Vorname() {
-		return _vorname;
+	public String getVorname() {
+		return vorname;
 	}
-	public void set_Vorname(String _vorname) {
-		this._vorname = _vorname;
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
 	}
-	public String get_Dienstbezeichnung() {
-		return _dienstbezeichnung;
+	public String getDienstbezeichnung() {
+		return dienstbezeichnung;
 	}
-	public void set_Dienstbezeichnung(String _dienstbezeichnung) {
-		this._dienstbezeichnung = _dienstbezeichnung;
+	public void setDienstbezeichnung(String dienstbezeichnung) {
+		this.dienstbezeichnung = dienstbezeichnung;
 	}
 	
 	public Lehrer(int id)
 	{
-		
+		DBZugriff.lesen(this, id);
 	}
 	
 	public Lehrer()
