@@ -22,25 +22,37 @@ public class Anwendung {
 	public static void main(String[] args) {
 		DBZugriff.initDB();
 		
+		ArrayList<Klasse> al = Klasse.AlleLesen(new Lehrer(1), new Schule(1));
 		
-		ausgabeKlassenEinesLehrers();
+		for(Klasse k:al)
+		{
+			System.out.println(k);
+		}
 		
-		
+		//ausgabeLeistungSchuelerEinesBestimmtenFaches(1,1);
+		//ausgabeKlassenEinesLehrers();
 		
 		
 		DBZugriff.closeDB();
 	}
-	public static void ausgabeLeistungSchueler()	//Funktioniert
+	
+	public static void ausgabeLeistungSchuelerEinesBestimmtenFaches(int idSchueler, int idLehrer)	//Funktioniert
 	{
 		//Ausgabe aller Leistungen eins Schülers
 		
 		
 		System.out.println("-------------------------------------------------------");
-		Schueler s = new Schueler(1);
-		for(Leistung a:s.getLeistung())
+		//Schueler s = new Schueler(1);
+		
+		String sql = "l Where l.ufachlehrer.id = "+idLehrer+" AND l.schueler.id = "+idSchueler;
+		ArrayList<Leistung>al = new ArrayList<Leistung>();
+		DBZugriff.alleLesen("Leistung", al,sql );
+		
+		for(Leistung l: al)
 		{
-			System.out.println(a.toString());
+			System.out.println(l.toString());
 		}
+		
 		System.out.println("-------------------------------------------------------");
 				
 		//--------------------
@@ -49,24 +61,14 @@ public class Anwendung {
 	
 	public static void ausgabeKlassenEinesLehrers()
 	{
-		//1.Test: Ausgabe aller klassen in denen ein gewisser lehrer unterrichtet
 		
-		//Danke an Sven :)
-//		  SELECT Klasse.bez
-//		  FROM Klasse
-//		  INNER JOIN Zeugnisfach
-//		  ON Klasse.id = Zeugnisfach.klasse_id
-//		  INNER JOIN Unterrichtsfach
-//		  ON Zeugnisfach.id = Unterrichtsfach.zfach_id
-//		  INNER JOIN UFachLehrer
-//		  ON UFachLehrer.ufach_id = Unterrichtsfach.id 
-//		  INNER JOIN Schule
-//		  ON Schule.id = 1
-//		  WHERE UFachLehrer.lehrer_id = 1
-		  
+		//Danke an Sven  
+		
+		String schuleid = "1";
+		String lehrerid = "1";
 		
 		String sql =
-					" k "
+					"k "
 				  +"INNER JOIN Zeugnisfach zf "
 				  +"ON k.id = zf.klasse.id "
 				  +"INNER JOIN Unterrichtsfach uf "
@@ -74,22 +76,40 @@ public class Anwendung {
 				  +"INNER JOIN UFachLehrer ufl "
 				  +"ON ufl.id = uf.id "			  
 				  +"INNER JOIN Schule s "
-				  +"ON s.id = 1 "
-				  +"WHERE ufl.lehrer.id = 1 ";
+				  +"ON s.id = "+schuleid+" "
+				  +"WHERE ufl.lehrer.id = "+lehrerid;
 		
 		
-		ArrayList<Klasse> al = new ArrayList<Klasse>();
+		ArrayList<Object[]> al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Klasse", al, sql );
 		
+		ArrayList<Klasse> klassenliste = new ArrayList<Klasse>();
 		
-		for(Klasse k:al)
-		{
-			System.out.println(k.toString());
+		//Schleifen der Klassen in eine Liste und prüfen, ob Klassen
+		//Doppelt vorkommen
+		for(Object[] k: al )
+		{	
+			boolean doppelt = false;
+			for(Klasse l: klassenliste )
+			{
+				if( ((Klasse)k[0]).equals(l)) 
+				{
+					doppelt = true;
+					break;
+				}				
+			}		
+			if(doppelt) continue;
+				
+			klassenliste.add((Klasse)k[0]);
 		}
 		
+		//Testausgabe auf der Console
+		for(Klasse k:klassenliste)
+		{
+			System.out.println(k);
+		}
 		
 	}
-	
 	
 	
 	public static void initDBDaten()

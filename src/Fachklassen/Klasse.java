@@ -53,6 +53,49 @@ public class Klasse
 		DBZugriff.lesen(this, sid);
 	}
 	
+	public static ArrayList<Klasse> AlleLesen(Lehrer lehrer, Schule schule)
+	{
+		Integer schuleid = schule.getID();
+		Integer lehrerid = lehrer.getId();
+		
+		String sql =
+					"k "
+				  +"INNER JOIN Zeugnisfach zf "
+				  +"ON k.id = zf.klasse.id "
+				  +"INNER JOIN Unterrichtsfach uf "
+				  +"ON zf.id = uf.zfach.id "			  
+				  +"INNER JOIN UFachLehrer ufl "
+				  +"ON ufl.id = uf.id "			  
+				  +"INNER JOIN Schule s "
+				  +"ON s.id = "+schuleid+" "
+				  +"WHERE ufl.lehrer.id = "+lehrerid;
+		
+		
+		ArrayList<Object[]> al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Klasse", al, sql );
+		
+		ArrayList<Klasse> klassenliste = new ArrayList<Klasse>();
+		
+		//Schleifen der Klassen in eine Liste und prüfen, ob Klassen
+		//Doppelt vorkommen
+		for(Object[] k: al )
+		{	
+			boolean doppelt = false;
+			for(Klasse l: klassenliste )
+			{
+				if( ((Klasse)k[0]).equals(l)) 
+				{
+					doppelt = true;
+					break;
+				}				
+			}		
+			if(doppelt) continue;
+				
+			klassenliste.add((Klasse)k[0]);
+		}
+		
+		return klassenliste;
+	}
 		
 	
 	public boolean speichern()
@@ -112,6 +155,18 @@ public class Klasse
 	public String toString()
 	{
 		return this.id + " "+ this.bez + " " + this.sj + " " + this.klassenleiter + " " + this.stvklassenleiter;
+	}
+	public boolean equals(Klasse k)
+	{
+		if(k.getid() == this.getid())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
 	}
 
 }
