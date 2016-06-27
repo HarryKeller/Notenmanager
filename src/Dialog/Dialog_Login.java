@@ -1,14 +1,8 @@
 package Dialog;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.EventQueue;
 
-import javax.swing.AbstractButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridBagLayout;
@@ -34,9 +28,6 @@ import Persistenz.DBZugriff;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Window.Type;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
 public class Dialog_Login extends JFrame implements ActionListener
@@ -60,7 +51,6 @@ public class Dialog_Login extends JFrame implements ActionListener
 	 */
 	public static void main(String[] args)
 	{		
-		DBZugriff.initDB();
 		
 		EventQueue.invokeLater(new Runnable()
 		{

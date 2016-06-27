@@ -3,6 +3,7 @@ package Fachklassen;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+
 import javax.persistence.Id;
 
 import Persistenz.DBZugriff;
@@ -125,5 +126,4 @@ public class Zeugnisnote
 	//---------------------------------------------------------------------------------------------
 	
 	//---------------------------------------------------------------------------------------------
-	
 }

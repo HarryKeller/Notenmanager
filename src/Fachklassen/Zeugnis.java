@@ -1,7 +1,10 @@
 package Fachklassen;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import Persistenz.DBZugriff;
 
@@ -14,6 +17,9 @@ public class Zeugnis
 	public Zeugnis()
 	{
 		
+	}
+	public Zeugnis(int id){
+		DBZugriff.lesen(this, id);
 	}
 	
 	public Zeugnis(String bemerkung, String zeugnisart, int fehltageGanztags,
@@ -33,6 +39,7 @@ public class Zeugnis
 	// Instanzvariablen
 	//---------------------------------------------------------------------------------------------
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int id;
 	
 	private String bemerkung;
@@ -42,6 +49,11 @@ public class Zeugnis
 	private int fehltageGanztagsUnentschuldigt;
 	private int fehltageStundenweise;
 	private int fehltageStundenweiseUnentschuldigt;
+	
+	@ManyToOne
+	private Schueler schueler;	//FS
+	
+	
 	//---------------------------------------------------------------------------------------------
 	
 	
@@ -51,6 +63,14 @@ public class Zeugnis
 	//---------------------------------------------------------------------------------------------
 	
 	
+	public Schueler getSchueler() {
+		return schueler;
+	}
+
+	public void setSchueler(Schueler schueler) {
+		this.schueler = schueler;
+	}
+
 	// Getter / Setter
 	//---------------------------------------------------------------------------------------------
 	public int getId()
@@ -134,7 +154,7 @@ public class Zeugnis
 	}
 	public String toString()
 	{
-		return "";
+		return "To string nicht überschrieben";
 	}
 	//---------------------------------------------------------------------------------------------
 	

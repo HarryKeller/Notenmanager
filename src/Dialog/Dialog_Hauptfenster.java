@@ -19,27 +19,27 @@ public class Dialog_Hauptfenster extends JFrame implements WindowListener
 
 	/**
 	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		DBZugriff.initDB();
-		
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					Dialog_Hauptfenster frame = new Dialog_Hauptfenster();
-					frame.setVisible(true);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	 */
+//	public static void main(String[] args)
+//	{
+//		DBZugriff.initDB();
+//		
+//		EventQueue.invokeLater(new Runnable()
+//		{
+//			public void run()
+//			{
+//				try
+//				{
+//					Dialog_Hauptfenster frame = new Dialog_Hauptfenster();
+//					frame.setVisible(true);
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.

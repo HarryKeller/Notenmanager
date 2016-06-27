@@ -55,6 +55,11 @@ public class Leistung
 		DBZugriff.alleLesen("Leistung", al, "" );
 		return al;	
 	}
+	public String toString()
+	{
+		return (String.valueOf(tendenz)+ String.valueOf(notenstufe)+schueler.getNachname());
+	}
+	
 	
 	public LocalDate getErhebungsdatum()
 	{
@@ -119,4 +124,5 @@ public class Leistung
 	public void setUfachlehrer(UFachLehrer ufachlehrer) {
 		this.ufachlehrer = ufachlehrer;
 	}	
+	
 }

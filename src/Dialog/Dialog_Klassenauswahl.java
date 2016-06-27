@@ -43,6 +43,8 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	JButton button_Zurueck;
 	
 	Klasse klasse = new Klasse();
+	private JLabel lblSchuleauswahl;
+	private JComboBox comboBox_Schule;
 	
 	/**
 	 * Launch the application.
@@ -71,7 +73,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	private void initGUI() {
 		setMinimumSize(new Dimension(450, 300));
 		setTitle("Klassenauswahl");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 320);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{434, 0};
 		gridBagLayout.rowHeights = new int[]{261, 0};
@@ -100,10 +102,30 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{0, 0};
-			gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
+			{
+				lblSchuleauswahl = new JLabel("Schule (Auswahl)");
+				lblSchuleauswahl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				GridBagConstraints gbc_lblSchuleauswahl = new GridBagConstraints();
+				gbc_lblSchuleauswahl.insets = new Insets(0, 0, 5, 0);
+				gbc_lblSchuleauswahl.gridx = 0;
+				gbc_lblSchuleauswahl.gridy = 0;
+				panel.add(lblSchuleauswahl, gbc_lblSchuleauswahl);
+			}
+			{
+				comboBox_Schule = new JComboBox();
+				GridBagConstraints gbc_comboBox_Schule = new GridBagConstraints();
+				gbc_comboBox_Schule.ipady = 10;
+				gbc_comboBox_Schule.anchor = GridBagConstraints.NORTH;
+				gbc_comboBox_Schule.insets = new Insets(0, 0, 5, 0);
+				gbc_comboBox_Schule.fill = GridBagConstraints.HORIZONTAL;
+				gbc_comboBox_Schule.gridx = 0;
+				gbc_comboBox_Schule.gridy = 1;
+				panel.add(comboBox_Schule, gbc_comboBox_Schule);
+			}
 			{
 				JLabel lblKlassenauswahl = new JLabel("Klassen (Auswahl)");
 				lblKlassenauswahl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,7 +134,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				GridBagConstraints gbc_lblKlassenauswahl = new GridBagConstraints();
 				gbc_lblKlassenauswahl.insets = new Insets(0, 0, 5, 0);
 				gbc_lblKlassenauswahl.gridx = 0;
-				gbc_lblKlassenauswahl.gridy = 0;
+				gbc_lblKlassenauswahl.gridy = 2;
 				panel.add(lblKlassenauswahl, gbc_lblKlassenauswahl);
 			}
 			{
@@ -124,7 +146,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				gbc_comboBox_Klassen.ipady = 10;
 				gbc_comboBox_Klassen.insets = new Insets(0, 0, 5, 0);
 				gbc_comboBox_Klassen.gridx = 0;
-				gbc_comboBox_Klassen.gridy = 1;
+				gbc_comboBox_Klassen.gridy = 3;
 				panel.add(comboBox_Klassen, gbc_comboBox_Klassen);
 			}
 			{
@@ -135,7 +157,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				GridBagConstraints gbc_lblFcherauswahl = new GridBagConstraints();
 				gbc_lblFcherauswahl.insets = new Insets(0, 0, 5, 0);
 				gbc_lblFcherauswahl.gridx = 0;
-				gbc_lblFcherauswahl.gridy = 2;
+				gbc_lblFcherauswahl.gridy = 4;
 				panel.add(lblFcherauswahl, gbc_lblFcherauswahl);
 			}
 			{
@@ -147,7 +169,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				gbc_comboBox_Faecher.ipady = 10;
 				gbc_comboBox_Faecher.fill = GridBagConstraints.HORIZONTAL;
 				gbc_comboBox_Faecher.gridx = 0;
-				gbc_comboBox_Faecher.gridy = 3;
+				gbc_comboBox_Faecher.gridy = 5;
 				panel.add(comboBox_Faecher, gbc_comboBox_Faecher);
 			}
 		}
@@ -185,7 +207,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				panel.add(button_Zurueck, gbc_button_Zurueck);
 			}
 		}
-		SetDatenInMaske();
 	}
 
 	public void SetDatenInMaske()

@@ -32,7 +32,7 @@ public class Zeugnisfach {
 	private boolean vorrueckungsfach;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "zfach_id", referencedColumnName = "id")	
+	@JoinColumn(name = "zfach_id")	
 	private List<Unterrichtsfach> unterrichtsfächer = new ArrayList<Unterrichtsfach>();
 	
 	//Getter + Setter
