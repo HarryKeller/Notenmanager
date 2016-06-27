@@ -26,6 +26,12 @@ public class Unterrichtsfach {
 	
 	//Getter + Setter
 	
+	public Zeugnisfach getZfach() {
+		return zfach;
+	}
+	public void setZfach(Zeugnisfach zfach) {
+		this.zfach = zfach;
+	}
 	public String getBez() {
 		return bez;
 	}
@@ -47,7 +53,7 @@ public class Unterrichtsfach {
 	public int getId() {
 		return id;
 	}
-	public Zeugnisfach getZfach_id() {
+	public Zeugnisfach getZfachid() {
 		return zfach;
 	}
 	//Konstruktoren

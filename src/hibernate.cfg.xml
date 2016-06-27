@@ -32,6 +32,8 @@
 		<mapping class="Fachklassen.UFachLehrer"/>
 		<mapping class="Fachklassen.Unterrichtsfach"/>
 		<mapping class="Fachklassen.Zeugnisfach"/>
+		<mapping class="Fachklassen.Zeugnis"/>
+		<mapping class="Fachklassen.Zeugnisnote"/>
 		
 		
 	</session-factory>

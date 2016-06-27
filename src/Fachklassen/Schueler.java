@@ -29,6 +29,14 @@ public class Schueler
 	private Klasse klasse;	//Fremdschlüssel
 	
 	
+	public List<Leistung> getLeistung() {
+		return leistung;
+	}
+
+	public void setLeistung(List<Leistung> leistung) {
+		this.leistung = leistung;
+	}
+
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
 	@JoinColumn(name="schueler_id") 
 	private List<Leistung> leistung = new ArrayList<Leistung>();
