@@ -22,40 +22,40 @@ public class Anwendung {
 	public static void main(String[] args) {
 		DBZugriff.initDB();
 		
-		ArrayList<Klasse> al = Klasse.AlleLesen(new Lehrer(1), new Schule(1));
-		
-		for(Klasse k:al)
-		{
-			System.out.println(k);
-		}
-		
-		//ausgabeLeistungSchuelerEinesBestimmtenFaches(1,1);
-		//ausgabeKlassenEinesLehrers();
+	
+		ausgabeLeistungSchuelerEinesBestimmtenFaches(1,2);
 		
 		
 		DBZugriff.closeDB();
 	}
 	
-	public static void ausgabeLeistungSchuelerEinesBestimmtenFaches(int idSchueler, int idLehrer)	//Funktioniert
+	public static void ausgabeLeistungSchuelerEinesBestimmtenFaches(int idSchueler, int idUnterrichtsfach)	//Funktioniert
 	{
-		//Ausgabe aller Leistungen eins Schülers
-		
-		
-		System.out.println("-------------------------------------------------------");
-		//Schueler s = new Schueler(1);
-		
-		String sql = "l Where l.ufachlehrer.id = "+idLehrer+" AND l.schueler.id = "+idSchueler;
-		ArrayList<Leistung>al = new ArrayList<Leistung>();
+			
+		String sql = 
+				"l "
+				+"INNER JOIN UFachLehrer ufl "
+				+ "ON l.ufachlehrer.id = ufl.id "
+				+ "INNER JOIN Unterrichtsfach uf "
+				+ "ON uf.id = ufl.id "
+				+ "AND uf.id = "+idUnterrichtsfach+" "
+				+ "WHERE l.schueler.id = "+idSchueler;
+							
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Leistung", al,sql );
 		
-		for(Leistung l: al)
-		{
-			System.out.println(l.toString());
+		ArrayList<Leistung>leistungliste = new ArrayList<Leistung>();
+		
+		for(Object[] k: al )
+		{			
+			leistungliste.add((Leistung)k[0]);
 		}
 		
-		System.out.println("-------------------------------------------------------");
-				
-		//--------------------
+		for(Leistung l:leistungliste)
+		{
+			System.out.println(l);
+		}
+			
 				
 	}
 	
