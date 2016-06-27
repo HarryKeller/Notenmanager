@@ -1,8 +1,8 @@
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-import antlr.collections.List;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
@@ -52,7 +52,7 @@ public class Anwendung {
 		//1.Test: Ausgabe aller klassen in denen ein gewisser lehrer unterrichtet
 		
 		//Danke an Sven :)
-//		SELECT Klasse.bez
+//		  SELECT Klasse.bez
 //		  FROM Klasse
 //		  INNER JOIN Zeugnisfach
 //		  ON Klasse.id = Zeugnisfach.klasse_id
@@ -60,23 +60,28 @@ public class Anwendung {
 //		  ON Zeugnisfach.id = Unterrichtsfach.zfach_id
 //		  INNER JOIN UFachLehrer
 //		  ON UFachLehrer.ufach_id = Unterrichtsfach.id 
+//		  INNER JOIN Schule
+//		  ON Schule.id = 1
 //		  WHERE UFachLehrer.lehrer_id = 1
-				
-		String sql = 
-		  " INNER JOIN Zeugnisfach" +
-		  " ON Klasse.id = Zeugnisfach.klasse_id"+
-		  " INNER JOIN Unterrichtsfach"+
-		  " ON Zeugnisfach.id = Unterrichtsfach.zfach_id"+
-		  " INNER JOIN UFachLehrer"+
-		  " ON UFachLehrer.ufach_id = Unterrichtsfach.id "+
-		  " WHERE UFachLehrer.lehrer_id = 1";
+		  
 		
-				//Also wir brauchen alle UFACHLEHRER-Zeilen aus der Tabelle UFACHLEHRER mit der lehrerid als FS
-				//Vom Unterrichtsfach brauchen wir die Zeugnisfach-id
-				//Vom Zeugnisfach brauchen wir die klasse
+		String sql =
+					" k "
+				  +"INNER JOIN Zeugnisfach zf "
+				  +"ON k.id = zf.klasse.id "
+				  +"INNER JOIN Unterrichtsfach uf "
+				  +"ON zf.id = uf.zfach.id "			  
+				  +"INNER JOIN UFachLehrer ufl "
+				  +"ON ufl.id = uf.id "			  
+				  +"INNER JOIN Schule s "
+				  +"ON s.id = 1 "
+				  +"WHERE ufl.lehrer.id = 1 ";
 		
-		ArrayList<Klasse> al = new ArrayList();
-		DBZugriff.alleLesen("Klasse", al,sql );
+		
+		ArrayList<Klasse> al = new ArrayList<Klasse>();
+		DBZugriff.alleLesen("Klasse", al, sql );
+		
+		
 		for(Klasse k:al)
 		{
 			System.out.println(k.toString());

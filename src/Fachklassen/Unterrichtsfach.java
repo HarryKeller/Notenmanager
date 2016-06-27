@@ -53,9 +53,7 @@ public class Unterrichtsfach {
 	public int getId() {
 		return id;
 	}
-	public Zeugnisfach getZfachid() {
-		return zfach;
-	}
+	
 	//Konstruktoren
 	public Unterrichtsfach(){}
 	

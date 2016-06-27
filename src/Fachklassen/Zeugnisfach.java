@@ -29,6 +29,14 @@ public class Zeugnisfach {
 	
 	private boolean abschliessendesFach;
 	private String fachart;
+	public void setKlasse(Klasse klasse) {
+		this.klasse = klasse;
+	}
+
+	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
+		this.unterrichtsfächer = unterrichtsfächer;
+	}
+
 	private boolean vorrueckungsfach;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
