@@ -86,7 +86,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 		getContentPane().add(contentPanel, gbc_contentPanel);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{25, 350, 25, 0};
-		gbl_contentPanel.rowHeights = new int[]{26, 150, 50, 25, 0};
+		gbl_contentPanel.rowHeights = new int[]{25, 150, 50, 25, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
@@ -185,6 +185,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 				panel.add(button_Zurueck, gbc_button_Zurueck);
 			}
 		}
+		SetDatenInMaske();
 	}
 
 	public void SetDatenInMaske()

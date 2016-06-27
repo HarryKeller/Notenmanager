@@ -39,7 +39,7 @@ import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
-public class Dialog_Login extends JDialog implements ActionListener
+public class Dialog_Login extends JFrame implements ActionListener
 {
 
 	private JPanel contentPane;
@@ -60,6 +60,8 @@ public class Dialog_Login extends JDialog implements ActionListener
 	 */
 	public static void main(String[] args)
 	{		
+		DBZugriff.initDB();
+		
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
@@ -86,9 +88,9 @@ public class Dialog_Login extends JDialog implements ActionListener
 	}
 	private void initGUI() 
 	{
-		setModal(true);
+		
 		setResizable(false);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(0);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -240,6 +242,7 @@ public class Dialog_Login extends JDialog implements ActionListener
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
+			DBZugriff.closeDB();
 			this.dispose();
 		}
 	}
