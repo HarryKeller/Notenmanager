@@ -1,10 +1,16 @@
 package Fachklassen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 
 import javax.persistence.Id;
+<<<<<<< HEAD
+=======
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+>>>>>>> refs/remotes/origin/master
 
 import Persistenz.DBZugriff;
 
@@ -42,7 +48,7 @@ public class Zeugnisnote
 	
 	private LocalDate aenderungszeitpunkt;
 	//---------------------------------------------------------------------------------------------
-	
+
 	
 	// Instanzvariablen -> Fremdschlüssel
 	//---------------------------------------------------------------------------------------------
@@ -107,10 +113,6 @@ public class Zeugnisnote
 	{
 		DBZugriff.lesen(this, id);
 	}
-	public void speichern()
-	{
-		DBZugriff.speichern(this);
-	}
 	public void loeschen()
 	{
 		DBZugriff.loeschen(this);
@@ -118,6 +120,34 @@ public class Zeugnisnote
 	public String toString()
 	{
 		return "";
+	}
+	public boolean speichern()
+	{
+		return DBZugriff.speichern(this);
+	}
+	public double berechneNote(Unterrichtsfach uf)
+	{
+		double muendlich = 0;
+		double schriftlich = 0;
+		double note = 0;
+		double i = 0;
+		
+		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf));
+		for (Leistung l : leistungen )
+		{
+			if(l.getLeistungsart().getBez() == "Schulaufgabe")
+			{
+				schriftlich = schriftlich + l.getNotenstufe();				
+			}
+			else
+			{
+				muendlich = muendlich + l.getNotenstufe();
+			}
+			i++;
+		}
+		note = ((schriftlich * 2) + muendlich) / i;	
+		
+		return note;
 	}
 	//---------------------------------------------------------------------------------------------
 	

@@ -32,16 +32,16 @@ public class UFachLehrer
 	public void setid(int id) {
 		this.id = id;
 	}
-	public LocalDate getedatum() {
+	public LocalDate geteintrittsdatum() {
 		return eintrittsdatum;
 	}
-	public void setedatum(LocalDate edatum) {
+	public void seteintrittsdatum(LocalDate edatum) {
 		this.eintrittsdatum = edatum;
 	}
-	public LocalDate getadatum() {
+	public LocalDate getaustrittsdatum() {
 		return austrittsdatum;
 	}
-	public void setadatum(LocalDate adatum) {
+	public void setaustrittsdatum(LocalDate adatum) {
 		this.austrittsdatum = adatum;
 	}
 	public int getstunden() {

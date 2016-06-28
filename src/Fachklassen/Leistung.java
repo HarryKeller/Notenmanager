@@ -55,6 +55,30 @@ public class Leistung
 		DBZugriff.alleLesen("Leistung", al, "" );
 		return al;	
 	}
+	
+	public static ArrayList<Leistung> AlleLesen(Schueler schueler,Unterrichtsfach ufach )
+	{
+		String sql = 
+				"l "
+				+"INNER JOIN UFachLehrer ufl "
+				+ "ON l.ufachlehrer.id = ufl.id "
+				+ "INNER JOIN Unterrichtsfach uf "
+				+ "ON uf.id = ufl.id "
+				+ "AND uf.id = "+ufach.getId()+" "
+				+ "WHERE l.schueler.id = "+schueler.getId();
+							
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Leistung", al,sql );
+		
+		ArrayList<Leistung>leistungliste = new ArrayList<Leistung>();
+		
+		for(Object[] k: al )
+		{			
+			leistungliste.add((Leistung)k[0]);
+		}
+		return leistungliste;
+	}
+	
 	public String toString()
 	{
 		return (String.valueOf(tendenz)+ String.valueOf(notenstufe)+schueler.getNachname());

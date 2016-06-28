@@ -1,8 +1,8 @@
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-import antlr.collections.List;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
@@ -23,68 +23,97 @@ public class Anwendung {
 		DBZugriff.initDB();
 		
 		
-		ausgabeKlassenEinesLehrers();
-		
+		for(Leistung l: Leistung.AlleLesen(new Schueler(1), new Unterrichtsfach(1)))
+		{
+			System.out.println(l+ l.getLeistungsart().toString());
+		}
 		
 		
 		
 		DBZugriff.closeDB();
 	}
-	public static void ausgabeLeistungSchueler()	//Funktioniert
+	
+	public static void ausgabeLeistungSchuelerEinesBestimmtenFaches(int idSchueler, int idUnterrichtsfach)	//Funktioniert
 	{
-		//Ausgabe aller Leistungen eins Schülers
+			
+		String sql = 
+				"l "
+				+"INNER JOIN UFachLehrer ufl "
+				+ "ON l.ufachlehrer.id = ufl.id "
+				+ "INNER JOIN Unterrichtsfach uf "
+				+ "ON uf.id = ufl.id "
+				+ "AND uf.id = "+idUnterrichtsfach+" "
+				+ "WHERE l.schueler.id = "+idSchueler;
+							
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Leistung", al,sql );
 		
+		ArrayList<Leistung>leistungliste = new ArrayList<Leistung>();
 		
-		System.out.println("-------------------------------------------------------");
-		Schueler s = new Schueler(1);
-		for(Leistung a:s.getLeistung())
-		{
-			System.out.println(a.toString());
+		for(Object[] k: al )
+		{			
+			leistungliste.add((Leistung)k[0]);
 		}
-		System.out.println("-------------------------------------------------------");
-				
-		//--------------------
+		
+		for(Leistung l:leistungliste)
+		{
+			System.out.println(l);
+		}
+			
 				
 	}
 	
 	public static void ausgabeKlassenEinesLehrers()
 	{
-		//1.Test: Ausgabe aller klassen in denen ein gewisser lehrer unterrichtet
 		
-		//Danke an Sven :)
-//		SELECT Klasse.bez
-//		  FROM Klasse
-//		  INNER JOIN Zeugnisfach
-//		  ON Klasse.id = Zeugnisfach.klasse_id
-//		  INNER JOIN Unterrichtsfach
-//		  ON Zeugnisfach.id = Unterrichtsfach.zfach_id
-//		  INNER JOIN UFachLehrer
-//		  ON UFachLehrer.ufach_id = Unterrichtsfach.id 
-//		  WHERE UFachLehrer.lehrer_id = 1
+		//Danke an Sven  
+		
+		String schuleid = "1";
+		String lehrerid = "1";
+		
+		String sql =
+					"k "
+				  +"INNER JOIN Zeugnisfach zf "
+				  +"ON k.id = zf.klasse.id "
+				  +"INNER JOIN Unterrichtsfach uf "
+				  +"ON zf.id = uf.zfach.id "			  
+				  +"INNER JOIN UFachLehrer ufl "
+				  +"ON ufl.id = uf.id "			  
+				  +"INNER JOIN Schule s "
+				  +"ON s.id = "+schuleid+" "
+				  +"WHERE ufl.lehrer.id = "+lehrerid;
+		
+		
+		ArrayList<Object[]> al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Klasse", al, sql );
+		
+		ArrayList<Klasse> klassenliste = new ArrayList<Klasse>();
+		
+		//Schleifen der Klassen in eine Liste und prüfen, ob Klassen
+		//Doppelt vorkommen
+		for(Object[] k: al )
+		{	
+			boolean doppelt = false;
+			for(Klasse l: klassenliste )
+			{
+				if( ((Klasse)k[0]).equals(l)) 
+				{
+					doppelt = true;
+					break;
+				}				
+			}		
+			if(doppelt) continue;
 				
-		String sql = 
-		  " INNER JOIN Zeugnisfach" +
-		  " ON Klasse.id = Zeugnisfach.klasse_id"+
-		  " INNER JOIN Unterrichtsfach"+
-		  " ON Zeugnisfach.id = Unterrichtsfach.zfach_id"+
-		  " INNER JOIN UFachLehrer"+
-		  " ON UFachLehrer.ufach_id = Unterrichtsfach.id "+
-		  " WHERE UFachLehrer.lehrer_id = 1";
-		
-				//Also wir brauchen alle UFACHLEHRER-Zeilen aus der Tabelle UFACHLEHRER mit der lehrerid als FS
-				//Vom Unterrichtsfach brauchen wir die Zeugnisfach-id
-				//Vom Zeugnisfach brauchen wir die klasse
-		
-		ArrayList<Klasse> al = new ArrayList();
-		DBZugriff.alleLesen("Klasse", al,sql );
-		for(Klasse k:al)
-		{
-			System.out.println(k.toString());
+			klassenliste.add((Klasse)k[0]);
 		}
 		
+		//Testausgabe auf der Console
+		for(Klasse k:klassenliste)
+		{
+			System.out.println(k);
+		}
 		
 	}
-	
 	
 	
 	public static void initDBDaten()
@@ -169,8 +198,8 @@ public class Anwendung {
 				
 				
 				UFachLehrer u1 = new UFachLehrer();
-				u1.setadatum(LocalDate.now());
-				u1.setedatum(LocalDate.now());
+				u1.setaustrittsdatum(LocalDate.now());
+				u1.seteintrittsdatum(LocalDate.now());
 				u1.setstunden(5);
 				u1.setLehrer(new Lehrer(1));
 				u1.setUfach(new Unterrichtsfach(1));
