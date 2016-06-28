@@ -22,8 +22,12 @@ public class Anwendung {
 	public static void main(String[] args) {
 		DBZugriff.initDB();
 		
-	
-		ausgabeLeistungSchuelerEinesBestimmtenFaches(1,2);
+		
+		for(Leistung l: Leistung.AlleLesen(new Schueler(1), new Unterrichtsfach(1)))
+		{
+			System.out.println(l+ l.getLeistungsart().toString());
+		}
+		
 		
 		
 		DBZugriff.closeDB();
@@ -194,8 +198,8 @@ public class Anwendung {
 				
 				
 				UFachLehrer u1 = new UFachLehrer();
-				u1.setadatum(LocalDate.now());
-				u1.setedatum(LocalDate.now());
+				u1.setaustrittsdatum(LocalDate.now());
+				u1.seteintrittsdatum(LocalDate.now());
 				u1.setstunden(5);
 				u1.setLehrer(new Lehrer(1));
 				u1.setUfach(new Unterrichtsfach(1));
