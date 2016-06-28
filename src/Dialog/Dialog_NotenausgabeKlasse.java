@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -188,9 +190,47 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			gbl_panel.rowHeights = new int[]{0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			
+			DefaultTableModel tablecontent = new DefaultTableModel(); 		
+			
 			panel.setLayout(gbl_panel);
 			{
 				table_Schueler_SNote_MNote = new JTable();
+				table_Schueler_SNote_MNote.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+					},
+					new String[] {
+						"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
+					}
+				) {
+					boolean[] columnEditables = new boolean[] {
+						false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
 				table_Schueler_SNote_MNote.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 				GridBagConstraints gbc_table_Schueler_SNote_MNote = new GridBagConstraints();
 				gbc_table_Schueler_SNote_MNote.fill = GridBagConstraints.BOTH;

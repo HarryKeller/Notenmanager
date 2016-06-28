@@ -209,9 +209,9 @@ public class Anwendung {
 				zn.setAenderungszeitpunkt(LocalDate.now());
 				zn.setBemerkung("Eine zeugnisnote für deutsch");
 				zn.setNoteErrechnet(1);
-				zn.setNoteZeugis(1);
-				zn.setZeugnis(new Zeugnis(1));
-				zn.setZeugnisfach(new Zeugnisfach(1));
+				zn.setNoteZeugnis(1);
+				// zn.setZeugnis(new Zeugnis(1));
+				// zn.setZeugnisfach(new Zeugnisfach(1));
 				zn.speichern();
 				
 		
