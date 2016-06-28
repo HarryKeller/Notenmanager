@@ -34,7 +34,6 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private JTextField textField_Klasse;
 	private JTextField textField_Fach;
 	private JTextField textField_LehrerIn;
-	private JTable table_Schueler_SNote_MNote;
 
 	/**
 	 * Launch the application.
@@ -73,19 +72,19 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JPanel panel = new JPanel();
-			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
-			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 1;
-			gbc_panel.gridy = 1;
-			contentPanel.add(panel, gbc_panel);
-			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{0, 0, 0};
-			gbl_panel.rowHeights = new int[]{0, 0};
-			gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			panel.setLayout(gbl_panel);
+			JPanel panel_Head = new JPanel();
+			GridBagConstraints gbc_panel_Head = new GridBagConstraints();
+			gbc_panel_Head.insets = new Insets(0, 0, 5, 5);
+			gbc_panel_Head.fill = GridBagConstraints.BOTH;
+			gbc_panel_Head.gridx = 1;
+			gbc_panel_Head.gridy = 1;
+			contentPanel.add(panel_Head, gbc_panel_Head);
+			GridBagLayout gbl_panel_Head = new GridBagLayout();
+			gbl_panel_Head.columnWidths = new int[]{0, 0, 0};
+			gbl_panel_Head.rowHeights = new int[]{0, 0};
+			gbl_panel_Head.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+			gbl_panel_Head.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel_Head.setLayout(gbl_panel_Head);
 			{
 				JPanel panel_1 = new JPanel();
 				GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -93,7 +92,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 				gbc_panel_1.fill = GridBagConstraints.BOTH;
 				gbc_panel_1.gridx = 0;
 				gbc_panel_1.gridy = 0;
-				panel.add(panel_1, gbc_panel_1);
+				panel_Head.add(panel_1, gbc_panel_1);
 				GridBagLayout gbl_panel_1 = new GridBagLayout();
 				gbl_panel_1.columnWidths = new int[]{0, 125, 0};
 				gbl_panel_1.rowHeights = new int[]{0, 0, 0};
@@ -148,7 +147,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 				gbc_panel_1.fill = GridBagConstraints.BOTH;
 				gbc_panel_1.gridx = 1;
 				gbc_panel_1.gridy = 0;
-				panel.add(panel_1, gbc_panel_1);
+				panel_Head.add(panel_1, gbc_panel_1);
 				GridBagLayout gbl_panel_1 = new GridBagLayout();
 				gbl_panel_1.columnWidths = new int[]{0, 125, 0};
 				gbl_panel_1.rowHeights = new int[]{0, 0};
@@ -178,66 +177,22 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			}
 		}
 		{
-			JPanel panel = new JPanel();
-			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
-			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 1;
-			gbc_panel.gridy = 2;
-			contentPanel.add(panel, gbc_panel);
-			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{0, 0};
-			gbl_panel.rowHeights = new int[]{0, 0};
-			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			JPanel panel_SchuelerNoten = new JPanel();
+			GridBagConstraints gbc_panel_SchuelerNoten = new GridBagConstraints();
+			gbc_panel_SchuelerNoten.insets = new Insets(0, 0, 5, 5);
+			gbc_panel_SchuelerNoten.fill = GridBagConstraints.BOTH;
+			gbc_panel_SchuelerNoten.gridx = 1;
+			gbc_panel_SchuelerNoten.gridy = 2;
+			contentPanel.add(panel_SchuelerNoten, gbc_panel_SchuelerNoten);
+			GridBagLayout gbl_panel_SchuelerNoten = new GridBagLayout();
+			gbl_panel_SchuelerNoten.columnWidths = new int[]{0, 0};
+			gbl_panel_SchuelerNoten.rowHeights = new int[]{0, 0};
+			gbl_panel_SchuelerNoten.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel_SchuelerNoten.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			
 			DefaultTableModel tablecontent = new DefaultTableModel(); 		
 			
-			panel.setLayout(gbl_panel);
-			{
-				table_Schueler_SNote_MNote = new JTable();
-				table_Schueler_SNote_MNote.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-					},
-					new String[] {
-						"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
-					}
-				) {
-					boolean[] columnEditables = new boolean[] {
-						false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
-					};
-					public boolean isCellEditable(int row, int column) {
-						return columnEditables[column];
-					}
-				});
-				table_Schueler_SNote_MNote.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-				GridBagConstraints gbc_table_Schueler_SNote_MNote = new GridBagConstraints();
-				gbc_table_Schueler_SNote_MNote.fill = GridBagConstraints.BOTH;
-				gbc_table_Schueler_SNote_MNote.gridx = 0;
-				gbc_table_Schueler_SNote_MNote.gridy = 0;
-				panel.add(table_Schueler_SNote_MNote, gbc_table_Schueler_SNote_MNote);
-			}
+			panel_SchuelerNoten.setLayout(gbl_panel_SchuelerNoten);
 		}
 		{
 			JPanel panel = new JPanel();

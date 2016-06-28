@@ -211,9 +211,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 
 	public void SetDatenInMaske()
 	{
-		ArrayList<Klasse> klassen = new ArrayList<Klasse>();
-		DBZugriff.alleLesen("Klasse", klassen, "");
-		for(Klasse klasse : klassen)
+		for(Klasse klasse : )
 		{
 			this.comboBox_Klassen.addItem(klasse);
 		}
