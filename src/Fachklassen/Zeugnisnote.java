@@ -1,13 +1,13 @@
 package Fachklassen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import Persistenz.DBZugriff;
@@ -35,8 +35,33 @@ public class Zeugnisnote
 	
 	//------------------------------------------------------
 	
-	public boolean speichern(){
+	public boolean speichern()
+	{
 		return DBZugriff.speichern(this);
+	}
+	
+	public double berechneNote(Unterrichtsfach uf)
+	{
+		double muendlich = 0;
+		double schriftlich = 0;
+		double note = 0;
+		double i = 0;
+		ArrayList<Leistung>leistungen = new ArrayList<>(Leistung.AlleLesen(schueler, uf));
+		for (Leistung l : leistungen )
+		{
+			if(l.getLeistungsart().getBez() == "Schulaufgabe")
+			{
+				schriftlich = schriftlich + l.getNotenstufe();				
+			}
+			else
+			{
+				muendlich = muendlich + l.getNotenstufe();
+			}
+			i++;
+		}
+		note = ((schriftlich * 2) + muendlich) / i;	
+		
+		return note;
 	}
 	
 	
