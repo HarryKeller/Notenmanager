@@ -1,4 +1,6 @@
 package Fachklassen;
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,6 +61,13 @@ public class Lehrer
 	public Lehrer()
 	{
 		
+	}
+	
+	public ArrayList<Lehrer> alleLesen()
+	{
+		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
+		DBZugriff.alleLesen("Lehrer", al, "");
+		return al;
 	}
 	
 	public boolean speichern()
