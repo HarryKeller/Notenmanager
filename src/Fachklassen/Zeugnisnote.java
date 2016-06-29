@@ -35,6 +35,18 @@ public class Zeugnisnote
 	
 	//------------------------------------------------------
 	
+	public Zeugnisnote()
+	{
+		
+	}
+	
+	public Zeugnisnote(int id)
+	{
+		DBZugriff.lesen(this, id);
+	}
+	
+	//------------------------------------------------------
+	
 	public boolean speichern()
 	{
 		return DBZugriff.speichern(this);
@@ -46,7 +58,7 @@ public class Zeugnisnote
 		double schriftlich = 0;
 		double note = 0;
 		double i = 0;
-		ArrayList<Leistung>leistungen = new ArrayList<>(Leistung.AlleLesen(schueler, uf));
+		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf));
 		for (Leistung l : leistungen )
 		{
 			if(l.getLeistungsart().getBez() == "Schulaufgabe")
