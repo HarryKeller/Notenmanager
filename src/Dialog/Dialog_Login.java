@@ -2,6 +2,7 @@ package Dialog;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -24,13 +25,18 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
+import Fachklassen.Lehrer;
+import Fachklassen.Login;
 import Persistenz.DBZugriff;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
-public class Dialog_Login extends JFrame implements ActionListener
+public class Dialog_Login extends JFrame implements ActionListener, WindowListener
 {
 
 	private JPanel contentPane;
@@ -78,6 +84,7 @@ public class Dialog_Login extends JFrame implements ActionListener
 	}
 	private void initGUI() 
 	{
+		addWindowListener(this);
 		
 		setResizable(false);
 		setDefaultCloseOperation(0);
@@ -221,16 +228,48 @@ public class Dialog_Login extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand().equals(button_Login.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-		{
-			// Aufruf Überprüfung der Logindaten -> Übergabe Lehrer an Dialog_Klassenauswahl
-			// Bis codiert:
-			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl();
-			dlg_klassenauswahl.setVisible(true);
+		{			
+			String benutzername = textField_Benutzername.getText();
+			char[] password = passwordField_Passwort.getPassword();	
+			String passString = new String(password);
+			
+			Login login = new Login();
+			ArrayList<Lehrer> lehrer = login.alleLesen(benutzername);
+			Lehrer l = new Lehrer(lehrer.get(0).getId());
+			login = new Login(l.getId());
+			
+			if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()))
+			{
+				Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l);
+				dlg_klassenauswahl.setVisible(true);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Der Benutzername oder das Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
+			}			
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
 			DBZugriff.closeDB();
 			this.dispose();
 		}
+	}
+	public void windowActivated(WindowEvent arg0) {
+	}
+	public void windowClosed(WindowEvent arg0) 
+	{
+		DBZugriff.closeDB();
+	}	
+	public void windowClosing(WindowEvent arg0) {
+	}
+	public void windowDeactivated(WindowEvent arg0) {
+	}
+	public void windowDeiconified(WindowEvent arg0) {
+	}
+	public void windowIconified(WindowEvent arg0) {
+	}
+	public void windowOpened(WindowEvent arg0) 
+	{
+		DBZugriff.initDB();
 	}
 }

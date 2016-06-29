@@ -18,7 +18,7 @@ public class Zeugnisnote
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int id;
-	private int noteZeugis;
+	private int noteZeugnis;
 	private double noteErrechnet;
 	private String bemerkung;
 	
@@ -80,11 +80,11 @@ public class Zeugnisnote
 	//-----------------------------------
 	
 	public int getNoteZeugis() {
-		return noteZeugis;
+		return noteZeugnis;
 	}
 
 	public void setNoteZeugis(int noteZeugis) {
-		this.noteZeugis = noteZeugis;
+		this.noteZeugnis = noteZeugis;
 	}
 
 	public double getNoteErrechnet() {
