@@ -211,7 +211,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 
 	public void SetDatenInMaske()
 	{
-		for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), new Schule(1)))
+		for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
 		{
 			this.comboBox_Klassen.addItem(klasse);
 		}
