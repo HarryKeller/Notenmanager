@@ -45,29 +45,14 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	Klasse klasse = new Klasse();
 	private JLabel lblSchuleauswahl;
 	private JComboBox comboBox_Schule;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		try
-		{
-			Dialog_Klassenauswahl dialog = new Dialog_Klassenauswahl();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	private Lehrer lehrer;
 
 	/**
 	 * Create the dialog.
 	 */
-	public Dialog_Klassenauswahl()
+	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
+		lehrer = this.lehrer;
 		initGUI();
 	}
 	private void initGUI() {

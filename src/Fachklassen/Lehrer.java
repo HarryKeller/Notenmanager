@@ -17,7 +17,7 @@ public class Lehrer
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String kürzel;
+	private String kuerzel;
 	private String nachname;
 	private String vorname;
 	private String dienstbezeichnung;
@@ -28,11 +28,11 @@ public class Lehrer
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getKürzel() {
-		return kürzel;
+	public String getKuerzel() {
+		return kuerzel;
 	}
-	public void setKürzel(String kürzel) {
-		this.kürzel = kürzel;
+	public void setKuerzel(String kürzel) {
+		this.kuerzel = kürzel;
 	}
 	public String getNachname() {
 		return nachname;
