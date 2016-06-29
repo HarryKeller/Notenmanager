@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener, WindowFocusListener
@@ -34,6 +36,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private JTextField textField_Klasse;
 	private JTextField textField_Fach;
 	private JTextField textField_LehrerIn;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -66,8 +69,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{25, 0, 25, 0};
-		gbl_contentPanel.rowHeights = new int[]{25, 60, 0, 25, 25, 0};
+		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 60, 0, 25, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
@@ -177,22 +180,31 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			}
 		}
 		{
-			JPanel panel_SchuelerNoten = new JPanel();
-			GridBagConstraints gbc_panel_SchuelerNoten = new GridBagConstraints();
-			gbc_panel_SchuelerNoten.insets = new Insets(0, 0, 5, 5);
-			gbc_panel_SchuelerNoten.fill = GridBagConstraints.BOTH;
-			gbc_panel_SchuelerNoten.gridx = 1;
-			gbc_panel_SchuelerNoten.gridy = 2;
-			contentPanel.add(panel_SchuelerNoten, gbc_panel_SchuelerNoten);
-			GridBagLayout gbl_panel_SchuelerNoten = new GridBagLayout();
-			gbl_panel_SchuelerNoten.columnWidths = new int[]{0, 0};
-			gbl_panel_SchuelerNoten.rowHeights = new int[]{0, 0};
-			gbl_panel_SchuelerNoten.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel_SchuelerNoten.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			
 			DefaultTableModel tablecontent = new DefaultTableModel(); 		
-			
-			panel_SchuelerNoten.setLayout(gbl_panel_SchuelerNoten);
+		}
+		{
+			JPanel panel = new JPanel();
+			GridBagConstraints gbc_panel = new GridBagConstraints();
+			gbc_panel.insets = new Insets(0, 0, 5, 5);
+			gbc_panel.fill = GridBagConstraints.BOTH;
+			gbc_panel.gridx = 1;
+			gbc_panel.gridy = 2;
+			contentPanel.add(panel, gbc_panel);
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0};
+			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			{
+				table = new JTable();
+				GridBagConstraints gbc_table = new GridBagConstraints();
+				gbc_table.fill = GridBagConstraints.BOTH;
+				gbc_table.gridx = 0;
+				gbc_table.gridy = 0;
+				panel.add(table, gbc_table);
+			}
 		}
 		{
 			JPanel panel = new JPanel();

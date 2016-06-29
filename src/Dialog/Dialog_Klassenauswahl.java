@@ -139,6 +139,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			}
 			{
 				comboBox_Klassen = new JComboBox();
+				comboBox_Klassen.setEnabled(false);
 				comboBox_Klassen.addActionListener(this);
 				GridBagConstraints gbc_comboBox_Klassen = new GridBagConstraints();
 				gbc_comboBox_Klassen.fill = GridBagConstraints.HORIZONTAL;
@@ -211,10 +212,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 
 	public void SetDatenInMaske()
 	{
-		for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
-		{
-			this.comboBox_Klassen.addItem(klasse);
-		}
+		// for-Schleife zur Aufnahme von Schulen in ComboBox
 	}
 	
 	
@@ -233,11 +231,20 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 		}
 		if(e.getActionCommand().equals(comboBox_Klassen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
+			ArrayList<Unterrichtsfach> faecher = new ArrayList<Unterrichtsfach>();
+			DBZugriff.alleLesen("Unterrichtsfach", faecher, "");
+			for(Unterrichtsfach fach : faecher)
+			{
+				this.comboBox_Faecher.addItem(fach);
+			}
 			comboBox_Faecher.setEnabled(true);
 		}
-		if(e.getActionCommand().equals(comboBox_Faecher.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+		if(e.getActionCommand().equals(comboBox_Schule.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			
+			for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
+			{
+				this.comboBox_Klassen.addItem(klasse);
+			}
 		}
 	}
 }

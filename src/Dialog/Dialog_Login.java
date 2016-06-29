@@ -222,13 +222,10 @@ public class Dialog_Login extends JFrame implements ActionListener
 	{
 		if(e.getActionCommand().equals(button_Login.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			if(true) // Überprüfung auf richtige Login-Daten
-			{
-				Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl();
-				dlg_klassenauswahl.setVisible(true);
-				
-				this.dispose();
-			}
+			// Aufruf Überprüfung der Logindaten -> Übergabe Lehrer an Dialog_Klassenauswahl
+			// Bis codiert:
+			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl();
+			dlg_klassenauswahl.setVisible(true);
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
