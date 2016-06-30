@@ -2,6 +2,7 @@ package Fachklassen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+
+
 
 import Persistenz.DBZugriff;
 
@@ -43,7 +45,7 @@ public class Klasse
 	//Liste aller Schüler der Klasse
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="klasse_id")
-	private List<Schueler> schuelerlist = new ArrayList<Schueler>();
+	private Set<Schueler> schuelerlist;// = new Set<Schueler>();
 	
 	
 	public Klasse(){}
@@ -173,7 +175,7 @@ public class Klasse
 	}
 	
 	
-	public List<Schueler> getSchueler()
+	public Set<Schueler> getSchueler()
 	{
 		return this.schuelerlist;
 	}

@@ -29,13 +29,7 @@ public class Schueler
 	private Klasse klasse;	//Fremdschlüssel
 	
 	
-	public List<Leistung> getLeistung() {
-		return leistung;
-	}
-
-	public void setLeistung(List<Leistung> leistung) {
-		this.leistung = leistung;
-	}
+	
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
 	@JoinColumn(name="schueler_id") 
@@ -46,29 +40,41 @@ public class Schueler
 	// ----- CONSTRUCTOR ---------------------------------------------------------------
 	// ---------------------------------------------------------------------------------
 	
+	public List<Leistung> getLeistung() {
+		return leistung;
+	}
+
+	public void setLeistung(List<Leistung> leistung) {
+		this.leistung = leistung;
+	}
 	
-	@Transient
-	public ArrayList<Leistung> getSchriftlich()
+	
+	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach)
 	{
+		//Alle Leistungen des Schülers für ein Fach lesen
+		ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+		//Rausschmeissen aller Mündlichen arbeiten
 		ArrayList<Leistung>ret = new ArrayList<Leistung>();
-		for(Leistung l: leistung)
+		for(Leistung l: lst)
 		{
 			if(l.getLeistungsart().getGruppe() == 'S')
 				ret.add(l);
 		}
-		return ret;
+		return ret;//Rückgabe der verbliebenen, also der Schriftlichen Arbeiten
 	}
 	
-	@Transient
-	public ArrayList<Leistung> getMuendlich()
+	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach)
 	{
+		//Alle Leistungen des Schülers für ein Fach lesen
+		ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+		//Rausschmiessen aller Schriftlichen arbeiten
 		ArrayList<Leistung>ret = new ArrayList<Leistung>();
-		for(Leistung l: leistung)
+		for(Leistung l: lst)
 		{
 			if(l.getLeistungsart().getGruppe() == 'M')
 				ret.add(l);
 		}
-		return ret;
+		return ret;	//Rückgabe der verbliebenen, also der Mündlichen Arbeiten
 	}
 	
 
