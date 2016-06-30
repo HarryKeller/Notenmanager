@@ -18,11 +18,13 @@ import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
+import Persistenz.DBZugriff;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -30,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 import java.awt.event.WindowFocusListener;
 import java.util.List;
+import java.util.Vector;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -48,9 +51,21 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private Klasse klasse;
 	private Unterrichtsfach fach;
 	
+	public static void main(String[] args)
+	{
+		DBZugriff.initDB();
+		Dialog_NotenausgabeKlasse d = new Dialog_NotenausgabeKlasse(new Lehrer(1), new Klasse(1), new Unterrichtsfach(1));
+		d.setVisible(true);
+		DBZugriff.closeDB();
+	}
 	/**
 	 * Create the dialog.
 	 */
+	public Dialog_NotenausgabeKlasse()
+	{
+		this.initGUI();
+	}
+	
 	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
 	{
 		this.lehrer = l;
@@ -58,6 +73,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		this.fach = f;
 		
 		initGUI();
+		
+		this.setDatenInMaske();
 	}
 	private void initGUI() {
 		addWindowFocusListener(this);
@@ -192,13 +209,18 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			
 			panel.setLayout(gbl_panel);
 			{
-				table_noten = new JTable();
-				table_noten.setModel(this.model_noten);
-				GridBagConstraints gbc_table_noten = new GridBagConstraints();
-				gbc_table_noten.fill = GridBagConstraints.BOTH;
-				gbc_table_noten.gridx = 0;
-				gbc_table_noten.gridy = 0;
-				panel.add(table_noten, gbc_table_noten);
+				this.model_noten = new DefaultTableModel();
+				{
+					JScrollPane scrollPane = new JScrollPane();
+					GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+					gbc_scrollPane.fill = GridBagConstraints.BOTH;
+					gbc_scrollPane.gridx = 0;
+					gbc_scrollPane.gridy = 0;
+					panel.add(scrollPane, gbc_scrollPane);
+					table_noten = new JTable();
+					scrollPane.setViewportView(this.table_noten);
+					table_noten.setModel(this.model_noten);
+				}
 			}
 		}
 		{
@@ -231,7 +253,20 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	public void setDatenInMaske()
 	{
 		List<Schueler> schueler = this.klasse.getSchueler();
-		//List<Zeugnisfach> faecher = this.klasse
+		this.model_noten.addColumn("Name");
+		this.model_noten.addColumn("Vorname");
+		this.model_noten.addColumn("Noten Mündlich");
+		this.model_noten.addColumn("Noten Schriftlich");
+		
+		this.textField_Fach.setText(this.fach.getBez());
+		this.textField_Klasse.setText(this.klasse.getBez());
+		this.textField_LehrerIn.setText(this.lehrer.getNachname());
+		
+		for(Schueler s : schueler)
+		{
+			Object[] data = {s.getNachname(), s.getVorname(), s.getMuendlich(), s.getSchriftlich()};
+			this.model_noten.addRow(data);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) 
