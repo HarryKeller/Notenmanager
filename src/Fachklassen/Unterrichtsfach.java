@@ -1,5 +1,7 @@
 package Fachklassen;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -71,6 +73,52 @@ public class Unterrichtsfach {
 	public void loeschen()
 	{
 		DBZugriff.loeschen(this);
+	}
+	
+	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse)
+	{
+
+		//Alle unterrichtsfäche zu diesem Lehrer lesen zu der ausgewählten Klasse
+		
+		//SELECT Unterrichtsfach.bez
+		//FROM Unterrichtsfach
+		
+		//INNER JOIN Zeugnisfach
+		//ON Zeugnisfach.id = Unterrichtsfach.zfach_id
+		
+		//INNER JOIN Klasse
+		//ON Klasse.id = Zeugnisfach.klasse_id
+		
+		//INNER JOIN UFachLehrer
+		//ON UFachLehrer.lehrer_id = 1
+		//AND UFachLehrer.ufach_id = Unterrichtsfach.id
+		//WHERE Klasse.id = 1 
+		
+		
+		String hql =
+				"uf "
+			    +"INNER JOIN Zeugnisfach zf "
+				+"ON zf.id = uf.zfach.id "
+			    +"INNER JOIN Klasse k "
+			    +"ON k.id = zf.klasse.id "
+			    +"INNER JOIN UFachLehrer ufl "
+			    +"ON ufl.lehrer.id = "+lehrer.getId()+" "
+			    +"AND ufl.ufach.id = uf.id "
+			    +"Where k.id = "+klasse.getid();
+		
+		ArrayList<Object[]> al = new ArrayList<>();
+		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
+		
+		ArrayList<Unterrichtsfach>ret = new ArrayList<>();
+		
+		for(Object[] o:al)
+		{
+			ret.add((Unterrichtsfach)o[0]);
+		}
+		
+		
+		
+		return ret;
 	}
 	
 	public String toString()

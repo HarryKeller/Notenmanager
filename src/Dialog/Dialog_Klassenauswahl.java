@@ -247,17 +247,16 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
-			//Richtige Schule wird übergeben
-			this.comboBox_Klassen.addItem(k);
-//			System.out.println("----------------------------------------------------");
-//			System.out.println(k);
-//			System.out.println("----------------------------------------------------");
-			
+			this.comboBox_Klassen.addItem(k);		
 		}				
-		comboBox_Faecher.setEnabled(true);
-//		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
-//		{
-//			this.comboBox_Klassen.addItem(k);
-//		}
+		
+		if(comboBox_Klassen.getSelectedItem() != null)
+		{
+			comboBox_Faecher.setEnabled(true);
+			for(Unterrichtsfach f : Unterrichtsfach.AlleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem()))
+			{
+				this.comboBox_Faecher.addItem(f);
+			}
+		}
 	}
 }

@@ -81,7 +81,7 @@ public class Leistung
 	
 	public String toString()
 	{
-		return (String.valueOf(tendenz)+ String.valueOf(notenstufe)+schueler.getNachname());
+		return (String.valueOf(tendenz)+ String.valueOf(notenstufe));
 	}
 	
 	
