@@ -174,5 +174,9 @@ public class Klasse
 	{
 		return this.schuelerlist;
 	}
+	public List<Zeugnisfach> getZeugnisfaecher()
+	{
+		return this.zeugnisfach;
+	}
 
 }
