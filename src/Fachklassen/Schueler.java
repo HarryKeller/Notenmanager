@@ -46,6 +46,31 @@ public class Schueler
 	// ----- CONSTRUCTOR ---------------------------------------------------------------
 	// ---------------------------------------------------------------------------------
 	
+	
+	@Transient
+	public ArrayList<Leistung> getSchriftlich()
+	{
+		ArrayList<Leistung>ret = new ArrayList<Leistung>();
+		for(Leistung l: leistung)
+		{
+			if(l.getLeistungsart().getGruppe() == 'S')
+				ret.add(l);
+		}
+		return ret;
+	}
+	
+	@Transient
+	public ArrayList<Leistung> getMuendlich()
+	{
+		ArrayList<Leistung>ret = new ArrayList<Leistung>();
+		for(Leistung l: leistung)
+		{
+			if(l.getLeistungsart().getGruppe() == 'M')
+				ret.add(l);
+		}
+		return ret;
+	}
+	
 
 	public Schueler()
 	{
@@ -64,11 +89,8 @@ public class Schueler
 		this.geschl = geschl;
 		this.konfession = konfession;
 	}
-	
-	
 	// --------- GETTER AND SETTER ------------------------------------------------------
 	// ------------------------------------------------------------------------------------
-	
 	public String getNachname()
 	{
 		return nachname;
