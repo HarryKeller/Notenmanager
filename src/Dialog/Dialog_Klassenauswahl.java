@@ -212,7 +212,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	{
 		if(e.getActionCommand().equals(button_Fortfahren.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
+			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());
 			dlg_notenausgabeKlasse.setVisible(true);
 		}		
 		if(e.getActionCommand().equals(button_Zurueck.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
