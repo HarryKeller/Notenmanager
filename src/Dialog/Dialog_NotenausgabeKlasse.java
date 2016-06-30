@@ -46,7 +46,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	/**
 	 * Create the dialog.
 	 */
-	public Dialog_NotenausgabeKlasse(Schueler s, Lehrer l, Klasse k)
+	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k)
 	{
 		initGUI();
 	}
