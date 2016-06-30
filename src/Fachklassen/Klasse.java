@@ -168,5 +168,11 @@ public class Klasse
 		}
 		
 	}
+	
+	
+	public List<Schueler> getSchueler()
+	{
+		return this.schuelerlist;
+	}
 
 }
