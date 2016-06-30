@@ -19,6 +19,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Fachklassen.Klasse;
+import Fachklassen.Lehrer;
+import Fachklassen.Schueler;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,29 +40,13 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private JTextField textField_Klasse;
 	private JTextField textField_Fach;
 	private JTextField textField_LehrerIn;
-	private JTable table;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		try
-		{
-			Dialog_NotenausgabeKlasse dialog = new Dialog_NotenausgabeKlasse();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
+	private JTable table_noten;
+	private DefaultTableModel model_noten;
+	
 	/**
 	 * Create the dialog.
 	 */
-	public Dialog_NotenausgabeKlasse()
+	public Dialog_NotenausgabeKlasse(Schueler s, Lehrer l, Klasse k)
 	{
 		initGUI();
 	}
@@ -178,11 +166,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 					textField_LehrerIn.setColumns(10);
 				}
 			}
-		}
-		{
-			
-			DefaultTableModel tablecontent = new DefaultTableModel(); 		
-		}
+		}		
 		{
 			JPanel panel = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -196,14 +180,16 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			gbl_panel.rowHeights = new int[]{0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			
 			panel.setLayout(gbl_panel);
 			{
-				table = new JTable();
-				GridBagConstraints gbc_table = new GridBagConstraints();
-				gbc_table.fill = GridBagConstraints.BOTH;
-				gbc_table.gridx = 0;
-				gbc_table.gridy = 0;
-				panel.add(table, gbc_table);
+				table_noten = new JTable();
+				table_noten.setModel(this.model_noten);
+				GridBagConstraints gbc_table_noten = new GridBagConstraints();
+				gbc_table_noten.fill = GridBagConstraints.BOTH;
+				gbc_table_noten.gridx = 0;
+				gbc_table_noten.gridy = 0;
+				panel.add(table_noten, gbc_table_noten);
 			}
 		}
 		{
@@ -233,6 +219,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		}
 	}
 
+	public void setDatenInMaske()
+	{
+		
+	}
+	
 	public void actionPerformed(ActionEvent e) 
 	{
 		
