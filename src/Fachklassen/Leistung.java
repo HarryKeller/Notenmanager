@@ -66,7 +66,8 @@ public class Leistung
 				+ "AND ufl.ufach.id = "+ufach.getId()+" "
 				+ "INNER JOIN Unterrichtsfach uf "
 				+ "ON uf.id = ufl.id "
-				+ "WHERE l.schueler.id = "+schueler.getId();
+				+ "WHERE l.schueler.id = "+schueler.getId()+" "
+				+ "ORDER BY l.erhebungsdatum";
 							
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Leistung", al,sql );

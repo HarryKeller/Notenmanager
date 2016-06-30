@@ -62,19 +62,29 @@ public class Klasse
 		System.out.println("lehrerid : "+lehrerid);
 		System.out.println("Schuelid : "+schuleid);
 		
-		//vermutlich unnötig
+		
+//		SELECT DISTINCT Klasse.bez
+//		FROM Klasse
+//		INNER JOIN UFachLehrer
+//		ON UFachLehrer.lehrer_id = 1
+		
+//		INNER JOIN Unterrichtsfach
+//		ON UFachLehrer.ufach_id = Unterrichtsfach.id
+		
+//		INNER JOIN Zeugnisfach
+//		ON Zeugnisfach.id = Unterrichtsfach.zfach_id
+//		WHERE Klasse.schule_id = 2
+		
+		
 		String sql =
 					"k "
-				  +"INNER JOIN Zeugnisfach zf "
-				  +"ON k.id = zf.klasse.id "
-				  +"INNER JOIN Unterrichtsfach uf "
-				  +"ON zf.id = uf.zfach.id "			  
 				  +"INNER JOIN UFachLehrer ufl "
-				  +"ON ufl.id = uf.id "			  
-				  +"INNER JOIN Schule s "
-				  +"ON s.id = "+schuleid+" "
-				  +"WHERE ufl.lehrer.id = "+lehrerid
-				  +" and k.schule.id = "+schuleid;
+				  +"ON ufl.lehrer.id = "+lehrerid+" "
+				  +"INNER JOIN Unterrichtsfach uf "
+				  +"ON uf.id = ufl.ufach.id "			  
+				  +"INNER JOIN Zeugnisfach zf "
+				  +"ON zf.id = uf.zfach.id "			  
+				  +"WHERE k.schule.id = "+schuleid;
 		
 		ArrayList<Object[]> al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Klasse", al, sql );
