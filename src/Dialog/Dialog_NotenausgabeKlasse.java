@@ -22,12 +22,14 @@ import javax.swing.table.DefaultTableModel;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
+import Fachklassen.Unterrichtsfach;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 import java.awt.event.WindowFocusListener;
+import java.util.List;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -42,12 +44,19 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private JTextField textField_LehrerIn;
 	private JTable table_noten;
 	private DefaultTableModel model_noten;
+	private Lehrer lehrer;
+	private Klasse klasse;
+	private Unterrichtsfach fach;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k)
+	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
 	{
+		this.lehrer = l;
+		this.klasse = k;
+		this.fach = f;
+		
 		initGUI();
 	}
 	private void initGUI() {
@@ -221,7 +230,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 
 	public void setDatenInMaske()
 	{
-		
+		List<Schueler> schueler = this.klasse.getSchueler();
+		//List<Zeugnisfach> faecher = this.klasse
 	}
 	
 	public void actionPerformed(ActionEvent e) 
