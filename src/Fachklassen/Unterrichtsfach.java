@@ -72,4 +72,9 @@ public class Unterrichtsfach {
 	{
 		DBZugriff.loeschen(this);
 	}
+	
+	public String toString()
+	{
+		return this.bez;
+	}
 }

@@ -31,8 +31,8 @@ public class Lehrer
 	public String getKuerzel() {
 		return kuerzel;
 	}
-	public void setKuerzel(String kürzel) {
-		this.kuerzel = kürzel;
+	public void setKuerzel(String kuerzel) {
+		this.kuerzel = kuerzel;
 	}
 	public String getNachname() {
 		return nachname;

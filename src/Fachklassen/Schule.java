@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import Persistenz.DBZugriff;
@@ -28,8 +29,11 @@ public class Schule
 	@JoinColumn(name="schule_id")
 	private List<Klasse> klassenlist = new ArrayList<Klasse>();
 	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Lehrer>lehrerlist = new ArrayList<Lehrer>();
 	
 	
+
 	//Konstruktoren -----------------------------------------------------
 	public Schule(){}
 	
@@ -64,6 +68,12 @@ public class Schule
 		return klassenlist;
 	}
 	
+	public static ArrayList<Schule> alleLesen()
+	{
+		ArrayList<Schule> al = new ArrayList<Schule>();
+		DBZugriff.alleLesen("Schule", al, "");
+		return al;
+	}
 	
 	
 	public int getID() //Rückgabe der ID der Schule
@@ -80,5 +90,21 @@ public class Schule
 	{
 		this.bez = bez;
 	}
+	
+	public String toString()
+	{
+		return this.bez;
+	}
 
+	public List<Lehrer> getLehrerlist()
+	{
+		return lehrerlist;
+	}
+
+	public void setLehrerlist(List<Lehrer> lehrerlist)
+	{
+		this.lehrerlist = lehrerlist;
+	}
+	
+	
 }

@@ -57,7 +57,10 @@ public class Klasse
 	{
 		Integer schuleid = schule.getID();
 		Integer lehrerid = lehrer.getId();
+		System.out.println("lehrerid : "+lehrerid);
+		System.out.println("Schuelid : "+schuleid);
 		
+		//vermutlich unnötig
 		String sql =
 					"k "
 				  +"INNER JOIN Zeugnisfach zf "
@@ -68,8 +71,8 @@ public class Klasse
 				  +"ON ufl.id = uf.id "			  
 				  +"INNER JOIN Schule s "
 				  +"ON s.id = "+schuleid+" "
-				  +"WHERE ufl.lehrer.id = "+lehrerid;
-		
+				  +"WHERE ufl.lehrer.id = "+lehrerid
+				  +" and k.schule.id = "+schuleid;
 		
 		ArrayList<Object[]> al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Klasse", al, sql );
@@ -154,7 +157,7 @@ public class Klasse
 	
 	public String toString()
 	{
-		return this.id + " "+ this.bez + " " + this.sj + " " + this.klassenleiter + " " + this.stvklassenleiter;
+		return this.bez + " " + this.sj;
 	}
 	public boolean equals(Klasse k)
 	{

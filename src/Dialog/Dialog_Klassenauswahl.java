@@ -29,22 +29,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener
+public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
 {
 
 	private final JPanel contentPanel = new JPanel();
 
-	JComboBox comboBox_Klassen;
-	JComboBox comboBox_Faecher;
+	JComboBox<Klasse> comboBox_Klassen;
+	JComboBox<Unterrichtsfach> comboBox_Faecher;
 	
 	JButton button_Fortfahren;
 	JButton button_Zurueck;
 	
 	Klasse klasse = new Klasse();
 	private JLabel lblSchuleauswahl;
-	private JComboBox comboBox_Schule;
+	private JComboBox<Schule> comboBox_Schule;
 	private Lehrer lehrer;
 
 	/**
@@ -52,8 +54,9 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	 */
 	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
-		lehrer = this.lehrer;
+		this.lehrer = lehrer; 
 		initGUI();
+		SetDatenInMaske();
 	}
 	private void initGUI() {
 		setMinimumSize(new Dimension(450, 300));
@@ -102,6 +105,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			}
 			{
 				comboBox_Schule = new JComboBox();
+				this.comboBox_Schule.addItemListener(this);
 				GridBagConstraints gbc_comboBox_Schule = new GridBagConstraints();
 				gbc_comboBox_Schule.ipady = 10;
 				gbc_comboBox_Schule.anchor = GridBagConstraints.NORTH;
@@ -125,7 +129,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			{
 				comboBox_Klassen = new JComboBox();
 				comboBox_Klassen.setEnabled(false);
-				comboBox_Klassen.addActionListener(this);
 				GridBagConstraints gbc_comboBox_Klassen = new GridBagConstraints();
 				gbc_comboBox_Klassen.fill = GridBagConstraints.HORIZONTAL;
 				gbc_comboBox_Klassen.anchor = GridBagConstraints.NORTH;
@@ -149,7 +152,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			{
 				comboBox_Faecher = new JComboBox();
 				comboBox_Faecher.setEnabled(false);
-				comboBox_Faecher.addActionListener(this);
 				GridBagConstraints gbc_comboBox_Faecher = new GridBagConstraints();
 				gbc_comboBox_Faecher.anchor = GridBagConstraints.NORTH;
 				gbc_comboBox_Faecher.ipady = 10;
@@ -196,8 +198,13 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	}
 
 	public void SetDatenInMaske()
-	{
-		// for-Schleife zur Aufnahme von Schulen in ComboBox
+	{			
+		//Combobox für Schule füllen
+		for(Schule s :Schule.alleLesen() )
+		{
+			comboBox_Schule.addItem(s);	
+		}
+						
 	}
 	
 	
@@ -205,7 +212,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 	{
 		if(e.getActionCommand().equals(button_Fortfahren.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse();
+			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
 			dlg_notenausgabeKlasse.setVisible(true);
 		}		
 		if(e.getActionCommand().equals(button_Zurueck.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
@@ -214,22 +221,43 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand().equals(comboBox_Klassen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+//		if(e.getActionCommand().equals(comboBox_Klassen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+//		{
+//			ArrayList<Unterrichtsfach> faecher = new ArrayList<Unterrichtsfach>();
+//			DBZugriff.alleLesen("Unterrichtsfach", faecher, "");
+//			for(Unterrichtsfach fach : faecher)
+//			{
+//				this.comboBox_Faecher.addItem(fach);
+//			}
+//			comboBox_Faecher.setEnabled(true);
+//		}
+//		if(e.getActionCommand().equals(comboBox_Schule.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+//		{
+//			for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
+//			{
+//				this.comboBox_Klassen.addItem(klasse);
+//			}
+//		}
+	}
+	public void itemStateChanged(ItemEvent arg0) 
+	{
+		comboBox_Faecher.removeAllItems();
+		comboBox_Klassen.removeAllItems();
+		comboBox_Klassen.setEnabled(true);
+		
+		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
-			ArrayList<Unterrichtsfach> faecher = new ArrayList<Unterrichtsfach>();
-			DBZugriff.alleLesen("Unterrichtsfach", faecher, "");
-			for(Unterrichtsfach fach : faecher)
-			{
-				this.comboBox_Faecher.addItem(fach);
-			}
-			comboBox_Faecher.setEnabled(true);
-		}
-		if(e.getActionCommand().equals(comboBox_Schule.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-		{
-			for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
-			{
-				this.comboBox_Klassen.addItem(klasse);
-			}
-		}
+			//Richtige Schule wird übergeben
+			this.comboBox_Klassen.addItem(k);
+//			System.out.println("----------------------------------------------------");
+//			System.out.println(k);
+//			System.out.println("----------------------------------------------------");
+			
+		}				
+		comboBox_Faecher.setEnabled(true);
+//		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
+//		{
+//			this.comboBox_Klassen.addItem(k);
+//		}
 	}
 }

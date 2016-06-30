@@ -242,6 +242,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 			{
 				Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l);
 				dlg_klassenauswahl.setVisible(true);
+				this.dispose();
 			}
 			else
 			{
@@ -254,11 +255,12 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 			this.dispose();
 		}
 	}
+	
 	public void windowActivated(WindowEvent arg0) {
 	}
 	public void windowClosed(WindowEvent arg0) 
 	{
-		DBZugriff.closeDB();
+		//DBZugriff.closeDB();
 	}	
 	public void windowClosing(WindowEvent arg0) {
 	}
