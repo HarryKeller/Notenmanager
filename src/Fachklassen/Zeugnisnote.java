@@ -79,12 +79,12 @@ public class Zeugnisnote
 	
 	//-----------------------------------
 	
-	public int getNoteZeugis() {
+	public int getNoteZeugnis() {
 		return noteZeugnis;
 	}
 
-	public void setNoteZeugis(int noteZeugis) {
-		this.noteZeugnis = noteZeugis;
+	public void setNoteZeugnis(int noteZeugnis) {
+		this.noteZeugnis = noteZeugnis;
 	}
 
 	public double getNoteErrechnet() {
