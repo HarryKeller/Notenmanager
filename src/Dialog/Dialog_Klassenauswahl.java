@@ -1,13 +1,10 @@
 package Dialog;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -15,8 +12,6 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 import java.awt.Font;
 
@@ -48,13 +43,12 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JLabel lblSchuleauswahl;
 	private JComboBox<Schule> comboBox_Schule;
 	private Lehrer lehrer;
-
 	/**
 	 * Create the dialog.
 	 */
 	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
-		this.lehrer = lehrer; 
+		this.lehrer = lehrer;				
 		initGUI();
 		SetDatenInMaske();
 	}
@@ -177,6 +171,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			panel.setLayout(gbl_panel);
 			{
 				button_Fortfahren = new JButton("Fortfahren");
+				this.button_Fortfahren.setEnabled(false);
 				button_Fortfahren.addActionListener(this);
 				GridBagConstraints gbc_button_Fortfahren = new GridBagConstraints();
 				gbc_button_Fortfahren.insets = new Insets(0, 0, 0, 5);
@@ -222,29 +217,13 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-//		if(e.getActionCommand().equals(comboBox_Klassen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-//		{
-//			ArrayList<Unterrichtsfach> faecher = new ArrayList<Unterrichtsfach>();
-//			DBZugriff.alleLesen("Unterrichtsfach", faecher, "");
-//			for(Unterrichtsfach fach : faecher)
-//			{
-//				this.comboBox_Faecher.addItem(fach);
-//			}
-//			comboBox_Faecher.setEnabled(true);
-//		}
-//		if(e.getActionCommand().equals(comboBox_Schule.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-//		{
-//			for(Klasse klasse : Klasse.AlleLesen(new Lehrer(1), ((Schule)this.comboBox_Schule.getSelectedItem())))
-//			{
-//				this.comboBox_Klassen.addItem(klasse);
-//			}
-//		}
 	}
 	public void itemStateChanged(ItemEvent arg0) 
 	{
 		comboBox_Faecher.removeAllItems();
 		comboBox_Klassen.removeAllItems();
 		comboBox_Klassen.setEnabled(true);
+		button_Fortfahren.setEnabled(false);
 		
 		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
@@ -257,7 +236,12 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			for(Unterrichtsfach f : Unterrichtsfach.AlleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem()))
 			{
 				this.comboBox_Faecher.addItem(f);
-			}
+			}			
 		}
+		if(comboBox_Faecher.getSelectedItem() != null)
+		{
+			button_Fortfahren.setEnabled(true);
+		}
+		
 	}
 }
