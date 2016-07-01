@@ -355,7 +355,13 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	
 	public void actionPerformed(ActionEvent e) 
 	{
-		
+		if(e.getActionCommand()=="Zur\u00FCck")
+		{
+			this.setVisible(false);
+			Dialog_Klassenauswahl ausw = new Dialog_Klassenauswahl(this.lehrer);
+			ausw.pack();
+			ausw.setVisible(true);
+		}
 	}
 	public void windowGainedFocus(WindowEvent e) 
 	{
