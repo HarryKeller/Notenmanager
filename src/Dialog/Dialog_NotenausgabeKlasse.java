@@ -23,12 +23,12 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private JTextField textField_Fach;
 	private JTextField textField_LehrerIn;
 	private JTable table_muendl;
-	private JTable table_schriftl;
 	private DefaultTableModel model_muendlich;
 	private DefaultTableModel model_schriftl;
 	private Lehrer lehrer;
 	private Klasse klasse;
 	private Unterrichtsfach fach;
+	private JTable table_schriftl;
 	
 	
 	/*public static void main(String[] args)
@@ -43,11 +43,14 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	 */
 	public Dialog_NotenausgabeKlasse()
 	{
+		this.setExtendedState(MAXIMIZED_BOTH);
 		this.initGUI();
 	}
 	
 	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
 	{
+		this.setExtendedState(MAXIMIZED_BOTH);
+		
 		this.lehrer = l;
 		this.klasse = k;
 		this.fach = f;
@@ -255,23 +258,20 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 				gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 				panel.setLayout(gbl_panel);
-				JScrollPane scrollPane = new JScrollPane();
-				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-				gbc_scrollPane.fill = GridBagConstraints.BOTH;
-				gbc_scrollPane.gridx = 0;
-				gbc_scrollPane.gridy = 0;
-				panel.add(scrollPane, gbc_scrollPane);
-				
-				this.model_schriftl = new DefaultTableModel();
-				this.table_schriftl = new JTable();
-				this.table_schriftl.setModel(model_schriftl);
-				scrollPane.setViewportView(this.table_schriftl);
-			}
-			{
 				{
-					this.model_schriftl = new DefaultTableModel();
-				}
-			}
+					JScrollPane scrollPane = new JScrollPane();
+					GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+					gbc_scrollPane.fill = GridBagConstraints.BOTH;
+					gbc_scrollPane.gridx = 0;
+					gbc_scrollPane.gridy = 0;
+					panel.add(scrollPane, gbc_scrollPane);
+					{
+						this.model_schriftl = new DefaultTableModel();
+						this.table_schriftl = new JTable();						
+						scrollPane.setViewportView(this.table_schriftl);
+						this.table_schriftl.setModel(this.model_schriftl);
+					}
+				}				
 		}
 		{
 			JPanel panel = new JPanel();
@@ -297,35 +297,24 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			gbc_button_Zurueck.gridx = 0;
 			gbc_button_Zurueck.gridy = 0;
 			panel.add(button_Zurueck, gbc_button_Zurueck);
+			}
 		}
 	}
 	
 	private int isColumnRequiered(DefaultTableModel model, Leistung l) //Prüft ob Spalten benötigt werden
-	{
-		int counted = 0;
-		
-		while(counted <= model.getColumnCount())
-		{			
-			if(model.getColumnName(counted) == l.getLeistungsart().getBez())
-			{
-				return counted;
-			}
-			
-			counted++;
-		}		
-		
-		return 0; //Falls keine Passende Spalte gefunden wurde
+	{		
+		return model.findColumn(l.getErhebungsdatum().toString());
 	}
 	
-	public void setDatenInMaske()
+	private void setGradesInTable() //Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl.
 	{
-		Set<Schueler> schueler = this.klasse.getSchueler();
 		this.model_muendlich.addColumn("Name");
-		this.model_muendlich.addColumn("Vorname");				
+		this.model_muendlich.addColumn("Vorname");	
 		
-		this.textField_Fach.setText(this.fach.getBez());
-		this.textField_Klasse.setText(this.klasse.getBez());
-		this.textField_LehrerIn.setText(this.lehrer.getNachname());
+		/*this.model_schriftl.addColumn("Name");
+		this.model_schriftl.addColumn("Vorname");*/
+		
+		Set<Schueler> schueler = this.klasse.getSchueler();
 		
 		for(Schueler s : schueler)
 		{
@@ -336,29 +325,49 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			{			
 				int col = this.isColumnRequiered(model_muendlich, l);
 				
-				if(col == 0)
+				if(col == -1)
 				{					
-					this.model_muendlich.addColumn(l.getLeistungsart().getBez());		
+					this.model_muendlich.addColumn(l.getErhebungsdatum().toString());		
 					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1, 
 																	   this.model_muendlich.getColumnCount() - 1);
 				}	
-				else if(col != 0)
+				else if(col >= 0)
 				{
 					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1 , col);
 				}				
+			}			
+			
+			for(Leistung l : s.getSchriftlich(this.fach))
+			{
+				int col = this.isColumnRequiered(model_schriftl, l);
+				this.model_schriftl.addRow(new Object[]{""});
+				
+				if(col == -1)
+				{
+					this.model_schriftl.addColumn(l.getErhebungsdatum().toString());
+					this.model_schriftl.setValueAt(l.getNotenstufe(), this.model_schriftl.getRowCount() - 1 , 
+																	  this.model_schriftl.getColumnCount() - 1);										
+				}
+				else if(col >= 0)
+				{
+					this.model_schriftl.setValueAt(l.getNotenstufe(), this.model_schriftl.getRowCount() - 1 , col);
+				}
 			}
 		}
 	}
 	
+	public void setDatenInMaske()
+	{		
+		this.textField_Fach.setText(this.fach.getBez());
+		this.textField_Klasse.setText(this.klasse.getBez());
+		this.textField_LehrerIn.setText(this.lehrer.getNachname());
+		
+		this.setGradesInTable();
+	}
+	
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getActionCommand()=="Zur\u00FCck")
-		{
-			this.setVisible(false);
-			Dialog_Klassenauswahl ausw = new Dialog_Klassenauswahl(this.lehrer);
-			ausw.pack();
-			ausw.setVisible(true);
-		}
+		this.dispose();
 	}
 	public void windowGainedFocus(WindowEvent e) 
 	{
