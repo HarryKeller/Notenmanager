@@ -26,6 +26,7 @@ public class Leistung
 	
 	@ManyToOne
 	private UFachLehrer ufachlehrer;	
+	
 	@ManyToOne
 	private Schueler schueler;
 		
@@ -62,10 +63,11 @@ public class Leistung
 				"l "
 				+"INNER JOIN UFachLehrer ufl "
 				+ "ON l.ufachlehrer.id = ufl.id "
+				+ "AND ufl.ufach.id = "+ufach.getId()+" "
 				+ "INNER JOIN Unterrichtsfach uf "
 				+ "ON uf.id = ufl.id "
-				+ "AND uf.id = "+ufach.getId()+" "
-				+ "WHERE l.schueler.id = "+schueler.getId();
+				+ "WHERE l.schueler.id = "+schueler.getId()+" "
+				+ "ORDER BY l.erhebungsdatum";
 							
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Leistung", al,sql );
