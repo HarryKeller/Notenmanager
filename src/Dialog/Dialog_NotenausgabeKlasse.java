@@ -13,7 +13,7 @@ import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
 import Persistenz.DBZugriff;
 
-import java.util.List;
+import java.util.*;
 
 public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener, WindowFocusListener
 {
@@ -320,7 +320,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	
 	public void setDatenInMaske()
 	{
-		List<Schueler> schueler = this.klasse.getSchueler();
+		Set<Schueler> schueler = this.klasse.getSchueler();
 		this.model_muendlich.addColumn("Name");
 		this.model_muendlich.addColumn("Vorname");				
 		
@@ -333,7 +333,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 			Object[] rowData = {s.getNachname(),s.getVorname()};
 			this.model_muendlich.addRow(rowData);
 			
-			for(Leistung l : s.getMuendlich())
+			for(Leistung l : s.getMuendlich(this.fach))
 			{			
 				int col = this.isColumnRequiered(model_muendlich, l);
 				
