@@ -111,6 +111,13 @@ public class Klasse
 		
 		return klassenliste;
 	}
+	
+	public static ArrayList<Klasse> alleLesen()
+	{
+		ArrayList<Klasse> al = new ArrayList<Klasse>();
+		DBZugriff.alleLesen("Klasse", al, "");
+		return al;	
+	}
 		
 	
 	public boolean speichern()

@@ -36,23 +36,40 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	JComboBox<Klasse> comboBox_Klassen;
 	JComboBox<Unterrichtsfach> comboBox_Faecher;
 	
-	JButton button_Fortfahren;
+	JButton btnbersicht;
 	JButton button_Zurueck;
 	
 	Klasse klasse = new Klasse();
 	private JLabel lblSchuleauswahl;
 	private JComboBox<Schule> comboBox_Schule;
 	private Lehrer lehrer;
+	private JButton button_klsicht;
+	private JButton button_zurueck;
 	/**
 	 * Create the dialog.
 	 */
 	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
-		this.lehrer = lehrer;				
+		this.lehrer = lehrer;	
 		initGUI();
+		ArrayList<Klasse> al = Klasse.alleLesen();
+		boolean found = false;
+		for(Klasse k : al)
+		{
+			if(k.getIdKlassenleiter().getId() == this.lehrer.getId())
+			{
+				this.button_klsicht.setEnabled(true);
+				found = true;
+			}
+			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
+			{
+				this.button_klsicht.setEnabled(false);
+			}
+		}
 		SetDatenInMaske();
 	}
 	private void initGUI() {
+		
 		setMinimumSize(new Dimension(450, 300));
 		setTitle("Klassenauswahl");
 		setBounds(100, 100, 450, 320);
@@ -164,31 +181,41 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			gbc_panel.gridy = 2;
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{0, 0, 0};
+			gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
 			gbl_panel.rowHeights = new int[]{0, 0};
-			gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			{
-				button_Fortfahren = new JButton("Fortfahren");
-				this.button_Fortfahren.setEnabled(false);
-				button_Fortfahren.addActionListener(this);
-				GridBagConstraints gbc_button_Fortfahren = new GridBagConstraints();
-				gbc_button_Fortfahren.insets = new Insets(0, 0, 0, 5);
-				gbc_button_Fortfahren.fill = GridBagConstraints.HORIZONTAL;
-				gbc_button_Fortfahren.gridx = 0;
-				gbc_button_Fortfahren.gridy = 0;
-				panel.add(button_Fortfahren, gbc_button_Fortfahren);
+				btnbersicht = new JButton("Fach\u00FCbersicht");
+				this.btnbersicht.setEnabled(false);
+				btnbersicht.addActionListener(this);
+				GridBagConstraints gbc_btnbersicht = new GridBagConstraints();
+				gbc_btnbersicht.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnbersicht.insets = new Insets(0, 0, 0, 5);
+				gbc_btnbersicht.gridx = 0;
+				gbc_btnbersicht.gridy = 0;
+				panel.add(btnbersicht, gbc_btnbersicht);
 			}
 			{
-				button_Zurueck = new JButton("Zur\u00FCck");
-				button_Zurueck.addActionListener(this);
-				GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
-				gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
-				gbc_button_Zurueck.gridx = 1;
-				gbc_button_Zurueck.gridy = 0;
-				panel.add(button_Zurueck, gbc_button_Zurueck);
-				panel.getRootPane().setDefaultButton(button_Fortfahren);
+				{
+					this.button_klsicht = new JButton("Klassen\u00FCbersicht");
+					this.button_klsicht.addActionListener(this);
+					GridBagConstraints gbc_button_klsicht = new GridBagConstraints();
+					gbc_button_klsicht.fill = GridBagConstraints.HORIZONTAL;
+					gbc_button_klsicht.insets = new Insets(0, 0, 0, 5);
+					gbc_button_klsicht.gridx = 1;
+					gbc_button_klsicht.gridy = 0;
+					panel.add(this.button_klsicht, gbc_button_klsicht);
+				}
+			}
+			{
+				this.button_zurueck = new JButton("Zur\u00FCck");
+				this.button_zurueck.addActionListener(this);
+				GridBagConstraints gbc_button_zurueck = new GridBagConstraints();
+				gbc_button_zurueck.gridx = 2;
+				gbc_button_zurueck.gridy = 0;
+				panel.add(this.button_zurueck, gbc_button_zurueck);
 			}
 		}
 	}
@@ -206,16 +233,20 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getActionCommand().equals(button_Fortfahren.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+		if(e.getActionCommand().equals(btnbersicht.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
 			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());
 			dlg_notenausgabeKlasse.setVisible(true);
 		}		
-		if(e.getActionCommand().equals(button_Zurueck.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
+		if(e.getActionCommand().equals(button_zurueck.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
 			this.dispose();
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
+		}
+		if(e.getActionCommand().equals(button_klsicht.getActionCommand())) // Abfrage ob 
+		{
+			
 		}
 	}
 	public void itemStateChanged(ItemEvent arg0) 
@@ -223,7 +254,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		comboBox_Faecher.removeAllItems();
 		comboBox_Klassen.removeAllItems();
 		comboBox_Klassen.setEnabled(true);
-		button_Fortfahren.setEnabled(false);
+		btnbersicht.setEnabled(false);
 		
 		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
@@ -240,7 +271,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(comboBox_Faecher.getSelectedItem() != null)
 		{
-			button_Fortfahren.setEnabled(true);
+			btnbersicht.setEnabled(true);
 		}
 		
 	}
