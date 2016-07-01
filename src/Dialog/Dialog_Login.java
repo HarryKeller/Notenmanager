@@ -34,6 +34,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class Dialog_Login extends JFrame implements ActionListener, WindowListener
@@ -220,34 +222,40 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 				gbc_button_Schliessen.gridx = 1;
 				gbc_button_Schliessen.gridy = 0;
 				panel.add(button_Schliessen, gbc_button_Schliessen);
+				panel.getRootPane().setDefaultButton(button_Login);
 			}
 		}
 	}
 	
+	public void loginUser()
+	{
+		String benutzername = textField_Benutzername.getText();
+		char[] password = passwordField_Passwort.getPassword();	
+		String passString = new String(password);
+		
+		Login login = new Login();
+		ArrayList<Lehrer> lehrer = login.alleLesen(benutzername);
+		Lehrer l = new Lehrer(lehrer.get(0).getId());
+		login = new Login(l.getId());
+		
+		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()))
+		{
+			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l);
+			dlg_klassenauswahl.setVisible(true);
+			this.dispose();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Der Benutzername oder das Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+		
 	
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand().equals(button_Login.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{			
-			String benutzername = textField_Benutzername.getText();
-			char[] password = passwordField_Passwort.getPassword();	
-			String passString = new String(password);
-			
-			Login login = new Login();
-			ArrayList<Lehrer> lehrer = login.alleLesen(benutzername);
-			Lehrer l = new Lehrer(lehrer.get(0).getId());
-			login = new Login(l.getId());
-			
-			if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()))
-			{
-				Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l);
-				dlg_klassenauswahl.setVisible(true);
-				this.dispose();
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "Der Benutzername oder das Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
-			}			
+			loginUser();
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
