@@ -83,7 +83,15 @@ public class Leistung
 	
 	public String toString()
 	{
-		return (String.valueOf(tendenz)+ String.valueOf(notenstufe));
+		if(tendenz!='o')
+		{
+			return (String.valueOf(tendenz)+ String.valueOf(notenstufe));
+		}
+		else
+		{
+			return String.valueOf(notenstufe);
+		}
+		
 	}
 	
 	
