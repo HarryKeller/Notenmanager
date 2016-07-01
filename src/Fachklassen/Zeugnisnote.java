@@ -35,13 +35,14 @@ public class Zeugnisnote
 	
 	//------------------------------------------------------
 	
-	public Zeugnisnote()
+	public Zeugnisnote(Schueler schueler)
 	{
-		
+		this.schueler = schueler;
 	}
 	
-	public Zeugnisnote(int id)
+	public Zeugnisnote(int id,Schueler schueler)
 	{
+		this.schueler = schueler;
 		DBZugriff.lesen(this, id);
 	}
 	
@@ -56,23 +57,45 @@ public class Zeugnisnote
 	{
 		double muendlich = 0;
 		double schriftlich = 0;
+		double kurzarbeit = 0;
 		double note = 0;
-		double i = 0;
+		double ki = 0;
+		double mi = 0;
+		double si = 0;
 		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf));
 		for (Leistung l : leistungen )
 		{
-			if(l.getLeistungsart().getBez() == "Schulaufgabe")
+			if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
 			{
-				schriftlich = schriftlich + l.getNotenstufe();				
+				schriftlich = schriftlich + l.getNotenstufe();	
+				si++;
+			}
+			else if (l.getLeistungsart().getBez().equals("Kurzarbeit"))
+			{
+				kurzarbeit = kurzarbeit + l.getNotenstufe();
+				ki++;
 			}
 			else
 			{
 				muendlich = muendlich + l.getNotenstufe();
+				mi++;
 			}
-			i++;
 		}
-		note = ((schriftlich * 2) + muendlich) / i;	
+		if(schriftlich != 0)
+		{
+			schriftlich = (schriftlich/si) * uf.getGewichtungSchriftlich();			
+		}
+		if(kurzarbeit != 0)
+		{
+			kurzarbeit = (kurzarbeit/ki);		
+		}
+		if(muendlich != 0)
+		{
+			muendlich = muendlich/mi;
+		}
 		
+		note = (muendlich + kurzarbeit + schriftlich) / 3;
+				
 		return note;
 	}
 	
