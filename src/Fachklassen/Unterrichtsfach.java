@@ -22,6 +22,7 @@ public class Unterrichtsfach {
 	private String bez;
 	private int stunden;
 	private int pos;
+	private int gewichtungSchriftlich;
 	
 	@ManyToOne
 	private Zeugnisfach zfach;
@@ -124,5 +125,11 @@ public class Unterrichtsfach {
 	public String toString()
 	{
 		return this.bez;
+	}
+	public int getGewichtungSchriftlich() {
+		return gewichtungSchriftlich;
+	}
+	public void setGewichtungSchriftlich(int gewichtungSchriftlich) {
+		this.gewichtungSchriftlich = gewichtungSchriftlich;
 	}
 }
