@@ -193,6 +193,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 				gbc_button_Zurueck.gridx = 1;
 				gbc_button_Zurueck.gridy = 0;
 				panel.add(button_Zurueck, gbc_button_Zurueck);
+				panel.getRootPane().setDefaultButton(button_Fortfahren);
 			}
 		}
 	}
