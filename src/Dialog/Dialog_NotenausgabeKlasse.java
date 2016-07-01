@@ -31,7 +31,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 	private Unterrichtsfach fach;
 	
 	
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		DBZugriff.initDB();
 		Dialog_NotenausgabeKlasse d = new Dialog_NotenausgabeKlasse(new Lehrer(1), new Klasse(1), new Unterrichtsfach(1));
@@ -261,6 +261,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 				gbc_scrollPane.gridx = 0;
 				gbc_scrollPane.gridy = 0;
 				panel.add(scrollPane, gbc_scrollPane);
+				
+				this.model_schriftl = new DefaultTableModel();
 				this.table_schriftl = new JTable();
 				this.table_schriftl.setModel(model_schriftl);
 				scrollPane.setViewportView(this.table_schriftl);
@@ -304,16 +306,13 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		
 		while(counted <= model.getColumnCount())
 		{			
-			String s = l.getArt() + ", " + l.getErhebungsdatum();
-			
-			if(model.getColumnName(counted).equals(s))
+			if(model.getColumnName(counted) == l.getLeistungsart().getBez())
 			{
 				return counted;
 			}
 			
 			counted++;
-		}
-		model.getColumnName(counted);
+		}		
 		
 		return 0; //Falls keine Passende Spalte gefunden wurde
 	}
@@ -338,17 +337,15 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 				int col = this.isColumnRequiered(model_muendlich, l);
 				
 				if(col == 0)
-				{
-					Object[] daten = {l.getArt(), ", ", l.getErhebungsdatum()};
-					this.model_muendlich.addRow(daten);		
+				{					
+					this.model_muendlich.addColumn(l.getLeistungsart().getBez());		
 					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1, 
 																	   this.model_muendlich.getColumnCount() - 1);
 				}	
 				else if(col != 0)
 				{
-	
-				}
-				
+					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1 , col);
+				}				
 			}
 		}
 	}
