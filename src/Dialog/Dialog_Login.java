@@ -246,7 +246,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, "Der Benutzername oder das Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Das eingegebene Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 		
@@ -254,8 +254,16 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand().equals(button_Login.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-		{			
-			loginUser();
+		{		
+			try
+			{
+				loginUser();
+			}
+			catch(IndexOutOfBoundsException ex)
+			{
+				JOptionPane.showMessageDialog(null, "Der eingegebene Benutzername ist falsch! (Lehrerkürzel verwenden)" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
