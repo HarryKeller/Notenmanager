@@ -18,34 +18,48 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
+
 import javax.swing.JScrollPane;
 
+import Fachklassen.Schueler;
+
 public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private DefaultTableModel model = new DefaultTableModel();
+	
+	private Schueler schueler;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler();
+	
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
+					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler(new Schueler(1));
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public Dialog_ZeugnisnotenZumSchueler() 
+	public Dialog_ZeugnisnotenZumSchueler(Schueler s) 
 	{
+		setSchueler(s);
+		setDatenToMaske();
+		
+		
 		setBounds(100, 100, 762, 496);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{32, 178, 326, 151, 0, 0};
@@ -112,6 +126,20 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		gbc_btnZeugnisDrucken.gridy = 2;
 		getContentPane().add(btnZeugnisDrucken, gbc_btnZeugnisDrucken);
 
+	}
+	
+	
+	public void setDatenToMaske()
+	{
+		
+	}
+
+	public Schueler getSchueler() {
+		return schueler;
+	}
+
+	public void setSchueler(Schueler schueler) {
+		this.schueler = schueler;
 	}
 
 }
