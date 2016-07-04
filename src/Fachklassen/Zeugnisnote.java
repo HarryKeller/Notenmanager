@@ -47,6 +47,36 @@ public class Zeugnisnote
 	}
 	
 	//------------------------------------------------------
+	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,LocalDate jahr)
+	{
+		
+		
+		int jbegin = jahr.getYear()-1;
+		int jende = jahr.getYear();
+		
+		String hql =
+				"zn "		
+				+"INNER JOIN Schueler s "
+				+"ON s.id = "+ s.getId()+" "
+				+"WHERE zn.aenderungszeitpunkt > "+jbegin+"-10-1"
+				+"AND zn.aenderungszeitpunkt < "+jende+"-8-1 ";
+				
+		
+				
+		ArrayList<Zeugnisnote >al = new ArrayList<Zeugnisnote>();
+		DBZugriff.alleLesen("Zeugnisnote", al,hql );
+		
+		
+		return al;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean speichern()
 	{
