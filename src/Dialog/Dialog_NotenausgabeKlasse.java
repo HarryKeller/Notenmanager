@@ -3,6 +3,8 @@ package Dialog;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -19,9 +21,12 @@ import java.util.*;
 
 public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener {
 
-	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("01.09.2015");
-	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2016");
-	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("01.08.2016");
+	private static DateTimeFormatter germanFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(
+													   Locale.GERMAN);
+
+	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("01.09.2015",germanFormatter);
+	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2015",germanFormatter);
+	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("01.08.2016",germanFormatter);
 	
 	private Lehrer lehrer;
 	private Klasse klasse;
