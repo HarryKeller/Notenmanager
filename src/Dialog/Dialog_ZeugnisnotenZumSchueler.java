@@ -18,17 +18,22 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.JScrollPane;
 
 import Fachklassen.Schueler;
+import Fachklassen.Zeugnisfach;
+import Fachklassen.Zeugnisnote;
+import Persistenz.DBZugriff;
 
 public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTable table;
+	private JTable table = new JTable();;
 	private DefaultTableModel model = new DefaultTableModel();
 	
 	private Schueler schueler;
@@ -42,9 +47,11 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 			{
 				try 
 				{
-					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler(new Schueler(1));
+					DBZugriff.initDB();
+					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler(new Schueler(4));
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
+					DBZugriff.closeDB();
 				} 
 				catch (Exception e) 
 				{
@@ -57,7 +64,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 	public Dialog_ZeugnisnotenZumSchueler(Schueler s) 
 	{
 		setSchueler(s);
-		setDatenToMaske();
 		
 		
 		setBounds(100, 100, 762, 496);
@@ -77,7 +83,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		gbc_lblZeugnisnotenDesSchlers.gridy = 0;
 		getContentPane().add(lblZeugnisnotenDesSchlers, gbc_lblZeugnisnotenDesSchlers);
 		
-		JLabel label = new JLabel("Keller Harry");
+		JLabel label = new JLabel(s.getNachname() + " " + s.getVorname());
 		label.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_label_schueler = new GridBagConstraints();
 		gbc_label_schueler.anchor = GridBagConstraints.SOUTHWEST;
@@ -85,9 +91,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		gbc_label_schueler.gridx = 2;
 		gbc_label_schueler.gridy = 0;
 		getContentPane().add(label, gbc_label_schueler);
-		model.addColumn("Fach");
-		model.addColumn("Errechnet");
-		model.addColumn("Festgelegt");
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -98,7 +102,10 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		gbc_scrollPane.gridy = 1;
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		
-		table = new JTable();
+		
+		model.addColumn("Fach");
+		model.addColumn("Errechnet");
+		model.addColumn("Festgelegt");
 		scrollPane.setViewportView(table);
 		table.setModel(model);
 		
@@ -125,13 +132,31 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		gbc_btnZeugnisDrucken.gridx = 3;
 		gbc_btnZeugnisDrucken.gridy = 2;
 		getContentPane().add(btnZeugnisDrucken, gbc_btnZeugnisDrucken);
-
+		setDatenToMaske();
 	}
 	
 	
 	public void setDatenToMaske()
 	{
-		
+		int n = model.getRowCount();
+		for(int i=n-1;i>0;i++)
+		{
+			model.removeRow(i);
+		}
+		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+		List<Zeugnisfach> zfaecher = this.getSchueler().getKlasseid().getZeugnisfaecher();
+		for(Zeugnisfach zfach:zfaecher)
+		{
+			for(Zeugnisnote znote: zfachnoten)
+			{
+				if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
+				{
+					model.addRow(new Object[]{zfach.getBez(), znote.getNoteErrechnet(), znote.getNoteZeugnis()});
+				}
+			}
+			
+		}
+		table.setModel(model);
 	}
 
 	public Schueler getSchueler() {
