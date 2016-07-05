@@ -2,6 +2,9 @@ package Fachklassen;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +48,7 @@ public class Zeugnisnote
 		this.schueler = schueler;
 		DBZugriff.lesen(this, id);
 	}
+	public Zeugnisnote() {}
 	
 	//------------------------------------------------------
 	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,LocalDate jahr)
@@ -54,20 +58,31 @@ public class Zeugnisnote
 		int jbegin = jahr.getYear()-1;
 		int jende = jahr.getYear();
 		
+	
 		String hql =
 				"zn "		
 				+"INNER JOIN Schueler s "
 				+"ON s.id = "+ s.getId()+" "
-				+"WHERE zn.aenderungszeitpunkt > "+jbegin+"-10-1"
-				+"AND zn.aenderungszeitpunkt < "+jende+"-8-1 ";
-				
+						//2015-10-10 > 2015-9-1
+				+"WHERE zn.aenderungszeitpunkt between '"+jbegin+"-9-1 '"	//Ab September des vorherigen Jahres	
+						//2015-10-10 < 2016-8-1
+				+"AND '"+jende+"-8-1 '";		//Bis August des aktuellen Jahres
+		
+			System.out.println(hql);	
 		
 				
-		ArrayList<Zeugnisnote >al = new ArrayList<Zeugnisnote>();
+		ArrayList<Object[] >al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Zeugnisnote", al,hql );
+		ArrayList<Zeugnisnote>ret = new ArrayList<Zeugnisnote>();
+		
+		for(Object[] or: al)
+		{
+			ret.add((Zeugnisnote)or[0]);
+		}
 		
 		
-		return al;
+		
+		return ret;
 	}
 	
 	
@@ -127,6 +142,12 @@ public class Zeugnisnote
 		note = (muendlich + kurzarbeit + schriftlich) / 3;
 				
 		return note;
+	}
+	//-------------------------
+	
+	public String toString()
+	{
+		return this.zeugnisfach.getBez()+" "+this.noteErrechnet;
 	}
 	
 	
