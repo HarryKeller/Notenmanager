@@ -43,6 +43,22 @@ public class Zeugnisfach {
 	@JoinColumn(name = "zfach_id")	
 	private List<Unterrichtsfach> unterrichtsfächer = new ArrayList<Unterrichtsfach>();
 	
+	
+	public static ArrayList<Zeugnisfach>alleLesen(Klasse k)
+	{
+		
+		String hql="WHERE zf.klasse.id = "+k.getid();
+		
+		ArrayList<Zeugnisfach>al = new ArrayList<Zeugnisfach>();
+		DBZugriff.alleLesen("Zeugnisfach zf", al, hql);
+		return al;
+	}
+	public String toString()
+	{
+		return this.bez;
+	}
+	
+	
 	//Getter + Setter
 	public String getBez() {
 		return bez;
