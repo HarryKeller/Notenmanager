@@ -2,6 +2,8 @@ package Dialog;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.border.*;
@@ -15,36 +17,54 @@ import Persistenz.DBZugriff;
 
 import java.util.*;
 
-public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener, WindowFocusListener
-{
+public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener {
 
-	private final JPanel contentPanel = new JPanel();
-	private JTextField textField_Klasse;
-	private JTextField textField_Fach;
-	private JTextField textField_LehrerIn;
-	private JTable table_muendl;
-	private DefaultTableModel model_muendlich;
-	private DefaultTableModel model_schriftl;
+	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("01.09.2015");
+	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2016");
+	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("01.08.2016");
+	
 	private Lehrer lehrer;
 	private Klasse klasse;
 	private Unterrichtsfach fach;
-	private JTable table_schriftl;
 	
+	private JPanel panel_head;
+	private JLabel _label;
+	private JTextField textField_LehrerIn;
+	private JLabel _label_1;
+	private JTextField textField_Klasse;
+	private JLabel _label_2;
+	private JTextField textField_Fach;
+	private JPanel panel_buttons;
+	private JButton btn_zurueck;
+	private JButton btn_neuespalte;
+	private JButton btn_aendern;
+	private JButton btn_verwerfen;
+	private JTabbedPane _tabbedPane;
+	private JPanel tab1_contentPanel;
+	private JPanel panel_tab1_muendl;
+	private JPanel panel_tab1_schriftl;
+	private JPanel _panel;
+	private JPanel _panel_1;
+	private NotenTable table_tab1_muendl;
+	private JScrollPane _scrollPane;
+	private NotenTable table_tab1_schriftl;
+	private JScrollPane _scrollPane_1;
+	private DefaultTableModel model_tab1_muendlich;
+	private DefaultTableModel model_tab1_schriftl;
+	private DefaultTableModel model_tab2_muendlich;
+	private DefaultTableModel model_tab2_schriftl;
+	private JPanel tab2_contentPanel;
+	private JPanel _panel_3;
+	private JPanel _panel_5;
+	private JPanel _panel_6;
+	private NotenTable table_tab2_muendl;
+	private JScrollPane _scrollPane_3;
+	private NotenTable table_tab2_schriftl;
+	private JScrollPane _scrollPane_2;	
 	
-	/*public static void main(String[] args)
-	{
-		DBZugriff.initDB();
-		Dialog_NotenausgabeKlasse d = new Dialog_NotenausgabeKlasse(new Lehrer(1), new Klasse(1), new Unterrichtsfach(1));
-		d.setVisible(true);
-		DBZugriff.closeDB();
-	}
-	/**
-	 * Create the dialog.
-	 */
-	public Dialog_NotenausgabeKlasse()
-	{
-		this.setExtendedState(MAXIMIZED_BOTH);
-		this.initGUI();
+	public Dialog_NotenausgabeKlasse() {
+		
+		initGUI();
 	}
 	
 	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
@@ -59,300 +79,344 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		
 		this.setDatenInMaske();
 	}
+	
 	private void initGUI() {
-		addWindowFocusListener(this);
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 60, 0, 25, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPanel.setLayout(gbl_contentPanel);
-		{
-			JPanel panel_Head = new JPanel();
-			GridBagConstraints gbc_panel_Head = new GridBagConstraints();
-			gbc_panel_Head.insets = new Insets(0, 0, 5, 5);
-			gbc_panel_Head.fill = GridBagConstraints.BOTH;
-			gbc_panel_Head.gridx = 1;
-			gbc_panel_Head.gridy = 1;
-			contentPanel.add(panel_Head, gbc_panel_Head);
-			GridBagLayout gbl_panel_Head = new GridBagLayout();
-			gbl_panel_Head.columnWidths = new int[]{0, 0, 0};
-			gbl_panel_Head.rowHeights = new int[]{0, 0};
-			gbl_panel_Head.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel_Head.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			panel_Head.setLayout(gbl_panel_Head);
-			{
-				JPanel panel_1 = new JPanel();
-				GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-				gbc_panel_1.insets = new Insets(0, 0, 0, 5);
-				gbc_panel_1.fill = GridBagConstraints.BOTH;
-				gbc_panel_1.gridx = 0;
-				gbc_panel_1.gridy = 0;
-				panel_Head.add(panel_1, gbc_panel_1);
-				GridBagLayout gbl_panel_1 = new GridBagLayout();
-				gbl_panel_1.columnWidths = new int[]{0, 125, 0};
-				gbl_panel_1.rowHeights = new int[]{0, 0, 0};
-				gbl_panel_1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-				gbl_panel_1.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-				panel_1.setLayout(gbl_panel_1);
-				{
-					JLabel label_Klasse = new JLabel("Klasse");
-					label_Klasse.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					GridBagConstraints gbc_label_Klasse = new GridBagConstraints();
-					gbc_label_Klasse.anchor = GridBagConstraints.EAST;
-					gbc_label_Klasse.insets = new Insets(0, 0, 5, 5);
-					gbc_label_Klasse.gridx = 0;
-					gbc_label_Klasse.gridy = 0;
-					panel_1.add(label_Klasse, gbc_label_Klasse);
-				}
-				{
-					textField_Klasse = new JTextField();
-					textField_Klasse.setEditable(false);
-					GridBagConstraints gbc_textField_Klasse = new GridBagConstraints();
-					gbc_textField_Klasse.insets = new Insets(0, 0, 5, 0);
-					gbc_textField_Klasse.fill = GridBagConstraints.HORIZONTAL;
-					gbc_textField_Klasse.gridx = 1;
-					gbc_textField_Klasse.gridy = 0;
-					panel_1.add(textField_Klasse, gbc_textField_Klasse);
-					textField_Klasse.setColumns(10);
-				}
-				{
-					JLabel label_Fach = new JLabel("Fach");
-					label_Fach.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					GridBagConstraints gbc_label_Fach = new GridBagConstraints();
-					gbc_label_Fach.anchor = GridBagConstraints.EAST;
-					gbc_label_Fach.insets = new Insets(0, 0, 0, 5);
-					gbc_label_Fach.gridx = 0;
-					gbc_label_Fach.gridy = 1;
-					panel_1.add(label_Fach, gbc_label_Fach);
-				}
-				{
-					textField_Fach = new JTextField();
-					textField_Fach.setEditable(false);
-					GridBagConstraints gbc_textField_Fach = new GridBagConstraints();
-					gbc_textField_Fach.fill = GridBagConstraints.HORIZONTAL;
-					gbc_textField_Fach.gridx = 1;
-					gbc_textField_Fach.gridy = 1;
-					panel_1.add(textField_Fach, gbc_textField_Fach);
-					textField_Fach.setColumns(10);
-				}
-			}
-			{
-				JPanel panel_1 = new JPanel();
-				GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-				gbc_panel_1.fill = GridBagConstraints.BOTH;
-				gbc_panel_1.gridx = 1;
-				gbc_panel_1.gridy = 0;
-				panel_Head.add(panel_1, gbc_panel_1);
-				GridBagLayout gbl_panel_1 = new GridBagLayout();
-				gbl_panel_1.columnWidths = new int[]{0, 125, 0};
-				gbl_panel_1.rowHeights = new int[]{0, 0};
-				gbl_panel_1.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-				gbl_panel_1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-				panel_1.setLayout(gbl_panel_1);
-				{
-					JLabel label_LehrerIn = new JLabel("Lehrer/in");
-					label_LehrerIn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					GridBagConstraints gbc_label_LehrerIn = new GridBagConstraints();
-					gbc_label_LehrerIn.insets = new Insets(0, 0, 0, 5);
-					gbc_label_LehrerIn.anchor = GridBagConstraints.EAST;
-					gbc_label_LehrerIn.gridx = 0;
-					gbc_label_LehrerIn.gridy = 0;
-					panel_1.add(label_LehrerIn, gbc_label_LehrerIn);
-				}
-				{
-					textField_LehrerIn = new JTextField();
-					textField_LehrerIn.setEditable(false);
-					GridBagConstraints gbc_textField_LehrerIn = new GridBagConstraints();
-					gbc_textField_LehrerIn.fill = GridBagConstraints.HORIZONTAL;
-					gbc_textField_LehrerIn.gridx = 1;
-					gbc_textField_LehrerIn.gridy = 0;
-					panel_1.add(textField_LehrerIn, gbc_textField_LehrerIn);
-					textField_LehrerIn.setColumns(10);
-				}
-			}
-		}		
-		{
-			JPanel panel_table_muendl = new JPanel();
-			GridBagConstraints gbc_panel_table_muendl = new GridBagConstraints();
-			gbc_panel_table_muendl.ipady = 50;
-			gbc_panel_table_muendl.ipadx = 50;
-			gbc_panel_table_muendl.insets = new Insets(0, 0, 5, 5);
-			gbc_panel_table_muendl.fill = GridBagConstraints.BOTH;
-			gbc_panel_table_muendl.gridx = 1;
-			gbc_panel_table_muendl.gridy = 2;
-			gbc_panel_table_muendl.weightx = 50;
-			gbc_panel_table_muendl.weighty = 50;
-			contentPanel.add(panel_table_muendl, gbc_panel_table_muendl);
-			GridBagLayout gbl_panel_table_muendl = new GridBagLayout();
-			gbl_panel_table_muendl.columnWidths = new int[]{0, 0};
-			gbl_panel_table_muendl.rowHeights = new int[]{0, 0};
-			gbl_panel_table_muendl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel_table_muendl.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			
-			panel_table_muendl.setLayout(gbl_panel_table_muendl);
-			{
-				this.model_muendlich = new DefaultTableModel();
-				{
-					JPanel panel = new JPanel();
-					panel.setToolTipText("");
-					panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndliche Noten", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-					GridBagConstraints gbc_panel = new GridBagConstraints();
-					gbc_panel.fill = GridBagConstraints.BOTH;
-					gbc_panel.gridx = 0;
-					gbc_panel.gridy = 0;
-					panel_table_muendl.add(panel, gbc_panel);
-					GridBagLayout gbl_panel = new GridBagLayout();
-					gbl_panel.columnWidths = new int[]{0, 0};
-					gbl_panel.rowHeights = new int[]{0, 0};
-					gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-					gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-					panel.setLayout(gbl_panel);
-					{
-						JScrollPane scrollPane = new JScrollPane();
-						GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-						gbc_scrollPane.fill = GridBagConstraints.BOTH;
-						gbc_scrollPane.gridx = 0;
-						gbc_scrollPane.gridy = 0;
-						panel.add(scrollPane, gbc_scrollPane);
-						table_muendl = new JTable();
-						scrollPane.setViewportView(this.table_muendl);
-						table_muendl.setModel(this.model_muendlich);
-					}
-				}
-			}
-		}
-		{
-			JPanel panel_table_schriftl = new JPanel();
-			GridBagConstraints gbc_panel_table_schriftl = new GridBagConstraints();
-			gbc_panel_table_schriftl.ipady = 50;
-			gbc_panel_table_schriftl.ipadx = 50;
-			gbc_panel_table_schriftl.insets = new Insets(0, 0, 5, 0);
-			gbc_panel_table_schriftl.fill = GridBagConstraints.BOTH;
-			gbc_panel_table_schriftl.gridx = 2;
-			gbc_panel_table_schriftl.gridy = 2;
-			gbc_panel_table_schriftl.weightx = 50;
-			gbc_panel_table_schriftl.weighty = 50;
-			contentPanel.add(panel_table_schriftl, gbc_panel_table_schriftl);
-			GridBagLayout gbl_panel_table_schriftl = new GridBagLayout();
-			gbl_panel_table_schriftl.columnWidths = new int[]{0, 0};
-			gbl_panel_table_schriftl.rowHeights = new int[]{0, 0};
-			gbl_panel_table_schriftl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel_table_schriftl.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			panel_table_schriftl.setLayout(gbl_panel_table_schriftl);
-			{
-				JPanel panel = new JPanel();
-				panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftliche Noten", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-				GridBagConstraints gbc_panel = new GridBagConstraints();
-				gbc_panel.fill = GridBagConstraints.BOTH;
-				gbc_panel.gridx = 0;
-				gbc_panel.gridy = 0;
-				panel_table_schriftl.add(panel, gbc_panel);
-				GridBagLayout gbl_panel = new GridBagLayout();
-				gbl_panel.columnWidths = new int[]{0, 0};
-				gbl_panel.rowHeights = new int[]{0, 0};
-				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-				panel.setLayout(gbl_panel);
-				{
-					JScrollPane scrollPane = new JScrollPane();
-					GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-					gbc_scrollPane.fill = GridBagConstraints.BOTH;
-					gbc_scrollPane.gridx = 0;
-					gbc_scrollPane.gridy = 0;
-					panel.add(scrollPane, gbc_scrollPane);
-					{
-						this.model_schriftl = new DefaultTableModel();
-						this.table_schriftl = new JTable();						
-						scrollPane.setViewportView(this.table_schriftl);
-						this.table_schriftl.setModel(this.model_schriftl);
-					}
-				}				
-		}
-		{
-			JPanel panel = new JPanel();
-			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
-			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 1;
-			gbc_panel.gridy = 3;
-			contentPanel.add(panel, gbc_panel);
-			{
-				GridBagLayout gbl_panel = new GridBagLayout();
-				gbl_panel.columnWidths = new int[]{65, 0};
-				gbl_panel.rowHeights = new int[]{23, 0};
-				gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-				gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-				panel.setLayout(gbl_panel);
-			}
-			JButton button_Zurueck = new JButton("Zur\u00FCck");
-			button_Zurueck.addActionListener(this);
-			GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
-			gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
-			gbc_button_Zurueck.anchor = GridBagConstraints.NORTHWEST;
-			gbc_button_Zurueck.gridx = 0;
-			gbc_button_Zurueck.gridy = 0;
-			panel.add(button_Zurueck, gbc_button_Zurueck);
-			}
-		}
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
+		
+		this.panel_head = new JPanel();
+		GridBagConstraints gbc_panel_head = new GridBagConstraints();
+		gbc_panel_head.anchor = GridBagConstraints.NORTH;
+		gbc_panel_head.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_head.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_head.gridx = 0;
+		gbc_panel_head.gridy = 0;
+		getContentPane().add(this.panel_head, gbc_panel_head);
+		GridBagLayout gbl_panel_head = new GridBagLayout();
+		gbl_panel_head.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_head.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_head.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_head.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		this.panel_head.setLayout(gbl_panel_head);
+		
+		this._label = new JLabel("Lehrer:");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.gridx = 0;
+		gbc_label.gridy = 0;
+		this.panel_head.add(this._label, gbc_label);
+		
+		this.textField_LehrerIn = new JTextField();
+		this.textField_LehrerIn.setEditable(false);
+		GridBagConstraints gbc_textField_LehrerIn = new GridBagConstraints();
+		gbc_textField_LehrerIn.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_LehrerIn.anchor = GridBagConstraints.WEST;
+		gbc_textField_LehrerIn.gridx = 1;
+		gbc_textField_LehrerIn.gridy = 0;
+		this.panel_head.add(this.textField_LehrerIn, gbc_textField_LehrerIn);
+		this.textField_LehrerIn.setColumns(10);
+		
+		this._label_1 = new JLabel("Klasse: ");
+		GridBagConstraints gbc_label_1 = new GridBagConstraints();
+		gbc_label_1.anchor = GridBagConstraints.EAST;
+		gbc_label_1.insets = new Insets(0, 0, 5, 5);
+		gbc_label_1.gridx = 0;
+		gbc_label_1.gridy = 1;
+		this.panel_head.add(this._label_1, gbc_label_1);
+		
+		this.textField_Klasse = new JTextField();
+		this.textField_Klasse.setEditable(false);
+		GridBagConstraints gbc_textField_Klasse = new GridBagConstraints();
+		gbc_textField_Klasse.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_Klasse.anchor = GridBagConstraints.WEST;
+		gbc_textField_Klasse.gridx = 1;
+		gbc_textField_Klasse.gridy = 1;
+		this.panel_head.add(this.textField_Klasse, gbc_textField_Klasse);
+		this.textField_Klasse.setColumns(10);
+		
+		this._label_2 = new JLabel("Fach: ");
+		GridBagConstraints gbc_label_2 = new GridBagConstraints();
+		gbc_label_2.anchor = GridBagConstraints.EAST;
+		gbc_label_2.insets = new Insets(0, 0, 0, 5);
+		gbc_label_2.gridx = 0;
+		gbc_label_2.gridy = 2;
+		this.panel_head.add(this._label_2, gbc_label_2);
+		
+		this.textField_Fach = new JTextField();
+		this.textField_Fach.setEditable(false);
+		GridBagConstraints gbc_textField_Fach = new GridBagConstraints();
+		gbc_textField_Fach.anchor = GridBagConstraints.WEST;
+		gbc_textField_Fach.gridx = 1;
+		gbc_textField_Fach.gridy = 2;
+		this.panel_head.add(this.textField_Fach, gbc_textField_Fach);
+		this.textField_Fach.setColumns(10);
+		
+		this._tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
+		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
+		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
+		gbc_tabbedPane.gridx = 0;
+		gbc_tabbedPane.gridy = 1;
+		getContentPane().add(this._tabbedPane, gbc_tabbedPane);
+		
+		this.tab1_contentPanel = new JPanel();
+		this._tabbedPane.addTab("Erstes Halbjahr", null, this.tab1_contentPanel, null);
+		GridBagLayout gbl_tab1_contentPanel = new GridBagLayout();
+		gbl_tab1_contentPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_tab1_contentPanel.rowHeights = new int[]{0, 0};
+		gbl_tab1_contentPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_tab1_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this.tab1_contentPanel.setLayout(gbl_tab1_contentPanel);
+		
+		this._panel = new JPanel();
+		this._panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		this.tab1_contentPanel.add(this._panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this._panel.setLayout(gbl_panel);
+		
+		this.panel_tab1_muendl = new JPanel();
+		GridBagConstraints gbc_panel_tab1_muendl = new GridBagConstraints();
+		gbc_panel_tab1_muendl.fill = GridBagConstraints.BOTH;
+		gbc_panel_tab1_muendl.gridx = 0;
+		gbc_panel_tab1_muendl.gridy = 0;
+		this._panel.add(this.panel_tab1_muendl, gbc_panel_tab1_muendl);
+		GridBagLayout gbl_panel_tab1_muendl = new GridBagLayout();
+		gbl_panel_tab1_muendl.columnWidths = new int[]{0, 0};
+		gbl_panel_tab1_muendl.rowHeights = new int[]{0, 0};
+		gbl_panel_tab1_muendl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_tab1_muendl.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this.panel_tab1_muendl.setLayout(gbl_panel_tab1_muendl);
+		
+		this._scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		this.panel_tab1_muendl.add(this._scrollPane, gbc_scrollPane);
+		
+		this.table_tab1_muendl = new NotenTable();		
+		this.model_tab1_muendlich = new DefaultTableModel();
+		this.table_tab1_muendl.setModel(this.model_tab1_muendlich);
+		this._scrollPane.setViewportView(this.table_tab1_muendl);
+		
+		this._panel_1 = new JPanel();
+		this._panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 1;
+		gbc_panel_1.gridy = 0;
+		this.tab1_contentPanel.add(this._panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0};
+		gbl_panel_1.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this._panel_1.setLayout(gbl_panel_1);
+		
+		this.panel_tab1_schriftl = new JPanel();
+		GridBagConstraints gbc_panel_tab1_schriftl = new GridBagConstraints();
+		gbc_panel_tab1_schriftl.fill = GridBagConstraints.BOTH;
+		gbc_panel_tab1_schriftl.gridx = 0;
+		gbc_panel_tab1_schriftl.gridy = 0;
+		this._panel_1.add(this.panel_tab1_schriftl, gbc_panel_tab1_schriftl);
+		GridBagLayout gbl_panel_tab1_schriftl = new GridBagLayout();
+		gbl_panel_tab1_schriftl.columnWidths = new int[]{0, 0};
+		gbl_panel_tab1_schriftl.rowHeights = new int[]{0, 0};
+		gbl_panel_tab1_schriftl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_tab1_schriftl.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this.panel_tab1_schriftl.setLayout(gbl_panel_tab1_schriftl);
+		
+		this._scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.gridx = 0;
+		gbc_scrollPane_1.gridy = 0;
+		this.panel_tab1_schriftl.add(this._scrollPane_1, gbc_scrollPane_1);
+		
+		this.table_tab1_schriftl = new NotenTable();
+		this.model_tab1_schriftl = new DefaultTableModel();
+		this.table_tab1_schriftl.setModel(this.model_tab1_schriftl);
+		this._scrollPane_1.setViewportView(this.table_tab1_schriftl);
+		
+		this.tab2_contentPanel = new JPanel();
+		this._tabbedPane.addTab("Zweites Halbjahr", null, this.tab2_contentPanel, null);
+		GridBagLayout gbl_tab2_contentPanel = new GridBagLayout();
+		gbl_tab2_contentPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_tab2_contentPanel.rowHeights = new int[]{0, 0};
+		gbl_tab2_contentPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_tab2_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this.tab2_contentPanel.setLayout(gbl_tab2_contentPanel);
+		
+		this._panel_5 = new JPanel();
+		this._panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.weighty = 50.0;
+		gbc_panel_5.weightx = 50.0;
+		gbc_panel_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_5.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_5.gridx = 0;
+		gbc_panel_5.gridy = 0;
+		this.tab2_contentPanel.add(this._panel_5, gbc_panel_5);
+		GridBagLayout gbl_panel_5 = new GridBagLayout();
+		gbl_panel_5.columnWidths = new int[]{0, 0};
+		gbl_panel_5.rowHeights = new int[]{0, 0};
+		gbl_panel_5.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_5.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this._panel_5.setLayout(gbl_panel_5);
+		
+		this._panel_3 = new JPanel();
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.weighty = 50.0;
+		gbc_panel_3.weightx = 50.0;
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 0;
+		this._panel_5.add(this._panel_3, gbc_panel_3);
+		GridBagLayout gbl_panel_3 = new GridBagLayout();
+		gbl_panel_3.columnWidths = new int[]{0, 0};
+		gbl_panel_3.rowHeights = new int[]{0, 0};
+		gbl_panel_3.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this._panel_3.setLayout(gbl_panel_3);
+		
+		this._scrollPane_3 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_3 = new GridBagConstraints();
+		gbc_scrollPane_3.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_3.gridx = 0;
+		gbc_scrollPane_3.gridy = 0;
+		this._panel_3.add(this._scrollPane_3, gbc_scrollPane_3);
+		
+		this.table_tab2_muendl = new NotenTable();
+		this.model_tab2_muendlich = new DefaultTableModel();
+		this.table_tab2_muendl.setModel(model_tab2_muendlich);
+		this._scrollPane_3.setViewportView(this.table_tab2_muendl);
+		
+		this._panel_6 = new JPanel();
+		this._panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
+		gbc_panel_6.weightx = 50.0;
+		gbc_panel_6.weighty = 50.0;
+		gbc_panel_6.fill = GridBagConstraints.BOTH;
+		gbc_panel_6.gridx = 1;
+		gbc_panel_6.gridy = 0;
+		this.tab2_contentPanel.add(this._panel_6, gbc_panel_6);
+		GridBagLayout gbl_panel_6 = new GridBagLayout();
+		gbl_panel_6.columnWidths = new int[]{0, 0};
+		gbl_panel_6.rowHeights = new int[]{0, 0};
+		gbl_panel_6.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_6.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		this._panel_6.setLayout(gbl_panel_6);
+		
+		this._scrollPane_2 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
+		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_2.gridx = 0;
+		gbc_scrollPane_2.gridy = 0;
+		this._panel_6.add(this._scrollPane_2, gbc_scrollPane_2);
+		
+		this.table_tab2_schriftl = new NotenTable();
+		this.model_tab2_schriftl = new DefaultTableModel();
+		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
+		this._scrollPane_2.setViewportView(this.table_tab2_schriftl);
+		
+		this.panel_buttons = new JPanel();
+		GridBagConstraints gbc_panel_buttons = new GridBagConstraints();
+		gbc_panel_buttons.anchor = GridBagConstraints.SOUTH;
+		gbc_panel_buttons.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_buttons.gridx = 0;
+		gbc_panel_buttons.gridy = 2;
+		getContentPane().add(this.panel_buttons, gbc_panel_buttons);
+		
+		this.btn_zurueck = new JButton("Zur\u00FCck");
+		this.btn_zurueck.addActionListener(this);
+		this.panel_buttons.add(this.btn_zurueck);
+		
+		this.btn_neuespalte = new JButton("Spalte anlegen");
+		this.btn_neuespalte.addActionListener(this);
+		this.panel_buttons.add(this.btn_neuespalte);
+		
+		this.btn_aendern = new JButton("Spalte \u00E4ndern");
+		this.btn_aendern.addActionListener(this);
+		this.panel_buttons.add(this.btn_aendern);
+		
+		this.btn_verwerfen = new JButton("Verwerfen");
+		this.btn_verwerfen.addActionListener(this);
+		this.panel_buttons.add(this.btn_verwerfen);
 	}
-	
-	private int isColumnRequiered(DefaultTableModel model, Leistung l) //Prüft ob Spalten benötigt werden
+	//Prüft ob Spalten benötigt werden -1 = keine Spalte gefunden, 0 + aufwärts = Spaltenindex
+	private int isColumnRequiered(NotenTableHeader header, Leistung l) 
 	{		
-		return model.findColumn(l.getErhebungsdatum().toString());
+		return header.findColumnWithTooltip(l.getErhebungsdatum().toString());
 	}
 	
-	private void setGradesInTable() //Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl.
+	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
+	private void setGradesInTable()
 	{
-		this.model_muendlich.addColumn("Name");
-		this.model_muendlich.addColumn("Vorname");	
-		
-		/*this.model_schriftl.addColumn("Name");
-		this.model_schriftl.addColumn("Vorname");*/
-		
+		NotenTableHeader header_tab1_muendl = (NotenTableHeader) this.table_tab1_muendl.getTableHeader();
+		this.model_tab1_muendlich.addColumn("Name");
+		header_tab1_muendl.addColumnTooltip("");
+		this.model_tab1_muendlich.addColumn("Vorname");	
+		header_tab1_muendl.addColumnTooltip("");
+				
 		Set<Schueler> schueler = this.klasse.getSchueler();
 		
 		for(Schueler s : schueler)
 		{
 			Object[] rowData = {s.getNachname(),s.getVorname()};
-			this.model_muendlich.addRow(rowData);
+			this.model_tab1_muendlich.addRow(rowData);
 			
 			for(Leistung l : s.getMuendlich(this.fach))
 			{			
-				int col = this.isColumnRequiered(model_muendlich, l);
+				int col = this.isColumnRequiered(header_tab1_muendl, l);
 				
 				if(col == -1)
 				{					
-					this.model_muendlich.addColumn(l.getErhebungsdatum().toString());		
-					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1, 
-																	   this.model_muendlich.getColumnCount() - 1);
+					header_tab1_muendl.addColumnTooltip(l.getErhebungsdatum().toString());
+					this.model_tab1_muendlich.addColumn(l.getLeistungsart().getBez());		
+					this.model_tab1_muendlich.setValueAt(l.getNotenstufe(), this.model_tab1_muendlich.getRowCount() - 1, 
+																	   this.model_tab1_muendlich.getColumnCount() - 1);
 				}	
 				else if(col >= 0)
 				{
-					this.model_muendlich.setValueAt(l.getNotenstufe(), this.model_muendlich.getRowCount() - 1 , col);
+					this.model_tab1_muendlich.setValueAt(l.getNotenstufe(), this.model_tab1_muendlich.getRowCount() - 1 , col);
 				}				
 			}			
 			
+			NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();
 			for(Leistung l : s.getSchriftlich(this.fach))
 			{
-				int col = this.isColumnRequiered(model_schriftl, l);
-				this.model_schriftl.addRow(new Object[]{""});
+				int col = this.isColumnRequiered(header_tab1_schriftl, l);
+				this.model_tab1_schriftl.addRow(new Object[]{""});
 				
 				if(col == -1)
 				{
-					this.model_schriftl.addColumn(l.getErhebungsdatum().toString());
-					this.model_schriftl.setValueAt(l.getNotenstufe(), this.model_schriftl.getRowCount() - 1 , 
-																	  this.model_schriftl.getColumnCount() - 1);										
+					header_tab1_schriftl.addColumnTooltip(l.getErhebungsdatum().toString());
+					this.model_tab1_schriftl.addColumn(l.getLeistungsart().getBez());
+					this.model_tab1_schriftl.setValueAt(l.getNotenstufe(), this.model_tab1_schriftl.getRowCount() - 1 , 
+																	  this.model_tab1_schriftl.getColumnCount() - 1);										
 				}
 				else if(col >= 0)
 				{
-					this.model_schriftl.setValueAt(l.getNotenstufe(), this.model_schriftl.getRowCount() - 1 , col);
+					this.model_tab1_schriftl.setValueAt(l.getNotenstufe(), this.model_tab1_schriftl.getRowCount() - 1 , col);
 				}
-			}
+			}	
+			
+			//Hier für zweites Halbjahr verarbeitung einfügen
 		}
 	}
 	
@@ -364,17 +428,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener,
 		
 		this.setGradesInTable();
 	}
-	
-	public void actionPerformed(ActionEvent e) 
-	{
-		this.dispose();
-	}
-	public void windowGainedFocus(WindowEvent e) 
-	{
-		
-	}
-	public void windowLostFocus(WindowEvent e) 
-	{
-		this.requestFocus();
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.btn_zurueck)
+		{
+			this.dispose();
+		}
 	}
 }

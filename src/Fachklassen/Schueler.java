@@ -28,7 +28,9 @@ public class Schueler
 	@ManyToOne
 	private Klasse klasse;	//Fremdschlüssel
 	
-	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="schueler_id")
+	private List<Zeugnisnote> zeugnisnoten = new ArrayList<Zeugnisnote>();
 	
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
@@ -77,7 +79,41 @@ public class Schueler
 		return ret;	//Rückgabe der verbliebenen, also der Mündlichen Arbeiten
 	}
 	
-
+	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
+	{
+			//Alle Leistungen des Schülers für ein Fach lesen
+				ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+				//Rausschmeissen aller Schriftlichen arbeiten
+				ArrayList<Leistung>ret = new ArrayList<Leistung>();
+				
+				
+				
+				for(Leistung l: lst)
+				{
+					if(l.getLeistungsart().getGruppe() == 'S' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
+						ret.add(l);
+				}
+				return ret;	//Rückgabe der verbliebenen, also der Mündlich
+	}
+	
+	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
+	{
+			//Alle Leistungen des Schülers für ein Fach lesen
+				ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+				//Rausschmeissen aller Schriftlichen arbeiten
+				ArrayList<Leistung>ret = new ArrayList<Leistung>();
+				
+				
+				
+				for(Leistung l: lst)
+				{
+					if(l.getLeistungsart().getGruppe() == 'M' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
+						ret.add(l);
+				}
+				return ret;	//Rückgabe der verbliebenen, also der Mündlich
+	}
+	
+	
 	public Schueler()
 	{
 	}
