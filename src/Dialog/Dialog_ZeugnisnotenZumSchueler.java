@@ -3,6 +3,7 @@ package Dialog;
 import java.awt.EventQueue;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import java.awt.GridBagLayout;
 
@@ -23,10 +24,15 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 
+import com.sun.rowset.internal.Row;
+
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 import Persistenz.DBZugriff;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 	/**
@@ -103,6 +109,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		
 		
+		
 		model.addColumn("Fach");
 		model.addColumn("Errechnet");
 		model.addColumn("Festgelegt");
@@ -143,21 +150,66 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		{
 			model.removeRow(i);
 		}
+		
+		
 		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
-		List<Zeugnisfach> zfaecher = this.getSchueler().getKlasseid().getZeugnisfaecher();
+		List<Zeugnisfach> zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
 		for(Zeugnisfach zfach:zfaecher)
 		{
+			boolean couldsorted = false;
+			String fachBez = zfach.getBez();
+			double errNote = 0;
+			int finalNote =  0;
 			for(Zeugnisnote znote: zfachnoten)
 			{
 				if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
 				{
-					model.addRow(new Object[]{zfach.getBez(), znote.getNoteErrechnet(), znote.getNoteZeugnis()});
+					errNote = znote.getNoteErrechnet();
+					finalNote =  znote.getNoteZeugnis();
+					if(finalNote==0)
+					{
+						model.addRow(new Object[]{fachBez, errNote,""});
+					}
+					else
+					{
+						model.addRow(new Object[]{fachBez, errNote, finalNote});
+					}
+					couldsorted=true;
 				}
+			}
+			if(couldsorted==false)
+			{
+				model.addRow(new Object[]{fachBez, "",""});
 			}
 			
 		}
 		table.setModel(model);
 	}
+	
+	public void getDatenFromMaske()
+	{
+		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+		int rows = model.getRowCount();
+		for(int row=0;row<rows-1;row++)
+		{
+			double pruef = Double.parseDouble((String) model.getValueAt(row, 2));
+			if(pruef!=0)
+			{
+				int wert = Integer.parseInt((String) model.getValueAt(row, 3));
+				for(Zeugnisnote znote: zfachnoten)
+				{
+					if(znote.getZeugnisfach().getBez().equals((String)model.getValueAt(row, 1))&&znote.getNoteErrechnet()!=0)
+					{
+						znote.setNoteZeugnis(wert);
+					}
+				}
+			}
+			
+		}
+	}
+	
+	
+	
 
 	public Schueler getSchueler() {
 		return schueler;
