@@ -372,9 +372,32 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		return header.findColumnWithTooltip(l.getErhebungsdatum().toString());
 	}
 	
+	//Verarbeitungsmethoder für Leistungen in beliebige Tabelle setzen
+	private void fillOneTable(NotenTableHeader header, DefaultTableModel model, ArrayList<Leistung> leistungen)
+	{
+		for(Leistung l : leistungen)
+		{			
+			int col = this.isColumnRequiered(header, l);
+			
+			if(col == -1)
+			{					
+				header.addColumnTooltip(l.getErhebungsdatum().toString());
+				model.addColumn(l.getLeistungsart().getBez());		
+				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, 
+																   model.getColumnCount() - 1);
+			}	
+			else if(col >= 0)
+			{
+				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1 , col);
+			}				
+		}	
+	}
+	
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
+		
+		//Vorbereitung der Tabellen
 		NotenTableHeader header_tab1_muendl = (NotenTableHeader) this.table_tab1_muendl.getTableHeader();
 		this.model_tab1_muendlich.addColumn("Name");
 		header_tab1_muendl.addColumnTooltip("");
@@ -399,84 +422,23 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.model_tab2_schriftl.addColumn("Vorname");
 		header_tab2_schriftl.addColumnTooltip("");
 		
+		//Abarbeitung der Schueler in der Klasse		
 		Set<Schueler> schueler = this.klasse.getSchueler();
 		
 		for(Schueler s : schueler)
 		{
+			//Ersten beiden spalten für jede Tabelle anlegen mit jeweiligem Schüler namen
 			Object[] rowData = {s.getNachname(),s.getVorname()};
 			this.model_tab1_muendlich.addRow(rowData);
 			this.model_tab1_schriftl.addRow(rowData);
 			this.model_tab2_muendlich.addRow(rowData);
 			this.model_tab2_schriftl.addRow(rowData);
 			
-			for(Leistung l : s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR))
-			{			
-				int col = this.isColumnRequiered(header_tab1_muendl, l);
-				
-				if(col == -1)
-				{					
-					header_tab1_muendl.addColumnTooltip(l.getErhebungsdatum().toString());
-					this.model_tab1_muendlich.addColumn(l.getLeistungsart().getBez());		
-					this.model_tab1_muendlich.setValueAt(l.getNotenstufe(), this.model_tab1_muendlich.getRowCount() - 1, 
-																	   this.model_tab1_muendlich.getColumnCount() - 1);
-				}	
-				else if(col >= 0)
-				{
-					this.model_tab1_muendlich.setValueAt(l.getNotenstufe(), this.model_tab1_muendlich.getRowCount() - 1 , col);
-				}				
-			}			
-			
-			for(Leistung l : s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR))
-			{
-				int col = this.isColumnRequiered(header_tab1_schriftl, l);				
-				
-				if(col == -1)
-				{
-					header_tab1_schriftl.addColumnTooltip(l.getErhebungsdatum().toString());
-					this.model_tab1_schriftl.addColumn(l.getLeistungsart().getBez());					
-					this.model_tab1_schriftl.setValueAt(l.getNotenstufe(), this.model_tab1_schriftl.getRowCount() - 1 , 
-																	  this.model_tab1_schriftl.getColumnCount() - 1);										
-				}
-				else if(col >= 0)
-				{
-					this.model_tab1_schriftl.setValueAt(l.getNotenstufe(), this.model_tab1_schriftl.getRowCount() - 1 , col);
-				}
-			}	
-			
-			for(Leistung l : s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR))
-			{			
-				int col = this.isColumnRequiered(header_tab2_muendl, l);
-				
-				if(col == -1)
-				{					
-					header_tab2_muendl.addColumnTooltip(l.getErhebungsdatum().toString());
-					this.model_tab2_muendlich.addColumn(l.getLeistungsart().getBez());		
-					this.model_tab2_muendlich.setValueAt(l.getNotenstufe(), this.model_tab2_muendlich.getRowCount() - 1, 
-																	   this.model_tab2_muendlich.getColumnCount() - 1);
-				}	
-				else if(col >= 0)
-				{
-					this.model_tab2_muendlich.setValueAt(l.getNotenstufe(), this.model_tab2_muendlich.getRowCount() - 1 , col);
-				}				
-			}
-			
-			for(Leistung l : s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR))
-			{
-				int col = this.isColumnRequiered(header_tab2_schriftl, l);				
-				
-				if(col == -1)
-				{
-					header_tab2_schriftl.addColumnTooltip(l.getErhebungsdatum().toString());
-					this.model_tab2_schriftl.addColumn(l.getLeistungsart().getBez());					
-					this.model_tab2_schriftl.setValueAt(l.getNotenstufe(), this.model_tab2_schriftl.getRowCount() - 1 , 
-																	  this.model_tab2_schriftl.getColumnCount() - 1);										
-				}
-				else if(col >= 0)
-				{
-					this.model_tab2_schriftl.setValueAt(l.getNotenstufe(), this.model_tab2_schriftl.getRowCount() - 1 , col);
-				}
-			}
-			
+			//Jede Tabelle mit Noten füllen
+			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));					
+			this.fillOneTable(header_tab1_schriftl, model_tab1_schriftl, s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));			
+			this.fillOneTable(header_tab2_muendl, model_tab2_muendlich, s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
+			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));
 		}
 	}
 	
