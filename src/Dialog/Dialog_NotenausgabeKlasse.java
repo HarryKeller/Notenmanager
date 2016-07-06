@@ -25,7 +25,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 													   Locale.GERMAN);
 
 	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("01.09.2015",germanFormatter);
-	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2015",germanFormatter);
+	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2016",germanFormatter);
 	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("01.08.2016",germanFormatter);
 	
 	private Lehrer lehrer;
@@ -49,23 +49,25 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private JPanel panel_tab1_muendl;
 	private JPanel panel_tab1_schriftl;
 	private JPanel _panel;
-	private JPanel _panel_1;
+	private JPanel _panel_1;	
+	private JScrollPane _scrollPane;	
+	private JScrollPane _scrollPane_1;	
+	private JPanel tab2_contentPanel;
+	private JPanel _panel_3;
+	private JPanel _panel_5;
+	private JPanel _panel_6;	
+	private JScrollPane _scrollPane_3;	
+	private JScrollPane _scrollPane_2;	
+	
 	private NotenTable table_tab1_muendl;
-	private JScrollPane _scrollPane;
 	private NotenTable table_tab1_schriftl;
-	private JScrollPane _scrollPane_1;
+	private NotenTable table_tab2_muendl;
+	private NotenTable table_tab2_schriftl;
+	
 	private DefaultTableModel model_tab1_muendlich;
 	private DefaultTableModel model_tab1_schriftl;
 	private DefaultTableModel model_tab2_muendlich;
 	private DefaultTableModel model_tab2_schriftl;
-	private JPanel tab2_contentPanel;
-	private JPanel _panel_3;
-	private JPanel _panel_5;
-	private JPanel _panel_6;
-	private NotenTable table_tab2_muendl;
-	private JScrollPane _scrollPane_3;
-	private NotenTable table_tab2_schriftl;
-	private JScrollPane _scrollPane_2;	
 	
 	public Dialog_NotenausgabeKlasse() {
 		
@@ -363,6 +365,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.btn_verwerfen.addActionListener(this);
 		this.panel_buttons.add(this.btn_verwerfen);
 	}
+	
 	//Prüft ob Spalten benötigt werden -1 = keine Spalte gefunden, 0 + aufwärts = Spaltenindex
 	private int isColumnRequiered(NotenTableHeader header, Leistung l) 
 	{		
@@ -377,15 +380,36 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		header_tab1_muendl.addColumnTooltip("");
 		this.model_tab1_muendlich.addColumn("Vorname");	
 		header_tab1_muendl.addColumnTooltip("");
-				
+		
+		NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();		
+		this.model_tab1_schriftl.addColumn("Name");
+		header_tab1_schriftl.addColumnTooltip("");
+		this.model_tab1_schriftl.addColumn("Vorname");
+		header_tab1_schriftl.addColumnTooltip("");
+		
+		NotenTableHeader header_tab2_muendl = (NotenTableHeader) this.table_tab2_muendl.getTableHeader();
+		this.model_tab2_muendlich.addColumn("Name");
+		header_tab2_muendl.addColumnTooltip("");
+		this.model_tab2_muendlich.addColumn("Vorname");	
+		header_tab2_muendl.addColumnTooltip("");
+		
+		NotenTableHeader header_tab2_schriftl = (NotenTableHeader) this.table_tab2_schriftl.getTableHeader();		
+		this.model_tab2_schriftl.addColumn("Name");
+		header_tab2_schriftl.addColumnTooltip("");
+		this.model_tab2_schriftl.addColumn("Vorname");
+		header_tab2_schriftl.addColumnTooltip("");
+		
 		Set<Schueler> schueler = this.klasse.getSchueler();
 		
 		for(Schueler s : schueler)
 		{
 			Object[] rowData = {s.getNachname(),s.getVorname()};
 			this.model_tab1_muendlich.addRow(rowData);
+			this.model_tab1_schriftl.addRow(rowData);
+			this.model_tab2_muendlich.addRow(rowData);
+			this.model_tab2_schriftl.addRow(rowData);
 			
-			for(Leistung l : s.getMuendlich(this.fach))
+			for(Leistung l : s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR))
 			{			
 				int col = this.isColumnRequiered(header_tab1_muendl, l);
 				
@@ -402,16 +426,14 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				}				
 			}			
 			
-			NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();
-			for(Leistung l : s.getSchriftlich(this.fach))
+			for(Leistung l : s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR))
 			{
-				int col = this.isColumnRequiered(header_tab1_schriftl, l);
-				this.model_tab1_schriftl.addRow(new Object[]{""});
+				int col = this.isColumnRequiered(header_tab1_schriftl, l);				
 				
 				if(col == -1)
 				{
 					header_tab1_schriftl.addColumnTooltip(l.getErhebungsdatum().toString());
-					this.model_tab1_schriftl.addColumn(l.getLeistungsart().getBez());
+					this.model_tab1_schriftl.addColumn(l.getLeistungsart().getBez());					
 					this.model_tab1_schriftl.setValueAt(l.getNotenstufe(), this.model_tab1_schriftl.getRowCount() - 1 , 
 																	  this.model_tab1_schriftl.getColumnCount() - 1);										
 				}
@@ -421,7 +443,40 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				}
 			}	
 			
-			//Hier für zweites Halbjahr verarbeitung einfügen
+			for(Leistung l : s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR))
+			{			
+				int col = this.isColumnRequiered(header_tab2_muendl, l);
+				
+				if(col == -1)
+				{					
+					header_tab2_muendl.addColumnTooltip(l.getErhebungsdatum().toString());
+					this.model_tab2_muendlich.addColumn(l.getLeistungsart().getBez());		
+					this.model_tab2_muendlich.setValueAt(l.getNotenstufe(), this.model_tab2_muendlich.getRowCount() - 1, 
+																	   this.model_tab2_muendlich.getColumnCount() - 1);
+				}	
+				else if(col >= 0)
+				{
+					this.model_tab2_muendlich.setValueAt(l.getNotenstufe(), this.model_tab2_muendlich.getRowCount() - 1 , col);
+				}				
+			}
+			
+			for(Leistung l : s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR))
+			{
+				int col = this.isColumnRequiered(header_tab2_schriftl, l);				
+				
+				if(col == -1)
+				{
+					header_tab2_schriftl.addColumnTooltip(l.getErhebungsdatum().toString());
+					this.model_tab2_schriftl.addColumn(l.getLeistungsart().getBez());					
+					this.model_tab2_schriftl.setValueAt(l.getNotenstufe(), this.model_tab2_schriftl.getRowCount() - 1 , 
+																	  this.model_tab2_schriftl.getColumnCount() - 1);										
+				}
+				else if(col >= 0)
+				{
+					this.model_tab2_schriftl.setValueAt(l.getNotenstufe(), this.model_tab2_schriftl.getRowCount() - 1 , col);
+				}
+			}
+			
 		}
 	}
 	
