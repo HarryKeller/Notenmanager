@@ -20,27 +20,30 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
-
-import com.sun.rowset.internal.Row;
 
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 import Persistenz.DBZugriff;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
+public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable table = new JTable();;
 	private DefaultTableModel model = new DefaultTableModel();
+	private List<Zeugnisnote> spnoten = new ArrayList<Zeugnisnote>();
+	private JButton btnSpeichern = new JButton("Speichern");
 	
 	private Schueler schueler;
 
@@ -57,7 +60,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler(new Schueler(4));
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
-					DBZugriff.closeDB();
+					
 				} 
 				catch (Exception e) 
 				{
@@ -69,6 +72,12 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 
 	public Dialog_ZeugnisnotenZumSchueler(Schueler s) 
 	{
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				DBZugriff.closeDB();
+			}
+		});
 		setSchueler(s);
 		
 		
@@ -117,13 +126,15 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		table.setModel(model);
 		
 		JButton btnZurck = new JButton("Zur\u00FCck");
+		btnZurck.addActionListener(this);
 		GridBagConstraints gbc_btnZurck = new GridBagConstraints();
 		gbc_btnZurck.insets = new Insets(0, 0, 0, 5);
 		gbc_btnZurck.gridx = 1;
 		gbc_btnZurck.gridy = 2;
 		getContentPane().add(btnZurck, gbc_btnZurck);
 		
-		JButton btnSpeichern = new JButton("Speichern");
+		
+		btnSpeichern.addActionListener(this);
 		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
 		gbc_btnSpeichern.anchor = GridBagConstraints.EAST;
 		gbc_btnSpeichern.insets = new Insets(0, 0, 0, 5);
@@ -132,6 +143,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
 		
 		JButton btnZeugnisDrucken = new JButton("Zeugnis drucken");
+		btnZeugnisDrucken.addActionListener(this);
 		btnZeugnisDrucken.setEnabled(false);
 		GridBagConstraints gbc_btnZeugnisDrucken = new GridBagConstraints();
 		gbc_btnZeugnisDrucken.insets = new Insets(0, 0, 0, 5);
@@ -143,6 +155,13 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 	}
 	
 	
+	
+	/**
+	* Liest durch eine Liste mit allen Zeugnisfächern der Klasse eines bestimmten
+	* Schülers und eine Liste mit allen Zeugnisfächern des Schülers. Zu jedem
+	* Zeugnisfach der Klassenliste wird das dazugehörige Zeugnisfach des
+	* Schülers zugeordet und ausgegeben.
+	*/
 	public void setDatenToMaske()
 	{
 		int n = model.getRowCount();
@@ -186,37 +205,83 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog {
 		table.setModel(model);
 	}
 	
+	
+	/**
+	* Holt sich alle Daten aus der Maske und speichert die Objekte, die geändert wurden.
+	*/
 	public void getDatenFromMaske()
 	{
+		table.getCellEditor().stopCellEditing();
 		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
 		int rows = model.getRowCount();
 		for(int row=0;row<rows-1;row++)
 		{
-			double pruef = Double.parseDouble((String) model.getValueAt(row, 2));
+			double pruef = 0;
+			try
+			{
+				 pruef = Double.parseDouble(model.getValueAt(row, 1).toString());
+			}
+			catch(Exception ex)
+			{
+				pruef = 0;
+			}
 			if(pruef!=0)
 			{
-				int wert = Integer.parseInt((String) model.getValueAt(row, 3));
+				JOptionPane.showMessageDialog(null, model.getValueAt(row, 2), "test", JOptionPane.OK_OPTION);
+				int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
 				for(Zeugnisnote znote: zfachnoten)
 				{
-					if(znote.getZeugnisfach().getBez().equals((String)model.getValueAt(row, 1))&&znote.getNoteErrechnet()!=0)
+					
+					if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
 					{
 						znote.setNoteZeugnis(wert);
+						spnoten.add(znote);
 					}
 				}
 			}
 			
 		}
+		
 	}
 	
 	
 	
-
+	/**
+	* Holt sich den gespeicherten Schüler.
+	*/
 	public Schueler getSchueler() {
 		return schueler;
 	}
 
+	/**
+	* Setzt für diese Klasse einen bestimmten Schüler.
+	*/
 	public void setSchueler(Schueler schueler) {
 		this.schueler = schueler;
 	}
 
+	//Überschriebene Methode des ActionListener
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getActionCommand()=="Zur\u00FCck")
+		{
+			
+		}
+		else if(e.getActionCommand()=="Speichern")
+		{
+			getDatenFromMaske();
+			for(Zeugnisnote zn:spnoten)
+			{				
+				zn.speichern();
+			}
+			
+		}
+		else if(e.getActionCommand()=="Zeugnis drucken")
+		{
+			
+		}
+		
+	}
+
 }
+
