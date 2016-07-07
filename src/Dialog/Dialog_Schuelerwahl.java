@@ -52,7 +52,6 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	public Dialog_Schuelerwahl(Lehrer lehrer, Klasse klasse) 
 	{
 		initGUI();
-		this.setExtendedState(MAXIMIZED_BOTH);
 		this.lehrer = lehrer;
 		this.klasse = klasse;
 		setDatenInMaske();
@@ -197,16 +196,19 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		if(e.getActionCommand().equals(this.button_Notenblatt.getActionCommand()))
 		{
 			Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt();
+			this.setVisible(false);
 			dlg_notenblatt.setVisible(true);
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
 			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()));
+			this.setVisible(false);
 			dlg_zeugnisnoten.setVisible(true);
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnis.getActionCommand()))
 		{
 			Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
+			this.setVisible(false);
 			dlg_zeugnis.setVisible(true);
 		}
 		if(e.getActionCommand().equals(this.btnZurck.getActionCommand()))
