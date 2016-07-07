@@ -42,6 +42,7 @@ public class Dialog_Notenblatt extends JDialog {
 	 * Create the dialog.
 	 */
 	public Dialog_Notenblatt() {
+		setTitle("Notenblatt");
 		initGUI();
 	}
 	private void initGUI() {

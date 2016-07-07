@@ -57,6 +57,7 @@ public class Dialog_Zeugnis extends JDialog implements ActionListener, ListSelec
 	 * Create the dialog.
 	 */
 	public Dialog_Zeugnis() {
+		setTitle("Zeugnis");
 		initGUI();
 	}
 	private void initGUI() {

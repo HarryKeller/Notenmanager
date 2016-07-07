@@ -7,14 +7,21 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import Fachklassen.Klasse;
+import Fachklassen.Lehrer;
+import Fachklassen.Schueler;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,19 +31,27 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	private JTextField textField_Lehrer;
 	private JTextField textField_Klasse;
 	
+	JList list_Schueler;
 	JButton button_Notenblatt;
 	JButton button_Zeugnisnoten;
 	JButton button_Zeugnis;
-
+	
+	Lehrer lehrer;
+	Klasse klasse;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args) 
+	{
+		try 
+		{
 			Dialog_Schuelerwahl dialog = new Dialog_Schuelerwahl();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -44,10 +59,18 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public Dialog_Schuelerwahl() {
+	public Dialog_Schuelerwahl() 
+	{
 		initGUI();
 	}
-	private void initGUI() {
+	public Dialog_Schuelerwahl(Lehrer lehrer, Klasse klasse) 
+	{
+		initGUI();
+		this.lehrer = lehrer;
+		this.klasse = klasse;
+	}
+	private void initGUI() 
+	{
 		setModal(true);
 		setBounds(100, 100, 560, 380);
 		getContentPane().setLayout(new BorderLayout());
@@ -122,7 +145,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			gbc_scrollPane.gridy = 2;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				JList list_Schueler = new JList();
+				list_Schueler = new JList();
 				scrollPane.setViewportView(list_Schueler);
 			}
 		}
@@ -172,6 +195,11 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 		}
 	}
 
+	public void SetDatenInMaske()
+	{
+		this.list_Schueler.setListData((klasse.getSchueler()).toArray());
+	}
+	
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand().equals(this.button_Notenblatt.getActionCommand()))
@@ -179,15 +207,11 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt();
 			dlg_notenblatt.setVisible(true);
 		}
-		/*
-
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
-			Dialog_Zeugnisnoten dlg_zeugnisnoten = new Dialog_Zeugnisnoten();
+			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()));
 			dlg_zeugnisnoten.setVisible(true);
 		}
-		
-		*/
 		if(e.getActionCommand().equals(this.button_Zeugnis.getActionCommand()))
 		{
 			Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
