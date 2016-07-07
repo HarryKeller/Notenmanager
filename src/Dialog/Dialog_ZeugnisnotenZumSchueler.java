@@ -1,87 +1,46 @@
 package Dialog;
 
-import java.awt.EventQueue;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-
 import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
 import java.awt.GridBagConstraints;
-
-import javax.swing.JTable;
-
 import java.awt.Insets;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Font;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JScrollPane;
+import java.time.LocalDate;
 
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
-import Persistenz.DBZugriff;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+
+public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionListener 
+{
 	private static final long serialVersionUID = 1L;
-	private JTable table = new JTable();;
+	private JTable table = new JTable();
 	private DefaultTableModel model = new DefaultTableModel();
 	private List<Zeugnisnote> spnoten = new ArrayList<Zeugnisnote>();
 	private JButton btnSpeichern = new JButton("Speichern");
 	private List<Zeugnisnote> zfachnoten;
 	private List<Zeugnisfach> zfaecher;
-	
 	private Schueler schueler;
-
+	private Dialog_Schuelerwahl swahl;
 	
-	public static void main(String[] args) 
+	public Dialog_ZeugnisnotenZumSchueler(Schueler s, Dialog_Schuelerwahl sw) 
 	{
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run() 
-			{
-				try 
-				{
-					DBZugriff.initDB();
-					Dialog_ZeugnisnotenZumSchueler dialog = new Dialog_ZeugnisnotenZumSchueler(new Schueler(4));
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-					
-				} 
-				catch (Exception e) 
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public Dialog_ZeugnisnotenZumSchueler(Schueler s) 
-	{
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				DBZugriff.closeDB();
-			}
-		});
 		setSchueler(s);
-		
+		setSwahl(sw);
 		
 		setBounds(100, 100, 762, 496);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -120,12 +79,12 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		
 		
-		
 		model.addColumn("Fach");
 		model.addColumn("Errechnet");
 		model.addColumn("Festgelegt");
 		scrollPane.setViewportView(table);
 		table.setModel(model);
+		
 		
 		JButton btnZurck = new JButton("Zur\u00FCck");
 		btnZurck.addActionListener(this);
@@ -144,9 +103,8 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 		gbc_btnSpeichern.gridy = 2;
 		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
 		
-		JButton btnZeugnisDrucken = new JButton("Zeugnis drucken");
+		JButton btnZeugnisDrucken = new JButton("Zeugnis anzeigen");
 		btnZeugnisDrucken.addActionListener(this);
-		btnZeugnisDrucken.setEnabled(false);
 		GridBagConstraints gbc_btnZeugnisDrucken = new GridBagConstraints();
 		gbc_btnZeugnisDrucken.insets = new Insets(0, 0, 0, 5);
 		gbc_btnZeugnisDrucken.anchor = GridBagConstraints.EAST;
@@ -235,7 +193,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 					int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
 					for(Zeugnisnote znote: zfachnoten)
 					{
-						
 						if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
 						{
 							boolean checksave = false;
@@ -257,13 +214,9 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 							{
 								JOptionPane.showMessageDialog(null, "Die Note des Zeugnisfachs " +  znote.getZeugnisfach().getBez() + " hat einen ungültigen Wert!", "Warnung", JOptionPane.OK_OPTION);
 							}
-							
-							
 						}
 					}
-					
 				}
-				
 			}
 			for(Zeugnisnote zn:spnoten)
 			{				
@@ -277,14 +230,11 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 			{
 				JOptionPane.showMessageDialog(null, "Fehler beim Aktualisieren der Zeugnisnotenliste!", "Meldung", JOptionPane.OK_OPTION);
 			}
-			
 		}
 		catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(null, "Speichern der Zeugnisnoten war nicht erfolgreich!", "Warnung", JOptionPane.OK_OPTION);
 		}
-		
-		
 	}
 	
 	
@@ -308,17 +258,30 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 	{
 		if(e.getActionCommand()=="Zur\u00FCck")
 		{
-			//Zurück zur Schülerauswahl
+			this.setVisible(false);
+			getSwahl().setVisible(true);
 		}
 		else if(e.getActionCommand()=="Speichern")
 		{
 			getDatenFromMaske();
 		}
-		else if(e.getActionCommand()=="Zeugnis drucken")
+		else if(e.getActionCommand()=="Zeugnis anzeigen")
 		{
 			//Weiterleitung zum Zeugnisdruck-Formular
 		}
 		
+	}
+
+
+
+	public Dialog_Schuelerwahl getSwahl() {
+		return swahl;
+	}
+
+
+
+	public void setSwahl(Dialog_Schuelerwahl swahl) {
+		this.swahl = swahl;
 	}
 
 }
