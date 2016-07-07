@@ -44,6 +44,8 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 	private DefaultTableModel model = new DefaultTableModel();
 	private List<Zeugnisnote> spnoten = new ArrayList<Zeugnisnote>();
 	private JButton btnSpeichern = new JButton("Speichern");
+	private List<Zeugnisnote> zfachnoten;
+	private List<Zeugnisfach> zfaecher;
 	
 	private Schueler schueler;
 
@@ -165,14 +167,12 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 	public void setDatenToMaske()
 	{
 		int n = model.getRowCount();
-		for(int i=n-1;i>0;i++)
+		for(int i=n-1;i>=0;i=i-1)
 		{
 			model.removeRow(i);
 		}
-		
-		
-		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
-		List<Zeugnisfach> zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
+		zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+		zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
 		for(Zeugnisfach zfach:zfaecher)
 		{
 			boolean couldsorted = false;
@@ -211,36 +211,79 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 	*/
 	public void getDatenFromMaske()
 	{
-		table.getCellEditor().stopCellEditing();
-		List<Zeugnisnote> zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
-		int rows = model.getRowCount();
-		for(int row=0;row<rows-1;row++)
+		try
 		{
-			double pruef = 0;
+			try 
+			{
+				table.getCellEditor().stopCellEditing();
+			} 
+			catch(Exception e) {}
+			int rows = model.getRowCount();
+			for(int row=0;row<rows-1;row++)
+			{
+				double pruef = 0;
+				try
+				{
+					 pruef = Double.parseDouble(model.getValueAt(row, 1).toString());
+				}
+				catch(Exception ex)
+				{
+					pruef = 0;
+				}
+				if(pruef!=0)
+				{
+					int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
+					for(Zeugnisnote znote: zfachnoten)
+					{
+						
+						if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
+						{
+							boolean checksave = false;
+							if(wert>0&&wert<7)
+							{
+								checksave = true;
+							}
+							else
+							{
+								checksave = false;
+							}
+							if(checksave==true)
+							{
+								znote.setNoteZeugnis(wert);
+								spnoten.add(znote);
+								JOptionPane.showMessageDialog(null, "Die Daten konnten erfolgreich gespeichert werden!", "Meldung", JOptionPane.OK_OPTION);
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Die Note des Zeugnisfachs " +  znote.getZeugnisfach().getBez() + " hat einen ungültigen Wert!", "Warnung", JOptionPane.OK_OPTION);
+							}
+							
+							
+						}
+					}
+					
+				}
+				
+			}
+			for(Zeugnisnote zn:spnoten)
+			{				
+				zn.speichern();
+			}
 			try
 			{
-				 pruef = Double.parseDouble(model.getValueAt(row, 1).toString());
+				setDatenToMaske();
 			}
-			catch(Exception ex)
+			catch(Exception es)
 			{
-				pruef = 0;
-			}
-			if(pruef!=0)
-			{
-				JOptionPane.showMessageDialog(null, model.getValueAt(row, 2), "test", JOptionPane.OK_OPTION);
-				int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
-				for(Zeugnisnote znote: zfachnoten)
-				{
-					
-					if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
-					{
-						znote.setNoteZeugnis(wert);
-						spnoten.add(znote);
-					}
-				}
+				JOptionPane.showMessageDialog(null, "Fehler beim Aktualisieren der Zeugnisnotenliste!", "Meldung", JOptionPane.OK_OPTION);
 			}
 			
 		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Speichern der Zeugnisnoten war nicht erfolgreich!", "Warnung", JOptionPane.OK_OPTION);
+		}
+		
 		
 	}
 	
@@ -265,23 +308,19 @@ public class Dialog_ZeugnisnotenZumSchueler extends JDialog implements ActionLis
 	{
 		if(e.getActionCommand()=="Zur\u00FCck")
 		{
-			
+			//Zurück zur Schülerauswahl
 		}
 		else if(e.getActionCommand()=="Speichern")
 		{
 			getDatenFromMaske();
-			for(Zeugnisnote zn:spnoten)
-			{				
-				zn.speichern();
-			}
-			
 		}
 		else if(e.getActionCommand()=="Zeugnis drucken")
 		{
-			
+			//Weiterleitung zum Zeugnisdruck-Formular
 		}
 		
 	}
 
 }
+
 

@@ -13,6 +13,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -28,7 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
+public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField_Lehrer;
@@ -42,6 +43,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	
 	Lehrer lehrer;
 	Klasse klasse;
+	private JButton btnZurck;
 	
 	public Dialog_Schuelerwahl() 
 	{
@@ -56,16 +58,15 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	}
 	private void initGUI() 
 	{
-		setModal(true);
 		setBounds(100, 100, 560, 380);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{25, 267, 25, 0};
-		gbl_contentPanel.rowHeights = new int[]{25, 10, 0, 0, 25, 0};
+		gbl_contentPanel.rowHeights = new int[]{25, 10, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JPanel panel = new JPanel();
@@ -124,8 +125,9 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.gridwidth = 2;
 			gbc_scrollPane.fill = GridBagConstraints.BOTH;
-			gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+			gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 			gbc_scrollPane.gridx = 1;
 			gbc_scrollPane.gridy = 2;
 			contentPanel.add(scrollPane, gbc_scrollPane);
@@ -137,7 +139,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 		{
 			JPanel panel = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
+			gbc_panel.insets = new Insets(0, 0, 0, 5);
 			gbc_panel.fill = GridBagConstraints.BOTH;
 			gbc_panel.gridx = 1;
 			gbc_panel.gridy = 3;
@@ -178,11 +180,15 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 				panel.add(button_Zeugnis, gbc_button_Zeugnis);
 			}
 		}
-	}
-
-	public void SetDatenInMaske()
-	{
-		this.list_Schueler.setListData((klasse.getSchueler()).toArray());
+		{
+			btnZurck = new JButton("Zur\u00FCck");
+			btnZurck.addActionListener(this);
+			GridBagConstraints gbc_btnZurck = new GridBagConstraints();
+			gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnZurck.gridx = 2;
+			gbc_btnZurck.gridy = 3;
+			contentPanel.add(btnZurck, gbc_btnZurck);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -190,17 +196,24 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 		if(e.getActionCommand().equals(this.button_Notenblatt.getActionCommand()))
 		{
 			Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt();
+			this.setVisible(false);
 			dlg_notenblatt.setVisible(true);
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
 			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()));
+			this.setVisible(false);
 			dlg_zeugnisnoten.setVisible(true);
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnis.getActionCommand()))
 		{
 			Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
+			this.setVisible(false);
 			dlg_zeugnis.setVisible(true);
+		}
+		if(e.getActionCommand().equals(this.btnZurck.getActionCommand()))
+		{
+			this.dispose();
 		}
 	}
 	
