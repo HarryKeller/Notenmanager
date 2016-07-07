@@ -45,7 +45,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JLabel lblKlassenleiter;
 	private JSeparator separator;
 	private JSeparator separator_1;
-	private JButton btnZeugnisnotenAnlegen;
 	private Lehrer lehrer;
 	Klasse klasse = new Klasse();
 
@@ -55,6 +54,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	
 	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
+		setTitle("Hauptmen\u00FC");
 		this.lehrer = lehrer;	
 		initGUI();
 		ArrayList<Klasse> al = Klasse.alleLesen();
@@ -64,13 +64,11 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			if(k.getIdKlassenleiter().getId() == this.lehrer.getId())
 			{
 				this.btnKlassenuebersicht.setEnabled(true);
-				this.btnZeugnisnotenAnlegen.setEnabled(true);
 				found = true;
 			}
 			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
 			{
 				this.btnKlassenuebersicht.setEnabled(false);
-				this.btnZeugnisnotenAnlegen.setEnabled(false);
 			}
 		}
 		SetDatenInMaske();
@@ -211,16 +209,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_btnKlassenuebersicht.gridy = 2;
 		this.panel_klassenleiter.add(this.btnKlassenuebersicht, gbc_btnKlassenuebersicht);
 		
-		this.btnZeugnisnotenAnlegen = new JButton("Zeugnisnoten anlegen");
-		this.btnZeugnisnotenAnlegen.addActionListener(this);
-		this.btnZeugnisnotenAnlegen.setEnabled(false);
-		GridBagConstraints gbc_btnZeugnisnotenAnlegen = new GridBagConstraints();
-		gbc_btnZeugnisnotenAnlegen.insets = new Insets(5, 5, 5, 5);
-		gbc_btnZeugnisnotenAnlegen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnZeugnisnotenAnlegen.gridx = 0;
-		gbc_btnZeugnisnotenAnlegen.gridy = 3;
-		this.panel_klassenleiter.add(this.btnZeugnisnotenAnlegen, gbc_btnZeugnisnotenAnlegen);
-		
 		this.panel_button = new JPanel();
 		GridBagConstraints gbc_panel_button = new GridBagConstraints();
 		gbc_panel_button.insets = new Insets(0, 0, 0, 5);
@@ -269,7 +257,8 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob 
 		{
-			
+			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
+			dlg_schueler.setVisible(true);
 		}
 	}
 	public void itemStateChanged(ItemEvent arg0) 
