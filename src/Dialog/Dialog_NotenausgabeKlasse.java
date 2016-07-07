@@ -41,7 +41,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private JTextField textField_Fach;
 	private JPanel panel_buttons;
 	private JButton btn_zurueck;
-	private JButton btn_neuespalte;
+	private JButton btn_neueLeistung;
 	private JButton btn_aendern;
 	private JButton btn_verwerfen;
 	private JTabbedPane _tabbedPane;
@@ -59,10 +59,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private JScrollPane _scrollPane_3;	
 	private JScrollPane _scrollPane_2;	
 	
-	private NotenTable table_tab1_muendl;
-	private NotenTable table_tab1_schriftl;
-	private NotenTable table_tab2_muendl;
-	private NotenTable table_tab2_schriftl;
+	public NotenTable table_tab1_muendl;
+	public NotenTable table_tab1_schriftl;
+	public NotenTable table_tab2_muendl;
+	public NotenTable table_tab2_schriftl;
 	
 	private DefaultTableModel model_tab1_muendlich;
 	private DefaultTableModel model_tab1_schriftl;
@@ -88,6 +88,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	}
 	
 	private void initGUI() {
+		setTitle("Klassen Noten\u00FCbersicht");
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -353,9 +354,9 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.btn_zurueck.addActionListener(this);
 		this.panel_buttons.add(this.btn_zurueck);
 		
-		this.btn_neuespalte = new JButton("Spalte anlegen");
-		this.btn_neuespalte.addActionListener(this);
-		this.panel_buttons.add(this.btn_neuespalte);
+		this.btn_neueLeistung = new JButton("Leistung anlegen");
+		this.btn_neueLeistung.addActionListener(this);
+		this.panel_buttons.add(this.btn_neueLeistung);
 		
 		this.btn_aendern = new JButton("Spalte \u00E4ndern");
 		this.btn_aendern.addActionListener(this);
@@ -381,7 +382,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			
 			if(col == -1)
 			{					
-				header.addColumnTooltip(l.getErhebungsdatum().toString());
+				//header.addColumnTooltip(l.getErhebungsdatum().toString());
+				header.addColumnTooltip(l.getErhebungsdatum().format(this.germanFormatter));
 				model.addColumn(l.getLeistungsart().getBez());		
 				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, 
 																   model.getColumnCount() - 1);
@@ -450,10 +452,16 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		
 		this.setGradesInTable();
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.btn_zurueck)
 		{
 			this.dispose();
+		}
+		else if(e.getSource() == this.btn_neueLeistung)
+		{
+			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
+			dln.setVisible(true);
 		}
 	}
 }

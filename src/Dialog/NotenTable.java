@@ -18,6 +18,5 @@ public class NotenTable extends JTable
 	protected JTableHeader createDefaultTableHeader()
 	{
 		return new NotenTableHeader(columnModel);
-	}
-	
+	}	
 }
