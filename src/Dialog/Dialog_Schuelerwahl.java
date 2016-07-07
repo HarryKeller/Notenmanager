@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -21,9 +22,11 @@ import javax.swing.JTextField;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
+import Persistenz.DBZugriff;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 
@@ -31,6 +34,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	private JTextField textField_Lehrer;
 	private JTextField textField_Klasse;
 	
+	DefaultListModel<Schueler> dlm = new DefaultListModel<Schueler>();
 	JList list_Schueler;
 	JButton button_Notenblatt;
 	JButton button_Zeugnisnoten;
@@ -39,26 +43,6 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 	Lehrer lehrer;
 	Klasse klasse;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) 
-	{
-		try 
-		{
-			Dialog_Schuelerwahl dialog = new Dialog_Schuelerwahl();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public Dialog_Schuelerwahl() 
 	{
 		initGUI();
@@ -68,6 +52,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 		initGUI();
 		this.lehrer = lehrer;
 		this.klasse = klasse;
+		setDatenInMaske();
 	}
 	private void initGUI() 
 	{
@@ -145,7 +130,7 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			gbc_scrollPane.gridy = 2;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				list_Schueler = new JList();
+				list_Schueler = new JList(dlm);
 				scrollPane.setViewportView(list_Schueler);
 			}
 		}
@@ -217,5 +202,23 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
 			dlg_zeugnis.setVisible(true);
 		}
+	}
+	
+	public void setDatenInMaske()
+	{		
+		this.textField_Lehrer.setText(this.lehrer.getNachname());
+		this.textField_Klasse.setText(this.klasse.getBez());
+		
+		setDatenInListbox();
+	}
+	
+	public void setDatenInListbox()
+	{
+		ArrayList<Schueler> al = new ArrayList<Schueler>();
+        DBZugriff.alleLesen("Schueler", al, "WHERE klasse_id= " + klasse.getid());
+        for(Schueler s : al)
+        {
+        	this.dlm.addElement(s);
+        }
 	}
 }
