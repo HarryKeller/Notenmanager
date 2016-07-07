@@ -179,11 +179,6 @@ public class Dialog_Schuelerwahl extends JDialog implements ActionListener {
 			}
 		}
 	}
-
-	public void SetDatenInMaske()
-	{
-		this.list_Schueler.setListData((klasse.getSchueler()).toArray());
-	}
 	
 	public void actionPerformed(ActionEvent e) 
 	{
