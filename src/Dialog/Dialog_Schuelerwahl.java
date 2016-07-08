@@ -58,6 +58,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	}
 	private void initGUI() 
 	{
+		this.setExtendedState(MAXIMIZED_BOTH);
 		setBounds(100, 100, 560, 380);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
