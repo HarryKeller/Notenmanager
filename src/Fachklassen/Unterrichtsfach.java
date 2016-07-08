@@ -122,6 +122,14 @@ public class Unterrichtsfach {
 		return ret;
 	}
 	
+	public static ArrayList<Unterrichtsfach>AlleLesen(Zeugnisfach zf)
+	{
+		String hql = " uf WHERE uf.zfach.id = "+zf.getId();
+		ArrayList<Unterrichtsfach>al = new ArrayList<Unterrichtsfach>();
+		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
+		return al;
+	}
+	
 	public String toString()
 	{
 		return this.bez;
