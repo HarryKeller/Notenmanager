@@ -61,8 +61,8 @@ public class Zeugnisnote
 	
 		String hql =
 				"zn "		
-				+"INNER JOIN Schueler s "
-				+"ON s.id = "+ s.getId()+" "
+				+"INNER JOIN Zeugnis z "
+				+"ON z.schueler.id = "+ s.getId()+" "
 						//2015-10-10 > 2015-9-1
 				+"WHERE zn.aenderungszeitpunkt between '"+jbegin+"-9-1 '"	//Ab September des vorherigen Jahres	
 						//2015-10-10 < 2016-8-1
