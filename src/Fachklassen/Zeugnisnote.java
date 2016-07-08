@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -141,8 +142,69 @@ public class Zeugnisnote
 		
 		note = (muendlich + kurzarbeit + schriftlich) / 3;
 				
-		return note;
+		return Math.round(note * 100)/100.0;
 	}
+	
+	public double berechneNote(Zeugnisfach zf,Schueler schueler)
+	{
+		double muendlich = 0;
+		double schriftlich = 0;
+		double kurzarbeit = 0;
+		double note = 0;
+		double ki = 0;
+		double mi = 0;
+		double si = 0;
+		double znote = 0;
+		int gewichtung = 0;
+		
+		List<Unterrichtsfach> uf = zf.getUnterrichtsfächer();
+		
+		
+		for(Unterrichtsfach ufach : uf)
+		{
+			note = 0;
+			ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, ufach));
+			for (Leistung l : leistungen )
+			{
+				if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
+				{
+					schriftlich = schriftlich + l.getNotenstufe();	
+					si++;
+				}
+				else if (l.getLeistungsart().getBez().equals("Kurzarbeit"))
+				{
+					kurzarbeit = kurzarbeit + l.getNotenstufe();
+					ki++;
+				}
+				else
+				{
+					muendlich = muendlich + l.getNotenstufe();
+					mi++;
+				}
+			}
+			if(schriftlich != 0)
+			{
+				schriftlich = (schriftlich/si) * ufach.getGewichtungSchriftlich();			
+			}
+			if(kurzarbeit != 0)
+			{
+				kurzarbeit = (kurzarbeit/ki);		
+			}
+			if(muendlich != 0)
+			{
+				muendlich = muendlich/mi;
+			}
+			
+			note = ((muendlich + kurzarbeit + schriftlich) / 3 ) * ufach.getStunden();
+			
+			gewichtung = gewichtung + ufach.getStunden();
+			
+			znote = znote + note;
+		}
+		
+		return Math.round((znote / gewichtung * 100))/100.0;
+	}
+	
 	//-------------------------
 	
 	public String toString()
