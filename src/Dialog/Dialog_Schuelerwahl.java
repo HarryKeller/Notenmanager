@@ -201,7 +201,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
-			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()));
+			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()),this);
 			this.setVisible(false);
 			dlg_zeugnisnoten.setVisible(true);
 		}
