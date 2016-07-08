@@ -1,10 +1,12 @@
 package Fachklassen;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import Persistenz.DBZugriff;
 
@@ -19,8 +21,9 @@ public class Historie {
 	private int idDatensatz;	
 	private String vorgangsart;
 	private String text;
+	@ManyToOne
 	private Lehrer idLehrer;		//Lehrerklasse 
-	private Date eintragszeitpunkt;
+	private LocalDate eintragszeitpunkt;
 	
 	
 	public Historie()
@@ -33,14 +36,14 @@ public class Historie {
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
-	public static void speichern(Leistung l,Lehrer lehrer)
+	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
 		h.setTabelleName("Leistung");
-		
+		h.setEintragszeitpunkt(LocalDate.now());
 		if(l.getId() == 0)
 		{
-			h.setIdDatensatz(DBZugriff.speichernAndGetID(l));
+			h.setIdDatensatz(DBZugriff.speichernAndGetId(l));
 			h.setIdLehere(lehrer);
 			h.setVorgangsart("Anlegen");
 		}
@@ -50,7 +53,7 @@ public class Historie {
 			h.setVorgangsart("Aendern");
 		}
 		h.speichern();
-		
+		return true;
 	}
 	
 	
@@ -85,11 +88,11 @@ public class Historie {
 	public void setIdLehere(Lehrer idLehere) {
 		this.idLehrer = idLehere;
 	}
-	public Date getEintragszeitpunkt() {
+	public LocalDate getEintragszeitpunkt() {
 		return eintragszeitpunkt;
 	}
-	public void setEintragszeitpunkt(Date eintragszeitpunkt) {
-		this.eintragszeitpunkt = eintragszeitpunkt;
+	public void setEintragszeitpunkt(LocalDate localDate) {
+		this.eintragszeitpunkt = localDate;
 	}
 	public int getId() {
 		return id;
