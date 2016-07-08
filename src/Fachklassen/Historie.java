@@ -33,7 +33,7 @@ public class Historie {
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
-	public static void speichern(Leistung l)
+	public static void speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
 		h.setTabelleName("Leistung");
@@ -41,11 +41,13 @@ public class Historie {
 		if(l.getId() == 0)
 		{
 			h.setIdDatensatz(DBZugriff.speichernAndGetID(l));
-			
+			h.setIdLehere(lehrer);
+			h.setVorgangsart("Anlegen");
 		}
 		else
 		{
 			h.setIdDatensatz(l.getId());
+			h.setVorgangsart("Aendern");
 		}
 		h.speichern();
 		
