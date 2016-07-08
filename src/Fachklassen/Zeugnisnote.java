@@ -157,7 +157,7 @@ public class Zeugnisnote
 		double znote = 0;
 		int gewichtung = 0;
 		
-		List<Unterrichtsfach> uf = zf.getUnterrichtsfächer();
+		List<Unterrichtsfach> uf = Unterrichtsfach.AlleLesen(zf);
 		
 		
 		for(Unterrichtsfach ufach : uf)
