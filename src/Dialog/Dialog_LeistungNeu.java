@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JDialog;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
 import java.awt.Insets;
@@ -19,10 +21,18 @@ import javax.swing.JPanel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
-public class Dialog_LeistungNeu extends JDialog implements ActionListener
-{
+public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemListener
+{	
 	private JLabel lbl_tables;
 	private JComboBox cmbbox_tables;
 	private JLabel _label;
@@ -36,17 +46,18 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 	private Dialog_NotenausgabeKlasse notenausgabe;
 	
 	private DefaultComboBoxModel model_tables;
-	private DefaultComboBoxModel model_leistungsart;
+	private DefaultComboBoxModel model_leistungsart;	
 	
 	public Dialog_LeistungNeu(Dialog_NotenausgabeKlasse n)
-	{
+	{		
 		this.notenausgabe = n;
 		initGUI();
 		
-		this.setDateninMaske();
+		this.setTitle("Leistung ändern");
+		this.setDateninMaske();		
+		
 	}
-	private void initGUI() {
-		setTitle("Neue Leistung");
+	private void initGUI() {		
 		setBounds(100, 100, 450, 300);
 		
 		this.setModal(true);
@@ -65,7 +76,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 		gbc_lbl_tables.gridy = 0;
 		getContentPane().add(this.lbl_tables, gbc_lbl_tables);
 		
-		this.cmbbox_tables = new JComboBox();
+		this.cmbbox_tables = new JComboBox();				
 		this.model_tables = new DefaultComboBoxModel();
 		this.cmbbox_tables.setModel(this.model_tables);
 		GridBagConstraints gbc_cmbbox_tables = new GridBagConstraints();
@@ -91,7 +102,9 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 		gbc_cmbBox_Leistungsart.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cmbBox_Leistungsart.gridx = 0;
 		gbc_cmbBox_Leistungsart.gridy = 4;
-		getContentPane().add(this.cmbBox_Leistungsart, gbc_cmbBox_Leistungsart);
+		getContentPane().add(this.cmbBox_Leistungsart, gbc_cmbBox_Leistungsart);		
+		
+		this.cmbbox_tables.addItemListener(this);
 		
 		this._label_1 = new JLabel("Erhebungsdatum (Eingabe)");
 		this._label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -158,7 +171,10 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 		for(Leistungsart l: Leistungsart.AlleLesen())
 		{
 			this.model_leistungsart.addElement(l.getBez());
-		}
+		}		
+		
+		this.txt_erhebungsdatum.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(
+													   Locale.GERMAN)).toString());
 	}
 	
 	private void getDatenAusMaske()
@@ -167,6 +183,13 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 		
 		DefaultTableModel model;
 		NotenTableHeader header;
+		String s = this.txt_erhebungsdatum.getText();
+		
+		if(s.length() != 10 || s.split(".").length != 3)
+		{
+			JOptionPane.showMessageDialog(this, "Fehlerhafte eingabe des Datums! "
+											  + "Bitte überprüfen Sie ob das Format tt.mm.yyyy ist.");				
+		}
 		
 		if(i == 0)
 		{
@@ -208,6 +231,24 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener
 		{
 			this.getDatenAusMaske();
 			this.dispose();
+		}
+	}
+	
+	public void itemStateChanged(ItemEvent arg0) 
+	{
+		char c = ' ';
+		
+		//Mündliche noten ausgewählt
+		if(this.cmbbox_tables.getSelectedIndex() == 0 || this.cmbbox_tables.getSelectedIndex() == 2)			
+			c = 'M';
+		else if(this.cmbbox_tables.getSelectedIndex() == 1 || this.cmbbox_tables.getSelectedIndex() == 3)
+			c = 'S';
+		
+		this.model_leistungsart.removeAllElements();
+		for(Leistungsart l: Leistungsart.AlleLesen())
+		{
+			if(l.getGruppe() == c)
+			this.model_leistungsart.addElement(l.getBez());
 		}
 	}
 }
