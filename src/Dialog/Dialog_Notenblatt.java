@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Dialog_Notenblatt extends JFrame {
+public class Dialog_Notenblatt extends JFrame implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txt_schueler;
@@ -36,10 +36,12 @@ public class Dialog_Notenblatt extends JFrame {
 	Schueler schueler;
 	private JTable notentabelle;
 	private DefaultTableModel model = new DefaultTableModel();
+	Dialog_Schuelerwahl schuelerwahl;
 
-	public Dialog_Notenblatt(Schueler schueler) 
+	public Dialog_Notenblatt(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl) 
 	{
 		this.schueler = schueler;
+		this.schuelerwahl = Schuelerwahl;
 		setTitle("Notenblatt");
 		initGUI();
 		this.setDatenInMaske();	
@@ -203,7 +205,7 @@ public class Dialog_Notenblatt extends JFrame {
 			panel.setLayout(gbl_panel);
 			{
 				JButton btnZurck = new JButton("Zur\u00FCck");
-				btnZurck.addActionListener((ActionListener) this);
+				btnZurck.addActionListener(this);
 				GridBagConstraints gbc_btnZurck = new GridBagConstraints();
 				gbc_btnZurck.insets = new Insets(0, 0, 0, 5);
 				gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
@@ -221,16 +223,16 @@ public class Dialog_Notenblatt extends JFrame {
 			}
 		}
 	}
-	
+		
 	public void actionPerformed(ActionEvent e) 
 	{
 		String action = e.getActionCommand();
 		if(action.equals("Zurück"))
 		{
-			
+			this.schuelerwahl.setVisible(true);
+			this.dispose();
 		}
 	}
-	
 	private void setDatenInMaske()
 	{
 		this.txt_schueler.setText(this.schueler.getNachname()+" "+this.schueler.getVorname());
