@@ -358,13 +358,25 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.btn_neueLeistung.addActionListener(this);
 		this.panel_buttons.add(this.btn_neueLeistung);
 		
-		this.btn_aendern = new JButton("Spalte \u00E4ndern");
+		this.btn_aendern = new JButton("Leistung l\u00F6schen");
 		this.btn_aendern.addActionListener(this);
 		this.panel_buttons.add(this.btn_aendern);
 		
 		this.btn_verwerfen = new JButton("Verwerfen");
 		this.btn_verwerfen.addActionListener(this);
 		this.panel_buttons.add(this.btn_verwerfen);
+		
+		this.table_tab1_muendl.setRowSelectionAllowed(false);
+		this.table_tab1_muendl.setColumnSelectionAllowed(false);
+		
+		this.table_tab1_schriftl.setRowSelectionAllowed(false);
+		this.table_tab1_schriftl.setColumnSelectionAllowed(false);
+		
+		this.table_tab2_muendl.setRowSelectionAllowed(false);
+		this.table_tab2_muendl.setColumnSelectionAllowed(false);
+		
+		this.table_tab2_schriftl.setRowSelectionAllowed(false);
+		this.table_tab2_schriftl.setColumnSelectionAllowed(false);
 	}
 	
 	//Prüft ob Spalten benötigt werden -1 = keine Spalte gefunden, 0 + aufwärts = Spaltenindex
@@ -381,8 +393,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			int col = this.isColumnRequiered(header, l);
 			
 			if(col == -1)
-			{					
-				//header.addColumnTooltip(l.getErhebungsdatum().toString());
+			{				
 				header.addColumnTooltip(l.getErhebungsdatum().format(this.germanFormatter));
 				model.addColumn(l.getLeistungsart().getBez());		
 				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, 
@@ -459,6 +470,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			this.dispose();
 		}
 		else if(e.getSource() == this.btn_neueLeistung)
+		{
+			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
+			dln.setVisible(true);
+		}
+		else if(e.getSource() == this.btn_aendern)
 		{
 			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
 			dln.setVisible(true);
