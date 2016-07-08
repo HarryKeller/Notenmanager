@@ -33,15 +33,12 @@ public class Zeugnisfach {
 		this.klasse = klasse;
 	}
 
-	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
-		this.unterrichtsfächer = unterrichtsfächer;
-	}
-
+	
 	private boolean vorrueckungsfach;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "zfach_id")	
-	private List<Unterrichtsfach> unterrichtsfächer = new ArrayList<Unterrichtsfach>();
+	@JoinColumn(name = "zfach_id")
+	private List<Unterrichtsfach> unterrichtsfaecher = new ArrayList<Unterrichtsfach>();
 	
 	
 	public static ArrayList<Zeugnisfach>alleLesen(Klasse k)
@@ -53,6 +50,8 @@ public class Zeugnisfach {
 		DBZugriff.alleLesen("Zeugnisfach zf", al, hql);
 		return al;
 	}
+	
+	
 	public String toString()
 	{
 		return this.bez;
@@ -93,7 +92,7 @@ public class Zeugnisfach {
 	}
 		
 	public List<Unterrichtsfach> getUnterrichtsfächer() {
-		return unterrichtsfächer;
+		return unterrichtsfaecher;
 	}	
 
 	public int getId() {
@@ -103,6 +102,10 @@ public class Zeugnisfach {
 	public Klasse getKlasse() {
 		return klasse;
 	}
+	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
+		this.unterrichtsfaecher = unterrichtsfächer;
+	}
+
 	
 	//Konstruktoren
 	public Zeugnisfach(){}
@@ -125,6 +128,7 @@ public class Zeugnisfach {
 	
 	public void addUnterrichtsfach(Unterrichtsfach uf)
 	{
-		this.unterrichtsfächer.add(uf);
+		this.unterrichtsfaecher.add(uf);
 	}
+	
 }
