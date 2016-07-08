@@ -176,4 +176,28 @@ public class DBZugriff
 		}
 	}
 	
+	public static int speichernAndGetId(Object o)
+	{
+		Session session = null;
+		int ret = -1;
+		try
+		{
+			// neue Sesseion beginnen
+			session = sessionFactory.openSession();
+		
+			// Tranaktion beginnen
+			Transaction t = session.beginTransaction();
+		
+			ret = (int) session.save(o);
+			t.commit();
+		}
+		catch (HibernateException e)
+		{
+			System.out.println("Fehler beim Speichern!");
+			Logger logger = Logger.getRootLogger();
+			logger.error("Fehler beim Speichern!");
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }
