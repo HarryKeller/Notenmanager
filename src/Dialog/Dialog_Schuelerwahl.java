@@ -1,10 +1,8 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -15,6 +13,7 @@ import java.awt.Insets;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
@@ -36,7 +35,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	private JTextField textField_Klasse;
 	
 	DefaultListModel<Schueler> dlm = new DefaultListModel<Schueler>();
-	JList list_Schueler;
+	JList<Schueler> list_Schueler;
 	JButton button_Notenblatt;
 	JButton button_Zeugnisnoten;
 	JButton button_Zeugnis;
@@ -196,21 +195,43 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	{
 		if(e.getActionCommand().equals(this.button_Notenblatt.getActionCommand()))
 		{
-			Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt();
-			this.setVisible(false);
-			dlg_notenblatt.setVisible(true);
+			try
+			{
+				Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt((Schueler)this.list_Schueler.getSelectedValue(), this);
+				this.setVisible(false);
+				dlg_notenblatt.setVisible(true);
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex.getMessage());
+				JOptionPane.showMessageDialog(null, "Es wurde kein Schueler ausgewählt oder ein anderer Fehler ist aufgetreten!", "Warnung!", JOptionPane.OK_OPTION);
+			}
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
-			Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()),this);
-			this.setVisible(false);
-			dlg_zeugnisnoten.setVisible(true);
+			try
+			{
+				Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()),this);
+				this.setVisible(false);
+				dlg_zeugnisnoten.setVisible(true);
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, "Es wurde kein Schueler ausgewählt oder ein anderer Fehler ist aufgetreten!", "Warnung!", JOptionPane.OK_OPTION);
+			}
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnis.getActionCommand()))
 		{
-			Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
-			this.setVisible(false);
-			dlg_zeugnis.setVisible(true);
+			try
+			{
+				Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
+				this.setVisible(false);
+				dlg_zeugnis.setVisible(true);
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, "Es wurde kein Schueler ausgewählt oder ein anderer Fehler ist aufgetreten!", "Warnung!", JOptionPane.OK_OPTION);
+			}
 		}
 		if(e.getActionCommand().equals(this.btnZurck.getActionCommand()))
 		{
@@ -220,7 +241,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	
 	public void setDatenInMaske()
 	{		
-		this.textField_Lehrer.setText(this.lehrer.getNachname());
+		this.textField_Lehrer.setText(this.lehrer.getNachname() + " " + this.lehrer.getVorname());
 		this.textField_Klasse.setText(this.klasse.getBez());
 		
 		setDatenInListbox();
