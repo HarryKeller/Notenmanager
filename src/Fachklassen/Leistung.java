@@ -62,11 +62,11 @@ public class Leistung
 		String sql = 
 				"l "
 				+"INNER JOIN UFachLehrer ufl "
-				+ "ON l.ufachlehrer.id = ufl.id "
-				+ "AND ufl.ufach.id = "+ufach.getId()+" "
+				+"ON ufl.ufach.id = "+ufach.getId()+" "
 				+ "INNER JOIN Unterrichtsfach uf "
 				+ "ON uf.id = ufl.id "
 				+ "WHERE l.schueler.id = "+schueler.getId()+" "
+				+ "AND l.ufachlehrer.id = ufl.id "
 				+ "ORDER BY l.erhebungsdatum";
 							
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
