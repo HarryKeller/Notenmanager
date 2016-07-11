@@ -24,9 +24,9 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private static DateTimeFormatter germanFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(
 													   Locale.GERMAN);
 
-	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("01.09.2015",germanFormatter);
-	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("01.02.2016",germanFormatter);
-	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("01.08.2016",germanFormatter);
+	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
+	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
+	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("2016-08-01");
 	
 	private Lehrer lehrer;
 	private Klasse klasse;
