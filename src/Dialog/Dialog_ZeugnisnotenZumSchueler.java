@@ -44,6 +44,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		setSchueler(s);
 		setSwahl(sw);
 		
+		this.setTitle("Zeugnisnoten - Anzeigen");
 		setBounds(100, 100, 762, 496);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{32, 178, 326, 151, 0, 0};
@@ -250,7 +251,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 							{
 								znote.setNoteZeugnis(wert);
 								spnoten.add(znote);
-								JOptionPane.showMessageDialog(null, "Die Daten konnten erfolgreich gespeichert werden!", "Meldung", JOptionPane.OK_OPTION);
 							}
 							else
 							{
