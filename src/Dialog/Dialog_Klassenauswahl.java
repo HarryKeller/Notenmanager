@@ -22,12 +22,20 @@ import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schule;
 import Fachklassen.Unterrichtsfach;
+import Persistenz.DBZugriff;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
+
+public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener, WindowListener
 
 {
 	private JPanel panel_combobox;
@@ -41,12 +49,15 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JLabel lblFcherauswahl;
 	private JButton btnFachuebersicht;
 	private JButton btnKlassenuebersicht;
-	private JButton btnZurueck;
+	private JButton btnSchlieﬂen;
 	private JLabel lblKlassenleiter;
 	private JSeparator separator;
 	private JSeparator separator_1;
 	private Lehrer lehrer;
 	Klasse klasse = new Klasse();
+	private JMenuBar menuBar;
+	private JMenu menuBenutzer;
+	private JMenuItem mitemBenutzerWechseln;
 
 	/**
 	 * Create the dialog.
@@ -54,9 +65,11 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	
 	public Dialog_Klassenauswahl(Lehrer lehrer)
 	{
+		addWindowListener(this);
 		setTitle("Hauptmen\u00FC");
-		this.lehrer = lehrer;	
+		this.lehrer = lehrer;					
 		initGUI();
+		
 		ArrayList<Klasse> al = Klasse.alleLesen();
 		boolean found = false;
 		for(Klasse k : al)
@@ -232,14 +245,24 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_btnFachuebersicht.gridy = 0;
 		this.panel_button.add(this.btnFachuebersicht, gbc_btnFachuebersicht);
 		
-		this.btnZurueck = new JButton("Zur\u00FCck");
-		this.btnZurueck.addActionListener(this);
-		GridBagConstraints gbc_btnZurueck = new GridBagConstraints();
-		gbc_btnZurueck.insets = new Insets(0, 10, 0, 10);
-		gbc_btnZurueck.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnZurueck.gridx = 1;
-		gbc_btnZurueck.gridy = 0;
-		this.panel_button.add(this.btnZurueck, gbc_btnZurueck);
+		this.btnSchlieﬂen = new JButton("Schlie\u00DFen");
+		this.btnSchlieﬂen.addActionListener(this);
+		GridBagConstraints gbc_btnSchlieﬂen = new GridBagConstraints();
+		gbc_btnSchlieﬂen.insets = new Insets(0, 10, 0, 10);
+		gbc_btnSchlieﬂen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSchlieﬂen.gridx = 1;
+		gbc_btnSchlieﬂen.gridy = 0;
+		this.panel_button.add(this.btnSchlieﬂen, gbc_btnSchlieﬂen);
+		
+		this.menuBar = new JMenuBar();
+		setJMenuBar(this.menuBar);
+		
+		this.menuBenutzer = new JMenu("Benutzer");
+		this.menuBar.add(this.menuBenutzer);
+		
+		this.mitemBenutzerWechseln = new JMenuItem("Benutzer wechseln");
+		this.mitemBenutzerWechseln.addActionListener(this);
+		this.menuBenutzer.add(this.mitemBenutzerWechseln);
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -249,16 +272,19 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());
 			dlg_notenausgabeKlasse.setVisible(true);
 		}		
-		if(e.getActionCommand().equals(btnZurueck.getActionCommand())) // Abfrage auf Dr¸cken des Login-Buttons "button_Login"
+		if(e.getActionCommand().equals(btnSchlieﬂen.getActionCommand())) // Abfrage auf Dr¸cken des Login-Buttons "button_Login"
 		{
 			this.dispose();
-			Dialog_Login dlg_login = new Dialog_Login();
-			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob 
+		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Butten Klassenuebersicht gedr¸ckt wurde
 		{
 			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
 			dlg_schueler.setVisible(true);
+		}
+		if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedr¸ckt wurde
+		{
+			Dialog_Login dlg_login = new Dialog_Login();
+			dlg_login.setVisible(true);
 		}
 	}
 	public void itemStateChanged(ItemEvent arg0) 
@@ -285,5 +311,22 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		{
 			btnFachuebersicht.setEnabled(true);
 		}
+	}
+	
+	public void windowActivated(WindowEvent arg0) {
+	}
+	public void windowClosed(WindowEvent arg0) 
+	{
+		DBZugriff.closeDB();
+	}
+	public void windowClosing(WindowEvent arg0) {
+	}
+	public void windowDeactivated(WindowEvent arg0) {
+	}
+	public void windowDeiconified(WindowEvent arg0) {
+	}
+	public void windowIconified(WindowEvent arg0) {
+	}
+	public void windowOpened(WindowEvent e) {
 	}
 }
