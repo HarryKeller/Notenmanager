@@ -10,6 +10,16 @@ import javax.swing.border.EmptyBorder;
 
 
 
+
+
+
+
+
+
+
+
+
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -20,12 +30,18 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Fachklassen.Leistung;
 import Fachklassen.Schueler;
+import Fachklassen.Unterrichtsfach;
 
 import java.awt.Color;
+
 import javax.swing.JScrollPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Dialog_Notenblatt extends JFrame implements ActionListener {
 
@@ -37,6 +53,10 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private JTable notentabelle;
 	private DefaultTableModel model = new DefaultTableModel();
 	Dialog_Schuelerwahl schuelerwahl;
+	private DefaultTableModel model_notentabelle;
+	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
+	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
+	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("2016-08-01");
 
 	public Dialog_Notenblatt(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl) 
 	{
@@ -181,9 +201,13 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 				panel.add(scrollPane, gbc_scrollPane);
 				{
 					notentabelle = new JTable();
+					this.model_notentabelle = new DefaultTableModel();
+					this.notentabelle.setModel(this.model_notentabelle);
 					model.addColumn("Fach");
-					model.addColumn("mündlich");
-					model.addColumn("schriftlich");
+					model.addColumn("mündlich (1. Halbjahr)");
+					model.addColumn("mündlich (2. Halbjahr)");
+					model.addColumn("schriftlich (1. Halbjahr)");
+					model.addColumn("schriftlich (2. Halbjahr)");
 					notentabelle.setModel(model);
 					scrollPane.setViewportView(notentabelle);
 				}
@@ -238,6 +262,36 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		this.txt_schueler.setText(this.schueler.getNachname()+" "+this.schueler.getVorname());
 		this.txt_klasse.setText(this.schueler.getKlasseid().getBez());
 		this.txt_lehrer.setText(this.schueler.getKlasseid().getIdKlassenleiter().getNachname()+ " " + this.schueler.getKlasseid().getIdKlassenleiter().getVorname());
+		filltable();
+	}
+	private void filltable()
+	{			
+		//Alle Noten Lesen
+		ArrayList<Leistung> grades = Leistung.AlleLesen();
+		//Alle Noten vom Schüler herausfiltern
+		for(Leistung l : grades)
+		{
+			if(l.getSchueler().getId() != this.schueler.getId())
+			{
+       		    grades.remove(l.getSchueler());
+			}
+		}
+		//Array mit Fächern füllen
+		ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
+		//Sortier ArrayListen anlegen
+
+		for(Unterrichtsfach f : fach)
+		{
+//			ArrayList<Leistung> muendlicherstes = (this.schueler.getMuendlich(f, this.BEGINN_SCHULJAHR,this.BEGINN_HALBJAHR));
+//			ArrayList<Leistung> muendlichzweites = (this.schueler.getMuendlich(f, this.BEGINN_HALBJAHR,this.ENDE_SCHULJAHR));
+//			ArrayList<Leistung> schriftlicherstes = (this.schueler.getSchriftlich(f, this.BEGINN_SCHULJAHR,this.BEGINN_HALBJAHR));
+//			ArrayList<Leistung> schriftlichzweites = (this.schueler.getSchriftlich(f, this.BEGINN_HALBJAHR,this.ENDE_SCHULJAHR));
+			for (Leistung l : this.schueler.getMuendlich(f, this.BEGINN_SCHULJAHR,this.BEGINN_HALBJAHR))
+			{
+				//KEINEN PLAN!
+			}
+
+		}
 	}
 
 }
