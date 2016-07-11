@@ -139,9 +139,16 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			int finalNote =  0;
 			for(Zeugnisnote znote: zfachnoten)
 			{
+				errNote = 0;
+				finalNote=0;
 				if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
 				{
 					errNote = znote.getNoteErrechnet();
+					if(errNote==0)
+					{
+						znote.berechneNote(znote.getZeugnisfach(), this.getSchueler());
+						errNote = znote.getNoteErrechnet();
+					}
 					finalNote =  znote.getNoteZeugnis();
 					if(finalNote==0)
 					{
