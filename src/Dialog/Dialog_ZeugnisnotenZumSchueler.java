@@ -163,6 +163,11 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			}
 			if(couldsorted==false)
 			{
+				Zeugnisnote zno = new Zeugnisnote();
+				zno.setAenderungszeitpunkt(LocalDate.now());
+				zno.setZeugnisfach(zfach);
+				zno.setSchueler(schueler);
+				zno.setNoteErrechnet(zno.berechneNote(zfach, schueler));
 				model.addRow(new Object[]{fachBez, "",""});
 			}
 			
@@ -292,5 +297,3 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 
 }
-
-
