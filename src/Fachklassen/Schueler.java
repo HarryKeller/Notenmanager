@@ -93,7 +93,6 @@ public class Schueler
 				
 				for(Leistung l: lst)
 				{
-					System.out.println(l);
 					if(l.getLeistungsart().getGruppe() == 'S' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
 						ret.add(l);
 				}
