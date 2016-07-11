@@ -130,6 +130,14 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
+	public static ArrayList<Unterrichtsfach> AlleLesen()
+	{
+		ArrayList<Unterrichtsfach> al = new ArrayList<Unterrichtsfach>();
+		DBZugriff.alleLesen("Unterrichtsfach", al, "");
+		
+		return al;
+	}
+	
 	public String toString()
 	{
 		return this.bez;
