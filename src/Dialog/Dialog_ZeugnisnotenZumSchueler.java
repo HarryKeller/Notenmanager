@@ -20,6 +20,7 @@ import java.util.List;
 import java.time.LocalDate;
 
 import Fachklassen.Schueler;
+import Fachklassen.Zeugnis;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 
@@ -36,6 +37,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	private List<Zeugnisfach> zfaecher;
 	private Schueler schueler;
 	private Dialog_Schuelerwahl swahl;
+	private Zeugnis zeugnis;
 	
 	public Dialog_ZeugnisnotenZumSchueler(Schueler s, Dialog_Schuelerwahl sw) 
 	{
@@ -130,6 +132,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			model.removeRow(i);
 		}
 		zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+		GetZeugnisFromZeugnisnoten(zfachnoten);
 		zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
 		for(Zeugnisfach zfach:zfaecher)
 		{
@@ -168,11 +171,38 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				zno.setZeugnisfach(zfach);
 				zno.setSchueler(schueler);
 				zno.setNoteErrechnet(zno.berechneNote(zfach, schueler));
-				model.addRow(new Object[]{fachBez, "",""});
+				if(this.getZeugnis()==null)
+				{
+					Zeugnis z = new Zeugnis();
+					z.setSchueler(this.getSchueler());
+					z.speichern();
+					zno.setZeugnis(z);
+				}
+				else
+				{
+					zno.setZeugnis(this.getZeugnis());
+				}
+				zno.speichern();
+				this.zfachnoten.add(zno);
+				model.addRow(new Object[]{fachBez, zno.getNoteErrechnet(),""});
 			}
 			
 		}
 		table.setModel(model);
+	}
+	
+	
+	
+	private void GetZeugnisFromZeugnisnoten(List<Zeugnisnote> list)
+	{
+		boolean pruef = false;
+		for(Zeugnisnote note:list)
+		{
+			if(this.getZeugnis()==null)
+			{
+				this.setZeugnis(note.getZeugnis());
+			}
+		}
 	}
 	
 	
@@ -294,6 +324,18 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 
 	public void setSwahl(Dialog_Schuelerwahl swahl) {
 		this.swahl = swahl;
+	}
+
+
+
+	public Zeugnis getZeugnis() {
+		return zeugnis;
+	}
+
+
+
+	public void setZeugnis(Zeugnis zeugnis) {
+		this.zeugnis = zeugnis;
 	}
 
 }
