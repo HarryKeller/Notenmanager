@@ -79,10 +79,13 @@ public class Schueler
 		return ret;	//Rückgabe der verbliebenen, also der Mündlichen Arbeiten
 	}
 	
+	
+	
+	
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
 	{
 			//Alle Leistungen des Schülers für ein Fach lesen
-				ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+				ArrayList<Leistung>lst = new ArrayList<Leistung>(Leistung.AlleLesen(this, ufach));
 				//Rausschmeissen aller Schriftlichen arbeiten
 				ArrayList<Leistung>ret = new ArrayList<Leistung>();
 				
@@ -90,6 +93,7 @@ public class Schueler
 				
 				for(Leistung l: lst)
 				{
+					System.out.println(l);
 					if(l.getLeistungsart().getGruppe() == 'S' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
 						ret.add(l);
 				}
