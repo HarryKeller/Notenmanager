@@ -43,6 +43,24 @@ public class NotenTableHeader extends JTableHeader
 	
 	public int findColumnWithTooltip(String tooltip)
 	{
-		return this.tooltips.indexOf(tooltip);
+		int i = 0;
+		int ret = -1;
+		
+		for(String s : this.tooltips)
+		{
+			if(tooltip.equals(s))
+			{
+				ret = i;
+			}
+			
+			i++;
+		}
+		
+		return ret;		
+	}	
+	
+	public void emptyTooltips()
+	{
+		this.tooltips.clear();
 	}
 }

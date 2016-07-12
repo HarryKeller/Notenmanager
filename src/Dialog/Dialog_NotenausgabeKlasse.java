@@ -42,7 +42,6 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private JPanel panel_buttons;
 	private JButton btn_zurueck;
 	private JButton btn_neueLeistung;
-	private JButton btn_aendern;
 	private JButton btn_verwerfen;
 	private JTabbedPane _tabbedPane;
 	private JPanel tab1_contentPanel;
@@ -87,7 +86,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setDatenInMaske();
 	}
 	
-	private void initGUI() {
+	private void initGUI() {		
 		setTitle("Klassen Noten\u00FCbersicht");
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -358,10 +357,6 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.btn_neueLeistung.addActionListener(this);
 		this.panel_buttons.add(this.btn_neueLeistung);
 		
-		this.btn_aendern = new JButton("Leistung l\u00F6schen");
-		this.btn_aendern.addActionListener(this);
-		this.panel_buttons.add(this.btn_aendern);
-		
 		this.btn_verwerfen = new JButton("Verwerfen");
 		this.btn_verwerfen.addActionListener(this);
 		this.panel_buttons.add(this.btn_verwerfen);
@@ -376,7 +371,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_muendl.setColumnSelectionAllowed(false);
 		
 		this.table_tab2_schriftl.setRowSelectionAllowed(false);
-		this.table_tab2_schriftl.setColumnSelectionAllowed(false);
+		this.table_tab2_schriftl.setColumnSelectionAllowed(false);				
 	}
 	
 	//Prüft ob Spalten benötigt werden -1 = keine Spalte gefunden, 0 + aufwärts = Spaltenindex
@@ -394,14 +389,23 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			
 			if(col == -1)
 			{				
-				header.addColumnTooltip(l.getErhebungsdatum().format(this.germanFormatter));
+				header.addColumnTooltip(l.getErhebungsdatum().toString());
 				model.addColumn(l.getLeistungsart().getBez());		
 				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, 
 																   model.getColumnCount() - 1);
 			}	
 			else if(col >= 0)
 			{
-				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1 , col);
+				if(model.getValueAt(model.getRowCount() - 1, col) == "" || model.getValueAt(model.getRowCount() - 1, col) == null)
+				{
+					model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1 , col);
+				}
+				else
+				{
+					header.addColumnTooltip(l.getErhebungsdatum().toString());
+					model.addColumn(l.getArt().getBez());
+					model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, model.getColumnCount() - 1);
+				}				
 			}				
 		}	
 	}
@@ -409,31 +413,37 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
-		
-		//Vorbereitung der Tabellen
 		NotenTableHeader header_tab1_muendl = (NotenTableHeader) this.table_tab1_muendl.getTableHeader();
+		NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();	
+		NotenTableHeader header_tab2_muendl = (NotenTableHeader) this.table_tab2_muendl.getTableHeader();
+		NotenTableHeader header_tab2_schriftl = (NotenTableHeader) this.table_tab2_schriftl.getTableHeader();		
+				
+		header_tab1_muendl.emptyTooltips();
+		header_tab1_schriftl.emptyTooltips();
+		header_tab2_muendl.emptyTooltips();
+		header_tab2_schriftl.emptyTooltips();
+		
+		//Vorbereitung der Tabellen		
 		this.model_tab1_muendlich.addColumn("Name");
 		header_tab1_muendl.addColumnTooltip("");
 		this.model_tab1_muendlich.addColumn("Vorname");	
-		header_tab1_muendl.addColumnTooltip("");
-		
-		NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();		
+		header_tab1_muendl.addColumnTooltip("");		
+			
 		this.model_tab1_schriftl.addColumn("Name");
 		header_tab1_schriftl.addColumnTooltip("");
 		this.model_tab1_schriftl.addColumn("Vorname");
-		header_tab1_schriftl.addColumnTooltip("");
+		header_tab1_schriftl.addColumnTooltip("");		
 		
-		NotenTableHeader header_tab2_muendl = (NotenTableHeader) this.table_tab2_muendl.getTableHeader();
 		this.model_tab2_muendlich.addColumn("Name");
 		header_tab2_muendl.addColumnTooltip("");
 		this.model_tab2_muendlich.addColumn("Vorname");	
-		header_tab2_muendl.addColumnTooltip("");
+		header_tab2_muendl.addColumnTooltip("");		
 		
-		NotenTableHeader header_tab2_schriftl = (NotenTableHeader) this.table_tab2_schriftl.getTableHeader();		
 		this.model_tab2_schriftl.addColumn("Name");
 		header_tab2_schriftl.addColumnTooltip("");
 		this.model_tab2_schriftl.addColumn("Vorname");
 		header_tab2_schriftl.addColumnTooltip("");
+		
 		
 		//Abarbeitung der Schueler in der Klasse		
 		Set<Schueler> schueler = this.klasse.getSchueler();
@@ -464,6 +474,19 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setGradesInTable();
 	}
 	
+	private void emptyTable()
+	{
+		this.model_tab1_muendlich = new DefaultTableModel();
+		this.model_tab1_schriftl = new DefaultTableModel();
+		this.model_tab2_muendlich = new DefaultTableModel();
+		this.model_tab2_schriftl = new DefaultTableModel();
+		
+		this.table_tab1_muendl.setModel(model_tab1_muendlich);
+		this.table_tab1_schriftl.setModel(model_tab1_schriftl);
+		this.table_tab2_muendl.setModel(model_tab2_muendlich);
+		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.btn_zurueck)
 		{
@@ -474,10 +497,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
 			dln.setVisible(true);
 		}
-		else if(e.getSource() == this.btn_aendern)
+		else if(e.getSource() == this.btn_verwerfen)
 		{
-			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
-			dln.setVisible(true);
+			this.emptyTable();
+			
+			this.setDatenInMaske();
 		}
-	}
+	}	
 }
