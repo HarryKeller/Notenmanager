@@ -227,7 +227,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			int counter = 0;
 			for(Zeugnisfach zfach:zfaecher)
 			{
-				if(zfach.getBez().equals((table.getValueAt(counter, 1))))
+				if(zfach.getBez().equals((table.getValueAt(counter, 0))))
 				{
 					try
 					{
