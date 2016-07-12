@@ -63,7 +63,7 @@ public class Lehrer
 		
 	}
 	
-	public ArrayList<Lehrer> alleLesen()
+	public static  ArrayList<Lehrer> alleLesen()
 	{
 		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
 		DBZugriff.alleLesen("Lehrer", al, "");
