@@ -222,40 +222,28 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			int rows = model.getRowCount();
 			for(int row=0;row<rows-1;row++)
 			{
-				double pruef = 0;
-				try
+				int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
+				for(Zeugnisnote znote: zfachnoten)
 				{
-					 pruef = Double.parseDouble(model.getValueAt(row, 1).toString());
-				}
-				catch(Exception ex)
-				{
-					pruef = 0;
-				}
-				if(pruef!=0)
-				{
-					int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(row, 2).toString()));
-					for(Zeugnisnote znote: zfachnoten)
+					if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
 					{
-						if(znote.getZeugnisfach().getBez().equals(model.getValueAt(row, 0).toString())&&znote.getNoteErrechnet()!=0)
+						boolean checksave = false;
+						if(wert>0&&wert<7)
 						{
-							boolean checksave = false;
-							if(wert>0&&wert<7)
-							{
-								checksave = true;
-							}
-							else
-							{
-								checksave = false;
-							}
-							if(checksave==true)
-							{
-								znote.setNoteZeugnis(wert);
-								spnoten.add(znote);
-							}
-							else
-							{
-								JOptionPane.showMessageDialog(null, "Die Note des Zeugnisfachs " +  znote.getZeugnisfach().getBez() + " hat einen ungültigen Wert!", "Warnung", JOptionPane.OK_OPTION);
-							}
+							checksave = true;
+						}
+						else
+						{
+							checksave = false;
+						}
+						if(checksave==true)
+						{
+							znote.setNoteZeugnis(wert);
+							spnoten.add(znote);
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Die Note des Zeugnisfachs " +  znote.getZeugnisfach().getBez() + " hat einen ungültigen Wert!", "Warnung", JOptionPane.OK_OPTION);
 						}
 					}
 				}
