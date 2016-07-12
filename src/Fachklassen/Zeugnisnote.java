@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,33 +64,36 @@ public class Zeugnisnote
 	
 		String hql =
 				"zn "		
-				+"INNER JOIN Zeugnis z "
-				+"ON z.schueler.id = "+ s.getId()+" "
 						//2015-10-10 > 2015-9-1
 				+"WHERE zn.aenderungszeitpunkt between '"+jbegin+"-9-1 '"	//Ab September des vorherigen Jahres	
 						//2015-10-10 < 2016-8-1
-				+"AND '"+jende+"-8-1 '";		//Bis August des aktuellen Jahres
+				+"AND '"+jende+"-8-1 '"		//Bis August des aktuellen Jahres
+				+ "AND zn.schueler.id =	" +s.getId()+" ";
 		
 			System.out.println(hql);	
 		
 				
-		ArrayList<Object[] >al = new ArrayList<Object[]>();
+		ArrayList<Zeugnisnote >al = new ArrayList<Zeugnisnote>();
 		DBZugriff.alleLesen("Zeugnisnote", al,hql );
-		ArrayList<Zeugnisnote>ret = new ArrayList<Zeugnisnote>();
-		
-		for(Object[] or: al)
-		{
-			ret.add((Zeugnisnote)or[0]);
-		}
-		
-		
-		
-		return ret;
+	return al;
 	}
 	
 	
 	
-	
+	public boolean equals(Zeugnisnote zn)
+	{
+		
+		if(zn.getId() == this.getId()) 
+		{
+			return true;
+		}	
+		else
+		{
+			return false;
+		}
+		
+		
+	}
 	
 	
 	
