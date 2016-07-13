@@ -57,7 +57,10 @@ public class Lehrer
 	{
 		DBZugriff.lesen(this, id);
 	}
-	
+	public void loeschen()
+	{
+		DBZugriff.loeschen(this);
+	}
 	public Lehrer()
 	{
 		
