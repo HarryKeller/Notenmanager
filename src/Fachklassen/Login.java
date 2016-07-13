@@ -20,6 +20,7 @@ public class Login
 	private String pw;
 	@ManyToOne
 	private Lehrer lehrer;
+	private boolean admin;
 	
 	public Login()
 	{
@@ -73,5 +74,14 @@ public class Login
 		return id;
 	}
 	
+	public boolean isAdmin()
+	{
+		return admin;
+	}
+
+	public void setAdmin(boolean admin)
+	{
+		this.admin = admin;
+	}
 	
 }

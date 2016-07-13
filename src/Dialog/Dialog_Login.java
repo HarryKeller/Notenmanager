@@ -34,8 +34,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
+import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class Dialog_Login extends JFrame implements ActionListener, WindowListener
@@ -68,6 +67,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 				{
 					Dialog_Login frame = new Dialog_Login();
 					frame.setVisible(true);
+					
 				}
 				catch (Exception e)
 				{
@@ -238,9 +238,15 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		Lehrer l = new Lehrer(lehrer.get(0).getId());
 		login = new Login(l.getId());
 		
-		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()))
+		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && login.isAdmin() == true)
 		{
-			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l);
+			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l,true);
+			dlg_klassenauswahl.setVisible(true);
+			this.dispose();
+		}
+		else if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()))
+		{
+			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l,false);
 			dlg_klassenauswahl.setVisible(true);
 			this.dispose();
 		}
@@ -267,7 +273,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		}
 		if(e.getActionCommand().equals(button_Schliessen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			DBZugriff.closeDB();
+			DBZugriff.closeDB();			
 			this.dispose();
 		}
 	}
@@ -288,6 +294,6 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	}
 	public void windowOpened(WindowEvent arg0) 
 	{
-		DBZugriff.initDB();
+		DBZugriff.initDB();									
 	}
 }
