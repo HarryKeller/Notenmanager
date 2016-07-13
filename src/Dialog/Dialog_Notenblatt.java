@@ -147,16 +147,6 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	}
 	private void filltable()
 	{			
-		//Alle Noten Lesen
-		ArrayList<Leistung> grades = Leistung.AlleLesen();
-		//Alle Noten vom Schüler herausfiltern
-		for(Leistung l : grades)
-		{
-			if(l.getSchueler().getId() != this.schueler.getId())
-			{
-       		    grades.remove(l.getSchueler());
-			}
-		}
 		//Array mit Fächern füllen
 		ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
 
@@ -172,7 +162,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 			zeile[3] = "";
 			zeile[4] = "";
 			zeile[0] = f.getBez();
-			for(Leistung l : grades)
+			//Leistungen für das Jeweilige Fach des Schülers lesen
+			for(Leistung l : Leistung.AlleLesen(schueler, f))
 			{
 				if(f.getId() == l.getUfachlehrer().getUfach().getId())
 				{
