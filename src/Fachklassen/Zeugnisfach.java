@@ -50,6 +50,12 @@ public class Zeugnisfach {
 		DBZugriff.alleLesen("Zeugnisfach zf", al, hql);
 		return al;
 	}
+	public static ArrayList<Zeugnisfach>alleLesen()
+	{
+		ArrayList<Zeugnisfach>al = new ArrayList<Zeugnisfach>();
+		DBZugriff.alleLesen("Zeugnisfach zf", al, "");
+		return al;
+	}
 	
 	
 	public String toString()
