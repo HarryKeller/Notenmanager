@@ -137,6 +137,24 @@ public class Unterrichtsfach {
 		
 		return al;
 	}
+	public static ArrayList<Unterrichtsfach> AlleLesen(Lehrer lehrer)
+	{
+		String hql= "uf "
+				+"INNER JOIN UFachLehrer ufl "
+				+"ON ufl.lehrer.id = "+lehrer.getId()+" "
+				+"WHERE uf.id = ufl.ufach.id";
+		
+		ArrayList<Object[]>ob = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Unterrichtsfach", ob, hql);
+		ArrayList<Unterrichtsfach>al = new ArrayList<Unterrichtsfach>();
+		for(Object[]o:ob)
+		{
+			al.add((Unterrichtsfach)o[0]);
+		}
+	
+		
+		return al;
+	}
 	
 	public String toString()
 	{
