@@ -40,27 +40,9 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 	private JComboBox<Zeugnisfach> cbZeugnisfaecher;
 	private ComboBoxModel<Zeugnisfach> cbModel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Dialog_adm_FachAnlegen frame = new Dialog_adm_FachAnlegen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
-	/**
-	 * Create the frame.
-	 */
 	public Dialog_adm_FachAnlegen() {
-		DBZugriff.initDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -174,12 +156,10 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 	}
 	private void fillDatenInMaske()
 	{
-		cbZeugnisfaecher = new JComboBox<Zeugnisfach>();
 		for(Zeugnisfach zf: Zeugnisfach.alleLesen())
 		{
 			cbZeugnisfaecher.addItem(zf);
 		}
-		cbZeugnisfaecher.setModel(cbModel);
 		
 	}
 
