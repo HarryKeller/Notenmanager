@@ -136,7 +136,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		getContentPane().add(this.panel_combobox, gbc_panel_combobox);
 		GridBagLayout gbl_panel_combobox = new GridBagLayout();
 		gbl_panel_combobox.columnWidths = new int[]{0, 0};
-		gbl_panel_combobox.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_combobox.rowHeights = new int[]{0, 0, 0, 0, 0, 11, 0};
 		gbl_panel_combobox.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panel_combobox.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		this.panel_combobox.setLayout(gbl_panel_combobox);
@@ -185,7 +185,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		this.comboBox_Faecher = new JComboBox();
 		this.comboBox_Faecher.setEnabled(false);
-		this.comboBox_Faecher.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_comboBox_Faecher = new GridBagConstraints();
 		gbc_comboBox_Faecher.insets = new Insets(5, 10, 5, 10);
 		gbc_comboBox_Faecher.fill = GridBagConstraints.BOTH;
