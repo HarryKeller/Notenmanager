@@ -69,6 +69,10 @@ public class Lehrer
 		DBZugriff.alleLesen("Lehrer", al, "");
 		return al;
 	}
+	public String toString()
+	{
+		return this.nachname +" " + this.vorname;
+	}
 	
 	public boolean speichern()
 	{
