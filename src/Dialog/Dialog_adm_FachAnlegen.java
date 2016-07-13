@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.ComboBoxModel;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -25,7 +27,10 @@ import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisfach;
 import Persistenz.DBZugriff;
 
-public class Dialog_adm_FachAnlegen extends JFrame {
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtBezeichnung;
@@ -33,21 +38,22 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 	private JLabel Stunden;
 	private JLabel lblNewLabel_2;
 	private JTextField txtStunden;
-	private JTextField textField_1;
+	private JTextField txtGewichtung;
 	private JLabel lblNewLabel_1;
 	private JButton btnSpeichern;
 	private JButton btnAbbrechen;
 	private JComboBox<Zeugnisfach> cbZeugnisfaecher;
-	private ComboBoxModel<Zeugnisfach> cbModel;
 
 
 	public Dialog_adm_FachAnlegen() {
+		setTitle("Unterrichtsfach anlegen");
 		initGUI();
 		fillDatenInMaske();
 	}
 	private void initGUI()
 	{
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setModal(true);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -119,14 +125,14 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 		gbc_lblNewLabel_2.gridy = 3;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
-		contentPane.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		txtGewichtung = new JTextField();
+		GridBagConstraints gbc_txtGewichtung = new GridBagConstraints();
+		gbc_txtGewichtung.insets = new Insets(0, 0, 5, 0);
+		gbc_txtGewichtung.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtGewichtung.gridx = 1;
+		gbc_txtGewichtung.gridy = 3;
+		contentPane.add(txtGewichtung, gbc_txtGewichtung);
+		txtGewichtung.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("Zeugnisfach");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -145,6 +151,7 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 		contentPane.add(cbZeugnisfaecher, gbc_cbZeugnisfaecher);
 		
 		btnSpeichern = new JButton("Speichern");
+		this.btnSpeichern.addActionListener(this);
 		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
 		gbc_btnSpeichern.insets = new Insets(0, 0, 0, 5);
 		gbc_btnSpeichern.gridx = 0;
@@ -152,6 +159,7 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 		contentPane.add(btnSpeichern, gbc_btnSpeichern);
 		
 		btnAbbrechen = new JButton("Abbrechen");
+		this.btnAbbrechen.addActionListener(this);
 		GridBagConstraints gbc_btnAbbrechen = new GridBagConstraints();
 		gbc_btnAbbrechen.gridx = 1;
 		gbc_btnAbbrechen.gridy = 8;
@@ -166,4 +174,34 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 		
 	}
 
+	public void actionPerformed(ActionEvent e)
+	{
+		String befehl = e.getActionCommand();
+		if(befehl.equals("Speichern"))
+		{
+			Unterrichtsfach f = new Unterrichtsfach();
+			f.setBez(txtBezeichnung.getText());
+				try
+				{
+					f.setGewichtungSchriftlich(Integer.parseInt(txtGewichtung.getText()));
+					f.setStunden(Integer.parseInt(txtStunden.getText()));
+
+					f.setPos(Integer.parseInt(txtPosition.getText()));
+					
+					f.setZfach((Zeugnisfach)cbZeugnisfaecher.getSelectedItem());
+					f.speichern();
+				}
+				catch (NumberFormatException ex)
+				{
+					JOptionPane.showMessageDialog(null, "Fehler beim speichern \n vermutlich wurde ein Buchstabe anstatt einer Zahl eingegeben", "Fehler beim Speichern", JOptionPane.OK_CANCEL_OPTION);
+				}
+		
+			
+			
+		}
+		else if(befehl.equals("Abbrechen"))
+		{
+			this.setVisible(false);
+		}
+	}
 }
