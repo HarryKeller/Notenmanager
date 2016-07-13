@@ -156,6 +156,14 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
+	public boolean equals(Unterrichtsfach uf)
+	{
+		if(uf.id == this.getId())
+		{
+			return true;
+		}
+		return false;
+	}
 	public String toString()
 	{
 		return this.bez;
