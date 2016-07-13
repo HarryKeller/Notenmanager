@@ -35,7 +35,7 @@ import javax.swing.JMenuItem;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener, WindowListener
+public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
 
 {
 	private JPanel panel_combobox;
@@ -58,34 +58,54 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JMenuBar menuBar;
 	private JMenu menuBenutzer;
 	private JMenuItem mitemBenutzerWechseln;
+	private JPanel panel_admin;
+	private JLabel lblAdmin;
+	private JSeparator separator_3;
+	private JButton btnSchuelerBearbeiten;
+	private JButton btnLehrerBearbeiten;
+	private JButton btnKlasseBearbeiten;
+	private JButton btnFachBearbeiten;
 
 	/**
 	 * Create the dialog.
 	 */
 	
-	public Dialog_Klassenauswahl(Lehrer lehrer)
+	public Dialog_Klassenauswahl(Lehrer lehrer, boolean admin)
 	{
-		addWindowListener(this);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
 		setTitle("Hauptmen\u00FC");
+		
 		this.lehrer = lehrer;					
 		initGUI();
+		panel_admin.setVisible(false);
 		
 		ArrayList<Klasse> al = Klasse.alleLesen();
 		boolean found = false;
+
+		if(admin == true)
+		{
+			panel_admin.setVisible(true);
+		}
+		
 		for(Klasse k : al)
 		{
 			if(k.getIdKlassenleiter().getId() == this.lehrer.getId())
 			{
+				panel_klassenleiter.setVisible(true);
+				separator_1.setVisible(true);
 				this.btnKlassenuebersicht.setEnabled(true);
 				found = true;
 			}
 			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
 			{
+				panel_klassenleiter.setVisible(false);
+				separator_1.setVisible(false);
 				this.btnKlassenuebersicht.setEnabled(false);
+				this.pack();
 			}
 		}
 		SetDatenInMaske();
-	}
+	}	
 	
 	public void SetDatenInMaske()
 	{			
@@ -191,9 +211,9 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		getContentPane().add(this.panel_klassenleiter, gbc_panel_klassenleiter);
 		GridBagLayout gbl_panel_klassenleiter = new GridBagLayout();
 		gbl_panel_klassenleiter.columnWidths = new int[]{0, 0};
-		gbl_panel_klassenleiter.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panel_klassenleiter.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_klassenleiter.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_klassenleiter.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_klassenleiter.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		this.panel_klassenleiter.setLayout(gbl_panel_klassenleiter);
 		
 		this.lblKlassenleiter = new JLabel("Klassenleiter");
@@ -222,6 +242,68 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_btnKlassenuebersicht.gridy = 2;
 		this.panel_klassenleiter.add(this.btnKlassenuebersicht, gbc_btnKlassenuebersicht);
 		
+		this.panel_admin = new JPanel();
+		GridBagConstraints gbc_panel_admin = new GridBagConstraints();
+		gbc_panel_admin.gridheight = 2;
+		gbc_panel_admin.fill = GridBagConstraints.BOTH;
+		gbc_panel_admin.gridx = 0;
+		gbc_panel_admin.gridy = 4;
+		this.panel_klassenleiter.add(this.panel_admin, gbc_panel_admin);
+		GridBagLayout gbl_panel_admin = new GridBagLayout();
+		gbl_panel_admin.columnWidths = new int[]{0, 0};
+		gbl_panel_admin.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_admin.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel_admin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		this.panel_admin.setLayout(gbl_panel_admin);
+		
+		this.lblAdmin = new JLabel("Admin Bereich");
+		this.lblAdmin.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		GridBagConstraints gbc_lblAdmin = new GridBagConstraints();
+		gbc_lblAdmin.insets = new Insets(10, 0, 5, 0);
+		gbc_lblAdmin.gridx = 0;
+		gbc_lblAdmin.gridy = 0;
+		this.panel_admin.add(this.lblAdmin, gbc_lblAdmin);
+		
+		this.separator_3 = new JSeparator();
+		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
+		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_3.fill = GridBagConstraints.BOTH;
+		gbc_separator_3.gridx = 0;
+		gbc_separator_3.gridy = 1;
+		this.panel_admin.add(this.separator_3, gbc_separator_3);
+		
+		this.btnSchuelerBearbeiten = new JButton("Sch\u00FCler bearbeiten");
+		GridBagConstraints gbc_btnSchuelerBearbeiten = new GridBagConstraints();
+		gbc_btnSchuelerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSchuelerBearbeiten.insets = new Insets(0, 5, 5, 5);
+		gbc_btnSchuelerBearbeiten.gridx = 0;
+		gbc_btnSchuelerBearbeiten.gridy = 2;
+		this.panel_admin.add(this.btnSchuelerBearbeiten, gbc_btnSchuelerBearbeiten);
+		
+		this.btnLehrerBearbeiten = new JButton("Lehrer bearbeiten");
+		GridBagConstraints gbc_btnLehrerBearbeiten = new GridBagConstraints();
+		gbc_btnLehrerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnLehrerBearbeiten.insets = new Insets(0, 5, 5, 5);
+		gbc_btnLehrerBearbeiten.gridx = 0;
+		gbc_btnLehrerBearbeiten.gridy = 3;
+		this.panel_admin.add(this.btnLehrerBearbeiten, gbc_btnLehrerBearbeiten);
+		
+		this.btnKlasseBearbeiten = new JButton("Klassen bearbeiten");
+		GridBagConstraints gbc_btnKlasseBearbeiten = new GridBagConstraints();
+		gbc_btnKlasseBearbeiten.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnKlasseBearbeiten.insets = new Insets(0, 5, 5, 5);
+		gbc_btnKlasseBearbeiten.gridx = 0;
+		gbc_btnKlasseBearbeiten.gridy = 4;
+		this.panel_admin.add(this.btnKlasseBearbeiten, gbc_btnKlasseBearbeiten);
+		
+		this.btnFachBearbeiten = new JButton("F\u00E4cher bearbeiten");
+		GridBagConstraints gbc_btnFachBearbeiten = new GridBagConstraints();
+		gbc_btnFachBearbeiten.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFachBearbeiten.insets = new Insets(0, 5, 5, 5);
+		gbc_btnFachBearbeiten.gridx = 0;
+		gbc_btnFachBearbeiten.gridy = 5;
+		this.panel_admin.add(this.btnFachBearbeiten, gbc_btnFachBearbeiten);
+		
 		this.panel_button = new JPanel();
 		GridBagConstraints gbc_panel_button = new GridBagConstraints();
 		gbc_panel_button.insets = new Insets(0, 0, 0, 5);
@@ -240,7 +322,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.btnFachuebersicht.addActionListener(this);
 		GridBagConstraints gbc_btnFachuebersicht = new GridBagConstraints();
 		gbc_btnFachuebersicht.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFachuebersicht.insets = new Insets(0, 10, 0, 10);
+		gbc_btnFachuebersicht.insets = new Insets(5, 10, 5, 10);
 		gbc_btnFachuebersicht.gridx = 0;
 		gbc_btnFachuebersicht.gridy = 0;
 		this.panel_button.add(this.btnFachuebersicht, gbc_btnFachuebersicht);
@@ -248,7 +330,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.btnSchlieﬂen = new JButton("Schlie\u00DFen");
 		this.btnSchlieﬂen.addActionListener(this);
 		GridBagConstraints gbc_btnSchlieﬂen = new GridBagConstraints();
-		gbc_btnSchlieﬂen.insets = new Insets(0, 10, 0, 10);
+		gbc_btnSchlieﬂen.insets = new Insets(5, 10, 5, 10);
 		gbc_btnSchlieﬂen.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSchlieﬂen.gridx = 1;
 		gbc_btnSchlieﬂen.gridy = 0;
@@ -275,6 +357,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		if(e.getActionCommand().equals(btnSchlieﬂen.getActionCommand())) // Abfrage auf Dr¸cken des Login-Buttons "button_Login"
 		{
 			this.dispose();
+			DBZugriff.closeDB();			
 		}
 		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Butten Klassenuebersicht gedr¸ckt wurde
 		{
@@ -283,6 +366,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedr¸ckt wurde
 		{
+			this.dispose();
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
@@ -311,22 +395,5 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		{
 			btnFachuebersicht.setEnabled(true);
 		}
-	}
-	
-	public void windowActivated(WindowEvent arg0) {
-	}
-	public void windowClosed(WindowEvent arg0) 
-	{
-		DBZugriff.closeDB();
-	}
-	public void windowClosing(WindowEvent arg0) {
-	}
-	public void windowDeactivated(WindowEvent arg0) {
-	}
-	public void windowDeiconified(WindowEvent arg0) {
-	}
-	public void windowIconified(WindowEvent arg0) {
-	}
-	public void windowOpened(WindowEvent e) {
 	}
 }
