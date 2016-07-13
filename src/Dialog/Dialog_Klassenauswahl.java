@@ -272,6 +272,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.panel_admin.add(this.separator_3, gbc_separator_3);
 		
 		this.btnSchuelerBearbeiten = new JButton("Sch\u00FCler bearbeiten");
+		this.btnSchuelerBearbeiten.addActionListener(this);
 		GridBagConstraints gbc_btnSchuelerBearbeiten = new GridBagConstraints();
 		gbc_btnSchuelerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSchuelerBearbeiten.insets = new Insets(0, 5, 5, 5);
@@ -280,6 +281,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.panel_admin.add(this.btnSchuelerBearbeiten, gbc_btnSchuelerBearbeiten);
 		
 		this.btnLehrerBearbeiten = new JButton("Lehrer bearbeiten");
+		this.btnLehrerBearbeiten.addActionListener(this);
 		GridBagConstraints gbc_btnLehrerBearbeiten = new GridBagConstraints();
 		gbc_btnLehrerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnLehrerBearbeiten.insets = new Insets(0, 5, 5, 5);
@@ -288,6 +290,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.panel_admin.add(this.btnLehrerBearbeiten, gbc_btnLehrerBearbeiten);
 		
 		this.btnKlasseBearbeiten = new JButton("Klassen bearbeiten");
+		this.btnKlasseBearbeiten.addActionListener(this);
 		GridBagConstraints gbc_btnKlasseBearbeiten = new GridBagConstraints();
 		gbc_btnKlasseBearbeiten.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnKlasseBearbeiten.insets = new Insets(0, 5, 5, 5);
@@ -296,6 +299,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.panel_admin.add(this.btnKlasseBearbeiten, gbc_btnKlasseBearbeiten);
 		
 		this.btnFachBearbeiten = new JButton("F\u00E4cher bearbeiten");
+		this.btnFachBearbeiten.addActionListener(this);
 		GridBagConstraints gbc_btnFachBearbeiten = new GridBagConstraints();
 		gbc_btnFachBearbeiten.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnFachBearbeiten.insets = new Insets(0, 5, 5, 5);
@@ -368,6 +372,16 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			this.dispose();
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
+		}
+		if(e.getActionCommand().equals(btnFachBearbeiten.getActionCommand()))
+		{
+			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
+			dlg_adm_fach.setVisible(true);
+		}
+		if(e.getActionCommand().equals(btnLehrerBearbeiten.getActionCommand()))
+		{
+			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
+			dlg_adm_lehrer.setVisible(true);
 		}
 	}
 	public void itemStateChanged(ItemEvent arg0) 
