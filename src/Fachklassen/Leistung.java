@@ -45,6 +45,10 @@ public class Leistung
 	{
 		return DBZugriff.speichern(this);
 	}
+	public boolean speichern(Lehrer lehrer)
+	{
+		return Historie.speichern(this, lehrer);
+	}
 	public void loeschen()
 	{
 		DBZugriff.loeschen(this);
