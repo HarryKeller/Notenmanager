@@ -40,9 +40,13 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 	private JComboBox<Zeugnisfach> cbZeugnisfaecher;
 	private ComboBoxModel<Zeugnisfach> cbModel;
 
-	
 
 	public Dialog_adm_FachAnlegen() {
+		initGUI();
+		fillDatenInMaske();
+	}
+	private void initGUI()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -152,7 +156,6 @@ public class Dialog_adm_FachAnlegen extends JFrame {
 		gbc_btnAbbrechen.gridx = 1;
 		gbc_btnAbbrechen.gridy = 8;
 		contentPane.add(btnAbbrechen, gbc_btnAbbrechen);
-		fillDatenInMaske();
 	}
 	private void fillDatenInMaske()
 	{
