@@ -119,7 +119,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox.gridy = 1;
 		getContentPane().add(comboBox_Schule, gbc_comboBox);
 		
-		JLabel lblKlasenleiter = new JLabel("1. Klasenleiter:");
+		JLabel lblKlasenleiter = new JLabel("1. Klassenleiter:");
 		lblKlasenleiter.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblKlasenleiter = new GridBagConstraints();
 		gbc_lblKlasenleiter.anchor = GridBagConstraints.EAST;
@@ -150,7 +150,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		getContentPane().add(lblKlassenleiter, gbc_lblKlassenleiter);
 		
 		comboBox_Klassenleiter_2 = new JComboBox<Lehrer>();
-		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.gridwidth = 2;
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 0);
@@ -275,7 +275,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		if(klasse!=null)
 		{
 			label_id.setText(Integer.toString(klasse.getid()));
-			comboBox_Schule.removeAll();
+			comboBox_Schule.removeAllItems();
 			int count =0;
 			for(Schule s: Schule.alleLesen())
 			{
@@ -293,7 +293,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			
 			
 			ArrayList<Lehrer> llist = Lehrer.alleLesen();
-			comboBox_Klassenleiter_1.removeAll();
+			comboBox_Klassenleiter_1.removeAllItems();
 			for(Lehrer l: llist)
 			{
 				comboBox_Klassenleiter_1.addItem(l);
@@ -305,7 +305,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 					comboBox_Klassenleiter_1.setSelectedIndex(i);
 				}
 			}
-			comboBox_Klassenleiter_2.removeAll();
+			comboBox_Klassenleiter_2.removeAllItems();
 			for(Lehrer l: llist)
 			{
 				comboBox_Klassenleiter_2.addItem(l);
