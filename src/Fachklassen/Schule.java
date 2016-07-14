@@ -29,8 +29,6 @@ public class Schule
 	@JoinColumn(name="schule_id")
 	private List<Klasse> klassenlist = new ArrayList<Klasse>();
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Lehrer>lehrerlist = new ArrayList<Lehrer>();
 	
 	
 
@@ -96,15 +94,7 @@ public class Schule
 		return this.bez;
 	}
 
-	public List<Lehrer> getLehrerlist()
-	{
-		return lehrerlist;
-	}
 
-	public void setLehrerlist(List<Lehrer> lehrerlist)
-	{
-		this.lehrerlist = lehrerlist;
-	}
 	
 	
 }

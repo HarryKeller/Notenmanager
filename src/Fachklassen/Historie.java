@@ -21,6 +21,7 @@ public class Historie {
 	private int idDatensatz;	
 	private String vorgangsart;
 	private String text;
+	
 	@ManyToOne
 	private Lehrer idLehrer;		//Lehrerklasse 
 	private LocalDate eintragszeitpunkt;
