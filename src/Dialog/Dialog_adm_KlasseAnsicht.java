@@ -28,13 +28,8 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	private JPanel contentPane;
 	private JList<Klasse> list = new JList<Klasse>();
 	private DefaultListModel<Klasse> klistmodel = new DefaultListModel<Klasse>();
-	private Dialog_Klassenauswahl dia;
-	public Dialog_adm_KlasseAnsicht(){
-		initFrame();
-	}
-	public Dialog_adm_KlasseAnsicht(Dialog_Klassenauswahl d)
+	public Dialog_adm_KlasseAnsicht()
 	{
-		this.setDia(d);
 		initFrame();
 	}
 
@@ -163,12 +158,6 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 
 	public void setKlistmodel(DefaultListModel<Klasse> klistmodel) {
 		this.klistmodel = klistmodel;
-	}
-	public Dialog_Klassenauswahl getDia() {
-		return dia;
-	}
-	public void setDia(Dialog_Klassenauswahl dia) {
-		this.dia = dia;
 	}
 
 }
