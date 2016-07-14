@@ -38,7 +38,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Dialog_adm_KlasseAnsicht ansichts_dialog;
 	
 	private JLabel label_id;
 	private JComboBox<Schule> comboBox_Schule;
@@ -55,15 +54,13 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public Dialog_adm_KlasseBearbeiten(Dialog_adm_KlasseAnsicht a)
+	public Dialog_adm_KlasseBearbeiten()
 	{
-		this.setAnsichts_dialog(a);
 		initFrame();
 	}
 	
-	public Dialog_adm_KlasseBearbeiten(Klasse k, Dialog_adm_KlasseAnsicht a)
+	public Dialog_adm_KlasseBearbeiten(Klasse k)
 	{
-		this.setAnsichts_dialog(a);
 		this.setKlasse(k);
 		initFrame();
 	}
@@ -351,7 +348,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		if(e.getActionCommand()=="Zur\u00FCck")
 		{
 			this.dispose();
-			ansichts_dialog.setVisible(true);
+			Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
+			an.pack();
+			an.setVisible(true);
 		}
 		else if(e.getActionCommand()=="Verwerfen")
 		{
@@ -364,8 +363,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			{
 				klasse.speichern();
 				this.dispose();
-				ansichts_dialog.setDatenToMaske();
-				ansichts_dialog.setVisible(true);
+				Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
+				an.setDatenToMaske();
+				an.pack();
+				an.setVisible(true);
 			}
 			else
 			{
@@ -373,8 +374,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 				{
 					klasse.speichern();
 					this.dispose();
-					ansichts_dialog.setDatenToMaske();
-					ansichts_dialog.setVisible(true);
+					Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
+					an.setDatenToMaske();
+					an.pack();
+					an.setVisible(true);
 				}
 			}
 		}
@@ -397,13 +400,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		this.textField_Schuljahr = textField_Schuljahr;
 	}
 
-	public Dialog_adm_KlasseAnsicht getAnsichts_dialog() {
-		return ansichts_dialog;
-	}
-
-	public void setAnsichts_dialog(Dialog_adm_KlasseAnsicht ansichts_dialog) {
-		this.ansichts_dialog = ansichts_dialog;
-	}
 
 	public DefaultListModel<Schueler> getKlasse_schueler_model() {
 		return klasse_schueler_model;

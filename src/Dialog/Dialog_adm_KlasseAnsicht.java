@@ -29,7 +29,9 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	private JList<Klasse> list = new JList<Klasse>();
 	private DefaultListModel<Klasse> klistmodel = new DefaultListModel<Klasse>();
 	private Dialog_Klassenauswahl dia;
-	public Dialog_adm_KlasseAnsicht(){}
+	public Dialog_adm_KlasseAnsicht(){
+		initFrame();
+	}
 	public Dialog_adm_KlasseAnsicht(Dialog_Klassenauswahl d)
 	{
 		this.setDia(d);
@@ -121,7 +123,7 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		{
 			if(list.isSelectionEmpty()!=true)
 			{
-				Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(list.getSelectedValue(), this);
+				Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(list.getSelectedValue());
 				dia.pack();
 				this.setVisible(false);
 				dia.setVisible(true);
@@ -129,7 +131,7 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		}
 		else if(e.getActionCommand()=="Klasse hinzuf\u00FCgen")
 		{
-			Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(this);
+			Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten();
 			dia.pack();
 			this.setVisible(false);
 			dia.setVisible(true);
@@ -151,7 +153,6 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		else if(e.getActionCommand()=="Zur\u00FCck")
 		{
 			this.dispose();
-			dia.setVisible(true);
 		}
 		
 	}
