@@ -187,7 +187,7 @@ public class Schueler
 	
 	public String toString()
 	{
-		return this.vorname + " " + this.nachname + " " + this.gebdat + " " + this.geschl + " " + this.konfession;
+		return this.nachname +", "+this.vorname;
 	}
 	
 	
