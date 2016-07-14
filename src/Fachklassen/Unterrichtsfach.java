@@ -76,6 +76,14 @@ public class Unterrichtsfach {
 	{
 		DBZugriff.loeschen(this);
 	}
+	public Unterrichtsfach(Unterrichtsfach uf)
+	{
+		this.id = uf.getId();	//int
+		this.bez = new String(uf.getBez());
+		this.stunden = uf.getStunden();	//int
+		this.pos = uf.getPos();		//int
+		this.gewichtungSchriftlich = uf.getGewichtungSchriftlich();	//int
+	}
 	
 	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
 	{
