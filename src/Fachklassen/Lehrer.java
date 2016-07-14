@@ -21,7 +21,8 @@ public class Lehrer
 	private String nachname;
 	private String vorname;
 	private String dienstbezeichnung;
-	
+	private boolean arbeitetAnDieserSchule;
+
 	public int getId() {
 		return id;
 	}
@@ -51,6 +52,14 @@ public class Lehrer
 	}
 	public void setDienstbezeichnung(String dienstbezeichnung) {
 		this.dienstbezeichnung = dienstbezeichnung;
+	}
+	public boolean isArbeitetAnDieserSchule()
+	{
+		return arbeitetAnDieserSchule;
+	}
+	public void setArbeitetAnDieserSchule(boolean arbeitetAnDieserSchule)
+	{
+		this.arbeitetAnDieserSchule = arbeitetAnDieserSchule;
 	}
 	
 	public Lehrer(int id)
