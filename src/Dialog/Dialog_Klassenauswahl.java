@@ -34,9 +34,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
-
 public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
 
 {
@@ -100,6 +97,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			if(k.getIdKlassenleiter().getId() == this.lehrer.getId())
 			{
 				panel_klassenleiter.setVisible(true);
+				menuStammdaten.setVisible(true);
 				separator_1.setVisible(true);
 				this.btnKlassenuebersicht.setEnabled(true);
 				found = true;
@@ -107,6 +105,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
 			{
 				panel_klassenleiter.setVisible(false);
+				menuStammdaten.setVisible(false);
 				separator_1.setVisible(false);
 				this.btnKlassenuebersicht.setEnabled(false);
 				this.pack();
