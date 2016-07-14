@@ -77,7 +77,7 @@ public class Unterrichtsfach {
 		DBZugriff.loeschen(this);
 	}
 	
-	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse)
+	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
 	{
 
 		
@@ -90,7 +90,8 @@ public class Unterrichtsfach {
 			    +"INNER JOIN UFachLehrer ufl "
 			    +"ON ufl.lehrer.id = "+lehrer.getId()+" "
 			    +"AND ufl.ufach.id = uf.id "
-			    +"Where k.id = "+klasse.getid();
+			    +"Where k.id = "+klasse.getid()+" "
+			    +" AND ufl.austrittsdatum > "+"'"+ausgangsdatum+"'";
 		
 		ArrayList<Object[]> al = new ArrayList<>();
 		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
@@ -115,13 +116,13 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
-	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer,LocalDate ausdat)
+	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer,LocalDate ausgangsdatum)
 	{
 		String hql= "uf "
 				+"INNER JOIN UFachLehrer ufl "
 				+"ON ufl.lehrer.id = "+lehrer.getId()+" "
 				+"WHERE uf.id = ufl.ufach.id "
-				+"AND ufl.austrittsdatum > "+ "'"+ausdat+"'";
+				+"AND ufl.austrittsdatum > "+ "'"+ausgangsdatum+"'";
 				
 		
 		ArrayList<Object[]>ob = new ArrayList<Object[]>();
