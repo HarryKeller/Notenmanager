@@ -28,9 +28,15 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	private JPanel contentPane;
 	private JList<Klasse> list = new JList<Klasse>();
 	private DefaultListModel<Klasse> klistmodel = new DefaultListModel<Klasse>();
+	private Dialog_Klassenauswahl dia;
+	public Dialog_adm_KlasseAnsicht(){}
+	public Dialog_adm_KlasseAnsicht(Dialog_Klassenauswahl d)
+	{
+		this.setDia(d);
+		initFrame();
+	}
 
-
-	public Dialog_adm_KlasseAnsicht() 
+	public  void initFrame()
 	{
 		setTitle("Admin - Klassenverwaltung");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -144,7 +150,8 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		}
 		else if(e.getActionCommand()=="Zur\u00FCck")
 		{
-			
+			this.dispose();
+			dia.setVisible(true);
 		}
 		
 	}
@@ -155,6 +162,12 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 
 	public void setKlistmodel(DefaultListModel<Klasse> klistmodel) {
 		this.klistmodel = klistmodel;
+	}
+	public Dialog_Klassenauswahl getDia() {
+		return dia;
+	}
+	public void setDia(Dialog_Klassenauswahl dia) {
+		this.dia = dia;
 	}
 
 }
