@@ -113,7 +113,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		comboBox_Schule.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.gridwidth = 2;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 1;
@@ -133,7 +133,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		comboBox_Klassenleiter_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.gridwidth = 2;
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.fill = GridBagConstraints.BOTH;
 		gbc_comboBox_1.gridx = 2;
 		gbc_comboBox_1.gridy = 2;
@@ -153,7 +153,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.gridwidth = 2;
-		gbc_comboBox_2.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_2.fill = GridBagConstraints.BOTH;
 		gbc_comboBox_2.gridx = 2;
 		gbc_comboBox_2.gridy = 3;
