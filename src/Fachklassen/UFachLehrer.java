@@ -1,5 +1,6 @@
 package Fachklassen;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -71,6 +72,27 @@ public class UFachLehrer
 	public UFachLehrer()
 	{
 		
+	}
+	public static boolean unterrichtetLehrerZurzeitFach(Lehrer lehrer,Unterrichtsfach ufach)
+	{
+		
+		String hql =  " ufl"
+				+" WHERE ufl.lehrer.id = "+lehrer.getId()+" "
+				+" AND ufl.ufach.id = " +ufach.getId()+" "
+				+" AND ufl.austrittsdatum > "+"'"+LocalDate.now()+"'";
+		
+		ArrayList<UFachLehrer>al = new ArrayList<UFachLehrer>();
+		try
+		{
+			DBZugriff.alleLesen("UFachLehrer", al, hql);
+		}	
+		catch( org.hibernate.ObjectNotFoundException ex)
+		{
+			throw ex;
+		}
+		if (al.size() == 0) return false;
+		else return true;
+	
 	}
 	
 	public boolean speichern()
