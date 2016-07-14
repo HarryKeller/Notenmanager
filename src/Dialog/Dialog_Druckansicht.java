@@ -130,7 +130,7 @@ public class Dialog_Druckansicht extends JFrame
 			JRMapCollectionDataSource ds = new JRMapCollectionDataSource(al);
 
 			// Variante 2: vorcompilierte ".jasper"-Datei nehmen!
-			JasperPrint jp = JasperFillManager.fillReport("H:/PROJEKT NOTENMANAGER/Notenblatt.jasper",
+			JasperPrint jp = JasperFillManager.fillReport("Notenblatt.jasper",
 					parameter, ds);
 			return jp;
 

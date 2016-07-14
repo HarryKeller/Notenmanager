@@ -29,10 +29,14 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.JButton;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+
 public class Dialog_Notenblatt extends JFrame implements ActionListener {
-	Schueler schueler;
+	public Schueler schueler;
 	Dialog_Schuelerwahl schuelerwahl;
 	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
 	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
@@ -46,6 +50,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private JButton btnZurck;
 	private JLabel lbl_lehrer;
 	private JLabel lbl_klasse;
+	public ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
 
 	public Dialog_Notenblatt(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl) 
 	{
@@ -137,6 +142,12 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 			this.schuelerwahl.setVisible(true);
 			this.dispose();
 		}
+		else if(action.equals("noton"))
+		{
+			Dialog_Druckansicht dd = new Dialog_Druckansicht(this);
+			dd.setVisible(true);
+			this.dispose();
+		}
 	}
 	private void setDatenInMaske()
 	{
@@ -148,7 +159,6 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private void filltable()
 	{			
 		//Array mit Fächern füllen
-		ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
 
 		String[] spaltenNamen = { "Fach", "Mündlich 1. Halbjahr", "Mündlich 2. Halbjahr", "Schriftlich 1. Halbjahr", "Schriftlich 2. Halbjahr"};
 		String[] zeile = new String[5];
@@ -226,6 +236,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		JTable table = new JTable(daten,spaltenNamen);
 		scrollPane.setViewportView(table);
 		btnNotenblattDrucken = new JButton("Notenblatt Drucken");
+		btnNotenblattDrucken.setActionCommand("noton");
+		btnNotenblattDrucken.addActionListener(this);
 		btnNotenblattDrucken.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 23));
 		GridBagConstraints gbc_btnNotenblattDrucken = new GridBagConstraints();
 		gbc_btnNotenblattDrucken.insets = new Insets(0, 0, 10, 5);
