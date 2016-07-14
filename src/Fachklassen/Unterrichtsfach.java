@@ -1,5 +1,6 @@
 package Fachklassen;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
@@ -79,22 +80,6 @@ public class Unterrichtsfach {
 	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse)
 	{
 
-		//Alle unterrichtsfäche zu diesem Lehrer lesen zu der ausgewählten Klasse
-		
-		//SELECT Unterrichtsfach.bez
-		//FROM Unterrichtsfach
-		
-		//INNER JOIN Zeugnisfach
-		//ON Zeugnisfach.id = Unterrichtsfach.zfach_id
-		
-		//INNER JOIN Klasse
-		//ON Klasse.id = Zeugnisfach.klasse_id
-		
-		//INNER JOIN UFachLehrer
-		//ON UFachLehrer.lehrer_id = 1
-		//AND UFachLehrer.ufach_id = Unterrichtsfach.id
-		//WHERE Klasse.id = 1 
-		
 		
 		String hql =
 				"uf "
@@ -127,6 +112,27 @@ public class Unterrichtsfach {
 		String hql = " uf WHERE uf.zfach.id = "+zf.getId();
 		ArrayList<Unterrichtsfach>al = new ArrayList<Unterrichtsfach>();
 		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
+		return al;
+	}
+	
+	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer,LocalDate ausdat)
+	{
+		String hql= "uf "
+				+"INNER JOIN UFachLehrer ufl "
+				+"ON ufl.lehrer.id = "+lehrer.getId()+" "
+				+"WHERE uf.id = ufl.ufach.id "
+				+"AND ufl.austrittsdatum > "+ "'"+ausdat+"'";
+				
+		
+		ArrayList<Object[]>ob = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Unterrichtsfach", ob, hql);
+		ArrayList<Unterrichtsfach>al = new ArrayList<Unterrichtsfach>();
+		for(Object[]o:ob)
+		{
+			al.add((Unterrichtsfach)o[0]);
+		}
+	
+		
 		return al;
 	}
 	
