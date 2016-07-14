@@ -10,6 +10,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -32,6 +33,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 
@@ -65,6 +67,12 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JButton btnLehrerBearbeiten;
 	private JButton btnKlasseBearbeiten;
 	private JButton btnFachBearbeiten;
+	private JMenu menuStammdaten;
+	private JMenuItem mitemSchuelerBearbeiten;
+	private JMenuItem mitemLehrerBearbeiten;
+	private JMenuItem mitemKlassenBearbeiten;
+	private JMenuItem mitemFaecherBearbeiten;
+	private JMenuItem mitemUnterrichtsfaecherZuweisen;
 
 	/**
 	 * Create the dialog.
@@ -348,6 +356,29 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.mitemBenutzerWechseln = new JMenuItem("Benutzer wechseln");
 		this.mitemBenutzerWechseln.addActionListener(this);
 		this.menuBenutzer.add(this.mitemBenutzerWechseln);
+		
+		this.menuStammdaten = new JMenu("Stammdaten");
+		this.menuBar.add(this.menuStammdaten);
+		
+		this.mitemSchuelerBearbeiten = new JMenuItem("Sch\u00FCler bearbeiten");
+		this.mitemSchuelerBearbeiten.addActionListener(this);
+		this.menuStammdaten.add(this.mitemSchuelerBearbeiten);
+		
+		this.mitemLehrerBearbeiten = new JMenuItem("Lehrer bearbeiten");
+		this.mitemLehrerBearbeiten.addActionListener(this);
+		this.menuStammdaten.add(this.mitemLehrerBearbeiten);
+		
+		this.mitemKlassenBearbeiten = new JMenuItem("Klassen bearbeiten");
+		this.mitemKlassenBearbeiten.addActionListener(this);
+		this.menuStammdaten.add(this.mitemKlassenBearbeiten);
+		
+		this.mitemFaecherBearbeiten = new JMenuItem("F\u00E4cher bearbeiten");
+		this.mitemFaecherBearbeiten.addActionListener(this);
+		this.menuStammdaten.add(this.mitemFaecherBearbeiten);
+		
+		this.mitemUnterrichtsfaecherZuweisen = new JMenuItem("Unterrichtsf\u00E4cher zuweisen");
+		this.mitemUnterrichtsfaecherZuweisen.addActionListener(this);
+		this.menuStammdaten.add(this.mitemUnterrichtsfaecherZuweisen);
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -373,16 +404,27 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnFachBearbeiten.getActionCommand()))
+		if(e.getActionCommand().equals(btnFachBearbeiten.getActionCommand()) || e.getActionCommand() == "Fächer anlegen")
 		{
 			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
 			dlg_adm_fach.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnLehrerBearbeiten.getActionCommand()))
+		if(e.getActionCommand().equals(btnLehrerBearbeiten.getActionCommand()) || e.getActionCommand() == "Lehrer bearbeiten")
 		{
 			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
 			dlg_adm_lehrer.setVisible(true);
 		}
+		if(e.getActionCommand().equals(btnKlasseBearbeiten.getActionCommand()) || e.getActionCommand() == "Klassen bearbeiten")
+		{
+			Dialog_adm_KlasseAnsicht dlg_adm_klasse = new Dialog_adm_KlasseAnsicht();
+			dlg_adm_klasse.setVisible(true);
+		}
+		if(e.getActionCommand().equals(btnSchuelerBearbeiten.getActionCommand()) || e.getActionCommand() == "Schüler bearbeiten")
+		{
+			
+		}
+		
+		
 	}
 	public void itemStateChanged(ItemEvent arg0) 
 	{
@@ -399,7 +441,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		if(comboBox_Klassen.getSelectedItem() != null)
 		{
 			comboBox_Faecher.setEnabled(true);
-			for(Unterrichtsfach f : Unterrichtsfach.AlleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem()))
+			for(Unterrichtsfach f : Unterrichtsfach.AlleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
 			{
 				this.comboBox_Faecher.addItem(f);
 			}			
