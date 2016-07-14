@@ -423,6 +423,11 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		{
 			
 		}
+		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
+		{
+			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
+			dlg_adm_fachz.setVisible(true);
+		}
 		
 		
 	}
