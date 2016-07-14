@@ -162,5 +162,10 @@ public class Leistung
 	public void setUfachlehrer(UFachLehrer ufachlehrer) {
 		this.ufachlehrer = ufachlehrer;
 	}	
+	public boolean equals(Leistung l)
+	{
+		if(this.id == l.getId())return true;
+		return false;
+	}
 	
 }

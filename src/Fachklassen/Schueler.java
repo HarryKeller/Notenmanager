@@ -180,6 +180,10 @@ public class Schueler
 	{
 		return id;
 	}
+	public void addLeistung(Leistung l)
+	{
+		this.leistung.add(l);
+	}
 	
 	
 	// --- Override-METHODS ----------------------------------------------------
