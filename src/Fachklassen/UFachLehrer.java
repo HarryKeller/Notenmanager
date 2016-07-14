@@ -94,6 +94,30 @@ public class UFachLehrer
 		else return true;
 	
 	}
+	public static UFachLehrer unterrichtetzurzeit(Lehrer lehrer,Unterrichtsfach ufach,LocalDate aktuell) throws Exception
+	{
+
+		String hql =  " ufl"
+				+" WHERE ufl.lehrer.id = "+lehrer.getId()+" "
+				+" AND ufl.ufach.id = " +ufach.getId()+" "
+				+" AND ufl.austrittsdatum > "+"'"+LocalDate.now()+"'";
+		
+		ArrayList<UFachLehrer>al = new ArrayList<UFachLehrer>();
+		try
+		{
+			DBZugriff.alleLesen("UFachLehrer", al, hql);
+		}	
+		catch( org.hibernate.ObjectNotFoundException ex)
+		{
+			throw ex;
+		}
+		if(al.size() == 0)
+		{
+			throw new Exception("Dieser Lehrer unterichtet dieses Fach nicht bzw nicht mehr");
+		}
+		return al.get(0);
+		
+	}
 	
 	public boolean speichern()
 	{
