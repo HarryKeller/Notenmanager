@@ -15,8 +15,10 @@ import javax.swing.border.EmptyBorder;
 
 
 
+
 import Fachklassen.Leistung;
 import Fachklassen.Unterrichtsfach;
+import Fachklassen.Zeugnisnote;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
@@ -83,6 +85,8 @@ public class Dialog_Druckansicht extends JFrame
 			String mündl2j = "";
 			String schula1j = "";
 			String schula2j = "";
+		    Zeugnisnote zn = new Zeugnisnote(notenblatt.schueler);
+		    double jz = 0.00;
 				for(Unterrichtsfach f : this.fach)
 				{
 					//Strings nach jedem abgefertigten Fach leeren, um Noten für das nächste Fach zu speichern
@@ -93,6 +97,11 @@ public class Dialog_Druckansicht extends JFrame
 					//HashMap für Felde im Report anlegen
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("Fach", f.getBez());
+					jz = zn.berechneNote(f);
+					if(jz!=0.00)
+					{
+						hm.put("jz", ""+zn.berechneNote(f));
+					}
 					for(Leistung l : Leistung.AlleLesen(this.notenblatt.schueler, f))
 					{
 						//Logische überprüfung in welche Spalte die Noten kommen müssen
