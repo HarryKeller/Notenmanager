@@ -13,7 +13,9 @@ import javax.swing.border.*;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
+import Fachklassen.Leistungsart;
 import Fachklassen.Schueler;
+import Fachklassen.UFachLehrer;
 import Fachklassen.Unterrichtsfach;
 import Persistenz.DBZugriff;
 
@@ -31,6 +33,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private Lehrer lehrer;
 	private Klasse klasse;
 	private Unterrichtsfach fach;
+	private Set<Schueler> schueler;
 	
 	private JPanel panel_head;
 	private JLabel _label;
@@ -63,10 +66,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	public NotenTable table_tab2_muendl;
 	public NotenTable table_tab2_schriftl;
 	
-	private DefaultTableModel model_tab1_muendlich;
-	private DefaultTableModel model_tab1_schriftl;
-	private DefaultTableModel model_tab2_muendlich;
-	private DefaultTableModel model_tab2_schriftl;
+	private NotenTableModel model_tab1_muendlich;
+	private NotenTableModel model_tab1_schriftl;
+	private NotenTableModel model_tab2_muendlich;
+	private NotenTableModel model_tab2_schriftl;
+	private JButton btn_speichern;
 	
 	public Dialog_NotenausgabeKlasse() {
 		
@@ -217,7 +221,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.panel_tab1_muendl.add(this._scrollPane, gbc_scrollPane);
 		
 		this.table_tab1_muendl = new NotenTable();		
-		this.model_tab1_muendlich = new DefaultTableModel();
+		this.model_tab1_muendlich = new NotenTableModel();
 		this.table_tab1_muendl.setModel(this.model_tab1_muendlich);
 		this._scrollPane.setViewportView(this.table_tab1_muendl);
 		
@@ -256,7 +260,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.panel_tab1_schriftl.add(this._scrollPane_1, gbc_scrollPane_1);
 		
 		this.table_tab1_schriftl = new NotenTable();
-		this.model_tab1_schriftl = new DefaultTableModel();
+		this.model_tab1_schriftl = new NotenTableModel();
 		this.table_tab1_schriftl.setModel(this.model_tab1_schriftl);
 		this._scrollPane_1.setViewportView(this.table_tab1_schriftl);
 		
@@ -309,7 +313,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this._panel_3.add(this._scrollPane_3, gbc_scrollPane_3);
 		
 		this.table_tab2_muendl = new NotenTable();
-		this.model_tab2_muendlich = new DefaultTableModel();
+		this.model_tab2_muendlich = new NotenTableModel();
 		this.table_tab2_muendl.setModel(model_tab2_muendlich);
 		this._scrollPane_3.setViewportView(this.table_tab2_muendl);
 		
@@ -337,7 +341,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this._panel_6.add(this._scrollPane_2, gbc_scrollPane_2);
 		
 		this.table_tab2_schriftl = new NotenTable();
-		this.model_tab2_schriftl = new DefaultTableModel();
+		this.model_tab2_schriftl = new NotenTableModel();
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
 		this._scrollPane_2.setViewportView(this.table_tab2_schriftl);
 		
@@ -361,6 +365,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.btn_verwerfen.addActionListener(this);
 		this.panel_buttons.add(this.btn_verwerfen);
 		
+		this.btn_speichern = new JButton("Speichern");
+		this.btn_speichern.addActionListener(this);
+		this.panel_buttons.add(this.btn_speichern);
+		
 		this.table_tab1_muendl.setRowSelectionAllowed(false);
 		this.table_tab1_muendl.setColumnSelectionAllowed(false);
 		
@@ -380,39 +388,44 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		return header.findColumnWithTooltip(l.getErhebungsdatum().toString());
 	}
 	
-	//Verarbeitungsmethoder für Leistungen in beliebige Tabelle setzen
-	private void fillOneTable(NotenTableHeader header, DefaultTableModel model, ArrayList<Leistung> leistungen)
+	//Leistungen und Tooltips in eine Tabelle einfügen
+	private void fillOneTable(NotenTableHeader header, NotenTableModel model, ArrayList<Leistung> leistungen)
 	{
 		for(Leistung l : leistungen)
-		{			
+		{	
+			//Spalte benötigt? Nein => index => col >= 0, Ja => -1
 			int col = this.isColumnRequiered(header, l);
 			
 			if(col == -1)
 			{				
 				header.addColumnTooltip(l.getErhebungsdatum().toString());
-				model.addColumn(l.getLeistungsart().getBez());		
-				model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, 
-																   model.getColumnCount() - 1);
+				model.addColumn(l.getLeistungsart().getBez());	
+				
+				model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);
 			}	
 			else if(col >= 0)
 			{
+				//Ist schon was in der Spalte? Ja => trotzdem neue Spalte, Nein => in spalte mit index col einfügen
 				if(model.getValueAt(model.getRowCount() - 1, col) == "" || model.getValueAt(model.getRowCount() - 1, col) == null)
 				{
-					model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1 , col);
+					model.setValueAt(l, model.getRowCount() - 1 , col);
 				}
 				else
 				{
 					header.addColumnTooltip(l.getErhebungsdatum().toString());
 					model.addColumn(l.getArt().getBez());
-					model.setValueAt(l.getNotenstufe(), model.getRowCount() - 1, model.getColumnCount() - 1);
+					model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);
 				}				
-			}				
+			}
+			
+			model.addLeistungToVector(l, model.getRowCount() - 1);
 		}	
 	}
 	
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
+		//Header aus der Tabelle holen, Ermöglicht setzen von Tooltips durch eigenen Header
 		NotenTableHeader header_tab1_muendl = (NotenTableHeader) this.table_tab1_muendl.getTableHeader();
 		NotenTableHeader header_tab1_schriftl = (NotenTableHeader) this.table_tab1_schriftl.getTableHeader();	
 		NotenTableHeader header_tab2_muendl = (NotenTableHeader) this.table_tab2_muendl.getTableHeader();
@@ -425,43 +438,53 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		
 		//Vorbereitung der Tabellen		
 		this.model_tab1_muendlich.addColumn("Name");
-		header_tab1_muendl.addColumnTooltip("");
-		this.model_tab1_muendlich.addColumn("Vorname");	
-		header_tab1_muendl.addColumnTooltip("");		
+		header_tab1_muendl.addColumnTooltip("");				
 			
 		this.model_tab1_schriftl.addColumn("Name");
-		header_tab1_schriftl.addColumnTooltip("");
-		this.model_tab1_schriftl.addColumn("Vorname");
-		header_tab1_schriftl.addColumnTooltip("");		
+		header_tab1_schriftl.addColumnTooltip("");				
 		
 		this.model_tab2_muendlich.addColumn("Name");
-		header_tab2_muendl.addColumnTooltip("");
-		this.model_tab2_muendlich.addColumn("Vorname");	
-		header_tab2_muendl.addColumnTooltip("");		
+		header_tab2_muendl.addColumnTooltip("");				
 		
 		this.model_tab2_schriftl.addColumn("Name");
-		header_tab2_schriftl.addColumnTooltip("");
-		this.model_tab2_schriftl.addColumn("Vorname");
-		header_tab2_schriftl.addColumnTooltip("");
-		
+		header_tab2_schriftl.addColumnTooltip("");		
 		
 		//Abarbeitung der Schueler in der Klasse		
-		Set<Schueler> schueler = this.klasse.getSchueler();
+		schueler = this.klasse.getSchueler();
 		
 		for(Schueler s : schueler)
 		{
-			//Ersten beiden spalten für jede Tabelle anlegen mit jeweiligem Schüler namen
-			Object[] rowData = {s.getNachname(),s.getVorname()};
-			this.model_tab1_muendlich.addRow(rowData);
-			this.model_tab1_schriftl.addRow(rowData);
-			this.model_tab2_muendlich.addRow(rowData);
-			this.model_tab2_schriftl.addRow(rowData);
+			//Ersten beiden spalten anlegen und dem Idvector hinzufügen		
+			this.model_tab1_muendlich.addRow(new String[]{});
+			this.model_tab1_muendlich.setValueAt(s, this.model_tab1_muendlich.getRowCount() - 1, 0);
+			this.model_tab1_muendlich.addRowToVector();
+			this.model_tab1_muendlich.addSchuelerToVector(s, this.model_tab1_muendlich.getRowCount() - 1);
+			
+			this.model_tab1_schriftl.addRow(new String[]{});
+			this.model_tab1_schriftl.setValueAt(s, this.model_tab1_schriftl.getRowCount() - 1, 0);
+			this.model_tab1_schriftl.addRowToVector();
+			this.model_tab1_schriftl.addSchuelerToVector(s, this.model_tab1_schriftl.getRowCount() - 1);
+			
+			this.model_tab2_muendlich.addRow(new String[]{});
+			this.model_tab2_muendlich.setValueAt(s, this.model_tab2_muendlich.getRowCount() - 1, 0);
+			this.model_tab2_muendlich.addRowToVector();
+			this.model_tab2_muendlich.addSchuelerToVector(s, this.model_tab2_muendlich.getRowCount() - 1);
+			
+			this.model_tab2_schriftl.addRow(new String[]{});
+			this.model_tab2_schriftl.setValueAt(s, this.model_tab2_schriftl.getRowCount() - 1, 0);
+			this.model_tab2_schriftl.addRowToVector();
+			this.model_tab2_schriftl.addSchuelerToVector(s, this.model_tab2_schriftl.getRowCount() - 1);			
 			
 			//Jede Tabelle mit Noten füllen
 			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));					
 			this.fillOneTable(header_tab1_schriftl, model_tab1_schriftl, s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));			
 			this.fillOneTable(header_tab2_muendl, model_tab2_muendlich, s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
 			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));
+			
+			this.table_tab1_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_muendl));
+			this.table_tab1_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_schriftl));			
+			this.table_tab2_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_muendl));
+			this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
 		}
 	}
 	
@@ -474,17 +497,71 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setGradesInTable();
 	}
 	
+	//Entfernt TableModels und fügt neue hinzu, alten werden vom Garbagecollector erwischt
 	private void emptyTable()
 	{
-		this.model_tab1_muendlich = new DefaultTableModel();
-		this.model_tab1_schriftl = new DefaultTableModel();
-		this.model_tab2_muendlich = new DefaultTableModel();
-		this.model_tab2_schriftl = new DefaultTableModel();
+		this.model_tab1_muendlich = new NotenTableModel();
+		this.model_tab1_schriftl = new NotenTableModel();
+		this.model_tab2_muendlich = new NotenTableModel();
+		this.model_tab2_schriftl = new NotenTableModel();
 		
 		this.table_tab1_muendl.setModel(model_tab1_muendlich);
 		this.table_tab1_schriftl.setModel(model_tab1_schriftl);
 		this.table_tab2_muendl.setModel(model_tab2_muendlich);
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
+	}
+	
+	private void saveOneTable(NotenTableModel model, NotenTableHeader header)
+	{
+        for(Vector<Object> vec : model.getIdVector())
+        {
+        	for(Object o : vec)
+        	{        		
+        		Schueler s = (Schueler) vec.get(0);       		
+        		
+        		try
+        		{
+        			Leistung l = (Leistung) o;
+        			
+            		if(l.getId() == 0 && l.getNotenstufe() != 0)
+            		{
+            			l.setSchueler(s);
+            				
+            			try
+    					{
+    						l.setUfachlehrer(UFachLehrer.unterrichtetzurzeit(lehrer, fach, LocalDate.now()));
+    					}
+    					catch (Exception e)
+    					{
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+    					}
+            				
+            			s.addLeistung(l);
+            		}
+        		}
+        		catch(Exception e)
+        		{
+        			System.out.println(e.getMessage());
+        			e.printStackTrace();
+        		}
+        	}
+        }
+	}
+	
+	//Daten auslesen und Speichern
+	private void getDatenAusMaske()
+	{	
+		this.saveOneTable(model_tab1_muendlich, (NotenTableHeader) this.table_tab1_muendl.getTableHeader());
+		this.saveOneTable(model_tab1_schriftl, (NotenTableHeader) this.table_tab1_schriftl.getTableHeader()); 
+		
+		this.saveOneTable(model_tab2_muendlich, (NotenTableHeader) this.table_tab2_muendl.getTableHeader());
+		this.saveOneTable(model_tab2_schriftl, (NotenTableHeader) this.table_tab2_schriftl.getTableHeader());
+		
+		for(Schueler s : schueler)
+		{
+			s.speichern();
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -503,5 +580,9 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			
 			this.setDatenInMaske();
 		}
+		else if(e.getSource() == this.btn_speichern)
+		{
+			this.getDatenAusMaske();			
+		}		
 	}	
 }
