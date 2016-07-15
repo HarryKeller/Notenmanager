@@ -214,11 +214,24 @@ public class Schueler
 		ArrayList<Leistung>al = new ArrayList<>();
 		DBZugriff.alleLesen("Leistung", al, "l WHERE l.schueler.id = "+this.getId());
 		
+		boolean vorhanden = false;
 		for(Leistung l:leistung)
 		{
-			Historie.speichern(l, lehrer);
+			for(Leistung lk:al)
+			{
+				if(l.equals(lk))
+				{
+					vorhanden =  true;
+				}
+			}
+			if(!vorhanden)
+			{
+				Historie.speichern(l, lehrer);
+			}
+			vorhanden = false;
 		}
 		this.leistung.clear();
+		
 		for(Leistung l: al)
 		{
 			leistung.add(l);
