@@ -1,8 +1,6 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -18,16 +16,15 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import Fachklassen.Lehrer;
-import Fachklassen.Schueler;
 import Fachklassen.UFachLehrer;
 import Persistenz.DBZugriff;
 
 import java.awt.Insets;
-import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 {
 
@@ -171,7 +168,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 			this.dispose();
 		}
 	}
-	public Lehrer[] ErzeugeLehrerArrayAusArrayList(ArrayList alist)
+	public Lehrer[] ErzeugeLehrerArrayAusArrayList(ArrayList<Lehrer> alist)
 	{
 		Lehrer[] llist = new Lehrer[alist.size()];
 		
