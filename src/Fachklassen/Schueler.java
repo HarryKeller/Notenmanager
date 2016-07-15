@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import Persistenz.DBZugriff;
 
 @Entity
@@ -34,7 +37,7 @@ public class Schueler
 	@JoinColumn(name="schueler_id")
 	private List<Zeugnisnote> zeugnisnoten = new ArrayList<Zeugnisnote>();
 	
-	@Transient
+	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
 	@JoinColumn(name="schueler_id") 
 	private Set<Leistung> leistung = new HashSet<Leistung>();
@@ -208,13 +211,24 @@ public class Schueler
 	
 	public void speichern(Lehrer lehrer) // Speichern des Satzes
 	{
-			
+		ArrayList<Leistung>al = new ArrayList<>();
+		DBZugriff.alleLesen("Leistung", al, "l WHERE l.schueler.id = "+this.getId());
+		
 		for(Leistung l:leistung)
 		{
 			Historie.speichern(l, lehrer);
 		}
-	
+		this.leistung.clear();
+		for(Leistung l: al)
+		{
+			leistung.add(l);
+		}
+		
 		DBZugriff.speichern(this);
+		
+		
+	
+	
 		
 	}
 	
