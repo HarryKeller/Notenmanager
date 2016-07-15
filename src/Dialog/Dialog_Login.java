@@ -230,6 +230,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	public void loginUser()
 	{
 		String benutzername = textField_Benutzername.getText();
+		benutzername = benutzername.replaceAll("\\s+","");
 		char[] password = passwordField_Passwort.getPassword();	
 		String passString = new String(password);
 		
