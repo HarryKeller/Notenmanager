@@ -1,8 +1,6 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,6 +19,7 @@ import Fachklassen.Lehrer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListener
 {
 

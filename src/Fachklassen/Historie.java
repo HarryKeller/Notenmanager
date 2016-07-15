@@ -40,6 +40,7 @@ public class Historie {
 	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
+		h.setText("Text ohne genauere Funktion");
 		h.setTabelleName("Leistung");
 		h.setEintragszeitpunkt(LocalDate.now());
 		if(l.getId() == 0)
