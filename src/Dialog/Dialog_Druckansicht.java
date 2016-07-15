@@ -65,7 +65,7 @@ public class Dialog_Druckansicht extends JFrame
 			parameter.put("namevorname", this.notenblatt.schueler.getNachname() + " " + this.notenblatt.schueler.getVorname());
 			parameter.put("geschlecht", this.notenblatt.schueler.getGeschl());
 			parameter.put("klasse", this.notenblatt.schueler.getKlasseid().getBez());
-			parameter.put("schuljahr", ""+LocalDateTime.now().getYear());
+			parameter.put("schuljahr", this.notenblatt.BEGINN_SCHULJAHR.getYear() + "/" + this.notenblatt.ENDE_SCHULJAHR.getYear());
 			parameter.put("anschrift", "DLC für 19,99");
 			parameter.put("tel", "DLC für 19,99");
 			parameter.put("erziehung", "DLC für 19,99");
