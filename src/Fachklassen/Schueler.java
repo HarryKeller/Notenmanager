@@ -50,12 +50,15 @@ public class Schueler
 		this.leistung = leistung;
 	}
 	
-	
+	@Deprecated
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach)
 	{
 		//Alle Leistungen des Schülers für ein Fach lesen
 		ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
 		//Rausschmeissen aller Mündlichen arbeiten
+		
+		
+		
 		ArrayList<Leistung>ret = new ArrayList<Leistung>();
 		for(Leistung l: lst)
 		{
@@ -64,7 +67,7 @@ public class Schueler
 		}
 		return ret;//Rückgabe der verbliebenen, also der Schriftlichen Arbeiten
 	}
-	
+	@Deprecated
 	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach)
 	{
 		//Alle Leistungen des Schülers für ein Fach lesen
@@ -85,15 +88,17 @@ public class Schueler
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
 	{
 			//Alle Leistungen des Schülers für ein Fach lesen
-				ArrayList<Leistung>lst = new ArrayList<Leistung>(Leistung.AlleLesen(this, ufach));
+			//	ArrayList<Leistung>lst = new ArrayList<Leistung>(Leistung.AlleLesen(this, ufach));
+		
+		
 				//Rausschmeissen aller Schriftlichen arbeiten
 				ArrayList<Leistung>ret = new ArrayList<Leistung>();
 				
 				
 				
-				for(Leistung l: lst)
+				for(Leistung l: leistung)
 				{
-					if(l.getLeistungsart().getGruppe() == 'S' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
+					if(l.getLeistungsart().getGruppe() == 'S' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis)&& l.getUfachlehrer().getUfach().equals(ufach))
 						ret.add(l);
 				}
 				return ret;	//Rückgabe der verbliebenen, also der Mündlich
@@ -102,15 +107,15 @@ public class Schueler
 	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
 	{
 			//Alle Leistungen des Schülers für ein Fach lesen
-				ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
+			//	ArrayList<Leistung>lst = Leistung.AlleLesen(this, ufach);
 				//Rausschmeissen aller Schriftlichen arbeiten
 				ArrayList<Leistung>ret = new ArrayList<Leistung>();
 				
 				
 				
-				for(Leistung l: lst)
+				for(Leistung l: leistung)
 				{
-					if(l.getLeistungsart().getGruppe() == 'M' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis))
+					if(l.getLeistungsart().getGruppe() == 'M' && l.getErhebungsdatum().isAfter(von) && l.getErhebungsdatum().isBefore(bis) && l.getUfachlehrer().getUfach().equals(ufach))
 						ret.add(l);
 				}
 				return ret;	//Rückgabe der verbliebenen, also der Mündlich
