@@ -5,27 +5,40 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import Fachklassen.Lehrer;
+import Fachklassen.Schueler;
+import Fachklassen.UFachLehrer;
+import Persistenz.DBZugriff;
+
 import java.awt.Insets;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
-public class Dialog_adm_Lehrer extends JDialog
+public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 {
 
 	private final JPanel contentPanel = new JPanel();
-	private final JList list_Lehrer = new JList();
+	private final JList<Lehrer> list_Lehrer = new JList<Lehrer>();
 	private final JScrollPane scrollPane = new JScrollPane();
 	private final JPanel panel = new JPanel();
 	private final JButton button_Lehrer_Anlegen = new JButton("Lehrer anlegen");
-	private final JButton btnLehrerBearbeiten = new JButton("Lehrer bearbeiten");
+	private final JButton button_Lehrer_bearbeiten = new JButton("Lehrer bearbeiten");
 	private final JButton button_Lehrer_loeschen = new JButton("Lehrer l\u00F6schen");
-	private final JButton btnZurck = new JButton("Zur\u00FCck");
+	private final JButton button_Zurueck = new JButton("Zur\u00FCck");
 
 	/**
 	 * Launch the application.
@@ -49,7 +62,7 @@ public class Dialog_adm_Lehrer extends JDialog
 	 */
 	public Dialog_adm_Lehrer()
 	{
-		setModal(true);
+		setTitle("Lehrer - Auswahl");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,25 +100,86 @@ public class Dialog_adm_Lehrer extends JDialog
 		gbc_button_Lehrer_Anlegen.insets = new Insets(0, 0, 5, 5);
 		gbc_button_Lehrer_Anlegen.gridx = 0;
 		gbc_button_Lehrer_Anlegen.gridy = 0;
+		button_Lehrer_Anlegen.addActionListener(this);
 		panel.add(button_Lehrer_Anlegen, gbc_button_Lehrer_Anlegen);
-		GridBagConstraints gbc_btnLehrerBearbeiten = new GridBagConstraints();
-		gbc_btnLehrerBearbeiten.anchor = GridBagConstraints.NORTH;
-		gbc_btnLehrerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLehrerBearbeiten.insets = new Insets(0, 0, 5, 0);
-		gbc_btnLehrerBearbeiten.gridx = 1;
-		gbc_btnLehrerBearbeiten.gridy = 0;
-		panel.add(btnLehrerBearbeiten, gbc_btnLehrerBearbeiten);
+		GridBagConstraints gbc_button_Lehrer_bearbeiten = new GridBagConstraints();
+		gbc_button_Lehrer_bearbeiten.anchor = GridBagConstraints.NORTH;
+		gbc_button_Lehrer_bearbeiten.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button_Lehrer_bearbeiten.insets = new Insets(0, 0, 5, 0);
+		gbc_button_Lehrer_bearbeiten.gridx = 1;
+		gbc_button_Lehrer_bearbeiten.gridy = 0;
+		button_Lehrer_bearbeiten.addActionListener(this);
+		panel.add(button_Lehrer_bearbeiten, gbc_button_Lehrer_bearbeiten);
 		GridBagConstraints gbc_button_Lehrer_loeschen = new GridBagConstraints();
 		gbc_button_Lehrer_loeschen.fill = GridBagConstraints.HORIZONTAL;
 		gbc_button_Lehrer_loeschen.insets = new Insets(0, 0, 0, 5);
 		gbc_button_Lehrer_loeschen.gridx = 0;
 		gbc_button_Lehrer_loeschen.gridy = 1;
+		button_Lehrer_loeschen.addActionListener(this);
 		panel.add(button_Lehrer_loeschen, gbc_button_Lehrer_loeschen);
-		GridBagConstraints gbc_btnZurck = new GridBagConstraints();
-		gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnZurck.gridx = 1;
-		gbc_btnZurck.gridy = 1;
-		panel.add(btnZurck, gbc_btnZurck);
+		GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
+		gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button_Zurueck.gridx = 1;
+		gbc_button_Zurueck.gridy = 1;
+		button_Zurueck.addActionListener(this);
+		panel.add(button_Zurueck, gbc_button_Zurueck);
+		
+		
+		DBZugriff.initDB();
+		this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen()));
 	}
 
+	
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		if(arg0.getActionCommand().equals(this.button_Lehrer_Anlegen.getActionCommand()))
+		{
+			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten();
+			dialog_lehrer.setVisible(true);
+		}
+		if(arg0.getActionCommand().equals(this.button_Lehrer_bearbeiten.getActionCommand()))
+		{
+			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten(((Lehrer)this.list_Lehrer.getSelectedValue()));
+			dialog_lehrer.setVisible(true);
+		}
+		if(arg0.getActionCommand().equals(this.button_Lehrer_loeschen.getActionCommand()))
+		{
+			try
+			{
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich löschen?", "Warnung!", JOptionPane.YES_NO_OPTION))
+			{
+				if(!UFachLehrer.unterrichtetNoch(this.list_Lehrer.getSelectedValue()))
+				{
+					this.list_Lehrer.getSelectedValue().setArbeitetAnDieserSchule(false);
+					this.list_Lehrer.getSelectedValue().speichern();
+					this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen()));
+				}
+				
+				}
+				else
+				{
+					
+				}
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Lehrer konnte nicht gelöscht werden, eventuell besitzt er noch Verbindungen die nicht getrennt werden können \n" + e.getMessage());
+			}
+		}
+		if(arg0.getActionCommand().equals(this.button_Zurueck.getActionCommand()))
+		{
+			this.dispose();
+		}
+	}
+	public Lehrer[] ErzeugeLehrerArrayAusArrayList(ArrayList alist)
+	{
+		Lehrer[] llist = new Lehrer[alist.size()];
+		
+		for(int i = 0; i < alist.size(); i++)
+		{
+			llist[i] = (Lehrer)alist.get(i);
+		}
+		
+		return llist;
+	}
 }
