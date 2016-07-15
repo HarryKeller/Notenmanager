@@ -1,20 +1,12 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 
@@ -33,16 +25,21 @@ import net.sf.jasperreports.swing.JRViewer;
 public class Dialog_Druckansicht extends JFrame
 {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     Dialog_Notenblatt notenblatt;
     ArrayList<Unterrichtsfach> fach;
 	
 	public Dialog_Druckansicht(Dialog_Notenblatt notenblatt)
 	{
+		//Notenblatt DialogDaten der JTable übernehmen, um an Daten für Notenblatt Jasperreport zu kommen
 		this.notenblatt = notenblatt;
 		this.fach = notenblatt.fach;
+		//GUI erstellen
 		initGUI();
+		//Jasperprint für JRViewer erzeugen
 		JasperPrint p = erzeugeBankenReport();
+		//PDF-Datei mit gefülltem Report anzeigen lassen
 		JRViewer viewer = new JRViewer(p);
 		contentPane.add(viewer);
 	}
@@ -61,11 +58,13 @@ public class Dialog_Druckansicht extends JFrame
 	{
 		try
 		{
+			//HashMap für Parameterbelegung im Report
 			HashMap<String, Object> parameter = new HashMap<String, Object>();
+			//Parameter belegen
 			parameter.put("namevorname", this.notenblatt.schueler.getNachname() + " " + this.notenblatt.schueler.getVorname());
 			parameter.put("geschlecht", this.notenblatt.schueler.getGeschl());
 			parameter.put("klasse", this.notenblatt.schueler.getKlasseid().getBez());
-			parameter.put("schuljahr", this.notenblatt.BEGINN_SCHULJAHR.getYear() + "/" + this.notenblatt.ENDE_SCHULJAHR.getYear());
+			parameter.put("schuljahr", Dialog_Notenblatt.BEGINN_SCHULJAHR.getYear() + "/" + Dialog_Notenblatt.ENDE_SCHULJAHR.getYear());
 			parameter.put("anschrift", "DLC für 19,99");
 			parameter.put("tel", "DLC für 19,99");
 			parameter.put("erziehung", "DLC für 19,99");
@@ -77,26 +76,29 @@ public class Dialog_Druckansicht extends JFrame
 			parameter.put("fehl_j_t", "12");
 			parameter.put("fehl_j_s", "4");
 			parameter.put("fehl_j_u", "2");
-			// diese ArrayList wird später einen Eintrag pro Zeile haben
-			// Achtung darf nicht mit HashMap angelegt werden (sondern mit Map)
+			//Arraylist für die Zusammenfassung aller Daten für die Notentabelle erzeugen
 			ArrayList<Map<String, ?>> al = new ArrayList<Map<String, ?>>();
+			//Einzelne Strings für jede mögliche Note anlegen
 			String mündl1j = "";
 			String mündl2j = "";
 			String schula1j = "";
 			String schula2j = "";
 				for(Unterrichtsfach f : this.fach)
 				{
+					//Strings nach jedem abgefertigten Fach leeren, um Noten für das nächste Fach zu speichern
 					mündl1j = "";
 					mündl2j = "";
 					schula1j = "";
 					schula2j = "";
+					//HashMap für Felde im Report anlegen
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("Fach", f.getBez());
 					for(Leistung l : Leistung.AlleLesen(this.notenblatt.schueler, f))
 					{
+						//Logische überprüfung in welche Spalte die Noten kommen müssen
 						if(f.getId() == l.getUfachlehrer().getUfach().getId())
 						{
-							if(l.getErhebungsdatum().isBefore(this.notenblatt.BEGINN_HALBJAHR))
+							if(l.getErhebungsdatum().isBefore(Dialog_Notenblatt.BEGINN_HALBJAHR))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
@@ -107,7 +109,7 @@ public class Dialog_Druckansicht extends JFrame
 									schula1j = schula1j + " | " + l.getNotenstufe() + " | ";
 								}
 							}
-							else if(l.getErhebungsdatum().isAfter(this.notenblatt.BEGINN_HALBJAHR))
+							else if(l.getErhebungsdatum().isAfter(Dialog_Notenblatt.BEGINN_HALBJAHR))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
@@ -120,16 +122,16 @@ public class Dialog_Druckansicht extends JFrame
 							}
 						}
 					}
+					//Gesammelte Noten pro Fach in die ArrayList einspeichern
 					hm.put("m1j", mündl1j);
 					hm.put("m2j", mündl2j);
 					hm.put("s1j", schula1j);
 					hm.put("s2j", schula2j);
 					al.add(hm);
 				}
-
+			//Nach erfolgreicher Datensammlung, wird die ArrayList für den Report vorbereitet
 			JRMapCollectionDataSource ds = new JRMapCollectionDataSource(al);
-
-			// Variante 2: vorcompilierte ".jasper"-Datei nehmen!
+			//Verteilung der Daten in den Report
 			JasperPrint jp = JasperFillManager.fillReport("Notenblatt.jasper",
 					parameter, ds);
 			return jp;

@@ -1,7 +1,5 @@
 package Dialog;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
@@ -14,28 +12,23 @@ import javax.swing.JTable;
 import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
-import Persistenz.DBZugriff;
 
 import java.awt.Color;
 
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.Font;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-
 public class Dialog_Notenblatt extends JFrame implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Schueler schueler;
 	Dialog_Schuelerwahl schuelerwahl;
 	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
