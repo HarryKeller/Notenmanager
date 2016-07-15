@@ -44,13 +44,22 @@ public class EXCELZugriff
 		if(file!=null&&file!="")
 		{
 			ExcelDB db = new ExcelDB();
-			db.setInputFile(file);
-			db.setRow_anfang(x1);
-			db.setRow_ende(x2);
-			db.setColumn_anfang(y1);
-			db.setColumn_ende(y2);
-			db.read();
-			return db.getDataList();
+			try
+			{
+				
+				db.setInputFile(file);
+				db.setRow_anfang(x1);
+				db.setRow_ende(x2);
+				db.setColumn_anfang(y1);
+				db.setColumn_ende(y2);
+				db.read();
+				return db.getDataList();
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("Die Datei konnte nicht gelesen werden!");
+			}
+			
 		}
 		else
 		{
