@@ -36,6 +36,7 @@ public class Leistung
 	{
 		
 	}	
+
 	public Leistung(int id)
 	{
 		DBZugriff.lesen(this,id);

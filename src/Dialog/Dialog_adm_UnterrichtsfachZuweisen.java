@@ -1,7 +1,4 @@
 package Dialog;
-
-import java.awt.EventQueue;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,8 +18,6 @@ import javax.swing.JList;
 import Fachklassen.Lehrer;
 import Fachklassen.UFachLehrer;
 import Fachklassen.Unterrichtsfach;
-import Fachklassen.Zeugnisfach;
-import Persistenz.DBZugriff;
 
 import javax.swing.JButton;
 
@@ -31,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 import javax.swing.ListSelectionModel;
@@ -109,7 +103,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		gbc_lblLehrer.gridy = 0;
 		this.panel.add(this.lblLehrer, gbc_lblLehrer);
 		
-		this.comboBox_Lehrer = new JComboBox();
+		this.comboBox_Lehrer = new JComboBox<Lehrer>();
 		this.comboBox_Lehrer.addItemListener(this);
 		this.comboBox_Lehrer.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_comboBox_Lehrer = new GridBagConstraints();
@@ -129,7 +123,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		gbc_lblUFach.gridy = 1;
 		this.panel.add(this.lblUFach, gbc_lblUFach);
 		
-		this.comboBox_UFach = new JComboBox();
+		this.comboBox_UFach = new JComboBox<Unterrichtsfach>();
 		this.comboBox_UFach.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_comboBox_UFach = new GridBagConstraints();
 		gbc_comboBox_UFach.gridwidth = 2;
@@ -165,7 +159,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		gbc_scrollPane.gridy = 2;
 		this.panel.add(this.scrollPane, gbc_scrollPane);
 		
-		this.list_UFach = new JList(model);
+		this.list_UFach = new JList<Unterrichtsfach>(model);
 		this.scrollPane.setViewportView(this.list_UFach);
 		this.list_UFach.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		

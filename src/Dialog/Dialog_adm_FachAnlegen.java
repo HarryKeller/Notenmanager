@@ -1,11 +1,6 @@
 package Dialog;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,11 +20,11 @@ import javax.swing.JComboBox;
 
 import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisfach;
-import Persistenz.DBZugriff;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
@@ -54,7 +49,6 @@ public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 	}
 	private void initGUI()
 	{
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setTitle("Unterrichtsfach anlegen");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -157,7 +151,7 @@ public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 		gbc_lblNewLabel_1.gridy = 4;
 		this.panel.add(this.lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		cbZeugnisfaecher = new JComboBox();
+		cbZeugnisfaecher = new JComboBox<Zeugnisfach>();
 		GridBagConstraints gbc_cbZeugnisfaecher = new GridBagConstraints();
 		gbc_cbZeugnisfaecher.insets = new Insets(5, 5, 5, 0);
 		gbc_cbZeugnisfaecher.fill = GridBagConstraints.HORIZONTAL;

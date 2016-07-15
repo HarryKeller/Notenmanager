@@ -34,7 +34,6 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
-import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class Dialog_Login extends JFrame implements ActionListener, WindowListener

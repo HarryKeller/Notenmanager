@@ -34,6 +34,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+@SuppressWarnings("serial")
 public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
 
 {
@@ -156,7 +157,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_lblSchuleauswahl.gridy = 0;
 		this.panel_combobox.add(this.lblSchuleauswahl, gbc_lblSchuleauswahl);
 		
-		this.comboBox_Schule = new JComboBox();
+		this.comboBox_Schule = new JComboBox<Schule>();
 		this.comboBox_Schule.addItemListener(this);
 		GridBagConstraints gbc_comboBox_Schule = new GridBagConstraints();
 		gbc_comboBox_Schule.insets = new Insets(5, 10, 5, 10);
@@ -173,7 +174,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_lblKlassenauswahl.gridy = 2;
 		this.panel_combobox.add(this.lblKlassenauswahl, gbc_lblKlassenauswahl);
 		
-		this.comboBox_Klassen = new JComboBox();
+		this.comboBox_Klassen = new JComboBox<Klasse>();
 		this.comboBox_Klassen.setEnabled(false);
 		GridBagConstraints gbc_comboBox_Klassen = new GridBagConstraints();
 		gbc_comboBox_Klassen.insets = new Insets(5, 10, 5, 10);
@@ -190,7 +191,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_lblFcherauswahl.gridy = 4;
 		this.panel_combobox.add(this.lblFcherauswahl, gbc_lblFcherauswahl);
 		
-		this.comboBox_Faecher = new JComboBox();
+		this.comboBox_Faecher = new JComboBox<Unterrichtsfach>();
 		this.comboBox_Faecher.setEnabled(false);
 		GridBagConstraints gbc_comboBox_Faecher = new GridBagConstraints();
 		gbc_comboBox_Faecher.insets = new Insets(5, 10, 5, 10);
