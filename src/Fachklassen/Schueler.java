@@ -3,7 +3,9 @@ package Fachklassen;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -32,21 +34,22 @@ public class Schueler
 	@JoinColumn(name="schueler_id")
 	private List<Zeugnisnote> zeugnisnoten = new ArrayList<Zeugnisnote>();
 	
-
+	@Transient
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
 	@JoinColumn(name="schueler_id") 
-	private List<Leistung> leistung = new ArrayList<Leistung>();
-	
+	private Set<Leistung> leistung = new HashSet<Leistung>();
 	
 	
 	// ----- CONSTRUCTOR ---------------------------------------------------------------
 	// ---------------------------------------------------------------------------------
 	
-	public List<Leistung> getLeistung() {
+
+
+	public Set<Leistung> getLeistung() {
 		return leistung;
 	}
 
-	public void setLeistung(List<Leistung> leistung) {
+	public void setLeistung(Set<Leistung> leistung) {
 		this.leistung = leistung;
 	}
 	
@@ -62,7 +65,7 @@ public class Schueler
 		ArrayList<Leistung>ret = new ArrayList<Leistung>();
 		for(Leistung l: lst)
 		{
-			if(l.getLeistungsart().getGruppe() == 'S')
+			if(l.getLeistungsart().getGruppe() == 'S' && l.getUfachlehrer().getUfach().equals(ufach))
 				ret.add(l);
 		}
 		return ret;//Rückgabe der verbliebenen, also der Schriftlichen Arbeiten
@@ -76,7 +79,7 @@ public class Schueler
 		ArrayList<Leistung>ret = new ArrayList<Leistung>();
 		for(Leistung l: lst)
 		{
-			if(l.getLeistungsart().getGruppe() == 'M')
+			if(l.getLeistungsart().getGruppe() == 'M' && l.getUfachlehrer().getUfach().equals(ufach))
 				ret.add(l);
 		}
 		return ret;	//Rückgabe der verbliebenen, also der Mündlichen Arbeiten
@@ -203,9 +206,16 @@ public class Schueler
 	// --- DATABASE -------------------------------------------------------------
 	// ---------------------------------------------------------------------------
 	
-	public void speichern() // Speichern des Satzes
+	public void speichern(Lehrer lehrer) // Speichern des Satzes
 	{
+			
+		for(Leistung l:leistung)
+		{
+			Historie.speichern(l, lehrer);
+		}
+	
 		DBZugriff.speichern(this);
+		
 	}
 	
 	public void loeschen() 	// Löschen des Satzes
@@ -220,6 +230,7 @@ public class Schueler
 	public void setKlasseid(Klasse klasse) {
 		this.klasse = klasse;
 	}
+
 	
 	
 }
