@@ -57,7 +57,7 @@ public class EXCELZugriff
 			}
 			catch(Exception ex)
 			{
-				throw new Exception("Die Datei konnte nicht gelesen werden!");
+				throw new Exception("Bei den Koordinaten ist ein Fehler aufgetreten!");
 			}
 			
 		}
