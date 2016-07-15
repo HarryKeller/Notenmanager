@@ -30,7 +30,23 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 {
 	private static final long serialVersionUID = 1L;
 	private JTable table = new JTable();
-	private DefaultTableModel model = new DefaultTableModel();
+	private DefaultTableModel model = new DefaultTableModel(){/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	@Override
+	    public boolean isCellEditable(int row, int column) {
+	       if(column>=0&&column<2)
+	       {
+	    	   return false;
+	       }
+	       else
+	       {
+	    	   return true;
+	       }
+	       
+	    }};
 	private List<Zeugnisnote> spnoten = new ArrayList<Zeugnisnote>();
 	private JButton btnSpeichern = new JButton("Speichern");
 	private List<Zeugnisnote> zfachnoten;
@@ -199,7 +215,9 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 	
 	
-	
+	/**
+	* Falls der Schüler schon Noten hat, holt sich die Methode das dazugehörige Zeugnis.
+	*/
 	private void GetZeugnisFromZeugnisnoten(List<Zeugnisnote> list)
 	{
 		for(Zeugnisnote note:list)
@@ -259,7 +277,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 					}
 					catch(Exception ex)
 					{
-						
+						ex.printStackTrace();
 					}
 				}	
 				counter++;
@@ -342,5 +360,5 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		this.zeugnis = zeugnis;
 	}
 
-
+	
 }
