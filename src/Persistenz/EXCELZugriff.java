@@ -26,7 +26,7 @@ public class EXCELZugriff
 	
 	/**
 	 * @param x1 
-	 * Erste Koordinate, wo der gewünschte Datensatz beginnen soll! Gezählt wird dieser ab 0!
+	 * Erste Koordinate, wo der gewünschte Datensatz beginnen soll! Gezählt wird ab 0!
 	 * @param x2
 	 * Letzte Koordinate des gewünschten Datensatzes. Leere Felder dazwischen werden mitgezählt!
 	 * @param y1
