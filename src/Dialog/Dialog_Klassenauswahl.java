@@ -63,12 +63,12 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JButton btnSchuelerBearbeiten;
 	private JButton btnLehrerBearbeiten;
 	private JButton btnKlasseBearbeiten;
-	private JButton btnFachBearbeiten;
+	private JButton btnFaecherAnlegen;
 	private JMenu menuStammdaten;
 	private JMenuItem mitemSchuelerBearbeiten;
 	private JMenuItem mitemLehrerBearbeiten;
 	private JMenuItem mitemKlassenBearbeiten;
-	private JMenuItem mitemFaecherBearbeiten;
+	private JMenuItem mitemFaecherAnlegen;
 	private JMenuItem mitemUnterrichtsfaecherZuweisen;
 
 	/**
@@ -305,14 +305,14 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_btnKlasseBearbeiten.gridy = 4;
 		this.panel_admin.add(this.btnKlasseBearbeiten, gbc_btnKlasseBearbeiten);
 		
-		this.btnFachBearbeiten = new JButton("F\u00E4cher bearbeiten");
-		this.btnFachBearbeiten.addActionListener(this);
-		GridBagConstraints gbc_btnFachBearbeiten = new GridBagConstraints();
-		gbc_btnFachBearbeiten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFachBearbeiten.insets = new Insets(0, 5, 5, 5);
-		gbc_btnFachBearbeiten.gridx = 0;
-		gbc_btnFachBearbeiten.gridy = 5;
-		this.panel_admin.add(this.btnFachBearbeiten, gbc_btnFachBearbeiten);
+		this.btnFaecherAnlegen = new JButton("F\u00E4cher anlegen");
+		this.btnFaecherAnlegen.addActionListener(this);
+		GridBagConstraints gbc_btnFaecherAnlegen = new GridBagConstraints();
+		gbc_btnFaecherAnlegen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFaecherAnlegen.insets = new Insets(0, 5, 5, 5);
+		gbc_btnFaecherAnlegen.gridx = 0;
+		gbc_btnFaecherAnlegen.gridy = 5;
+		this.panel_admin.add(this.btnFaecherAnlegen, gbc_btnFaecherAnlegen);
 		
 		this.panel_button = new JPanel();
 		GridBagConstraints gbc_panel_button = new GridBagConstraints();
@@ -371,9 +371,9 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.mitemKlassenBearbeiten.addActionListener(this);
 		this.menuStammdaten.add(this.mitemKlassenBearbeiten);
 		
-		this.mitemFaecherBearbeiten = new JMenuItem("F\u00E4cher bearbeiten");
-		this.mitemFaecherBearbeiten.addActionListener(this);
-		this.menuStammdaten.add(this.mitemFaecherBearbeiten);
+		this.mitemFaecherAnlegen = new JMenuItem("F\u00E4cher anlegen");
+		this.mitemFaecherAnlegen.addActionListener(this);
+		this.menuStammdaten.add(this.mitemFaecherAnlegen);
 		
 		this.mitemUnterrichtsfaecherZuweisen = new JMenuItem("Unterrichtsf\u00E4cher zuweisen");
 		this.mitemUnterrichtsfaecherZuweisen.addActionListener(this);
@@ -403,7 +403,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnFachBearbeiten.getActionCommand()) || e.getActionCommand() == "Fächer anlegen")
+		if(e.getActionCommand().equals(btnFaecherAnlegen.getActionCommand()) || e.getActionCommand() == "Fächer anlegen")
 		{
 			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
 			dlg_adm_fach.setVisible(true);
