@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Notenblatt" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a46312a-4f36-49b1-959c-7f36d65f4743">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.1000000000000034"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="42"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -73,6 +73,7 @@
 	<field name="s1j" class="java.lang.String"/>
 	<field name="s2j" class="java.lang.String"/>
 	<field name="jz" class="java.lang.String"/>
+	<field name="zz" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -109,7 +110,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="184" splitType="Stretch">
+		<band height="208" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="39" uuid="f0d39083-f86c-4766-a84e-03bb753807b2"/>
 			</rectangle>
@@ -211,7 +212,7 @@
 				<text><![CDATA[Erziehungsberechtigte]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="164" width="74" height="20" backcolor="#CCCCCC" uuid="1eda0488-3c0f-4522-9257-94bb930fce4a"/>
+				<reportElement x="0" y="188" width="108" height="20" backcolor="#CCCCCC" uuid="1eda0488-3c0f-4522-9257-94bb930fce4a"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="401" y="97" width="154" height="40" uuid="16e7ddc3-9ab5-4241-8baa-3e5fa53ea8aa"/>
@@ -226,22 +227,25 @@
 				<reportElement x="475" y="97" width="80" height="20" backcolor="#CCCCCC" uuid="8b210a82-3cc7-4e78-86e4-86408b9b611b"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="194" y="164" width="111" height="20" backcolor="#CCCCCC" uuid="c17035d9-7fd9-492a-a073-899473231bbf"/>
+				<reportElement x="332" y="188" width="116" height="20" backcolor="#CCCCCC" uuid="c17035d9-7fd9-492a-a073-899473231bbf"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="74" y="164" width="120" height="20" backcolor="#CCCCCC" uuid="f8c87418-d4a1-4886-b469-41242636c688"/>
+				<reportElement x="108" y="188" width="111" height="20" backcolor="#CCCCCC" uuid="f8c87418-d4a1-4886-b469-41242636c688"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="305" y="164" width="113" height="20" backcolor="#CCCCCC" uuid="bf43cd46-0a5f-4d41-8196-ef5b7142e3cb"/>
+				<reportElement x="219" y="188" width="86" height="20" backcolor="#CCCCCC" uuid="bf43cd46-0a5f-4d41-8196-ef5b7142e3cb"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="418" y="164" width="108" height="20" backcolor="#CCCCCC" uuid="fd487d17-2b81-4748-a5f4-7d77d74abe93"/>
+				<reportElement x="448" y="188" width="78" height="20" backcolor="#CCCCCC" uuid="fd487d17-2b81-4748-a5f4-7d77d74abe93"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="526" y="164" width="29" height="20" backcolor="#CCCCCC" uuid="956415e8-34c5-4e3d-944f-f52b7795bb4e"/>
+				<reportElement x="304" y="188" width="28" height="20" backcolor="#CCCCCC" uuid="ab4daedd-3f45-4edf-a0e7-d4aa04e60a0a"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="144" width="100" height="20" backcolor="#CCCCCC" uuid="e252b072-2fc7-4685-a264-4b8af3e80d48"/>
+				<reportElement x="526" y="188" width="29" height="20" backcolor="#CCCCCC" uuid="956415e8-34c5-4e3d-944f-f52b7795bb4e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="108" y="148" width="447" height="20" backcolor="#CCCCCC" uuid="e3f3e98b-c5c7-46fc-980a-11e1dbfccd1d"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="401" y="97" width="74" height="20" uuid="c56e3910-fb4d-4661-a389-1e42aa697668"/>
@@ -258,150 +262,191 @@
 				<text><![CDATA[Bekenntnis]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="164" width="74" height="20" uuid="606a8325-8cc7-47e7-a637-1a91071c7235"/>
+				<reportElement x="0" y="188" width="108" height="20" uuid="606a8325-8cc7-47e7-a637-1a91071c7235"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fach]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="164" width="120" height="20" uuid="66622c90-677e-4f6a-a23f-9ddfc76b39f8"/>
+				<reportElement x="109" y="188" width="111" height="20" uuid="66622c90-677e-4f6a-a23f-9ddfc76b39f8"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Mündlich 1. Halbjahr]]></text>
+				<text><![CDATA[Mündlich]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="194" y="164" width="111" height="20" uuid="fdc607a2-e68f-48f7-bb5a-9cd1966fc169"/>
+				<reportElement x="332" y="188" width="115" height="20" uuid="fdc607a2-e68f-48f7-bb5a-9cd1966fc169"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Mündlich 2. Halbjahr]]></text>
+				<text><![CDATA[Mündlich]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="305" y="164" width="113" height="20" uuid="b1e89b3c-b76d-45a6-aad9-553b57990081"/>
+				<reportElement x="220" y="188" width="85" height="20" uuid="b1e89b3c-b76d-45a6-aad9-553b57990081"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Schriftlich 1. Halbjahr]]></text>
+				<text><![CDATA[Schriftlich]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="418" y="164" width="108" height="20" uuid="915111c4-df9a-4b0d-888c-88661d17b660"/>
+				<reportElement x="448" y="188" width="78" height="20" uuid="915111c4-df9a-4b0d-888c-88661d17b660"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Schriftlich 2. Halbjahr]]></text>
+				<text><![CDATA[Schriftlich]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="20" width="220" height="20" uuid="6d0b3daf-6c02-4f2f-ab14-846cff2dbfac"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{namevorname}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="220" y="19" width="127" height="20" uuid="aa83bebc-d420-4e6d-bf25-aeccb5250c4d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{geschlecht}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="347" y="19" width="100" height="20" uuid="8e14909b-bee8-4190-83f9-c82512c64d9f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{klasse}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="447" y="20" width="108" height="20" uuid="d3dfd7d0-a5ec-4f85-88f6-133b7b55026b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{schuljahr}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="77" width="220" height="20" uuid="e18d83b9-1be6-426c-b9cd-50fef013b2b3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{anschrift}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="117" width="220" height="20" uuid="9e6c98ec-d7c8-4f38-85dd-60342c2fcf91"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{tel}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="220" y="77" width="181" height="60" uuid="d526f47d-32fe-4cfe-9121-9a0423eafd60"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{erziehung}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="401" y="117" width="74" height="20" uuid="7f5f7dc4-38ab-4c52-bf7c-0f4c993fefed"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{gebdatum}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="475" y="117" width="80" height="20" uuid="af7e833c-2aff-44fa-9b10-db4223ed89ad"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{bekenntnis}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="144" width="100" height="20" backcolor="#000000" uuid="c17d9a08-b85e-4e6b-8340-2e88090aba74"/>
-				<textElement>
-					<font size="12" isBold="true"/>
+				<reportElement x="108" y="148" width="447" height="20" backcolor="#000000" uuid="c17d9a08-b85e-4e6b-8340-2e88090aba74"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Nirmala UI Semilight" size="14" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Notentabelle]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="526" y="164" width="29" height="20" uuid="a116ba6a-0988-4b41-800a-cc9c6e9fef30"/>
+				<reportElement x="526" y="188" width="29" height="20" uuid="a116ba6a-0988-4b41-800a-cc9c6e9fef30"/>
 				<textElement textAlignment="Center">
-					<font size="11" isBold="true"/>
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="188" width="29" height="20" uuid="7c79e72d-0c17-49e7-b294-ed33fb3db4bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ZZ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="108" y="168" width="224" height="20" backcolor="#CCCCCC" uuid="2ef8c12a-4f5f-47bf-9466-c223ac3f636f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="108" y="168" width="224" height="20" uuid="c392b6c2-04ec-47b7-9591-908f0c7d286d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Erstes Halbjahr]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="332" y="168" width="223" height="20" backcolor="#CCCCCC" uuid="40e7875c-32f0-4cda-b0d0-e172bce1168c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="332" y="168" width="223" height="20" uuid="6b69c6a5-94d1-4f8c-9aa9-cc0867cf5c80"/>
+				<textElement textAlignment="Center">
+					<font fontName="Nirmala UI Semilight" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zweites Halbjahr]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="74" height="14" uuid="dc67b5ae-1d18-449b-abf6-bc254b5d769a"/>
+				<reportElement x="304" y="0" width="28" height="14" uuid="60014b8d-26b3-4e64-82c6-d6d5e85668ce"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="74" y="0" width="120" height="14" uuid="ab7f8e72-2d3b-4e81-9c92-ef403b6e5b70"/>
+				<reportElement x="0" y="0" width="108" height="14" uuid="dc67b5ae-1d18-449b-abf6-bc254b5d769a"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="194" y="0" width="111" height="14" uuid="f7415e17-e407-4393-9012-269544ff8a56"/>
+				<reportElement x="108" y="0" width="111" height="14" uuid="ab7f8e72-2d3b-4e81-9c92-ef403b6e5b70"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="305" y="0" width="113" height="14" uuid="57638398-2ded-492c-80e9-a4018243b28d"/>
+				<reportElement x="219" y="0" width="85" height="14" uuid="f7415e17-e407-4393-9012-269544ff8a56"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="418" y="0" width="108" height="14" uuid="adbb95df-47a3-42da-9bfc-e19c4af1f938"/>
+				<reportElement x="332" y="0" width="116" height="14" uuid="57638398-2ded-492c-80e9-a4018243b28d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="448" y="0" width="78" height="14" uuid="adbb95df-47a3-42da-9bfc-e19c4af1f938"/>
 			</rectangle>
 			<textField>
-				<reportElement x="3" y="0" width="71" height="14" uuid="de7eb423-7229-4b23-951f-c2ea288d3973"/>
-				<textElement>
-					<font size="8"/>
+				<reportElement x="3" y="0" width="105" height="14" uuid="de7eb423-7229-4b23-951f-c2ea288d3973"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8" isBold="false" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Fach}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="194" y="0" width="111" height="14" uuid="89065696-0f29-480c-88b2-9635b502b391"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{m2j}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="74" y="0" width="120" height="14" uuid="1141a01a-94ac-4c57-90e9-324428111913"/>
-				<textElement>
-					<font size="8"/>
+				<reportElement x="109" y="0" width="111" height="14" uuid="1141a01a-94ac-4c57-90e9-324428111913"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{m1j}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="305" y="0" width="113" height="14" uuid="3f769ac3-1509-424e-986d-50c83360456a"/>
-				<textElement>
-					<font size="8"/>
+				<reportElement x="218" y="0" width="86" height="14" uuid="3f769ac3-1509-424e-986d-50c83360456a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{s1j}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="418" y="0" width="108" height="14" uuid="be6afac3-27bb-4a12-af78-73ba16b73927"/>
-				<textElement>
-					<font size="8"/>
+				<reportElement x="448" y="0" width="81" height="14" uuid="be6afac3-27bb-4a12-af78-73ba16b73927"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{s2j}]]></textFieldExpression>
 			</textField>
@@ -409,8 +454,25 @@
 				<reportElement x="526" y="0" width="29" height="14" uuid="a641d52e-610e-4751-88c6-3e69784c153d"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="529" y="0" width="26" height="14" uuid="7e2271c1-e36b-438d-9768-81ef88e82cb1"/>
+				<reportElement x="526" y="0" width="26" height="14" uuid="7e2271c1-e36b-438d-9768-81ef88e82cb1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{jz}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="332" y="0" width="117" height="14" uuid="89065696-0f29-480c-88b2-9635b502b391"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{m2j}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="305" y="0" width="27" height="14" uuid="e3a27a5c-6156-4ecc-ad54-f3d2ada56bc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nirmala UI Semilight" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zz}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -604,26 +666,44 @@
 			</staticText>
 			<textField>
 				<reportElement x="118" y="64" width="24" height="14" uuid="70fae454-2865-447e-8400-426cbdbd750e"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_z_t}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="224" y="64" width="20" height="14" uuid="b9408032-fd99-4a9e-93af-b1e77beab850"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_z_s}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="332" y="64" width="23" height="14" uuid="f437aa64-96fa-498e-9009-5abd8e657269"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_z_u}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="118" y="159" width="24" height="16" uuid="c214db73-b2cf-4daa-a8a0-d0e64b74412f"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_j_t}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="224" y="159" width="20" height="14" uuid="9a30db3b-73e4-4bac-bb8f-65932874c204"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_j_s}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="332" y="159" width="23" height="14" uuid="44bd3531-0246-4108-af96-bfe56bbe0f0a"/>
+				<textElement>
+					<font fontName="Nirmala UI Semilight"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{fehl_j_u}]]></textFieldExpression>
 			</textField>
 		</band>
