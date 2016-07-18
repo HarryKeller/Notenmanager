@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -181,11 +182,11 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	{
 		int i = this.cmbbox_tables.getSelectedIndex();
 		
-		DefaultTableModel model;
+		NotenTableModel model;
 		NotenTableHeader header;
 		String s = this.txt_erhebungsdatum.getText();
 		
-		if(s.length() != 10 || s.split(".").length != 3)
+		if(s.length() != 10)
 		{
 			JOptionPane.showMessageDialog(this, "Fehlerhafte eingabe des Datums! "
 											  + "Bitte überprüfen Sie ob das Format tt.mm.yyyy ist.");				
@@ -193,31 +194,51 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		
 		if(i == 0)
 		{
-			model = (DefaultTableModel) this.notenausgabe.table_tab1_muendl.getModel();
+			model = (NotenTableModel) this.notenausgabe.table_tab1_muendl.getModel();
 			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 			header = (NotenTableHeader) this.notenausgabe.table_tab1_muendl.getTableHeader();
-			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+			header.addColumnTooltip(this.txt_erhebungsdatum.getText());		
+			
+			for(Vector<Object> v : model.getIdVector())
+			{
+				v.add(new Leistung());
+			}
 		}
 		else if(i == 1)
 		{
-			model = (DefaultTableModel) this.notenausgabe.table_tab1_schriftl.getModel();
+			model = (NotenTableModel) this.notenausgabe.table_tab1_schriftl.getModel();
 			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 			header = (NotenTableHeader) this.notenausgabe.table_tab1_schriftl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+			
+			for(Vector<Object> v : model.getIdVector())
+			{
+				v.add(new Leistung());
+			}
 		}
 		else if(i == 2)
 		{
-			model = (DefaultTableModel) this.notenausgabe.table_tab2_muendl.getModel();
+			model = (NotenTableModel) this.notenausgabe.table_tab2_muendl.getModel();
 			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 			header = (NotenTableHeader) this.notenausgabe.table_tab2_muendl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+			
+			for(Vector<Object> v : model.getIdVector())
+			{
+				v.add(new Leistung());
+			}
 		}
 		else if(i == 3)
 		{
-			model = (DefaultTableModel) this.notenausgabe.table_tab2_schriftl.getModel();
+			model = (NotenTableModel) this.notenausgabe.table_tab2_schriftl.getModel();
 			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 			header = (NotenTableHeader) this.notenausgabe.table_tab2_schriftl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+			
+			for(Vector<Object> v : model.getIdVector())
+			{
+				v.add(new Leistung());
+			}
 		}
 	}
 	

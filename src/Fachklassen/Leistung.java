@@ -41,7 +41,7 @@ public class Leistung
 	{
 		DBZugriff.lesen(this,id);
 	}
-	
+	@Deprecated
 	public boolean speichern()
 	{
 		return DBZugriff.speichern(this);
@@ -165,7 +165,7 @@ public class Leistung
 	}	
 	public boolean equals(Leistung l)
 	{
-		if(this.id == l.getId())return true;
+		if(this.id == l.getId() && this.notenstufe == l.notenstufe && this.tendenz == l.tendenz)return true;
 		return false;
 	}
 	
