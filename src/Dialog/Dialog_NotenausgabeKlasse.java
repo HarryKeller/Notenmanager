@@ -71,6 +71,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private NotenTableModel model_tab2_muendlich;
 	private NotenTableModel model_tab2_schriftl;
 	private JButton btn_speichern;
+	private JLabel _label_3;
 	
 	public Dialog_NotenausgabeKlasse() {
 		
@@ -95,9 +96,9 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		this.panel_head = new JPanel();
@@ -345,12 +346,19 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
 		this._scrollPane_2.setViewportView(this.table_tab2_schriftl);
 		
+		this._label_3 = new JLabel("Bitte nach Noteneingabe mit Enter-Taste das Feld verlassen.");
+		GridBagConstraints gbc_label_3 = new GridBagConstraints();
+		gbc_label_3.insets = new Insets(0, 0, 5, 0);
+		gbc_label_3.gridx = 0;
+		gbc_label_3.gridy = 2;
+		getContentPane().add(this._label_3, gbc_label_3);
+		
 		this.panel_buttons = new JPanel();
 		GridBagConstraints gbc_panel_buttons = new GridBagConstraints();
 		gbc_panel_buttons.anchor = GridBagConstraints.SOUTH;
 		gbc_panel_buttons.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel_buttons.gridx = 0;
-		gbc_panel_buttons.gridy = 2;
+		gbc_panel_buttons.gridy = 3;
 		getContentPane().add(this.panel_buttons, gbc_panel_buttons);
 		
 		this.btn_zurueck = new JButton("Zur\u00FCck");
