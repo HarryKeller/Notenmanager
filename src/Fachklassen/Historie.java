@@ -37,6 +37,7 @@ public class Historie {
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
+	@SuppressWarnings("deprecation")
 	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
@@ -53,7 +54,29 @@ public class Historie {
 		{
 			h.setIdDatensatz(l.getId());
 			h.setVorgangsart("Aendern");
+			l.speichern();
 		}
+		h.speichern();
+		return true;
+	}
+	public static boolean loeschen(Leistung l,Lehrer lehrer)
+	{
+		Historie h = new Historie();
+		h.setText("Text ohne genauere Funktion");
+		h.setTabelleName("Leistung");
+		h.setEintragszeitpunkt(LocalDate.now());	
+		h.setIdLehere(lehrer);
+		h.setVorgangsart("Loeschen");
+		h.setIdDatensatz(0);
+		try
+		{
+			l.loeschen();
+		}
+		catch (Exception e)
+		{
+			//Random error ohne ahnung warum
+		}
+		
 		h.speichern();
 		return true;
 	}

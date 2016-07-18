@@ -15,7 +15,7 @@ public class DatumSJ
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Id
+	
 	private String sj;
 	
 	private LocalDate beginn;
@@ -45,7 +45,7 @@ public class DatumSJ
 	}
 	public void setSJ(String sj)
 	{
-		sj = sj;
+		this.sj = sj;
 	}
 	public void speichern()
 	{

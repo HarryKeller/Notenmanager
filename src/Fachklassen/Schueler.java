@@ -195,6 +195,10 @@ public class Schueler
 	{
 		this.leistung.add(l);
 	}
+	public void removeLeistung(Leistung l)
+	{
+		this.leistung.remove(l);
+	}
 	
 	
 	// --- Override-METHODS ----------------------------------------------------
@@ -212,37 +216,63 @@ public class Schueler
 	public void speichern(Lehrer lehrer) // Speichern des Satzes
 	{
 		ArrayList<Leistung>al = new ArrayList<>();
+		
 		DBZugriff.alleLesen("Leistung", al, "l WHERE l.schueler.id = "+this.getId());
+		
+		
+		for(Leistung l: leistung)
+		{
+			System.out.println(l.getNotenstufe());
+		}
 		
 		boolean vorhanden = false;
 		for(Leistung l:leistung)
 		{
-			for(Leistung lk:al)
+			vorhanden = false;
+			for(Leistung lk:al)	//Die aktuelle Leistung aus der DB wird mit allen aktuellen verglichen
 			{
-				if(l.equals(lk))
+				if(l.equals(lk))	//Wenn der Datensatz genau so bereits in der DB steht
 				{
-					vorhanden =  true;
+					vorhanden =  true;//Dann wird vorhanden auf true gesetzt
+					break;		//Und die Schleife verlassen
 				}
 			}
-			if(!vorhanden)
+			if(!vorhanden)	//Wenn dieser Datensatz nicht so vorhanden ist, so wird dieser gespeichert
 			{
+				System.out.println(l);
 				Historie.speichern(l, lehrer);
 			}
-			vorhanden = false;
+			
 		}
-		this.leistung.clear();
-		
+		//Nachschaun ob eine Leistung in leistung nicht mehr vorhanden ist, die jedoch vorhanden sein sollte
+		//Aktualisieren der DB einträge
+		DBZugriff.alleLesen("Leistung", al, "l WHERE l.schueler.id = "+this.getId());
+		boolean nochvorhanden = false;
 		for(Leistung l: al)
 		{
-			leistung.add(l);
+			nochvorhanden = false;
+			for(Leistung l2 : leistung)
+			{
+				if(l.getId() == l2.getId())	
+				{
+					nochvorhanden = true;
+					break;
+				}
+			}
+			if(!nochvorhanden)
+			{
+				l.loeschen(lehrer);
+			}
 		}
 		
-		DBZugriff.speichern(this);
 		
+		DBZugriff.speichern(this);	
+		
+		//An dieser stelle werden alle Datensätze die jetzt null sind gelöscht:
+			
 		
 	
-	
-		
+		System.out.println("check");
 	}
 	
 	public void loeschen() 	// Löschen des Satzes

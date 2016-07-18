@@ -54,6 +54,10 @@ public class Leistung
 	{
 		DBZugriff.loeschen(this);
 	}
+	public void loeschen(Lehrer l)
+	{
+		Historie.loeschen(this, l);
+	}
 	
 	public static ArrayList<Leistung>AlleLesen()
 	{
