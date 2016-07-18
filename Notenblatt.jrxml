@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Notenblatt" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a46312a-4f36-49b1-959c-7f36d65f4743">
-	<property name="ireport.zoom" value="1.1000000000000034"/>
+	<property name="ireport.zoom" value="1.1000000000000052"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="42"/>
+	<property name="ireport.y" value="9"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -425,28 +425,28 @@
 			<textField>
 				<reportElement x="3" y="0" width="105" height="14" uuid="de7eb423-7229-4b23-951f-c2ea288d3973"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8" isBold="false" isItalic="false" isUnderline="false"/>
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Fach}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="109" y="0" width="111" height="14" uuid="1141a01a-94ac-4c57-90e9-324428111913"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{m1j}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="218" y="0" width="86" height="14" uuid="3f769ac3-1509-424e-986d-50c83360456a"/>
+				<reportElement x="220" y="0" width="84" height="14" uuid="3f769ac3-1509-424e-986d-50c83360456a"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{s1j}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="448" y="0" width="81" height="14" uuid="be6afac3-27bb-4a12-af78-73ba16b73927"/>
+				<reportElement x="449" y="0" width="80" height="14" uuid="be6afac3-27bb-4a12-af78-73ba16b73927"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{s2j}]]></textFieldExpression>
 			</textField>
@@ -456,21 +456,21 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="526" y="0" width="26" height="14" uuid="7e2271c1-e36b-438d-9768-81ef88e82cb1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{jz}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="332" y="0" width="117" height="14" uuid="89065696-0f29-480c-88b2-9635b502b391"/>
+				<reportElement x="333" y="0" width="116" height="14" uuid="89065696-0f29-480c-88b2-9635b502b391"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{m2j}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="305" y="0" width="27" height="14" uuid="e3a27a5c-6156-4ecc-ad54-f3d2ada56bc0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Nirmala UI Semilight" size="8"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{zz}]]></textFieldExpression>
 			</textField>

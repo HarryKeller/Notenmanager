@@ -153,7 +153,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	{			
 		//Array mit Fächern füllen
 
-		String[] spaltenNamen = { "Fach", "Mündlich 1. Halbjahr", "Mündlich 2. Halbjahr", "Schriftlich 1. Halbjahr", "Schriftlich 2. Halbjahr"};
+		String[] spaltenNamen = { "Fach", "Mündlich 1. Halbjahr", "Schriftlich 1. Halbjahr", "Mündlich 2. Halbjahr", "Schriftlich 2. Halbjahr"};
 		String[] zeile = new String[5];
 		int i = 0;
 		Object[][] daten = new Object[fach.size()][5];
@@ -178,14 +178,14 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 						}
 						else if(l.getLeistungsart().getGewichtung() == 2)
 						{
-							zeile[3] += " | "+l.getNotenstufe()+" | ";
+							zeile[2] += " | "+l.getNotenstufe()+" | ";
 						}
 					}
 					else if(l.getErhebungsdatum().isAfter(BEGINN_HALBJAHR))
 					{
 						if(l.getLeistungsart().getGewichtung() == 1)
 						{
-							zeile[2] += " | "+l.getNotenstufe()+" | ";
+							zeile[3] += " | "+l.getNotenstufe()+" | ";
 						}
 						else if(l.getLeistungsart().getGewichtung() == 2)
 						{
