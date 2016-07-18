@@ -55,7 +55,7 @@ public class Historie {
 			h.setIdDatensatz(l.getId());
 			h.setVorgangsart("Aendern");
 			//l.speichern();
-			DBZugriff.loeschen(l);
+			DBZugriff.speichern(l);
 		}
 		
 		h.speichern();
