@@ -560,7 +560,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		
 		for(Schueler s : schueler)
 		{
-			s.speichern();
+			s.speichern(this.lehrer);
 		}
 	}
 	
