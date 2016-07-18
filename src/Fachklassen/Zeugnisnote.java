@@ -46,13 +46,15 @@ public class Zeugnisnote
 		this.schueler = schueler;
 		DBZugriff.lesen(this, id);
 	}
-	public Zeugnisnote() {}
+	
+	public Zeugnisnote()
+	{
+		
+	}
 	
 	//------------------------------------------------------
 	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,LocalDate jahr)
-	{
-		
-		
+	{		
 		int jbegin = jahr.getYear()-1;
 		int jende = jahr.getYear();
 		
@@ -73,8 +75,6 @@ public class Zeugnisnote
 	return al;
 	}
 	
-	
-	
 	public boolean equals(Zeugnisnote zn)
 	{
 		
@@ -85,14 +85,8 @@ public class Zeugnisnote
 		else
 		{
 			return false;
-		}
-		
-		
-	}
-	
-	
-	
-	
+		}		
+	}	
 	
 	public boolean speichern()
 	{
@@ -127,9 +121,10 @@ public class Zeugnisnote
 				mi++;
 			}
 		}
+	
 		if(schriftlich != 0)
 		{
-			schriftlich = (schriftlich/si) * uf.getGewichtungSchriftlich();			
+			schriftlich = (schriftlich/si); //* uf.getGewichtungSchriftlich();			
 		}
 		if(kurzarbeit != 0)
 		{
@@ -140,7 +135,36 @@ public class Zeugnisnote
 			muendlich = muendlich/mi;
 		}
 		
-		note = (muendlich + kurzarbeit + schriftlich) / 3;
+		
+		
+		if(muendlich == 0 && kurzarbeit == 0)
+		{
+			note = schriftlich;
+		}
+		else if(muendlich == 0 && schriftlich == 0)
+		{
+			note = kurzarbeit;
+		}
+		else if(kurzarbeit == 0 && schriftlich == 0)
+		{
+			note = muendlich;
+		}
+		else if(muendlich == 0)
+		{
+			note = ((kurzarbeit + schriftlich) / 2);
+		}
+		else if(schriftlich == 0)
+		{
+			note = ((kurzarbeit + muendlich) / 2);
+		}
+		else if(kurzarbeit == 0)
+		{
+			note = ((muendlich + schriftlich) / 2);
+		}
+		else
+		{
+			note = ((muendlich + kurzarbeit + schriftlich) / 3 );
+		}	
 				
 		return Math.round(note * 100)/100.0;
 	}
@@ -182,9 +206,10 @@ public class Zeugnisnote
 					mi++;
 				}
 			}
+			
 			if(schriftlich != 0)
 			{
-				schriftlich = (schriftlich/si) * ufach.getGewichtungSchriftlich();			
+				schriftlich = (schriftlich/si); //* ufach.getGewichtungSchriftlich();			
 			}
 			if(kurzarbeit != 0)
 			{
@@ -195,7 +220,35 @@ public class Zeugnisnote
 				muendlich = muendlich/mi;
 			}
 			
-			note = ((muendlich + kurzarbeit + schriftlich) / 3 ) * ufach.getStunden();
+			
+			if(muendlich == 0 && kurzarbeit == 0)
+			{
+				note = (schriftlich/2) * ufach.getStunden();
+			}
+			else if(muendlich == 0 && schriftlich == 0)
+			{
+				note = kurzarbeit * ufach.getStunden();
+			}
+			else if(kurzarbeit == 0 && schriftlich == 0)
+			{
+				note = muendlich * ufach.getStunden();
+			}
+			else if(muendlich == 0)
+			{
+				note = ((kurzarbeit + schriftlich) / 2) * ufach.getStunden();
+			}
+			else if(schriftlich == 0)
+			{
+				note = ((kurzarbeit + muendlich) / 2) * ufach.getStunden();
+			}
+			else if(kurzarbeit == 0)
+			{
+				note = ((muendlich + schriftlich) / 2) * ufach.getStunden();
+			}
+			else
+			{
+				note = ((muendlich + kurzarbeit + schriftlich) / 3 ) * ufach.getStunden();
+			}									
 			
 			gewichtung = gewichtung + ufach.getStunden();
 			
@@ -203,6 +256,85 @@ public class Zeugnisnote
 		}
 		
 		return Math.round((znote / gewichtung * 100))/100.0;
+	}
+	
+	public double berechneZZNote(Unterrichtsfach uf)
+	{
+		final LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
+		final LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
+		double muendlich = 0;
+		double schriftlich = 0;
+		double kurzarbeit = 0;
+		double note = 0;
+		double ki = 0;
+		double mi = 0;
+		double si = 0;
+		ArrayList<Leistung> leistungenmuendlich = schueler.getMuendlich(uf, BEGINN_SCHULJAHR, BEGINN_HALBJAHR);
+		ArrayList<Leistung> leistungenschriftlich = schueler.getSchriftlich(uf, BEGINN_SCHULJAHR, BEGINN_HALBJAHR);
+		for (Leistung l : leistungenschriftlich )
+		{
+			if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
+			{
+				schriftlich = schriftlich + l.getNotenstufe();	
+				si++;
+			}
+			else if (l.getLeistungsart().getBez().equals("Kurzarbeit"))
+			{
+				kurzarbeit = kurzarbeit + l.getNotenstufe();
+				ki++;
+			}
+		}
+		for(Leistung l : leistungenmuendlich )
+		{
+			muendlich = muendlich + l.getNotenstufe();
+			mi++;
+		}
+	
+		if(schriftlich != 0)
+		{
+			schriftlich = (schriftlich/si); //* uf.getGewichtungSchriftlich();			
+		}
+		if(kurzarbeit != 0)
+		{
+			kurzarbeit = (kurzarbeit/ki);		
+		}
+		if(muendlich != 0)
+		{
+			muendlich = muendlich/mi;
+		}
+		
+		
+		
+		if(muendlich == 0 && kurzarbeit == 0)
+		{
+			note = schriftlich;
+		}
+		else if(muendlich == 0 && schriftlich == 0)
+		{
+			note = kurzarbeit;
+		}
+		else if(kurzarbeit == 0 && schriftlich == 0)
+		{
+			note = muendlich;
+		}
+		else if(muendlich == 0)
+		{
+			note = ((kurzarbeit + schriftlich) / 2);
+		}
+		else if(schriftlich == 0)
+		{
+			note = ((kurzarbeit + muendlich) / 2);
+		}
+		else if(kurzarbeit == 0)
+		{
+			note = ((muendlich + schriftlich) / 2);
+		}
+		else
+		{
+			note = ((muendlich + kurzarbeit + schriftlich) / 3 );
+		}	
+				
+		return Math.round(note * 100)/100.0;
 	}
 	
 	//-------------------------
@@ -273,7 +405,5 @@ public class Zeugnisnote
 
 	public int getId() {
 		return id;
-	}
-
-	
+	}	
 }
