@@ -15,11 +15,6 @@ public class DatumSJ
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> 62679d3620fc6824893bcc10124a7d2c37fe4ad9
 	private String sj;
 	private LocalDate beginn;
 	private LocalDate halbjahr;
