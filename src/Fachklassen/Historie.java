@@ -56,6 +56,7 @@ public class Historie {
 			h.setVorgangsart("Aendern");
 			l.speichern();
 		}
+		
 		h.speichern();
 		return true;
 	}
