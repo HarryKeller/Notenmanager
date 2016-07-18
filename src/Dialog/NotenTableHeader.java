@@ -19,7 +19,11 @@ public class NotenTableHeader extends JTableHeader
 		super(cm);		
 	}
 
-
+	public String getTooltip(int index)
+	{
+		return this.tooltips.get(index);
+	}
+	
 	@Override
 	public String getToolTipText(MouseEvent arg0)
 	{		
