@@ -41,11 +41,11 @@ public class Leistung
 	{
 		DBZugriff.lesen(this,id);
 	}
-	@Deprecated
-	public boolean speichern()
-	{
-		return DBZugriff.speichern(this);
-	}
+//	@Deprecated	Verletzt das 4 Schichten modell, nachdem alle leistungen über die Historie gelocked werden
+//	public boolean speichern()
+//	{
+//		return DBZugriff.speichern(this);
+//	}
 	public boolean speichern(Lehrer lehrer)
 	{
 		return Historie.speichern(this, lehrer);
