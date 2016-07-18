@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bf8e724-0672-4e2b-bd5e-08d8ef435c32">
+	<property name="ireport.zoom" value="1.1000000000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="gebdat" class="java.lang.String"/>
+	<parameter name="schuljahr" class="java.lang.String"/>
+	<parameter name="klasse" class="java.lang.String"/>
+	<parameter name="ausbildungszweig" class="java.lang.String"/>
+	<parameter name="konfession" class="java.lang.String"/>
+	<parameter name="note_reli" class="java.lang.String"/>
+	<parameter name="note_sozi" class="java.lang.String"/>
+	<parameter name="note_deutsch" class="java.lang.String"/>
+	<parameter name="note_sport" class="java.lang.String"/>
+	<parameter name="note_eng" class="java.lang.String"/>
+	<parameter name="note_wms" class="java.lang.String"/>
+	<parameter name="note_bp" class="java.lang.String"/>
+	<parameter name="note_ks" class="java.lang.String"/>
+	<parameter name="note_mse" class="java.lang.String"/>
+	<parameter name="note_anwend" class="java.lang.String"/>
+	<parameter name="note_dbs" class="java.lang.String"/>
+	<parameter name="note_tf" class="java.lang.String"/>
+	<parameter name="note_office" class="java.lang.String"/>
+	<parameter name="bemerkung" class="java.lang.String"/>
+	<parameter name="stel_schulleiter" class="java.lang.String"/>
+	<parameter name="lehrer" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="gesch" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="108" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="45" width="555" height="57" uuid="a89eaa96-5a49-42d4-b37a-b1030400b3db"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staatl. Berufsfachschule für informations- und telekomunikationstechnische Berufe Wiesau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="45" uuid="672a3b35-7700-4334-96ad-3ab178441782"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Staatliches Berufliches Schulzentrum Wiesau]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement x="242" y="52" width="286" height="42" uuid="5f392d0d-392a-43a0-ad72-2f3e03b29e70"/>
+				<textElement verticalAlignment="Top">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="52" uuid="15399e4c-4ad1-4f3e-a9c3-b6596fdb83a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Notenbescheinigung]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="52" width="131" height="42" uuid="723f9644-9d8f-40c9-94c7-b809a1454702"/>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{gesch}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="308" splitType="Stretch">
+			<rectangle>
+				<reportElement x="382" y="78" width="100" height="13" backcolor="#E0E0E0" uuid="b9297ce0-8a19-43d5-9489-732e15a82341"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="91" width="100" height="13" backcolor="#E0E0E0" uuid="de4294b4-2988-4088-9cc2-e3723c327117"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="39" y="0" width="61" height="20" uuid="6e9fa6bb-783e-4235-8478-51858586e5ab"/>
+				<text><![CDATA[geboren am]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="20" width="85" height="20" uuid="739fdcc9-1789-453c-b512-6b6bb4ea10b8"/>
+				<text><![CDATA[, Ausbildungsberuf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="20" width="225" height="20" uuid="18b3ef61-7d9a-4f50-897d-88f156cf07ff"/>
+				<text><![CDATA[, der oben genannten Berufsfachschule besucht.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="57" width="259" height="20" uuid="4a7659fd-1320-4e9e-8593-71f9b3c4ae48"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Leistungen in den Pflichtfächern]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="77" width="74" height="14" uuid="67f1ce9c-66bb-4629-9272-8242bf1b1e1f"/>
+				<text><![CDATA[Religionslehre]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="90" width="343" height="1" uuid="48f9efcc-8f6f-436a-924a-7c47741f8b6e"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="91" width="74" height="13" uuid="1db78c9a-693f-44cc-b876-70d31bdccb13"/>
+				<text><![CDATA[Deutsch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="103" width="74" height="14" uuid="253d50d6-4a4f-4f3e-aaf9-e4b4b48650df"/>
+				<text><![CDATA[Sozialkunde]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="103" width="343" height="1" uuid="5ab4d556-b2a7-4651-879a-32e3ea028c5d"/>
+			</line>
+			<line>
+				<reportElement x="39" y="116" width="343" height="1" uuid="4b1c31c3-1f3d-4e0f-a71e-ce5a4c17a51b"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="116" width="74" height="15" uuid="f87474b2-416f-4d17-8adb-20d950443585"/>
+				<text><![CDATA[Sport]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="129" width="343" height="1" uuid="3abc274d-d148-418d-b115-f895bb35151f"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="130" width="74" height="14" uuid="4cc4087c-ec70-443c-86c8-00da469ca20c"/>
+				<text><![CDATA[Englisch]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="142" width="343" height="1" uuid="1a838325-7207-4461-a811-33c26b17a044"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="142" width="169" height="15" uuid="6adea0c0-0034-4b10-92eb-080b0543be07"/>
+				<text><![CDATA[Wirtschaftsmathematik mit Statistik]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="155" width="343" height="1" uuid="0a17b409-6c85-40dd-9309-2e5b2c728ed7"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="155" width="343" height="14" uuid="869a3453-08ef-46e8-adf1-eecde5220b4f"/>
+				<text><![CDATA[Betriebswirtschaftliche Prozesse mit Rechnungswesen und Controlling]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="382" y="104" width="100" height="13" backcolor="#E0E0E0" uuid="6f211518-6ad2-4aac-a4b6-726fbb7dfc2b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="39" y="168" width="343" height="1" uuid="af838f09-1c97-4044-af6b-ac86962f4297"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="168" width="208" height="14" uuid="5a3162e5-450b-40fc-b721-45148ab0a050"/>
+				<text><![CDATA[Informations- und Kommunikationssysteme]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="180" width="343" height="1" uuid="d4c44cd9-494a-4f6c-979d-1feb03af99e4"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="180" width="208" height="13" uuid="985f139f-0c34-4a83-95e2-4f89b963e587"/>
+				<text><![CDATA[Methoden der Softwareentwicklung]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="192" width="343" height="1" uuid="1c67fd31-e536-4c26-93a8-1273e167e8c2"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="192" width="263" height="14" uuid="482692a9-c144-4728-870d-7a9475328fcb"/>
+				<text><![CDATA[Anwendungsentwicklung mit Programmierung]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="204" width="343" height="1" uuid="78a4926e-4aa8-4c9e-9814-e376fde64a4c"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="203" width="100" height="14" uuid="3243ae96-9bc6-4e19-9a0e-e53553301315"/>
+				<text><![CDATA[Datenbanksysteme]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="382" y="117" width="100" height="13" backcolor="#E0E0E0" uuid="ffc36524-d04f-403a-807b-9b6d109caaa2"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="130" width="100" height="13" backcolor="#E0E0E0" uuid="b8804acf-6c73-4d55-a230-68f31427c114"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="143" width="100" height="13" backcolor="#E0E0E0" uuid="1e53c08e-5d53-4098-916e-05478e61e268"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="156" width="100" height="13" backcolor="#E0E0E0" uuid="96dc9f9d-c06c-4a64-8f17-145f84f16665"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="168" width="100" height="13" backcolor="#E0E0E0" uuid="f693b7b7-ed86-41f2-b7d8-2128d4796f25"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="180" width="100" height="13" backcolor="#E0E0E0" uuid="8702f108-8db7-4e56-a160-4ca0ed84fa97"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="192" width="100" height="13" backcolor="#E0E0E0" uuid="34feb5bf-d29c-4dfa-abd6-784a237b91e2"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="204" width="100" height="13" backcolor="#E0E0E0" uuid="3b0a7c34-b0c6-48b6-b07b-04257ab19be4"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="217" width="100" height="13" backcolor="#E0E0E0" uuid="9328df56-2e48-4d59-af5d-acbfdc08c2bf"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="382" y="266" width="100" height="13" backcolor="#E0E0E0" uuid="09e25580-37db-4519-ae7b-36d95a952cbd"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="39" y="216" width="343" height="1" uuid="21e529c4-8287-421b-b784-10521aae19ee"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="216" width="100" height="13" uuid="40e7fe66-1613-4fb3-9eb4-9134bec6b250"/>
+				<text><![CDATA[Trainingsfirma]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="228" width="343" height="1" uuid="5749d4b3-577e-4acb-aebc-414335431008"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="243" width="259" height="20" uuid="75dfeebe-3e77-4ab4-81ad-401add48b388"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Leistungen im Wahlfach]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="263" width="100" height="15" uuid="8868751c-0d6c-4020-a3eb-1da8cababd8f"/>
+				<text><![CDATA[Office]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="278" width="343" height="1" uuid="1eb0036e-024e-4eb7-baa4-e34089237d6b"/>
+			</line>
+			<textField>
+				<reportElement x="261" y="0" width="69" height="20" uuid="ab4d11ec-ebb4-41ae-adce-5e21bf4656c1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{schuljahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="20" width="179" height="20" uuid="5331102f-203c-4d0d-a855-23dc8d5ae764"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{ausbildungszweig}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="77" width="100" height="14" uuid="1758a78b-8730-4e5e-91a3-58fcfbff64a7"/>
+				<textFieldExpression><![CDATA[$P{konfession}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="78" width="98" height="13" uuid="36f3747d-844d-4e04-85cc-12e290e374b3"/>
+				<textFieldExpression><![CDATA[$P{note_reli}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="90" width="98" height="13" uuid="2e589949-8b40-40a9-bfc8-25ee0410a651"/>
+				<textFieldExpression><![CDATA[$P{note_sozi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="103" width="98" height="13" uuid="996f71d6-0274-49bc-8950-6a721f7610e0"/>
+				<textFieldExpression><![CDATA[$P{note_deutsch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="116" width="98" height="14" uuid="60b5a0ad-3f9b-4542-b463-30ef3f059f62"/>
+				<textFieldExpression><![CDATA[$P{note_sport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="129" width="98" height="14" uuid="e6e8c113-e011-4354-b323-ba228474976f"/>
+				<textFieldExpression><![CDATA[$P{note_eng}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="142" width="98" height="14" uuid="a38bc9df-f011-4ed6-a95e-b7d6c5dfcb45"/>
+				<textFieldExpression><![CDATA[$P{note_wms}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="155" width="98" height="14" uuid="17edcfb7-2a15-4be8-a3b0-bf4caf14e095"/>
+				<textFieldExpression><![CDATA[$P{note_bp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="168" width="98" height="15" uuid="3a8fa68d-4eef-4b86-830f-a103757e4386"/>
+				<textFieldExpression><![CDATA[$P{note_ks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="180" width="98" height="13" uuid="b5484904-49e2-4bfd-9303-c788748b11c5"/>
+				<textFieldExpression><![CDATA[$P{note_mse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="192" width="98" height="14" uuid="cfac472b-d46f-430a-bb46-3b7014827f39"/>
+				<textFieldExpression><![CDATA[$P{note_anwend}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="204" width="98" height="14" uuid="ae2f7efe-dbdb-47fc-9193-7098145d122a"/>
+				<textFieldExpression><![CDATA[$P{note_dbs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="217" width="98" height="13" uuid="13a5b355-c0f4-44c0-a38b-903d2d3d2a39"/>
+				<textFieldExpression><![CDATA[$P{note_tf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="264" width="98" height="15" uuid="8f774352-1c9d-465f-952b-3981c6e3b391"/>
+				<textFieldExpression><![CDATA[$P{note_office}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="0" width="62" height="20" uuid="f0eeebf2-2ef3-4388-ad49-6de70c686f3d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{klasse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="71" height="20" uuid="0a6261d9-a9c3-487a-8c69-8dfd48a7aa63"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{gebdat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="171" y="0" width="90" height="20" uuid="e0242c1d-4aa6-47e9-bdbd-985b0ee532a9"/>
+				<text><![CDATA[, hat im Schuljahr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="54" height="20" uuid="73f1c479-d9b2-4f18-a158-2cbac6cf72f4"/>
+				<text><![CDATA[die Klasse]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="87" splitType="Stretch">
+			<textField>
+				<reportElement x="39" y="-15" width="516" height="98" uuid="1f5b26a7-0d2f-4e22-9bb4-835b620080ae"/>
+				<textFieldExpression><![CDATA[$P{bemerkung}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="148" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="0" width="49" height="14" uuid="b44b9f51-6ca2-47ad-a02e-429a304bf366"/>
+				<text><![CDATA[Wiesau, ]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="88" y="0" width="100" height="14" uuid="81d54c28-119f-4c35-b589-33ab9f6732b0"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="14" width="190" height="20" uuid="d3fd107a-97cb-4ef1-8f9b-ad619f446731"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Weiterer Stellvertretender Schulleiter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="14" width="154" height="20" uuid="ee46f816-ca0b-4779-a53e-ae0ae1b83e18"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Klassenleiter]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="62" width="213" height="1" uuid="f02f5c97-3ce2-4c8c-b7f8-fbdcbe33fa82"/>
+			</line>
+			<line>
+				<reportElement x="303" y="62" width="214" height="1" uuid="ff455fe3-9746-460b-9f36-88ca91e9aa51"/>
+			</line>
+			<textField>
+				<reportElement x="68" y="63" width="145" height="20" uuid="e36179a6-980d-4ee1-9a39-7b70ca13ff10"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{stel_schulleiter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="63" width="117" height="20" uuid="9f485c29-518d-4af8-aca3-e42ec0fe5e65"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{lehrer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="127" width="555" height="21" uuid="4bd07f50-e986-434f-9180-3f4bc026d1e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Notenstufen: 1 = sehr gut, 2 = gut, 3 = befriedigend, 4 = ausreichend, 5 = mangelhaft, 6 = ungenügend]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
