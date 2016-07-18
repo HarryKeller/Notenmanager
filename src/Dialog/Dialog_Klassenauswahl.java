@@ -129,7 +129,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private void initGUI() 
 	{
 		setResizable(false);
-		setBounds(100, 100, 525, 300);
+		setBounds(100, 100, 525, 325);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{340, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{216, 0, 0};

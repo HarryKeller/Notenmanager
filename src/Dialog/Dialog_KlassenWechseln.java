@@ -207,41 +207,41 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 
 	private void setDatenInMaske()
 	{
-		for(Klasse kl : Klasse.alleLesen())
-		{			
-			comboBox_alteKlasse.addItem(kl);		
-		}
-		
-		for(Klasse kl : Klasse.alleLesen())
-		{
-			if(!k.getBez().equals(kl.getBez()))
-			{
-				comboBox_Klassen.addItem(kl);
-			}			
-		}	
-	}
-	
-	public void itemStateChanged(ItemEvent arg0) 
-	{
 		model.removeAllElements();
-		model_neu.removeAllElements();	
+		model_neu.removeAllElements();
 		
-		for(Schueler s : k.getSchueler())
+		for(Klasse ka : Klasse.alleLesen())
+		{			
+			comboBox_alteKlasse.addItem(ka);						
+		}	
+		
+		for(Klasse kl : Klasse.alleLesen())
 		{
-			model.addElement(s);
+//			if(!k.getBez().equals(kl.getBez()))
+//			{
+//				comboBox_Klassen.addItem(kl);
+//			}			
+			comboBox_Klassen.addItem(kl);
 		}
+	}	
+
+	public void itemStateChanged(ItemEvent arg0) 
+	{										 
+		model.removeAllElements();
+		model_neu.removeAllElements();
 		
+			
+		for(Schueler s : ((Klasse) comboBox_alteKlasse.getSelectedItem()).getSchueler())
+		{
+			model.addElement(s);						
+		} 					
 		if(comboBox_Klassen.getSelectedItem() != null)
 		{
-			for(Schueler s : ((Klasse) comboBox_Klassen.getSelectedItem()).getSchueler())
+			for(Schueler schueler : ((Klasse) comboBox_Klassen.getSelectedItem()).getSchueler())
 			{
-				model_neu.addElement(s);
+				model_neu.addElement(schueler);
 			}
 		}
-		
-		
-		
-
 		
 	}
 	
@@ -256,8 +256,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 				s.setKlasseid((Klasse)comboBox_Klassen.getSelectedItem());
 				s.speichern(l);		
 			}
-			setDatenInMaske();
-			//this.dispose();
+			this.dispose();
 		}
 		else
 		{
