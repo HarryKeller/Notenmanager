@@ -37,7 +37,7 @@ public class Historie {
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
-	@SuppressWarnings("deprecation")
+	
 	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
@@ -54,7 +54,8 @@ public class Historie {
 		{
 			h.setIdDatensatz(l.getId());
 			h.setVorgangsart("Aendern");
-			l.speichern();
+			//l.speichern();
+			DBZugriff.loeschen(l);
 		}
 		
 		h.speichern();
@@ -71,7 +72,7 @@ public class Historie {
 		h.setIdDatensatz(0);
 		try
 		{
-			l.loeschen();
+			DBZugriff.loeschen(l);
 		}
 		catch (Exception e)
 		{

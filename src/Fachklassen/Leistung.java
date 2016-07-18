@@ -50,10 +50,7 @@ public class Leistung
 	{
 		return Historie.speichern(this, lehrer);
 	}
-	public void loeschen()
-	{
-		DBZugriff.loeschen(this);
-	}
+
 	public void loeschen(Lehrer l)
 	{
 		Historie.loeschen(this, l);
