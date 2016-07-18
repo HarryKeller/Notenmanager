@@ -71,6 +71,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JMenuItem mitemKlassenBearbeiten;
 	private JMenuItem mitemFaecherAnlegen;
 	private JMenuItem mitemUnterrichtsfaecherZuweisen;
+	private JButton btnKlassenWechseln;
 
 	/**
 	 * Create the dialog.
@@ -101,6 +102,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 				menuStammdaten.setVisible(true);
 				separator_1.setVisible(true);
 				this.btnKlassenuebersicht.setEnabled(true);
+				this.btnKlassenWechseln.setEnabled(true);
 				found = true;
 			}
 			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
@@ -233,7 +235,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		this.separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.insets = new Insets(0, 0, 10, 0);
+		gbc_separator.insets = new Insets(0, 0, 5, 0);
 		gbc_separator.fill = GridBagConstraints.BOTH;
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 1;
@@ -243,11 +245,21 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.btnKlassenuebersicht.addActionListener(this);
 		this.btnKlassenuebersicht.setEnabled(false);
 		GridBagConstraints gbc_btnKlassenuebersicht = new GridBagConstraints();
-		gbc_btnKlassenuebersicht.insets = new Insets(5, 5, 5, 5);
+		gbc_btnKlassenuebersicht.insets = new Insets(0, 5, 5, 5);
 		gbc_btnKlassenuebersicht.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnKlassenuebersicht.gridx = 0;
 		gbc_btnKlassenuebersicht.gridy = 2;
 		this.panel_klassenleiter.add(this.btnKlassenuebersicht, gbc_btnKlassenuebersicht);
+		
+		this.btnKlassenWechseln = new JButton("Klassen wechseln");
+		this.btnKlassenWechseln.addActionListener(this);
+		this.btnKlassenWechseln.setEnabled(false);
+		GridBagConstraints gbc_btnKlassenWechseln = new GridBagConstraints();
+		gbc_btnKlassenWechseln.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnKlassenWechseln.insets = new Insets(0, 5, 5, 5);
+		gbc_btnKlassenWechseln.gridx = 0;
+		gbc_btnKlassenWechseln.gridy = 3;
+		this.panel_klassenleiter.add(this.btnKlassenWechseln, gbc_btnKlassenWechseln);
 		
 		this.panel_admin = new JPanel();
 		GridBagConstraints gbc_panel_admin = new GridBagConstraints();
@@ -393,11 +405,16 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			this.dispose();
 			DBZugriff.closeDB();			
 		}
-		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Butten Klassenuebersicht gedrückt wurde
+		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Button Klassenuebersicht gedrückt wurde
 		{
 			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
 			dlg_schueler.setVisible(true);
 		}
+		if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
+		{
+			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln((Klasse) comboBox_Klassen.getSelectedItem(), lehrer);
+			dlg_klassenw.setVisible(true);
+		}				
 		if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
 		{
 			this.dispose();
