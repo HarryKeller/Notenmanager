@@ -32,7 +32,7 @@ public class Ausbildungszweig
 	public static ArrayList<Ausbildungszweig> alleLesen()
 	{
 		ArrayList<Ausbildungszweig>al = new ArrayList<Ausbildungszweig>();
-		DBZugriff.alleLesen("Ausbidlugnszweig", al, "");
+		DBZugriff.alleLesen("Ausbildungszweig", al, "");
 		return al;
 	}
 	
