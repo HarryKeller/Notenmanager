@@ -32,10 +32,10 @@ public class Ausbildungszweig
 	private Set<Zeugnisfach> lstZeugnisfach = new HashSet<Zeugnisfach>();
 
 	
-	public ArrayList<Ausbildungszweig> alleLesen()
+	public static ArrayList<Ausbildungszweig> alleLesen()
 	{
 		ArrayList<Ausbildungszweig>al = new ArrayList<Ausbildungszweig>();
-		DBZugriff.alleLesen("Ausbidlugnszweig", al, "");
+		DBZugriff.alleLesen("Ausbildungszweig", al, "");
 		return al;
 	}
 	
