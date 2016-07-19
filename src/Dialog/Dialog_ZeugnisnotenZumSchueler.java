@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+import Fachklassen.DatumSJ;
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnis;
+import Fachklassen.Zeugnisart;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 
@@ -194,6 +196,8 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				if(this.getZeugnis()==null)
 				{
 					Zeugnis z = new Zeugnis();
+					DatumSJ sj = new DatumSJ(LocalDate.now());
+					z.setSchuljahr(sj);
 					z.setSchueler(this.getSchueler());
 					z.speichern();
 					this.setZeugnis(z);
