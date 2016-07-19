@@ -34,7 +34,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 	private final JPanel panel = new JPanel();
 	private final JButton button_Lehrer_Anlegen = new JButton("Lehrer anlegen");
 	private final JButton button_Lehrer_bearbeiten = new JButton("Lehrer bearbeiten");
-	private final JButton button_Lehrer_loeschen = new JButton("Lehrer l\u00F6schen");
+	private final JButton btnLehrerKndigen = new JButton("Lehrer k\u00FCndigen");
 	private final JButton button_Zurueck = new JButton("Zur\u00FCck");
 
 	/**
@@ -107,13 +107,13 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		gbc_button_Lehrer_bearbeiten.gridy = 0;
 		button_Lehrer_bearbeiten.addActionListener(this);
 		panel.add(button_Lehrer_bearbeiten, gbc_button_Lehrer_bearbeiten);
-		GridBagConstraints gbc_button_Lehrer_loeschen = new GridBagConstraints();
-		gbc_button_Lehrer_loeschen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button_Lehrer_loeschen.insets = new Insets(0, 0, 0, 5);
-		gbc_button_Lehrer_loeschen.gridx = 0;
-		gbc_button_Lehrer_loeschen.gridy = 1;
-		button_Lehrer_loeschen.addActionListener(this);
-		panel.add(button_Lehrer_loeschen, gbc_button_Lehrer_loeschen);
+		GridBagConstraints gbc_btnLehrerKndigen = new GridBagConstraints();
+		gbc_btnLehrerKndigen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnLehrerKndigen.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLehrerKndigen.gridx = 0;
+		gbc_btnLehrerKndigen.gridy = 1;
+		btnLehrerKndigen.addActionListener(this);
+		panel.add(btnLehrerKndigen, gbc_btnLehrerKndigen);
 		GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
 		gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
 		gbc_button_Zurueck.gridx = 1;
@@ -139,7 +139,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten(((Lehrer)this.list_Lehrer.getSelectedValue()));
 			dialog_lehrer.setVisible(true);
 		}
-		if(arg0.getActionCommand().equals(this.button_Lehrer_loeschen.getActionCommand()))
+		if(arg0.getActionCommand().equals(this.btnLehrerKndigen.getActionCommand()))
 		{
 			try
 			{
