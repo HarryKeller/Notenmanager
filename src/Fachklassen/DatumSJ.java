@@ -1,6 +1,7 @@
 package Fachklassen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,9 @@ public class DatumSJ
 	private LocalDate halbjahr;
 	private LocalDate ende;
 	
+	
+	//------------------------------------------------------------------------
+	//Konstruktoren
 	public DatumSJ(String sj,LocalDate beginn,LocalDate halbjahr,LocalDate ende)
 	{
 		this.sj = sj;
@@ -29,14 +33,35 @@ public class DatumSJ
 	}
 	public DatumSJ(){/* Defaultkonstrucktor */}
 	
+	public DatumSJ(LocalDate aktuell)
+	{
+		String hql = " d "
+		+"WHERE d.beginn < "+"'"+aktuell+"'"
+		+"AND d.ende > "+"'"+aktuell+"'";
+		
+		ArrayList<DatumSJ>al = new ArrayList<DatumSJ>();
+		DBZugriff.alleLesen("DatumSJ", al, hql);
+		
+		if(al.size()== 0) return;
+		DatumSJ temp = new DatumSJ();
+		temp = al.get(0);
+		this.id = temp.getId();
+		this.sj = temp.getsj();
+		this.beginn = temp.beginn;
+		this.halbjahr = temp.halbjahr;
+		this.ende = temp.ende;
+		
+	
+	}
 	
 	public DatumSJ (int id)
 	{
 		DBZugriff.lesen(this, id);
 		
 	}
-	
-	//getSet
+	//---------------------------------------------------------------------
+	//---------------------------------------------------------------------
+	//get-Set
 	public String getsj()
 	{
 		return sj;
@@ -49,7 +74,6 @@ public class DatumSJ
 	{
 		DBZugriff.speichern(this);
 	}
-	
 	
 	public LocalDate getBeginn()
 	{

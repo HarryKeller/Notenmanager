@@ -44,7 +44,8 @@ public class Zeugnis
 	
 	private String bemerkung;
 	private String zeugnisart;
-	
+	@ManyToOne
+	private DatumSJ schuljahr;
 	private int fehltageGanztags;
 	private int fehltageGanztagsUnentschuldigt;
 	private int fehltageStundenweise;

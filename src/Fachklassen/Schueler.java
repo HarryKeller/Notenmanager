@@ -29,7 +29,11 @@ public class Schueler
 	private LocalDate gebdat;	// Geburtstag (index 3)
 	private String geschl;		// Geschlecht (index 4)
 	private String konfession;	// wegen Religion (index 5)
+	private String telnr;
+	private String anschrift;
 	
+
+	private String erziehungsberechtigte;
 	@ManyToOne
 	private Klasse klasse;	//Fremdschlüssel
 	
@@ -200,6 +204,60 @@ public class Schueler
 		this.leistung.remove(l);
 	}
 	
+	public String getTelnr()
+	{
+		return telnr;
+	}
+
+	public void setTelnr(String telnr)
+	{
+		this.telnr = telnr;
+	}
+
+	public String getAnschrift()
+	{
+		return anschrift;
+	}
+
+	public void setAnschrift(String anschrift)
+	{
+		this.anschrift = anschrift;
+	}
+
+	public String getErziehungsberechtigte()
+	{
+		return erziehungsberechtigte;
+	}
+
+	public void setErziehungsberechtigte(String erziehungsberechtigte)
+	{
+		this.erziehungsberechtigte = erziehungsberechtigte;
+	}
+
+	public Klasse getKlasse()
+	{
+		return klasse;
+	}
+
+	public void setKlasse(Klasse klasse)
+	{
+		this.klasse = klasse;
+	}
+
+	public List<Zeugnisnote> getZeugnisnoten()
+	{
+		return zeugnisnoten;
+	}
+
+	public void setZeugnisnoten(List<Zeugnisnote> zeugnisnoten)
+	{
+		this.zeugnisnoten = zeugnisnoten;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
 	
 	// --- Override-METHODS ----------------------------------------------------
 	// --------------------------------------------------------------------------
@@ -267,14 +325,10 @@ public class Schueler
 		
 		
 		DBZugriff.speichern(this);	
-		
-		//An dieser stelle werden alle Datensätze die jetzt null sind gelöscht:
+
 			
-		
-	
-		System.out.println("check");
 	}
-	
+	@Deprecated
 	public void loeschen() 	// Löschen des Satzes
 	{
 		DBZugriff.speichern(this);

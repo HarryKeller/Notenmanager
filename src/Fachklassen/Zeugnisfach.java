@@ -1,7 +1,9 @@
 package Fachklassen;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -26,7 +30,53 @@ public class Zeugnisfach {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klasse klasse;
+
 	
+	@ManyToMany(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
+	@JoinTable(name="zeugnisfach_ausbildungszweig",
+				joinColumns = @JoinColumn(name="zeugnisfach_id"),
+				inverseJoinColumns=@JoinColumn(name="ausbildungszweig_id")	
+			)
+	private List<Ausbildungszweig> ausbildungszweig = new ArrayList<Ausbildungszweig>();
+	
+
+	
+	public List<Ausbildungszweig> getAusbildungszweig()
+	{
+		return ausbildungszweig;
+	}
+
+
+
+	public void addAusbildungszweig(Ausbildungszweig az)
+	{
+		ausbildungszweig.add(az);
+	}
+	
+
+
+	public void setAusbildungszweig(List<Ausbildungszweig> ausbildungszweig)
+	{
+		this.ausbildungszweig = ausbildungszweig;
+	}
+
+	public List<Unterrichtsfach> getUnterrichtsfaecher()
+	{
+		return unterrichtsfaecher;
+	}
+
+	public void setUnterrichtsfaecher(List<Unterrichtsfach> unterrichtsfaecher)
+	{
+		this.unterrichtsfaecher = unterrichtsfaecher;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+
+
 	private boolean abschliessendesFach;
 	private String fachart;
 	public void setKlasse(Klasse klasse) {
@@ -34,12 +84,43 @@ public class Zeugnisfach {
 	}
 
 	
+	
 	private boolean vorrueckungsfach;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "zfach_id")
 	private List<Unterrichtsfach> unterrichtsfaecher = new ArrayList<Unterrichtsfach>();
 	
+	public static ArrayList<Zeugnisfach>alleLesenAbschliesendeFaecher(Klasse aktuelle,Klasse... values)
+	{
+		String hql =" zf "
+				+"INNER JOIN zf.ausbildungszweig az "
+				+"WHERE az = 1 "						//Funktioniert bis dahin
+				+"AND zf.abschliessendesFach = true "			// 1== true
+				
+				+"OR zf.klasse.id = "+aktuelle.getid()+" ";
+		String orbedingung=" ";		
+		
+		for(Klasse k:values)
+		{
+			orbedingung += "OR zf.klasse.id = "+k.getid();		
+		}
+		hql+=orbedingung;
+				
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Zeugnisfach", al, hql);
+		
+		ArrayList<Zeugnisfach> zf = new ArrayList<Zeugnisfach>();
+		
+		for(Object[] o : al)
+		{
+			zf.add((Zeugnisfach)o[0]);
+		}
+		
+		
+	
+		return zf;
+	}
 	
 	public static ArrayList<Zeugnisfach>alleLesen(Klasse k)
 	{
