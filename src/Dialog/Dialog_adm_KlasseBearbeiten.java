@@ -152,7 +152,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		getContentPane().add(lblKlassenleiter, gbc_lblKlassenleiter);
 		
 		comboBox_Klassenleiter_2 = new JComboBox<Lehrer>();
-		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.gridwidth = 2;
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
@@ -283,6 +283,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	
 	public void getDatenFromMaske()
 	{
+		klasse.setIdSchule((Schule)comboBox_Schule.getSelectedItem());
 		klasse.setIdKlassenleiter((Lehrer)comboBox_Klassenleiter_1.getSelectedItem());
 		klasse.setIdStvKlassenleiter((Lehrer)comboBox_Klassenleiter_2.getSelectedItem());
 		klasse.setAusbildungszweig((Ausbildungszweig)comboBox_Ausbildungszweig.getSelectedItem());
@@ -366,6 +367,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		else
 		{
 			this.setKlasse(new Klasse());
+			comboBox_Schule.removeAllItems();
+			comboBox_Klassenleiter_1.removeAllItems();
+			comboBox_Klassenleiter_2.removeAllItems();
+			comboBox_Ausbildungszweig.removeAllItems();
 			for(Schule s: Schule.alleLesen())
 			{
 				comboBox_Schule.addItem(s);
@@ -374,6 +379,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			{
 				comboBox_Klassenleiter_1.addItem(l);
 				comboBox_Klassenleiter_2.addItem(l);
+			}
+			for(Ausbildungszweig l: Ausbildungszweig.alleLesen())
+			{
+				comboBox_Ausbildungszweig.addItem(l);
 			}
 		}
 	}

@@ -123,6 +123,10 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 				this.setVisible(false);
 				dia.setVisible(true);
 			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Bitte wählen sie eine Klasse aus!","Achtung",JOptionPane.OK_OPTION);
+			}
 		}
 		else if(e.getActionCommand()=="Klasse hinzuf\u00FCgen")
 		{
