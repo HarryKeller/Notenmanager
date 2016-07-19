@@ -88,6 +88,14 @@ public class Zeugnis
 	{
 		return bemerkung;
 	}
+	public DatumSJ getSchuljahr()
+	{
+		return schuljahr;
+	}
+	public void setSchuljahr(DatumSJ schuljahr)
+	{
+		this.schuljahr = schuljahr;
+	}
 	public void setBemerkung(String bemerkung)
 	{
 		this.bemerkung = bemerkung;
