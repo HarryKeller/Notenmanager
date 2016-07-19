@@ -224,9 +224,9 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		{
 			try
 			{
-				Dialog_Zeugnis dlg_zeugnis = new Dialog_Zeugnis();
+				Dialog_ZeugnisBemerkung zb = new Dialog_ZeugnisBemerkung(((Schueler)this.list_Schueler.getSelectedValue()),this);
 				this.setVisible(false);
-				dlg_zeugnis.setVisible(true);
+				zb.setVisible(true);
 			}
 			catch(Exception ex)
 			{
@@ -234,8 +234,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			}
 		}
 		if(e.getActionCommand().equals(this.btnZurck.getActionCommand()))
-		{
-			this.dispose();
+		{			this.dispose();
 		}
 	}
 	
