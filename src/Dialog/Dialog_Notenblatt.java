@@ -139,7 +139,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		{
 			Dialog_Druckansicht dd = new Dialog_Druckansicht(this);
 			dd.setVisible(true);
-			this.dispose();
+			this.setVisible(false);
 		}
 	}
 	private void setDatenInMaske()
