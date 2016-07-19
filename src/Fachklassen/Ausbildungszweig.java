@@ -2,7 +2,6 @@ package Fachklassen;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import Persistenz.DBZugriff;
@@ -32,7 +29,7 @@ public class Ausbildungszweig
 	private Set<Zeugnisfach> lstZeugnisfach = new HashSet<Zeugnisfach>();
 
 	
-	public ArrayList<Ausbildungszweig> alleLesen()
+	public static ArrayList<Ausbildungszweig> alleLesen()
 	{
 		ArrayList<Ausbildungszweig>al = new ArrayList<Ausbildungszweig>();
 		DBZugriff.alleLesen("Ausbidlugnszweig", al, "");
