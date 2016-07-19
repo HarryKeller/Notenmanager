@@ -22,7 +22,7 @@ public class Zeugnis
 		DBZugriff.lesen(this, id);
 	}
 	
-	public Zeugnis(String bemerkung, String zeugnisart, int fehltageGanztags,
+	public Zeugnis(String bemerkung, Zeugnisart zeugnisart, int fehltageGanztags,
 			int fehltageGanztagsUnentschuldigt, int fehltageStundenweise,
 			int fehltageStundenweiseUnentschuldigt)
 	{
@@ -43,7 +43,8 @@ public class Zeugnis
 	private int id;
 	
 	private String bemerkung;
-	private String zeugnisart;
+	@ManyToOne
+	private Zeugnisart zeugnisart;
 	@ManyToOne
 	private DatumSJ schuljahr;
 	private int fehltageGanztags;
@@ -92,11 +93,11 @@ public class Zeugnis
 		this.bemerkung = bemerkung;
 	}
 	
-	public String getZeugnisart()
+	public Zeugnisart getZeugnisart()
 	{
 		return zeugnisart;
 	}
-	public void setZeugnisart(String zeugnisart)
+	public void setZeugnisart(Zeugnisart zeugnisart)
 	{
 		this.zeugnisart = zeugnisart;
 	}
