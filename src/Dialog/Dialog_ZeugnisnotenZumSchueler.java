@@ -196,6 +196,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 					Zeugnis z = new Zeugnis();
 					z.setSchueler(this.getSchueler());
 					z.speichern();
+					this.setZeugnis(z);
 					zno.setZeugnis(z);
 				}
 				else
