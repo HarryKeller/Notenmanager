@@ -28,10 +28,27 @@ public class Zeugnisfach {
 	private int id;
 	private String bez;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Klasse klasse;
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL ,mappedBy="lstzeugnisfach", fetch=FetchType.EAGER)
+	private Set<Klasse> lstklassen = new HashSet<Klasse>();
 
 	
+	
+	public Set<Klasse> getLstklassen()
+	{
+		return lstklassen;
+	}
+
+
+
+	public void setLstklassen(Set<Klasse> lstklassen)
+	{
+		this.lstklassen = lstklassen;
+	}
+
+
+
 	@ManyToMany(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
 	@JoinTable(name="zeugnisfach_ausbildungszweig",
 				joinColumns = @JoinColumn(name="zeugnisfach_id"),
@@ -79,9 +96,6 @@ public class Zeugnisfach {
 
 	private boolean abschliessendesFach;
 	private String fachart;
-	public void setKlasse(Klasse klasse) {
-		this.klasse = klasse;
-	}
 
 	
 	
@@ -93,20 +107,25 @@ public class Zeugnisfach {
 	
 	public static ArrayList<Zeugnisfach>alleLesenAbschliesendeFaecher(Klasse aktuelle,Klasse... values)
 	{
+		
+		
 		String hql =" zf "
 				+"INNER JOIN zf.ausbildungszweig az "
-				+"WHERE az = 1 "						//Funktioniert bis dahin
-				+"AND zf.abschliessendesFach = true "			// 1== true
-				
-				+"OR zf.klasse.id = "+aktuelle.getid()+" ";
-		String orbedingung=" ";		
+				+"INNER JOIN zf.lstklassen lk " 
+				+"WHERE az = 1 "					
+				+"AND zf.abschliessendesFach = true "				
+				+"OR lk.id = "+aktuelle.getid()+" ";
+		
+		String orbedingung = " ";
 		
 		for(Klasse k:values)
 		{
-			orbedingung += "OR zf.klasse.id = "+k.getid();		
+			orbedingung += "OR lk.id = "+k.getid();		
 		}
-		hql+=orbedingung;
+		hql += orbedingung;
 				
+		System.out.println(hql);
+		
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Zeugnisfach", al, hql);
 		
@@ -186,9 +205,9 @@ public class Zeugnisfach {
 		return id;
 	}
 
-	public Klasse getKlasse() {
-		return klasse;
-	}
+//	public Klasse getKlasse() {
+//		return klasse;
+//	}
 	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
 		this.unterrichtsfaecher = unterrichtsfächer;
 	}

@@ -11,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 
 
 
@@ -42,14 +45,25 @@ public class Klasse
 	private Ausbildungszweig ausbildungszweig;
 	
 	//Liste aller Zeugnisfächer
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="klasse_id")
-	private List<Zeugnisfach> zeugnisfach = new ArrayList<Zeugnisfach>();
+	@ManyToMany(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
+	@JoinTable(name="zeugnisfach_klasse",
+				joinColumns = @JoinColumn(name="klasse_id"),
+				inverseJoinColumns=@JoinColumn(name="zeugnisfach_id")	
+			)
+	private List<Zeugnisfach> lstzeugnisfach = new ArrayList<Zeugnisfach>();
+	
+	
 	
 	//Liste aller Schüler der Klasse
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="klasse_id")
 	private Set<Schueler> schuelerlist;// = new Set<Schueler>();
+	
+	
+	public void addZeugnisfach(Zeugnisfach zf)
+	{
+		lstzeugnisfach.add(zf);
+	}
 	
 	
 	public Klasse(){}
@@ -200,9 +214,9 @@ public class Klasse
 	{
 		return this.schuelerlist;
 	}
-	public List<Zeugnisfach> getZeugnisfaecher()
+	public List<Zeugnisfach> getlstzeugnisfach()
 	{
-		return this.zeugnisfach;
+		return this.lstzeugnisfach;
 	}
 
 	public Ausbildungszweig getAusbildungszweig()
