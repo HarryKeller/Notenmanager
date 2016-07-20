@@ -107,7 +107,10 @@ public class DatumSJ
 	{
 		this.id = id;
 	}
-	
+	public String toString()
+	{
+		return this.sj;
+	}
 	
 	
 }
