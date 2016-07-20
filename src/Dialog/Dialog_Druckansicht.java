@@ -23,14 +23,18 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Dialog_Druckansicht extends JFrame
+public class Dialog_Druckansicht extends JFrame implements ActionListener
 {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     Dialog_Notenblatt notenblatt;
     ArrayList<Unterrichtsfach> fach;
+    private JButton btnZurck;
 	
 	public Dialog_Druckansicht(Dialog_Notenblatt notenblatt)
 	{
@@ -40,10 +44,13 @@ public class Dialog_Druckansicht extends JFrame
 		//GUI erstellen
 		initGUI();
 		//Jasperprint für JRViewer erzeugen
-		JasperPrint p = erzeugeBankenReport();
+		JasperPrint p = erzeugeReport();
 		//PDF-Datei mit gefülltem Report anzeigen lassen
 		JRViewer viewer = new JRViewer(p);
 		contentPane.add(viewer);
+		btnZurck = new JButton("Zur\u00FCck");
+		btnZurck.addActionListener(this);
+		contentPane.add(btnZurck, BorderLayout.SOUTH);
 	}
 	public void initGUI()
 	{
@@ -56,7 +63,7 @@ public class Dialog_Druckansicht extends JFrame
 		setContentPane(contentPane);
 		
 	}
-	public JasperPrint erzeugeBankenReport()
+	public JasperPrint erzeugeReport()
 	{
 		try
 		{
@@ -70,7 +77,7 @@ public class Dialog_Druckansicht extends JFrame
 			parameter.put("anschrift", "DLC für 19,99");
 			parameter.put("tel", "DLC für 19,99");
 			parameter.put("erziehung", "DLC für 19,99");
-			parameter.put("gebdatum", ""+this.notenblatt.schueler.getGebdat());
+			parameter.put("gebdatum", this.notenblatt.schueler.getGebdat().getDayOfMonth() + "." + this.notenblatt.schueler.getGebdat().getMonth() + "." + this.notenblatt.schueler.getGebdat().getYear());
 			parameter.put("bekenntnis", this.notenblatt.schueler.getKonfession());
 			parameter.put("fehl_z_t", "8");
 			parameter.put("fehl_z_s", "2");
@@ -160,4 +167,9 @@ public class Dialog_Druckansicht extends JFrame
 		return null;
 	}
 
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		this.notenblatt.setVisible(true);
+		this.dispose();
+	}
 }
