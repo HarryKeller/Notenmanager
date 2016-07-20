@@ -102,7 +102,7 @@ public class Zeugnisnote
 		double ki = 0;
 		double mi = 0;
 		double si = 0;
-		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf));
+		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf,new DatumSJ(LocalDate.now())));
 		for (Leistung l : leistungen )
 		{
 			if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
