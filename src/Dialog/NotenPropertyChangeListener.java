@@ -62,12 +62,12 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		{
 			NotenTableModel model = (NotenTableModel) this.table.getModel();
 			
-			Vector idVec = model.getIdVector();
-			Vector<Object> idRow = (Vector<Object>) idVec.get(editedRow);
-			Leistung l = (Leistung) idRow.get(this.editedCol);
+			Vector saveVec = model.getSaveVector();
+			Vector<Object> saveRow = (Vector<Object>) saveVec.get(editedRow);
+			Leistung l = (Leistung) saveRow.get(this.editedCol);
 			
-			Vector row = (Vector) model.getDataVector().get(this.editedRow);				
-			Object newVal = row.get(editedCol);	
+			Vector dataRow = (Vector) model.getDataVector().get(this.editedRow);				
+			Object newVal = dataRow.get(editedCol);	
 			
 			String[] note = new String[2];
 						
@@ -77,9 +77,16 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 				
 				note[0] = newVal.toString().substring(0, 1);
 				note[1] = s;
-			}
+			}			
 			
-			if(note[0] != null && note[1] != null)	
+			//Notenstufe auf 100 setzen bei ungültiger Note umd späteren Datenbankzugriff zu verhindern durch
+			//bewusst falschen Wert
+			if(Math.abs(Integer.parseInt(newVal.toString())) > 6 || Math.abs(Integer.parseInt(newVal.toString())) < 1)
+			{
+				JOptionPane.showMessageDialog(this.table, "Ungültige Note eingegeben! Die Note muss zwischen 1 und 6 liegen.");
+				l.setNotenstufe(100);
+			}			
+			else if(note[0] != null && note[1] != null)	
 			{
 				l.setNotenstufe(Integer.parseInt(note[1]));	
 				char[] c = note[0].toCharArray();

@@ -8,8 +8,7 @@ public class NotenTable extends JTable
 {
 	public NotenTable()
 	{
-		super();
-		this.setAutoCreateRowSorter(true);
+		super();		
 	}
 
 	@Override

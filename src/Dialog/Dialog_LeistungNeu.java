@@ -198,7 +198,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			header = (NotenTableHeader) this.notenausgabe.table_tab1_muendl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());		
 			
-			for(Vector<Object> v : model.getIdVector())
+			for(Vector<Object> v : model.getSaveVector())
 			{
 				Leistung l = new Leistung();
 				
@@ -214,7 +214,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			header = (NotenTableHeader) this.notenausgabe.table_tab1_schriftl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
 			
-			for(Vector<Object> v : model.getIdVector())
+			for(Vector<Object> v : model.getSaveVector())
 			{
 				Leistung l = new Leistung();
 				
@@ -230,7 +230,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			header = (NotenTableHeader) this.notenausgabe.table_tab2_muendl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
 			
-			for(Vector<Object> v : model.getIdVector())
+			for(Vector<Object> v : model.getSaveVector())
 			{
 				Leistung l = new Leistung();
 				
@@ -246,7 +246,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			header = (NotenTableHeader) this.notenausgabe.table_tab2_schriftl.getTableHeader();
 			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
 			
-			for(Vector<Object> v : model.getIdVector())
+			for(Vector<Object> v : model.getSaveVector())
 			{
 				Leistung l = new Leistung();
 				
