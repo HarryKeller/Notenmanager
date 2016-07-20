@@ -459,6 +459,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			rowcount++;
 		}
 	}
+	
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
@@ -532,6 +533,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
 	}
 	
+	//Daten aus der DB holen und in Maske verfrachten
 	public void setDatenInMaske()
 	{		
 		this.textField_Fach.setText(this.fach.getBez());
@@ -541,7 +543,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setGradesInTable();
 	}
 	
-	//Entfernt TableModels und fügt neue hinzu, alten werden vom Garbagecollector erwischt
+	//Entfernt TableModels und fügt neue hinzu, alten werden vom Garbagecollector exterminiert
 	private void emptyTable()
 	{
 		this.model_tab1_muendlich = new NotenTableModel();
@@ -555,7 +557,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
 	}
 	
-	//Methode um neue Leistungen zu den jeweiligen Schülern zuzuweisen und per Hibernate zu speichern
+	//Neue Leistungen zu den jeweiligen Schülern zuzuweisen unm per Hibernate zu speichern zu ermöglichen
 	private void addNewLeistungenToSchuelerFromTable(NotenTableModel model, NotenTableHeader header)
 	{
         for(Vector<Object> vec : model.getSaveVector())
@@ -568,6 +570,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
         		{
         			Leistung l = (Leistung) o;
         			
+        			//ID muss 0 sein, da Objekte mit ID 0 nicht aus db kommen können,
+        			//Notenstufe != 0, um zu gewährleisten das kein dummy objekt in die DB kommt
             		if(l.getId() == 0 && l.getNotenstufe() != 0)
             		{
             			l.setSchueler(s);
@@ -606,6 +610,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				if(colcount != 0)
 				{
 					Leistung l = (Leistung) o;
+					
+					//Notenstufe != 0 um zu verhindern das Dummy-Objekte die Prüfung beeinflussen
+					//Dummy-Objekte wurde mit addNewLeistungenToSchuelerFromTable nicht an Schueler gehängt
+					//und werden also nicht mit gespeichert, halten also nur Platz in der Tabelle um 
+					//1:1 Abbildung zu ermöglichen
 					if(l.getNotenstufe() < 1 && l.getNotenstufe() != 0 || l.getNotenstufe() > 6 && l.getNotenstufe() != 0)
 						ret = false;
 				}

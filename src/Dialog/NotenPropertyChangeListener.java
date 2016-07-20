@@ -37,6 +37,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	@Override
 	public void propertyChange(PropertyChangeEvent e)
 	{		
+		//Fragt ab wann der Cell editor arbeitet => also wann Zelle bearbeitet und wann nicht mehr
 		if("tableCellEditor".equals(e.getPropertyName()))
 		{
 			if(this.table.isEditing())
@@ -51,6 +52,8 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		
 	}
 	
+	//Benötigt um Thread zu starten, der die Position der bearbeiteten Zelle zu holen
+	//invokeLater um GUI thread nicht in die Quere zu kommen
 	private void editingStarted()
 	{
 		SwingUtilities.invokeLater(this);
@@ -71,6 +74,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 			
 			String[] note = new String[2];
 						
+			//Prüfung ob Tendenz an der Note steht
 			if(newVal.toString().startsWith("+") || newVal.toString().startsWith("-"))
 			{
 				String s = newVal.toString().substring(1);	
@@ -93,6 +97,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 				
 				l.setTendenz(c[0]);
 				
+				//Für den Fall das die Leistung neu ist, aber eine Tendenz hat
 				if(l.getId() == 0)
 				{
 					NotenTableHeader header = (NotenTableHeader) this.table.getTableHeader();
@@ -116,8 +121,10 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 					l.setLetzteaenderung(LocalDate.now());
 				}
 			}
-			else if(l.getId() == 0)
+			else if(l.getId() == 0) 
 			{
+				//Für den Fall, das Leistung neu ist, aber keine Tendenz hat => default Tendenz o wird gesetzt
+				//Fügt außerdem Leistungsart und Erhebungsdatum der Leistung hinzu
 				NotenTableHeader header = (NotenTableHeader) this.table.getTableHeader();
 				
 				for(Leistungsart la : Leistungsart.AlleLesen())
@@ -141,7 +148,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 				l.setLetzteaenderung(LocalDate.now());
 				
 			}
-			else if(l.getId() != 0)
+			else if(l.getId() != 0) //Bestehende Leistung wird bearbeitet
 			{
 				l.setNotenstufe(Integer.parseInt(newVal.toString()));	
 				l.setTendenz('o');
@@ -157,6 +164,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	@Override
 	public void run()
 	{		
+		//Bestimmt die Position der bearbeiteten Zelle
 		this.editedCol = this.table.getEditingColumn();
 		this.editedRow = this.table.getEditingRow();
 	}	

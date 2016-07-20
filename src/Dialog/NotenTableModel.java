@@ -16,11 +16,13 @@ public class NotenTableModel extends DefaultTableModel
 		super();		
 	}
 	
+	//Vector einfügen um Tabellenzeile abzubilden
 	public void addRowToSaveVector()
 	{
 		savevector.add(new Vector<Object>());
 	}
 	
+	//Leistung an SaveVector hinten anhängen
 	public boolean addLeistungToSaveVector(Leistung l, int y)
 	{
 		if(this.savevector.get(y) != null)
@@ -32,6 +34,7 @@ public class NotenTableModel extends DefaultTableModel
 			return false;	
 	}
 	
+	//Leistung zweidimensionalspezifiziert hinzufügen mit Position aus der Tabelle
 	public boolean addLeistungAtCoordinatesToSaveVector(Leistung l, int x, int y)
 	{
 		if(this.savevector.get(y) != null)
@@ -43,7 +46,7 @@ public class NotenTableModel extends DefaultTableModel
 		else		
 			return false;
 	}
-	
+	//Schueler objekte hinzufügen um Table 1:1 abzubilden
 	public boolean addSchuelerToSaveVector(Schueler s, int y)
 	{
 		if(this.savevector.get(y) != null)
@@ -56,6 +59,7 @@ public class NotenTableModel extends DefaultTableModel
 			return false;		
 	}
 	
+	//Leistung zweidimensionalspezifiziert lesen mit Position aus der Tabelle
 	public Object getLeistungFromCoordinates(int x, int y)
 	{		
 		return this.savevector.get(y).get(x);
