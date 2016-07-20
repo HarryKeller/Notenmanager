@@ -41,11 +41,7 @@ public class Leistung
 	{
 		DBZugriff.lesen(this,id);
 	}
-//	@Deprecated	Verletzt das 4 Schichten modell, nachdem alle leistungen über die Historie gelocked werden
-//	public boolean speichern()
-//	{
-//		return DBZugriff.speichern(this);
-//	}
+	
 	public boolean speichern(Lehrer lehrer)
 	{
 		return Historie.speichern(this, lehrer);
@@ -86,6 +82,45 @@ public class Leistung
 		}
 		return leistungliste;
 	}
+	
+	
+	public static ArrayList<Leistung> AlleLesen(Schueler schueler,Unterrichtsfach ufach,DatumSJ sj )
+	{
+		String sql = 
+				"l "
+				+"INNER JOIN UFachLehrer ufl "
+				+"ON ufl.ufach.id = "+ufach.getId()+" "
+				+ "INNER JOIN Unterrichtsfach uf "
+				+ "ON uf.id = ufl.id "
+				+ "WHERE l.schueler.id = "+schueler.getId()+" "
+				+ "AND l.ufachlehrer.id = ufl.id "
+				+ "AND l.erhebungsdatum > "+ "'"+sj.getBeginn()+"'"
+				+ "AND l.erhebungsdatum < "+ "'"+sj.getEnde()+"'"
+				+ "ORDER BY l.erhebungsdatum";
+							
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Leistung", al,sql );
+		
+		ArrayList<Leistung>leistungliste = new ArrayList<Leistung>();
+		
+		for(Object[] k: al )
+		{			
+			leistungliste.add((Leistung)k[0]);
+		}
+		return leistungliste;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String toString()
 	{
