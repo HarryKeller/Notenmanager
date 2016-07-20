@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bf8e724-0672-4e2b-bd5e-08d8ef435c32">
 	<property name="ireport.zoom" value="1.1000000000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="182"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="gebdat" class="java.lang.String"/>
 	<parameter name="schuljahr" class="java.lang.String"/>
 	<parameter name="klasse" class="java.lang.String"/>
@@ -15,6 +15,7 @@
 	<parameter name="gesch" class="java.lang.String"/>
 	<parameter name="fach" class="java.lang.String"/>
 	<parameter name="note" class="java.lang.String"/>
+	<parameter name="datum" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -147,10 +148,6 @@
 				<reportElement x="39" y="0" width="49" height="14" uuid="b44b9f51-6ca2-47ad-a02e-429a304bf366"/>
 				<text><![CDATA[Wiesau, ]]></text>
 			</staticText>
-			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="88" y="0" width="100" height="14" uuid="81d54c28-119f-4c35-b589-33ab9f6732b0"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="52" y="14" width="190" height="20" uuid="d3fd107a-97cb-4ef1-8f9b-ad619f446731"/>
 				<textElement textAlignment="Center"/>
@@ -182,6 +179,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<text><![CDATA[Notenstufen: 1 = sehr gut, 2 = gut, 3 = befriedigend, 4 = ausreichend, 5 = mangelhaft, 6 = ungenügend]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="88" y="0" width="100" height="14" uuid="e56f8822-05a9-4358-9a6d-5c3abfc4c547"/>
+				<textFieldExpression><![CDATA[$P{datum}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+import Fachklassen.DatumSJ;
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnis;
 import Fachklassen.Zeugnisfach;
@@ -148,83 +149,78 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		{
 			model.removeRow(i);
 		}
-		zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
-		GetZeugnisFromZeugnisnoten(zfachnoten);
-		zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
-		
-		for(Zeugnisnote znote: zfachnoten)
+		DatumSJ tsj = new DatumSJ(LocalDate.now());
+		ArrayList<Zeugnis> zeugnislist = Zeugnis.alleLesen(tsj, getSchueler());
+		for(Zeugnis z: zeugnislist)
 		{
-			System.out.println(znote);
+			LocalDate a = LocalDate.now();
+			LocalDate b = z.getSchuljahr().getBeginn();
+			LocalDate c = z.getSchuljahr().getHalbjahr();
+			LocalDate d = z.getSchuljahr().getEnde();
+			if(a.isAfter(b)&&a.isBefore(c)||a.isAfter(c)&&a.isBefore(d))
+			{
+				this.setZeugnis(z);
+			}
 		}
-		
-		for(Zeugnisfach zfach:zfaecher)
+		if(getZeugnis()!=null)
 		{
-			boolean couldsorted = false;
-			String fachBez = zfach.getBez();
-			double errNote = 0;
-			int finalNote =  0;
-			for(Zeugnisnote znote: zfachnoten)
+			zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+			zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
+			for(Zeugnisfach zfach:zfaecher)
 			{
-				errNote = 0;
-				finalNote=0;
-				if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
+				boolean couldsorted = false;
+				String fachBez = zfach.getBez();
+				double errNote = 0;
+				int finalNote =  0;
+				for(Zeugnisnote znote: zfachnoten)
 				{
-					znote.berechneNote(znote.getZeugnisfach(), this.getSchueler());
-					znote.speichern();
-					errNote = znote.getNoteErrechnet();
-					finalNote =  znote.getNoteZeugnis();
-					if(finalNote==0)
+					errNote = 0;
+					finalNote=0;
+					if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
 					{
-						model.addRow(new Object[]{fachBez, errNote,""});
+						znote.berechneNote(znote.getZeugnisfach(), this.getSchueler());
+						znote.speichern();
+						errNote = znote.getNoteErrechnet();
+						finalNote =  znote.getNoteZeugnis();
+						if(finalNote==0)
+						{
+							model.addRow(new Object[]{fachBez, errNote,""});
+						}
+						else
+						{
+							model.addRow(new Object[]{fachBez, errNote, finalNote});
+						}
+						couldsorted=true;
 					}
-					else
-					{
-						model.addRow(new Object[]{fachBez, errNote, finalNote});
-					}
-					couldsorted=true;
 				}
-			}
-			if(couldsorted==false)
-			{
-				Zeugnisnote zno = new Zeugnisnote();
-				zno.setAenderungszeitpunkt(LocalDate.now());
-				zno.setZeugnisfach(zfach);
-				zno.setSchueler(schueler);
-				zno.setNoteErrechnet(zno.berechneNote(zfach, schueler));
-				if(this.getZeugnis()==null)
+				if(couldsorted==false)
 				{
-					Zeugnis z = new Zeugnis();
-					z.setSchueler(this.getSchueler());
-					z.speichern();
-					zno.setZeugnis(z);
+					Zeugnisnote zno = new Zeugnisnote();
+					zno.setAenderungszeitpunkt(LocalDate.now());
+					zno.setZeugnisfach(zfach);
+					zno.setSchueler(schueler);
+					zno.setNoteErrechnet(zno.berechneNote(zfach, schueler));
+					zno.speichern();
+					this.zfachnoten.add(zno);
+					model.addRow(new Object[]{fachBez, zno.getNoteErrechnet(),""});
 				}
-				else
-				{
-					zno.setZeugnis(this.getZeugnis());
-				}
-				zno.speichern();
-				this.zfachnoten.add(zno);
-				model.addRow(new Object[]{fachBez, zno.getNoteErrechnet(),""});
+				
 			}
-			
+			table.setModel(model);
 		}
-		table.setModel(model);
+		else
+		{
+			Zeugnis z = new Zeugnis();
+			DatumSJ sj = new DatumSJ(LocalDate.now());
+			z.setSchuljahr(sj);
+			z.setSchueler(this.getSchueler());
+			z.speichern();
+			setDatenToMaske();
+		}
 	}
 	
 	
-	/**
-	* Falls der Schüler schon Noten hat, holt sich die Methode das dazugehörige Zeugnis.
-	*/
-	private void GetZeugnisFromZeugnisnoten(List<Zeugnisnote> list)
-	{
-		for(Zeugnisnote note:list)
-		{
-			if(this.getZeugnis()==null)
-			{
-				this.setZeugnis(note.getZeugnis());
-			}
-		}
-	}
+
 	
 	
 	/**
@@ -246,11 +242,11 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				{
 					try
 					{
-						int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(counter, 2).toString()));
 						for(Zeugnisnote znote: zfachnoten)
 						{
-							if(znote.getZeugnisfach().getBez().equals(model.getValueAt(counter, 0).toString())&&znote.getNoteErrechnet()!=0)
+							if(znote.getZeugnisfach().getBez().equals(model.getValueAt(counter, 0).toString())&&znote.getNoteErrechnet()!=0.0)
 							{
+								int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(counter, 2).toString()));
 								boolean checksave = false;
 								if(wert>0&&wert<7)
 								{
@@ -274,7 +270,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 					}
 					catch(Exception ex)
 					{
-						ex.printStackTrace();
+						
 					}
 				}	
 				counter++;
@@ -356,6 +352,9 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	public void setZeugnis(Zeugnis zeugnis) {
 		this.zeugnis = zeugnis;
 	}
-
+	
+	
+	
+	
 	
 }

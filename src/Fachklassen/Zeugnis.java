@@ -1,5 +1,7 @@
 package Fachklassen;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,7 @@ public class Zeugnis
 		DBZugriff.lesen(this, id);
 	}
 	
-	public Zeugnis(String bemerkung, String zeugnisart, int fehltageGanztags,
+	public Zeugnis(String bemerkung, Zeugnisart zeugnisart, int fehltageGanztags,
 			int fehltageGanztagsUnentschuldigt, int fehltageStundenweise,
 			int fehltageStundenweiseUnentschuldigt)
 	{
@@ -43,8 +45,10 @@ public class Zeugnis
 	private int id;
 	
 	private String bemerkung;
-	private String zeugnisart;
-	
+	@ManyToOne
+	private Zeugnisart zeugnisart;
+	@ManyToOne
+	private DatumSJ schuljahr;
 	private int fehltageGanztags;
 	private int fehltageGanztagsUnentschuldigt;
 	private int fehltageStundenweise;
@@ -86,16 +90,24 @@ public class Zeugnis
 	{
 		return bemerkung;
 	}
+	public DatumSJ getSchuljahr()
+	{
+		return schuljahr;
+	}
+	public void setSchuljahr(DatumSJ schuljahr)
+	{
+		this.schuljahr = schuljahr;
+	}
 	public void setBemerkung(String bemerkung)
 	{
 		this.bemerkung = bemerkung;
 	}
 	
-	public String getZeugnisart()
+	public Zeugnisart getZeugnisart()
 	{
 		return zeugnisart;
 	}
-	public void setZeugnisart(String zeugnisart)
+	public void setZeugnisart(Zeugnisart zeugnisart)
 	{
 		this.zeugnisart = zeugnisart;
 	}
@@ -154,13 +166,27 @@ public class Zeugnis
 	}
 	public String toString()
 	{
-		return "To string nicht überschrieben";
+		return "Zeugnis von: "+this.schueler+" im jahr: "+this.schuljahr;
 	}
 	//---------------------------------------------------------------------------------------------
 	
 	
 	// Methoden -> Static
 	//---------------------------------------------------------------------------------------------
+	
+	public static ArrayList<Zeugnis> alleLesen(DatumSJ d, Schueler s)
+	{
+		//Zeugnisse des Schülers aus diesem Schuljahr
+		//-noch machen
+		String hql= " z "			
+				+"WHERE z.schueler.id = "+s.getId()+" "
+				+"AND z.schuljahr.id = "+d.getId();
+		
+		System.out.println(hql);
+		ArrayList<Zeugnis>al = new ArrayList<Zeugnis>();
+		DBZugriff.alleLesen("Zeugnis", al, hql);
+		return al;
+	}
 	
 	//---------------------------------------------------------------------------------------------
 }

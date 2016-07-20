@@ -17,19 +17,26 @@ public class Historie {
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String tabelleName;	//Wie wird das gemacht???
+	//Tabellenname in dem der Datensatz geändert/erstellt wurde
+	private String tabelleName;	
+	//id des Datensatzes welcher geändert wurde (gelöscht wird nur logisch)
 	private int idDatensatz;	
+	//Vorgangsart wie "Anlegen", "Ändern", "(logisch)Löschen"
 	private String vorgangsart;
+	//Ein textfeld ohne genaueren Sinn das aber reinsollte und benutzt werden kann
 	private String text;
 	
 	@ManyToOne
-	private Lehrer idLehrer;		//Lehrerklasse 
+	//Lehrer, welcher den Datensatz geändert hat
+	private Lehrer idLehrer;		
+	//Der Zeitpunkt an welchem der Datensatz geändert wurde
 	private LocalDate eintragszeitpunkt;
+	//----------------------------------------------------------------------------------
 	
-	
+	//DefaultKonstruktor für hybernate
 	public Historie()
 	{
-		//DefaultKonstruktor für hybernate
+		
 	}
 	
 	
@@ -54,7 +61,6 @@ public class Historie {
 		{
 			h.setIdDatensatz(l.getId());
 			h.setVorgangsart("Aendern");
-			//l.speichern();
 			DBZugriff.speichern(l);
 		}
 		

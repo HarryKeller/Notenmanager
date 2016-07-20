@@ -29,8 +29,50 @@ public class Schule
 	@JoinColumn(name="schule_id")
 	private List<Klasse> klassenlist = new ArrayList<Klasse>();
 	
+	private String schulleiter;
+	private String stvSchulleiter;
 	
 	
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+	public List<Klasse> getKlassenlist()
+	{
+		return klassenlist;
+	}
+
+	public void setKlassenlist(List<Klasse> klassenlist)
+	{
+		this.klassenlist = klassenlist;
+	}
+
+	public String getSchulleiter()
+	{
+		return schulleiter;
+	}
+
+	public void setSchulleiter(String schulleiter)
+	{
+		this.schulleiter = schulleiter;
+	}
+
+	public String getStvSchulleiter()
+	{
+		return stvSchulleiter;
+	}
+
+	public void setStvSchulleiter(String stvSchulleiter)
+	{
+		this.stvSchulleiter = stvSchulleiter;
+	}
 
 	//Konstruktoren -----------------------------------------------------
 	public Schule(){}

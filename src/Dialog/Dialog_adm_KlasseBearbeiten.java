@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Fachklassen.Ausbildungszweig;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
@@ -43,6 +44,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	private JComboBox<Schule> comboBox_Schule;
 	private JComboBox<Lehrer> comboBox_Klassenleiter_1;
 	private JComboBox<Lehrer> comboBox_Klassenleiter_2;
+	private JComboBox<Ausbildungszweig> comboBox_Ausbildungszweig;
 	private JTextField textField_bez;
 	private JTextField textField_Schuljahr;
 	private JList<Schueler> list;
@@ -75,9 +77,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		setTitle("Admin - Klasse bearbeiten");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{46, 403, 446, 426, 41, 0};
-		gridBagLayout.rowHeights = new int[]{33, 42, 39, 41, 39, 38, 58, 37, 32, 0};
+		gridBagLayout.rowHeights = new int[]{33, 42, 39, 41, 39, 39, 38, 58, 37, 32, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblId = new JLabel("Klassen-ID:");
@@ -150,7 +152,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		getContentPane().add(lblKlassenleiter, gbc_lblKlassenleiter);
 		
 		comboBox_Klassenleiter_2 = new JComboBox<Lehrer>();
-		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_Klassenleiter_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.gridwidth = 2;
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
@@ -159,6 +161,24 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox_2.gridy = 3;
 		getContentPane().add(comboBox_Klassenleiter_2, gbc_comboBox_2);
 		
+		JLabel label = new JLabel("Ausbildungszweig:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 4;
+		contentPane.add(label, gbc_label);
+		
+		comboBox_Ausbildungszweig = new JComboBox<Ausbildungszweig>();
+		GridBagConstraints gbc_comboBox_Ausbildungsrichtung = new GridBagConstraints();
+		gbc_comboBox_Ausbildungsrichtung.gridwidth = 2;
+		gbc_comboBox_Ausbildungsrichtung.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox_Ausbildungsrichtung.fill = GridBagConstraints.BOTH;
+		gbc_comboBox_Ausbildungsrichtung.gridx = 2;
+		gbc_comboBox_Ausbildungsrichtung.gridy = 4;
+		contentPane.add(comboBox_Ausbildungszweig, gbc_comboBox_Ausbildungsrichtung);
+		
 		JLabel lblBezeichnung = new JLabel("Bezeichnung:");
 		lblBezeichnung.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblBezeichnung = new GridBagConstraints();
@@ -166,7 +186,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_lblBezeichnung.fill = GridBagConstraints.VERTICAL;
 		gbc_lblBezeichnung.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBezeichnung.gridx = 1;
-		gbc_lblBezeichnung.gridy = 4;
+		gbc_lblBezeichnung.gridy = 5;
 		getContentPane().add(lblBezeichnung, gbc_lblBezeichnung);
 		
 		textField_bez = new JTextField();
@@ -176,7 +196,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 4;
+		gbc_textField.gridy = 5;
 		getContentPane().add(textField_bez, gbc_textField);
 		textField_bez.setColumns(10);
 		
@@ -186,7 +206,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_lblSchuljahr1.anchor = GridBagConstraints.EAST;
 		gbc_lblSchuljahr1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSchuljahr1.gridx = 1;
-		gbc_lblSchuljahr1.gridy = 5;
+		gbc_lblSchuljahr1.gridy = 6;
 		contentPane.add(lblSchuljahr, gbc_lblSchuljahr1);
 		
 		textField_Schuljahr = new JTextField();
@@ -196,7 +216,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_textField1.insets = new Insets(0, 0, 5, 5);
 		gbc_textField1.fill = GridBagConstraints.BOTH;
 		gbc_textField1.gridx = 2;
-		gbc_textField1.gridy = 5;
+		gbc_textField1.gridy = 6;
 		contentPane.add(textField_Schuljahr, gbc_textField1);
 		textField_Schuljahr.setColumns(10);
 		
@@ -210,7 +230,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_panel.gridwidth = 3;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 6;
+		gbc_panel.gridy = 7;
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{403, 446, 371, 0};
@@ -235,7 +255,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_btnZurck.fill = GridBagConstraints.BOTH;
 		gbc_btnZurck.insets = new Insets(0, 0, 5, 5);
 		gbc_btnZurck.gridx = 1;
-		gbc_btnZurck.gridy = 7;
+		gbc_btnZurck.gridy = 8;
 		getContentPane().add(btnZurck, gbc_btnZurck);
 		
 		JButton btnVerwerfen = new JButton("Verwerfen");
@@ -245,7 +265,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_btnVerwerfen.fill = GridBagConstraints.BOTH;
 		gbc_btnVerwerfen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnVerwerfen.gridx = 2;
-		gbc_btnVerwerfen.gridy = 7;
+		gbc_btnVerwerfen.gridy = 8;
 		getContentPane().add(btnVerwerfen, gbc_btnVerwerfen);
 		
 		JButton btnSpeichern = new JButton("Speichern");
@@ -255,7 +275,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_btnSpeichern.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSpeichern.fill = GridBagConstraints.BOTH;
 		gbc_btnSpeichern.gridx = 3;
-		gbc_btnSpeichern.gridy = 7;
+		gbc_btnSpeichern.gridy = 8;
 		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
 		
 		setDatenToMaske();
@@ -263,8 +283,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	
 	public void getDatenFromMaske()
 	{
+		klasse.setIdSchule((Schule)comboBox_Schule.getSelectedItem());
 		klasse.setIdKlassenleiter((Lehrer)comboBox_Klassenleiter_1.getSelectedItem());
 		klasse.setIdStvKlassenleiter((Lehrer)comboBox_Klassenleiter_2.getSelectedItem());
+		klasse.setAusbildungszweig((Ausbildungszweig)comboBox_Ausbildungszweig.getSelectedItem());
 		klasse.setBez(textField_bez.getText());
 		klasse.setSj(Integer.parseInt(textField_Schuljahr.getText()));
 	}
@@ -317,6 +339,21 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 					comboBox_Klassenleiter_2.setSelectedIndex(i);
 				}
 			}
+			
+			ArrayList<Ausbildungszweig> alist = Ausbildungszweig.alleLesen();
+			comboBox_Ausbildungszweig.removeAllItems();
+			for(Ausbildungszweig l: alist)
+			{
+				comboBox_Ausbildungszweig.addItem(l);
+			}
+			for(int i=0; i< comboBox_Ausbildungszweig.getItemCount()-1;i++)
+			{
+				if(comboBox_Ausbildungszweig.getItemAt(i).getId() == klasse.getAusbildungszweig().getId())
+				{
+					comboBox_Ausbildungszweig.setSelectedIndex(i);
+				}
+			}
+			
 			textField_bez.setText(klasse.getBez());
 			textField_Schuljahr.setText(Integer.toString(klasse.getSj()));
 			klasse_schueler_model.clear();;
@@ -330,6 +367,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		else
 		{
 			this.setKlasse(new Klasse());
+			comboBox_Schule.removeAllItems();
+			comboBox_Klassenleiter_1.removeAllItems();
+			comboBox_Klassenleiter_2.removeAllItems();
+			comboBox_Ausbildungszweig.removeAllItems();
 			for(Schule s: Schule.alleLesen())
 			{
 				comboBox_Schule.addItem(s);
@@ -338,6 +379,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			{
 				comboBox_Klassenleiter_1.addItem(l);
 				comboBox_Klassenleiter_2.addItem(l);
+			}
+			for(Ausbildungszweig l: Ausbildungszweig.alleLesen())
+			{
+				comboBox_Ausbildungszweig.addItem(l);
 			}
 		}
 	}

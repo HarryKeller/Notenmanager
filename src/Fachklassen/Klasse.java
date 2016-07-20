@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 
 
+
 import Persistenz.DBZugriff;
 
 @Entity
@@ -36,6 +37,9 @@ public class Klasse
 	
 	@ManyToOne
 	private Lehrer stvklassenleiter;	//FS
+	
+	@ManyToOne
+	private Ausbildungszweig ausbildungszweig;
 	
 	//Liste aller Zeugnisfächer
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -199,6 +203,16 @@ public class Klasse
 	public List<Zeugnisfach> getZeugnisfaecher()
 	{
 		return this.zeugnisfach;
+	}
+
+	public Ausbildungszweig getAusbildungszweig()
+	{
+		return ausbildungszweig;
+	}
+
+	public void setAusbildungszweig(Ausbildungszweig ausbildungszweig)
+	{
+		this.ausbildungszweig = ausbildungszweig;
 	}
 
 }
