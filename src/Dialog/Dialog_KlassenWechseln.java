@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import java.awt.Insets;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -44,20 +45,19 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	private JComboBox<Klasse> comboBox_Klassen;
 	private JPanel panel_buttons;
 	private JButton btnSpeichern;
-	private Klasse k;
 	private Lehrer l;
 	private JScrollPane scrollPane;
 	private DefaultListModel<Schueler> model_neu = new DefaultListModel<Schueler>();
 	private JList<Schueler> list_neueSchueler;
 	private JScrollPane scrollPane_1;
+	private DefaultComboBoxModel<Klasse> model_cb_aklasse = new DefaultComboBoxModel<Klasse>();
 	private JComboBox<Klasse> comboBox_alteKlasse;
 	private JButton btnZurueck;
 	
 
 	
-	public Dialog_KlassenWechseln(Klasse k, Lehrer l)
+	public Dialog_KlassenWechseln(Lehrer l)
 	{
-		this.k = k;	
 		this.l = l;
 		initGUI();
 		setDatenInMaske();
@@ -67,7 +67,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	{
 		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Klasse wechseln");
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,7 +105,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		this.comboBox_Klassen = new JComboBox<Klasse>();
 		this.comboBox_Klassen.addItemListener(this);
 		
-		this.comboBox_alteKlasse = new JComboBox<Klasse>();
+		this.comboBox_alteKlasse = new JComboBox<Klasse>(model_cb_aklasse);
 		this.comboBox_alteKlasse.addItemListener(this);
 		
 		this.lblList2 = new JLabel("Sch\u00FCler der neuen Klasse :");
@@ -193,26 +193,27 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	private void setDatenInMaske()
 	{
 		model.removeAllElements();
-		model_neu.removeAllElements();		
+		model_neu.removeAllElements();	
 		
 		for(Klasse ka : Klasse.alleLesen())
 		{		
-			comboBox_alteKlasse.addItem(ka);									
+//			comboBox_alteKlasse.addItem(ka);
+			model_cb_aklasse.addElement(ka);
 		}
 		setDatenComboBoxKlasse();			
 	}
 	
 	private void setDatenComboBoxKlasse()
 	{
-		comboBox_Klassen.removeAllItems();
-		
+		comboBox_Klassen.removeAllItems();	
 		for(Klasse kl : Klasse.alleLesen())
-		{
+		{						
 			if(!((Klasse) comboBox_alteKlasse.getSelectedItem()).getBez().equals(kl.getBez()))
 			{
 				comboBox_Klassen.addItem(kl);
 			}			
-		}
+		}	
+					
 	}
 	
 	public void itemStateChanged(ItemEvent arg0) 
@@ -225,12 +226,12 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 			{
 				for(Schueler s : ((Klasse) comboBox_alteKlasse.getSelectedItem()).getSchueler())
 				{
-					model.addElement(s);						
+					model.addElement(s);					
 				} 
 			}		
 		}
 		
-		if(arg0.getSource().equals(comboBox_Klassen))
+		else if(arg0.getSource().equals(comboBox_Klassen))
 		{
 			model_neu.removeAllElements();
 			
@@ -256,7 +257,15 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 				s.speichern(l);	
 				model_neu.addElement(s);
 				model.removeElement(s);
-			}
+			}	
+//			setDatenInMaske();
+			
+//			for(int i = 0; i<comboBox_alteKlasse.getItemCount(); i++)
+//			{
+//				comboBox_alteKlasse.removeItem(comboBox_alteKlasse.getItemAt(i));
+//				comboBox_alteKlasse.addItem(new Klasse (i+1));
+//			}			
+//			comboBox_alteKlasse.removeItem(comboBox_alteKlasse.getSelectedItem());
 		}
 		else
 		{
