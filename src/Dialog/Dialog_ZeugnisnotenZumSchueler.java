@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import Fachklassen.DatumSJ;
 import Fachklassen.Schueler;
 import Fachklassen.Zeugnis;
+import Fachklassen.Zeugnisart;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 
@@ -210,10 +211,28 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		}
 		else
 		{
+			List<Zeugnisart> zartlist = Zeugnisart.alleLesen();
+			String[] zarten = new String[zartlist.size()];
+			int count = 0;
+			for(Zeugnisart zar: zartlist)
+			{
+				zarten[count] = zar.getZeugnisart();
+				count++;
+			}
 			Zeugnis z = new Zeugnis();
 			DatumSJ sj = new DatumSJ(LocalDate.now());
 			z.setSchuljahr(sj);
 			z.setSchueler(this.getSchueler());
+			String zart= null;
+			while((zart=(String)JOptionPane.showInputDialog(this, "Bitte eine Zeugnisart auswählen","Achtung!", JOptionPane.QUESTION_MESSAGE, null, zarten, zarten[0]))==null);
+			for(Zeugnisart zar: zartlist)
+			{
+				if(zar.getZeugnisart().equals(zart))
+				{
+					z.setZeugnisart(zar);
+					break;
+				}
+			}
 			z.speichern();
 			setDatenToMaske();
 		}
@@ -295,7 +314,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 	
 	
-	
 	/**
 	* Holt sich den gespeicherten Schüler.
 	*/
@@ -330,11 +348,9 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 
 
-
 	public Dialog_Schuelerwahl getSwahl() {
 		return swahl;
 	}
-
 
 
 	public void setSwahl(Dialog_Schuelerwahl swahl) {
@@ -342,19 +358,14 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 
 
-
 	public Zeugnis getZeugnis() {
 		return zeugnis;
 	}
 
 
-
 	public void setZeugnis(Zeugnis zeugnis) {
 		this.zeugnis = zeugnis;
 	}
-	
-	
-	
 	
 	
 }
