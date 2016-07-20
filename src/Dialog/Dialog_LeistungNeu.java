@@ -14,6 +14,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Fachklassen.DatumSJ;
 import Fachklassen.Leistung;
 import Fachklassen.Leistungsart;
 
@@ -183,78 +184,112 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		
 		NotenTableModel model;
 		NotenTableHeader header;
+		
+		if(this.checkDate())
+		{
+			if(i == 0)
+			{
+				model = (NotenTableModel) this.notenausgabe.table_tab1_muendl.getModel();
+				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
+				header = (NotenTableHeader) this.notenausgabe.table_tab1_muendl.getTableHeader();
+				header.addColumnTooltip(this.txt_erhebungsdatum.getText());		
+				
+				for(Vector<Object> v : model.getSaveVector())
+				{
+					Leistung l = new Leistung();
+					
+					l.setNotenstufe(0);
+					l.setTendenz('o');
+					v.add(l);
+				}
+			}
+			else if(i == 1)
+			{
+				model = (NotenTableModel) this.notenausgabe.table_tab1_schriftl.getModel();
+				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
+				header = (NotenTableHeader) this.notenausgabe.table_tab1_schriftl.getTableHeader();
+				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				
+				for(Vector<Object> v : model.getSaveVector())
+				{
+					Leistung l = new Leistung();
+					
+					l.setNotenstufe(0);
+					l.setTendenz('o');
+					v.add(l);
+				}
+			}
+			else if(i == 2)
+			{
+				model = (NotenTableModel) this.notenausgabe.table_tab2_muendl.getModel();
+				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
+				header = (NotenTableHeader) this.notenausgabe.table_tab2_muendl.getTableHeader();
+				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				
+				for(Vector<Object> v : model.getSaveVector())
+				{
+					Leistung l = new Leistung();
+					
+					l.setNotenstufe(0);
+					l.setTendenz('o');
+					v.add(l);
+				}
+			}
+			else if(i == 3)
+			{
+				model = (NotenTableModel) this.notenausgabe.table_tab2_schriftl.getModel();
+				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
+				header = (NotenTableHeader) this.notenausgabe.table_tab2_schriftl.getTableHeader();
+				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				
+				for(Vector<Object> v : model.getSaveVector())
+				{
+					Leistung l = new Leistung();
+					
+					l.setNotenstufe(0);
+					l.setTendenz('o');
+					v.add(l);
+				}
+			}
+			
+			this.dispose();
+		}		
+	}
+	
+	private boolean checkDate()
+	{
+		boolean ret = false;
+		CharSequence cs = new StringBuffer('-');		
+		
 		String s = this.txt_erhebungsdatum.getText();
+		String[] datumteile = s.split("-");
 		
-		if(s.length() != 10)
+		if(s.isEmpty())
 		{
-			JOptionPane.showMessageDialog(this, "Fehlerhafte eingabe des Datums! "
-											  + "Bitte überprüfen Sie ob das Format yyyy-mm-tt ist.");				
+			JOptionPane.showMessageDialog(this, "Kein Datum eingegeben!");				
+		}
+		else if(s.length() != 10)
+		{
+			JOptionPane.showMessageDialog(this, "Datum muss im Format yyyy-mm-dd geschrieben sein!");
+		}
+		else if(!s.contains(cs))
+		{
+			JOptionPane.showMessageDialog(this, "Datum muss im Format yyyy-mm-dd geschrieben sein!");
+		}
+		else if(datumteile[0].length() != 4 || datumteile[1].length() != 2 || datumteile[2].length() != 2)
+		{
+			JOptionPane.showMessageDialog(this, "Datum muss im Format yyyy-mm-dd geschrieben sein!");
+		}
+		else if(Integer.parseInt(datumteile[2]) < 2000)
+		{
+			JOptionPane.showMessageDialog(this, "Datum auf ein Sinnvolles Jahr begrenzen.");
+		}
+		else
+		{
+			ret = true;
 		}
 		
-		if(i == 0)
-		{
-			model = (NotenTableModel) this.notenausgabe.table_tab1_muendl.getModel();
-			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
-			header = (NotenTableHeader) this.notenausgabe.table_tab1_muendl.getTableHeader();
-			header.addColumnTooltip(this.txt_erhebungsdatum.getText());		
-			
-			for(Vector<Object> v : model.getSaveVector())
-			{
-				Leistung l = new Leistung();
-				
-				l.setNotenstufe(0);
-				l.setTendenz('o');
-				v.add(l);
-			}
-		}
-		else if(i == 1)
-		{
-			model = (NotenTableModel) this.notenausgabe.table_tab1_schriftl.getModel();
-			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
-			header = (NotenTableHeader) this.notenausgabe.table_tab1_schriftl.getTableHeader();
-			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
-			
-			for(Vector<Object> v : model.getSaveVector())
-			{
-				Leistung l = new Leistung();
-				
-				l.setNotenstufe(0);
-				l.setTendenz('o');
-				v.add(l);
-			}
-		}
-		else if(i == 2)
-		{
-			model = (NotenTableModel) this.notenausgabe.table_tab2_muendl.getModel();
-			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
-			header = (NotenTableHeader) this.notenausgabe.table_tab2_muendl.getTableHeader();
-			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
-			
-			for(Vector<Object> v : model.getSaveVector())
-			{
-				Leistung l = new Leistung();
-				
-				l.setNotenstufe(0);
-				l.setTendenz('o');
-				v.add(l);
-			}
-		}
-		else if(i == 3)
-		{
-			model = (NotenTableModel) this.notenausgabe.table_tab2_schriftl.getModel();
-			model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
-			header = (NotenTableHeader) this.notenausgabe.table_tab2_schriftl.getTableHeader();
-			header.addColumnTooltip(this.txt_erhebungsdatum.getText());
-			
-			for(Vector<Object> v : model.getSaveVector())
-			{
-				Leistung l = new Leistung();
-				
-				l.setNotenstufe(0);
-				l.setTendenz('o');
-				v.add(l);
-			}
-		}
+		return ret;
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -265,8 +300,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		}
 		else if(e.getSource() == this.btn_anlegen)
 		{
-			this.getDatenAusMaske();
-			this.dispose();
+			this.getDatenAusMaske();			
 		}
 	}
 	
