@@ -242,11 +242,11 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				{
 					try
 					{
-						int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(counter, 2).toString()));
 						for(Zeugnisnote znote: zfachnoten)
 						{
-							if(znote.getZeugnisfach().getBez().equals(model.getValueAt(counter, 0).toString())&&znote.getNoteErrechnet()!=0)
+							if(znote.getZeugnisfach().getBez().equals(model.getValueAt(counter, 0).toString())&&znote.getNoteErrechnet()!=0.0)
 							{
+								int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(counter, 2).toString()));
 								boolean checksave = false;
 								if(wert>0&&wert<7)
 								{
@@ -270,7 +270,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 					}
 					catch(Exception ex)
 					{
-						ex.printStackTrace();
+						
 					}
 				}	
 				counter++;
