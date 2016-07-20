@@ -70,21 +70,44 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 			Object newVal = row.get(editedCol);	
 			
 			String[] note = new String[2];
+						
+			if(newVal.toString().startsWith("+") || newVal.toString().startsWith("-"))
+			{
+				String s = newVal.toString().substring(1);	
+				
+				note[0] = newVal.toString().substring(0, 1);
+				note[1] = s;
+			}
 			
-			if(newVal.toString().startsWith("-"))
-			{
-				note = newVal.toString().split("-");				
-			}
-			else if(newVal.toString().startsWith("+"))
-			{
-				note = newVal.toString().split("+");				
-			}
-			else if(note[0] != null && note[1] != null)	
+			if(note[0] != null && note[1] != null)	
 			{
 				l.setNotenstufe(Integer.parseInt(note[1]));	
 				char[] c = note[0].toCharArray();
 				
 				l.setTendenz(c[0]);
+				
+				if(l.getId() == 0)
+				{
+					NotenTableHeader header = (NotenTableHeader) this.table.getTableHeader();
+					
+					for(Leistungsart la : Leistungsart.AlleLesen())
+					{
+						if(la.getBez().equals(table.getColumnName(editedCol)))
+							l.setLeistungsart(la);
+					}
+					
+					try
+					{
+						l.setErhebungsdatum(LocalDate.parse(header.getTooltip(editedCol)));
+					}
+					catch(Exception ex)
+					{
+						ex.printStackTrace();
+						System.out.println(ex.getMessage());
+					}
+					
+					l.setLetzteaenderung(LocalDate.now());
+				}
 			}
 			else if(l.getId() == 0)
 			{
@@ -92,12 +115,24 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 				
 				for(Leistungsart la : Leistungsart.AlleLesen())
 				{
-					if(la.getBez() == table.getColumnName(editedCol))
+					if(la.getBez().equals(table.getColumnName(editedCol)))
 						l.setLeistungsart(la);
 				}
 				
-				l.setErhebungsdatum(LocalDate.parse(header.getTooltip(editedCol), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM
-									).withLocale(Locale.ENGLISH)));
+				try
+				{
+					l.setErhebungsdatum(LocalDate.parse(header.getTooltip(editedCol)));
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+					System.out.println(ex.getMessage());
+				}
+				
+				l.setNotenstufe(Integer.parseInt(newVal.toString()));	
+				l.setTendenz('o');
+				l.setLetzteaenderung(LocalDate.now());
+				
 			}
 			else if(l.getId() != 0)
 			{

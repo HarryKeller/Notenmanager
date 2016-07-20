@@ -13,7 +13,7 @@ public class NotenTableModel extends DefaultTableModel
 	
 	public NotenTableModel()
 	{
-		super();
+		super();		
 	}
 	
 	public void addRowToVector()
@@ -32,6 +32,18 @@ public class NotenTableModel extends DefaultTableModel
 			return false;	
 	}
 	
+	public boolean addLeistungAtCoordinates(Leistung l, int x, int y)
+	{
+		if(this.vec.get(y) != null)
+		{
+			Vector<Object> v = (Vector<Object>) this.vec.get(y);
+			v.insertElementAt(l, x);
+			return true;
+		}
+		else		
+			return false;
+	}
+	
 	public boolean addSchuelerToVector(Schueler s, int y)
 	{
 		if(this.vec.get(y) != null)
@@ -45,7 +57,7 @@ public class NotenTableModel extends DefaultTableModel
 	}
 	
 	public Object getLeistungFromCoordinates(int x, int y)
-	{
+	{		
 		return this.vec.get(y).get(x);
 	}
 	

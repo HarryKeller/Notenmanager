@@ -6,6 +6,11 @@ import javax.swing.table.TableColumn;
 
 public class NotenTable extends JTable
 {
+	public NotenTable()
+	{
+		super();
+		this.setAutoCreateRowSorter(true);
+	}
 
 	@Override
 	public void addColumn(TableColumn aColumn)

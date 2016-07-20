@@ -398,7 +398,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	
 	//Leistungen und Tooltips in eine Tabelle einfügen
 	private void fillOneTable(NotenTableHeader header, NotenTableModel model, ArrayList<Leistung> leistungen)
-	{
+	{		
 		for(Leistung l : leistungen)
 		{	
 			//Spalte benötigt? Nein => index => col >= 0, Ja => -1
@@ -409,27 +409,56 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				header.addColumnTooltip(l.getErhebungsdatum().toString());
 				model.addColumn(l.getLeistungsart().getBez());	
 				
-				model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);
+				model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);					
+				model.addLeistungToVector(l, model.getRowCount() - 1);				
 			}	
 			else if(col >= 0)
 			{
 				//Ist schon was in der Spalte? Ja => trotzdem neue Spalte, Nein => in spalte mit index col einfügen
-				if(model.getValueAt(model.getRowCount() - 1, col) == "" || model.getValueAt(model.getRowCount() - 1, col) == null)
+				if(model.getValueAt(model.getRowCount() - 1, col) == null || model.getValueAt(model.getRowCount() - 1, col) == "")
 				{
 					model.setValueAt(l, model.getRowCount() - 1 , col);
+					model.addLeistungToVector(l, model.getRowCount() - 1);
 				}
 				else
 				{
 					header.addColumnTooltip(l.getErhebungsdatum().toString());
 					model.addColumn(l.getArt().getBez());
 					model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);
+					
+					model.addLeistungToVector(l, model.getRowCount() - 1);
 				}				
 			}
 			
-			model.addLeistungToVector(l, model.getRowCount() - 1);
+			
 		}	
 	}
 	
+	//Nochmal Tabellen überprüfen umd leere Felder mit leeren Leistungen zu belegen (veganen Leistungen)
+	private void fillEmptyfieldsWithDummy(NotenTableModel model)
+	{
+		
+		int rows = model.getRowCount();
+		int cols = model.getColumnCount();		
+		
+		int rowcount = 0;
+		for(Vector<Object> vec : model.getIdVector())
+		{			
+			for(int colcount = 0; colcount < cols; colcount++)
+			{
+				try
+				{
+					model.getLeistungFromCoordinates(colcount, rowcount);											
+				}
+				catch(Exception e)
+				{
+					model.addLeistungAtCoordinates(new Leistung(), colcount, rowcount);
+				}
+									
+			}
+			rowcount++;
+		}
+	}
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
@@ -487,13 +516,20 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));					
 			this.fillOneTable(header_tab1_schriftl, model_tab1_schriftl, s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));			
 			this.fillOneTable(header_tab2_muendl, model_tab2_muendlich, s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
-			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));
+			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
 			
-			this.table_tab1_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_muendl));
-			this.table_tab1_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_schriftl));			
-			this.table_tab2_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_muendl));
-			this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
 		}
+		
+		//Nachbearbeitung um leere Felder einzubeziehen
+		this.fillEmptyfieldsWithDummy(model_tab1_muendlich);
+		this.fillEmptyfieldsWithDummy(model_tab1_schriftl);
+		this.fillEmptyfieldsWithDummy(model_tab2_muendlich);
+		this.fillEmptyfieldsWithDummy(model_tab2_schriftl);
+		
+		this.table_tab1_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_muendl));
+		this.table_tab1_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_schriftl));			
+		this.table_tab2_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_muendl));
+		this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
 	}
 	
 	public void setDatenInMaske()

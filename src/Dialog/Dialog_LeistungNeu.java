@@ -174,8 +174,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			this.model_leistungsart.addElement(l.getBez());
 		}		
 		
-		this.txt_erhebungsdatum.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(
-													   Locale.GERMAN)).toString());
+		this.txt_erhebungsdatum.setText(LocalDate.now().toString());
 	}
 	
 	private void getDatenAusMaske()
@@ -189,7 +188,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		if(s.length() != 10)
 		{
 			JOptionPane.showMessageDialog(this, "Fehlerhafte eingabe des Datums! "
-											  + "Bitte überprüfen Sie ob das Format tt.mm.yyyy ist.");				
+											  + "Bitte überprüfen Sie ob das Format yyyy-mm-tt ist.");				
 		}
 		
 		if(i == 0)
@@ -201,7 +200,11 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			
 			for(Vector<Object> v : model.getIdVector())
 			{
-				v.add(new Leistung());
+				Leistung l = new Leistung();
+				
+				l.setNotenstufe(0);
+				l.setTendenz('o');
+				v.add(l);
 			}
 		}
 		else if(i == 1)
@@ -213,7 +216,11 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			
 			for(Vector<Object> v : model.getIdVector())
 			{
-				v.add(new Leistung());
+				Leistung l = new Leistung();
+				
+				l.setNotenstufe(0);
+				l.setTendenz('o');
+				v.add(l);
 			}
 		}
 		else if(i == 2)
@@ -225,7 +232,11 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			
 			for(Vector<Object> v : model.getIdVector())
 			{
-				v.add(new Leistung());
+				Leistung l = new Leistung();
+				
+				l.setNotenstufe(0);
+				l.setTendenz('o');
+				v.add(l);
 			}
 		}
 		else if(i == 3)
@@ -237,7 +248,11 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			
 			for(Vector<Object> v : model.getIdVector())
 			{
-				v.add(new Leistung());
+				Leistung l = new Leistung();
+				
+				l.setNotenstufe(0);
+				l.setTendenz('o');
+				v.add(l);
 			}
 		}
 	}
