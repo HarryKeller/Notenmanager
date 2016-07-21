@@ -12,6 +12,7 @@ import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
 import Fachklassen.Schule;
+import Fachklassen.Zeugnisfach;
 
 import java.awt.GridBagLayout;
 
@@ -49,6 +50,8 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	private JTextField textField_Schuljahr;
 	private JList<Schueler> list;
 	private DefaultListModel<Schueler> klasse_schueler_model = new DefaultListModel<Schueler>();
+	private JList<Zeugnisfach> list_zeugnisfach;
+	private DefaultListModel<Zeugnisfach> klasse_zeugnisfach_model = new DefaultListModel<Zeugnisfach>();
 	
 	private Klasse klasse = null;
 	
@@ -76,10 +79,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		
 		setTitle("Admin - Klasse bearbeiten");
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{46, 403, 446, 426, 41, 0};
-		gridBagLayout.rowHeights = new int[]{33, 42, 39, 41, 39, 39, 38, 58, 37, 32, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{41, 262, 336, 326, 330, 35, 0};
+		gridBagLayout.rowHeights = new int[]{33, 42, 39, 41, 39, 39, 38, 250, 214, 37, 34, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblId = new JLabel("Klassen-ID:");
@@ -97,7 +100,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		GridBagConstraints gbc_lblSchuljahr = new GridBagConstraints();
 		gbc_lblSchuljahr.anchor = GridBagConstraints.WEST;
 		gbc_lblSchuljahr.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSchuljahr.gridx = 2;
+		gbc_lblSchuljahr.gridx = 3;
 		gbc_lblSchuljahr.gridy = 0;
 		contentPane.add(label_id, gbc_lblSchuljahr);
 		
@@ -117,7 +120,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox.gridwidth = 2;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 2;
+		gbc_comboBox.gridx = 3;
 		gbc_comboBox.gridy = 1;
 		getContentPane().add(comboBox_Schule, gbc_comboBox);
 		
@@ -137,7 +140,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox_1.gridwidth = 2;
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.fill = GridBagConstraints.BOTH;
-		gbc_comboBox_1.gridx = 2;
+		gbc_comboBox_1.gridx = 3;
 		gbc_comboBox_1.gridy = 2;
 		getContentPane().add(comboBox_Klassenleiter_1, gbc_comboBox_1);
 		
@@ -157,7 +160,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox_2.gridwidth = 2;
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_2.fill = GridBagConstraints.BOTH;
-		gbc_comboBox_2.gridx = 2;
+		gbc_comboBox_2.gridx = 3;
 		gbc_comboBox_2.gridy = 3;
 		getContentPane().add(comboBox_Klassenleiter_2, gbc_comboBox_2);
 		
@@ -175,7 +178,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_comboBox_Ausbildungsrichtung.gridwidth = 2;
 		gbc_comboBox_Ausbildungsrichtung.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_Ausbildungsrichtung.fill = GridBagConstraints.BOTH;
-		gbc_comboBox_Ausbildungsrichtung.gridx = 2;
+		gbc_comboBox_Ausbildungsrichtung.gridx = 3;
 		gbc_comboBox_Ausbildungsrichtung.gridy = 4;
 		contentPane.add(comboBox_Ausbildungszweig, gbc_comboBox_Ausbildungsrichtung);
 		
@@ -195,7 +198,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_textField.gridwidth = 2;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.gridx = 2;
+		gbc_textField.gridx = 3;
 		gbc_textField.gridy = 5;
 		getContentPane().add(textField_bez, gbc_textField);
 		textField_bez.setColumns(10);
@@ -215,7 +218,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_textField1.gridwidth = 2;
 		gbc_textField1.insets = new Insets(0, 0, 5, 5);
 		gbc_textField1.fill = GridBagConstraints.BOTH;
-		gbc_textField1.gridx = 2;
+		gbc_textField1.gridx = 3;
 		gbc_textField1.gridy = 6;
 		contentPane.add(textField_Schuljahr, gbc_textField1);
 		textField_Schuljahr.setColumns(10);
@@ -227,7 +230,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		panel.setBorder(new TitledBorder(null, "Schüler der Klasse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridwidth = 3;
+		gbc_panel.gridwidth = 4;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 7;
@@ -250,22 +253,58 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		
 		list = new JList<Schueler>();
 		scrollPane.setViewportView(list);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Zeugnisfächer der Klasse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridwidth = 4;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.gridx = 1;
+		gbc_panel_1.gridy = 8;
+		contentPane.add(panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{403, 446, 426, 0};
+		gbl_panel_1.rowHeights = new int[]{214, 0};
+		gbl_panel_1.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_1.setLayout(gbl_panel_1);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.gridwidth = 3;
+		gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
+		gbc_scrollPane_1.gridx = 0;
+		gbc_scrollPane_1.gridy = 0;
+		panel_1.add(scrollPane_1, gbc_scrollPane_1);
+		
+		list_zeugnisfach = new JList<Zeugnisfach>();
+		scrollPane_1.setViewportView(list_zeugnisfach);
 		btnZurck.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_btnZurck = new GridBagConstraints();
 		gbc_btnZurck.fill = GridBagConstraints.BOTH;
 		gbc_btnZurck.insets = new Insets(0, 0, 5, 5);
 		gbc_btnZurck.gridx = 1;
-		gbc_btnZurck.gridy = 8;
+		gbc_btnZurck.gridy = 9;
 		getContentPane().add(btnZurck, gbc_btnZurck);
 		
 		JButton btnVerwerfen = new JButton("Verwerfen");
 		btnVerwerfen.addActionListener(this);
+		
+		JButton btnZeugnisfcherBearbeiten = new JButton("Zeugnisf\u00E4cher bearbeiten");
+		GridBagConstraints gbc_btnZeugnisfcherBearbeiten = new GridBagConstraints();
+		gbc_btnZeugnisfcherBearbeiten.fill = GridBagConstraints.BOTH;
+		gbc_btnZeugnisfcherBearbeiten.insets = new Insets(0, 0, 5, 5);
+		gbc_btnZeugnisfcherBearbeiten.gridx = 2;
+		gbc_btnZeugnisfcherBearbeiten.gridy = 9;
+		contentPane.add(btnZeugnisfcherBearbeiten, gbc_btnZeugnisfcherBearbeiten);
 		btnVerwerfen.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_btnVerwerfen = new GridBagConstraints();
 		gbc_btnVerwerfen.fill = GridBagConstraints.BOTH;
 		gbc_btnVerwerfen.insets = new Insets(0, 0, 5, 5);
-		gbc_btnVerwerfen.gridx = 2;
-		gbc_btnVerwerfen.gridy = 8;
+		gbc_btnVerwerfen.gridx = 3;
+		gbc_btnVerwerfen.gridy = 9;
 		getContentPane().add(btnVerwerfen, gbc_btnVerwerfen);
 		
 		JButton btnSpeichern = new JButton("Speichern");
@@ -274,8 +313,8 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
 		gbc_btnSpeichern.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSpeichern.fill = GridBagConstraints.BOTH;
-		gbc_btnSpeichern.gridx = 3;
-		gbc_btnSpeichern.gridy = 8;
+		gbc_btnSpeichern.gridx = 4;
+		gbc_btnSpeichern.gridy = 9;
 		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
 		
 		setDatenToMaske();
@@ -356,12 +395,19 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			
 			textField_bez.setText(klasse.getBez());
 			textField_Schuljahr.setText(Integer.toString(klasse.getSj()));
-			klasse_schueler_model.clear();;
+			klasse_schueler_model.clear();
 			for(Schueler s:klasse.getSchueler())
 			{
 				klasse_schueler_model.addElement(s);
 			}
 			list.setModel(klasse_schueler_model);
+			
+			klasse_zeugnisfach_model.clear();
+			for(Zeugnisfach z: Zeugnisfach.alleLesen(getKlasse()))
+			{
+				klasse_zeugnisfach_model.addElement(z);
+			}
+			list_zeugnisfach.setModel(klasse_zeugnisfach_model);
 			
 		}
 		else
@@ -452,6 +498,14 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 
 	public void setKlasse_schueler_model(DefaultListModel<Schueler> klasse_schueler_model) {
 		this.klasse_schueler_model = klasse_schueler_model;
+	}
+
+	public DefaultListModel<Zeugnisfach> getKlasse_zeugnisfach_model() {
+		return klasse_zeugnisfach_model;
+	}
+
+	public void setKlasse_zeugnisfach_model(DefaultListModel<Zeugnisfach> klasse_zeugnisfach_model) {
+		this.klasse_zeugnisfach_model = klasse_zeugnisfach_model;
 	}
 
 
