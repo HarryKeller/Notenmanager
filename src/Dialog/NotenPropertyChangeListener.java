@@ -1,5 +1,6 @@
 package Dialog;
 
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
@@ -10,6 +11,7 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
@@ -22,6 +24,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 {
 	
 	private NotenTable table;
+	private JButton button;
 	private int editedRow;
 	private int editedCol;
 	
@@ -29,9 +32,10 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	@param t Zu Beobachtende NotenTable
 	**/
 	
-	public NotenPropertyChangeListener(NotenTable t)
+	public NotenPropertyChangeListener(NotenTable t, JButton b)
 	{
 		this.table = t;
+		this.button = b;
 	}
 	
 	@Override
@@ -57,6 +61,8 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	private void editingStarted()
 	{
 		SwingUtilities.invokeLater(this);
+		this.button.setEnabled(false);
+		
 	}
 	
 	private void editingStopped(PropertyChangeEvent e)
@@ -159,6 +165,8 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		{
 			
 		}
+		
+		this.button.setEnabled(true);
 	}
 	
 	@Override

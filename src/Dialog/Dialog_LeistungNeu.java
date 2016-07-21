@@ -178,6 +178,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		this.txt_erhebungsdatum.setText(LocalDate.now().toString());
 	}
 	
+	//Legt neue Leistungen für jeweilige Tabellen an und fügt Dummy-Objekte ein für die 1:1 Abbildung der jeweiligen Tabelle
 	private void getDatenAusMaske()
 	{
 		int i = this.cmbbox_tables.getSelectedIndex();
@@ -256,6 +257,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		}		
 	}
 	
+	//Überprüft ob das Leistungserhebungsdatum der neuen Leistung nicht leer ist, richtiges Format hat usw.
 	private boolean checkDate()
 	{
 		boolean ret = false;

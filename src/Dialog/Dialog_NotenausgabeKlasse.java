@@ -91,7 +91,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setDatenInMaske();
 	}
 	
-	private void initGUI() {		
+	private void initGUI() {			
 		setTitle("Klassen Noten\u00FCbersicht");
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -169,7 +169,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.panel_head.add(this.textField_Fach, gbc_textField_Fach);
 		this.textField_Fach.setColumns(10);
 		
-		this._tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		this._tabbedPane = new JTabbedPane(JTabbedPane.TOP);		
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
@@ -186,7 +186,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbl_tab1_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		this.tab1_contentPanel.setLayout(gbl_tab1_contentPanel);
 		
-		this._panel = new JPanel();
+		this._panel = new JPanel();		
 		this._panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -214,7 +214,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbl_panel_tab1_muendl.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		this.panel_tab1_muendl.setLayout(gbl_panel_tab1_muendl);
 		
-		this._scrollPane = new JScrollPane();
+		this._scrollPane = new JScrollPane();		
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
@@ -226,7 +226,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab1_muendl.setModel(this.model_tab1_muendlich);
 		this._scrollPane.setViewportView(this.table_tab1_muendl);
 		
-		this._panel_1 = new JPanel();
+		this._panel_1 = new JPanel();		
 		this._panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
@@ -260,7 +260,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbc_scrollPane_1.gridy = 0;
 		this.panel_tab1_schriftl.add(this._scrollPane_1, gbc_scrollPane_1);
 		
-		this.table_tab1_schriftl = new NotenTable();
+		this.table_tab1_schriftl = new NotenTable();		
 		this.model_tab1_schriftl = new NotenTableModel();
 		this.table_tab1_schriftl.setModel(this.model_tab1_schriftl);
 		this._scrollPane_1.setViewportView(this.table_tab1_schriftl);
@@ -274,7 +274,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbl_tab2_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		this.tab2_contentPanel.setLayout(gbl_tab2_contentPanel);
 		
-		this._panel_5 = new JPanel();
+		this._panel_5 = new JPanel();		
 		this._panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
 		gbc_panel_5.weighty = 50.0;
@@ -313,12 +313,12 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbc_scrollPane_3.gridy = 0;
 		this._panel_3.add(this._scrollPane_3, gbc_scrollPane_3);
 		
-		this.table_tab2_muendl = new NotenTable();
+		this.table_tab2_muendl = new NotenTable();		
 		this.model_tab2_muendlich = new NotenTableModel();
 		this.table_tab2_muendl.setModel(model_tab2_muendlich);
 		this._scrollPane_3.setViewportView(this.table_tab2_muendl);
 		
-		this._panel_6 = new JPanel();
+		this._panel_6 = new JPanel();		
 		this._panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
 		gbc_panel_6.weightx = 50.0;
@@ -341,7 +341,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		gbc_scrollPane_2.gridy = 0;
 		this._panel_6.add(this._scrollPane_2, gbc_scrollPane_2);
 		
-		this.table_tab2_schriftl = new NotenTable();
+		this.table_tab2_schriftl = new NotenTable();		
 		this.model_tab2_schriftl = new NotenTableModel();
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
 		this._scrollPane_2.setViewportView(this.table_tab2_schriftl);
@@ -527,10 +527,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.fillEmptyfieldsWithDummy(model_tab2_muendlich);
 		this.fillEmptyfieldsWithDummy(model_tab2_schriftl);
 		
-		this.table_tab1_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_muendl));
-		this.table_tab1_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_schriftl));			
-		this.table_tab2_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_muendl));
-		this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
+		this.table_tab1_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_muendl, this.btn_speichern));
+		this.table_tab1_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab1_schriftl, this.btn_speichern));			
+		this.table_tab2_muendl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_muendl, this.btn_speichern));
+		this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl, this.btn_neueLeistung));
 	}
 	
 	//Daten aus der DB holen und in Maske verfrachten
@@ -692,4 +692,5 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				this.dispose();
 		}		
 	}	
+
 }
