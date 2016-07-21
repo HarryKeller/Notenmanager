@@ -37,6 +37,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	@Override
 	public void propertyChange(PropertyChangeEvent e)
 	{		
+		//Fragt ab wann der Cell editor arbeitet => also wann Zelle bearbeitet und wann nicht mehr
 		if("tableCellEditor".equals(e.getPropertyName()))
 		{
 			if(this.table.isEditing())
@@ -51,6 +52,8 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		
 	}
 	
+	//Benötigt um Thread zu starten, der die Position der bearbeiteten Zelle zu holen
+	//invokeLater um GUI thread nicht in die Quere zu kommen
 	private void editingStarted()
 	{
 		SwingUtilities.invokeLater(this);
@@ -62,30 +65,39 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		{
 			NotenTableModel model = (NotenTableModel) this.table.getModel();
 			
-			Vector idVec = model.getIdVector();
-			Vector<Object> idRow = (Vector<Object>) idVec.get(editedRow);
-			Leistung l = (Leistung) idRow.get(this.editedCol);
+			Vector saveVec = model.getSaveVector();
+			Vector<Object> saveRow = (Vector<Object>) saveVec.get(editedRow);
+			Leistung l = (Leistung) saveRow.get(this.editedCol);
 			
-			Vector row = (Vector) model.getDataVector().get(this.editedRow);				
-			Object newVal = row.get(editedCol);	
+			Vector dataRow = (Vector) model.getDataVector().get(this.editedRow);				
+			Object newVal = dataRow.get(editedCol);	
 			
 			String[] note = new String[2];
 						
+			//Prüfung ob Tendenz an der Note steht
 			if(newVal.toString().startsWith("+") || newVal.toString().startsWith("-"))
 			{
 				String s = newVal.toString().substring(1);	
 				
 				note[0] = newVal.toString().substring(0, 1);
 				note[1] = s;
-			}
+			}			
 			
-			if(note[0] != null && note[1] != null)	
+			//Notenstufe auf 100 setzen bei ungültiger Note umd späteren Datenbankzugriff zu verhindern durch
+			//bewusst falschen Wert
+			if(Math.abs(Integer.parseInt(newVal.toString())) > 6 || Math.abs(Integer.parseInt(newVal.toString())) < 1)
+			{
+				JOptionPane.showMessageDialog(this.table, "Ungültige Note eingegeben! Die Note muss zwischen 1 und 6 liegen.");
+				l.setNotenstufe(100);
+			}			
+			else if(note[0] != null && note[1] != null)	
 			{
 				l.setNotenstufe(Integer.parseInt(note[1]));	
 				char[] c = note[0].toCharArray();
 				
 				l.setTendenz(c[0]);
 				
+				//Für den Fall das die Leistung neu ist, aber eine Tendenz hat
 				if(l.getId() == 0)
 				{
 					NotenTableHeader header = (NotenTableHeader) this.table.getTableHeader();
@@ -109,8 +121,10 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 					l.setLetzteaenderung(LocalDate.now());
 				}
 			}
-			else if(l.getId() == 0)
+			else if(l.getId() == 0) 
 			{
+				//Für den Fall, das Leistung neu ist, aber keine Tendenz hat => default Tendenz o wird gesetzt
+				//Fügt außerdem Leistungsart und Erhebungsdatum der Leistung hinzu
 				NotenTableHeader header = (NotenTableHeader) this.table.getTableHeader();
 				
 				for(Leistungsart la : Leistungsart.AlleLesen())
@@ -134,7 +148,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 				l.setLetzteaenderung(LocalDate.now());
 				
 			}
-			else if(l.getId() != 0)
+			else if(l.getId() != 0) //Bestehende Leistung wird bearbeitet
 			{
 				l.setNotenstufe(Integer.parseInt(newVal.toString()));	
 				l.setTendenz('o');
@@ -150,6 +164,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 	@Override
 	public void run()
 	{		
+		//Bestimmt die Position der bearbeiteten Zelle
 		this.editedCol = this.table.getEditingColumn();
 		this.editedRow = this.table.getEditingRow();
 	}	

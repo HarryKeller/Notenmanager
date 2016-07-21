@@ -412,7 +412,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
 		{
-			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln((Klasse) comboBox_Klassen.getSelectedItem(), lehrer);
+			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln(lehrer);
 			dlg_klassenw.setVisible(true);
 		}				
 		if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde

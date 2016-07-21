@@ -9,46 +9,49 @@ import Fachklassen.Schueler;
 
 public class NotenTableModel extends DefaultTableModel
 {	
-	private Vector<Vector<Object>> vec = new Vector();
+	private Vector<Vector<Object>> savevector = new Vector();
 	
 	public NotenTableModel()
 	{
 		super();		
 	}
 	
-	public void addRowToVector()
+	//Vector einfügen um Tabellenzeile abzubilden
+	public void addRowToSaveVector()
 	{
-		vec.add(new Vector<Object>());
+		savevector.add(new Vector<Object>());
 	}
 	
-	public boolean addLeistungToVector(Leistung l, int y)
+	//Leistung an SaveVector hinten anhängen
+	public boolean addLeistungToSaveVector(Leistung l, int y)
 	{
-		if(this.vec.get(y) != null)
+		if(this.savevector.get(y) != null)
 		{
-			this.vec.get(y).add(l);
+			this.savevector.get(y).add(l);
 			return true;
 		}
 		else		
 			return false;	
 	}
 	
-	public boolean addLeistungAtCoordinates(Leistung l, int x, int y)
+	//Leistung zweidimensionalspezifiziert hinzufügen mit Position aus der Tabelle
+	public boolean addLeistungAtCoordinatesToSaveVector(Leistung l, int x, int y)
 	{
-		if(this.vec.get(y) != null)
+		if(this.savevector.get(y) != null)
 		{
-			Vector<Object> v = (Vector<Object>) this.vec.get(y);
+			Vector<Object> v = (Vector<Object>) this.savevector.get(y);
 			v.insertElementAt(l, x);
 			return true;
 		}
 		else		
 			return false;
 	}
-	
-	public boolean addSchuelerToVector(Schueler s, int y)
+	//Schueler objekte hinzufügen um Table 1:1 abzubilden
+	public boolean addSchuelerToSaveVector(Schueler s, int y)
 	{
-		if(this.vec.get(y) != null)
+		if(this.savevector.get(y) != null)
 		{
-			this.vec.get(y).add(s);
+			this.savevector.get(y).add(s);
 			
 			return true;
 		}
@@ -56,13 +59,14 @@ public class NotenTableModel extends DefaultTableModel
 			return false;		
 	}
 	
+	//Leistung zweidimensionalspezifiziert lesen mit Position aus der Tabelle
 	public Object getLeistungFromCoordinates(int x, int y)
 	{		
-		return this.vec.get(y).get(x);
+		return this.savevector.get(y).get(x);
 	}
 	
-	public Vector<Vector<Object>> getIdVector()
+	public Vector<Vector<Object>> getSaveVector()
 	{
-		return this.vec;
+		return this.savevector;
 	}
 }

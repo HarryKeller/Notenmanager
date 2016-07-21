@@ -410,7 +410,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				model.addColumn(l.getLeistungsart().getBez());	
 				
 				model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);					
-				model.addLeistungToVector(l, model.getRowCount() - 1);				
+				model.addLeistungToSaveVector(l, model.getRowCount() - 1);				
 			}	
 			else if(col >= 0)
 			{
@@ -418,7 +418,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				if(model.getValueAt(model.getRowCount() - 1, col) == null || model.getValueAt(model.getRowCount() - 1, col) == "")
 				{
 					model.setValueAt(l, model.getRowCount() - 1 , col);
-					model.addLeistungToVector(l, model.getRowCount() - 1);
+					model.addLeistungToSaveVector(l, model.getRowCount() - 1);
 				}
 				else
 				{
@@ -426,7 +426,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 					model.addColumn(l.getArt().getBez());
 					model.setValueAt(l, model.getRowCount() - 1, model.getColumnCount() - 1);
 					
-					model.addLeistungToVector(l, model.getRowCount() - 1);
+					model.addLeistungToSaveVector(l, model.getRowCount() - 1);
 				}				
 			}
 			
@@ -442,7 +442,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		int cols = model.getColumnCount();		
 		
 		int rowcount = 0;
-		for(Vector<Object> vec : model.getIdVector())
+		for(Vector<Object> vec : model.getSaveVector())
 		{			
 			for(int colcount = 0; colcount < cols; colcount++)
 			{
@@ -452,13 +452,14 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 				}
 				catch(Exception e)
 				{
-					model.addLeistungAtCoordinates(new Leistung(), colcount, rowcount);
+					model.addLeistungAtCoordinatesToSaveVector(new Leistung(), colcount, rowcount);
 				}
 									
 			}
 			rowcount++;
 		}
 	}
+	
 	//Tabellen mit Noten befüllen, geteilt nach Schriftl. & Mündl., Erstes & Zweites Halbjahr
 	private void setGradesInTable()
 	{
@@ -494,23 +495,23 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			//Ersten beiden spalten anlegen und dem Idvector hinzufügen		
 			this.model_tab1_muendlich.addRow(new String[]{});
 			this.model_tab1_muendlich.setValueAt(s, this.model_tab1_muendlich.getRowCount() - 1, 0);
-			this.model_tab1_muendlich.addRowToVector();
-			this.model_tab1_muendlich.addSchuelerToVector(s, this.model_tab1_muendlich.getRowCount() - 1);
+			this.model_tab1_muendlich.addRowToSaveVector();
+			this.model_tab1_muendlich.addSchuelerToSaveVector(s, this.model_tab1_muendlich.getRowCount() - 1);
 			
 			this.model_tab1_schriftl.addRow(new String[]{});
 			this.model_tab1_schriftl.setValueAt(s, this.model_tab1_schriftl.getRowCount() - 1, 0);
-			this.model_tab1_schriftl.addRowToVector();
-			this.model_tab1_schriftl.addSchuelerToVector(s, this.model_tab1_schriftl.getRowCount() - 1);
+			this.model_tab1_schriftl.addRowToSaveVector();
+			this.model_tab1_schriftl.addSchuelerToSaveVector(s, this.model_tab1_schriftl.getRowCount() - 1);
 			
 			this.model_tab2_muendlich.addRow(new String[]{});
 			this.model_tab2_muendlich.setValueAt(s, this.model_tab2_muendlich.getRowCount() - 1, 0);
-			this.model_tab2_muendlich.addRowToVector();
-			this.model_tab2_muendlich.addSchuelerToVector(s, this.model_tab2_muendlich.getRowCount() - 1);
+			this.model_tab2_muendlich.addRowToSaveVector();
+			this.model_tab2_muendlich.addSchuelerToSaveVector(s, this.model_tab2_muendlich.getRowCount() - 1);
 			
 			this.model_tab2_schriftl.addRow(new String[]{});
 			this.model_tab2_schriftl.setValueAt(s, this.model_tab2_schriftl.getRowCount() - 1, 0);
-			this.model_tab2_schriftl.addRowToVector();
-			this.model_tab2_schriftl.addSchuelerToVector(s, this.model_tab2_schriftl.getRowCount() - 1);			
+			this.model_tab2_schriftl.addRowToSaveVector();
+			this.model_tab2_schriftl.addSchuelerToSaveVector(s, this.model_tab2_schriftl.getRowCount() - 1);			
 			
 			//Jede Tabelle mit Noten füllen
 			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));					
@@ -532,6 +533,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl.addPropertyChangeListener(new NotenPropertyChangeListener(this.table_tab2_schriftl));
 	}
 	
+	//Daten aus der DB holen und in Maske verfrachten
 	public void setDatenInMaske()
 	{		
 		this.textField_Fach.setText(this.fach.getBez());
@@ -541,7 +543,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setGradesInTable();
 	}
 	
-	//Entfernt TableModels und fügt neue hinzu, alten werden vom Garbagecollector erwischt
+	//Entfernt TableModels und fügt neue hinzu, alten werden vom Garbagecollector exterminiert
 	private void emptyTable()
 	{
 		this.model_tab1_muendlich = new NotenTableModel();
@@ -555,9 +557,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
 	}
 	
-	private void saveOneTable(NotenTableModel model, NotenTableHeader header)
+	//Neue Leistungen zu den jeweiligen Schülern zuzuweisen unm per Hibernate zu speichern zu ermöglichen
+	private void addNewLeistungenToSchuelerFromTable(NotenTableModel model, NotenTableHeader header)
 	{
-        for(Vector<Object> vec : model.getIdVector())
+        for(Vector<Object> vec : model.getSaveVector())
         {
         	for(Object o : vec)
         	{        		
@@ -567,6 +570,8 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
         		{
         			Leistung l = (Leistung) o;
         			
+        			//ID muss 0 sein, da Objekte mit ID 0 nicht aus db kommen können,
+        			//Notenstufe != 0, um zu gewährleisten das kein dummy objekt in die DB kommt
             		if(l.getId() == 0 && l.getNotenstufe() != 0)
             		{
             			l.setSchueler(s);
@@ -586,25 +591,80 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
         		}
         		catch(Exception e)
         		{
-        			System.out.println(e.getMessage());
-        			e.printStackTrace();
+        			
         		}
         	}
         }
 	}
 	
+	//Überprüft Tabelle auf legitime Werte
+	private boolean checkOneTableForCorrectValues(NotenTableModel model)
+	{
+		boolean ret = true;
+		int colcount = 0;
+		
+		for(Vector<Object> v : model.getSaveVector())
+		{			
+			for(Object o : v)
+			{				
+				if(colcount != 0)
+				{
+					Leistung l = (Leistung) o;
+					
+					//Notenstufe != 0 um zu verhindern das Dummy-Objekte die Prüfung beeinflussen
+					//Dummy-Objekte wurde mit addNewLeistungenToSchuelerFromTable nicht an Schueler gehängt
+					//und werden also nicht mit gespeichert, halten also nur Platz in der Tabelle um 
+					//1:1 Abbildung zu ermöglichen
+					if(l.getNotenstufe() < 1 && l.getNotenstufe() != 0 || l.getNotenstufe() > 6 && l.getNotenstufe() != 0)
+						ret = false;
+				}
+				
+				colcount++;
+			}
+			
+			colcount = 0;
+		}
+		
+		return ret;
+	}
+	
+	//Siehe Methode checkOneTableForCorrectValues
+	private boolean checkAllTablesForCorrectValues()
+	{
+		boolean ret = true;
+		
+		if(!this.checkOneTableForCorrectValues(this.model_tab1_muendlich))
+			ret = false;		
+		else if(!this.checkOneTableForCorrectValues(model_tab1_schriftl))
+			ret = false;		
+		else if(!this.checkOneTableForCorrectValues(model_tab2_muendlich))
+			ret = false;
+		else if(!this.checkOneTableForCorrectValues(model_tab2_schriftl))
+			ret = false;		
+		
+		return ret;
+	}
+	
 	//Daten auslesen und Speichern
 	private void getDatenAusMaske()
 	{	
-		this.saveOneTable(model_tab1_muendlich, (NotenTableHeader) this.table_tab1_muendl.getTableHeader());
-		this.saveOneTable(model_tab1_schriftl, (NotenTableHeader) this.table_tab1_schriftl.getTableHeader()); 
+		this.addNewLeistungenToSchuelerFromTable(model_tab1_muendlich, (NotenTableHeader) this.table_tab1_muendl.getTableHeader());
+		this.addNewLeistungenToSchuelerFromTable(model_tab1_schriftl, (NotenTableHeader) this.table_tab1_schriftl.getTableHeader()); 
 		
-		this.saveOneTable(model_tab2_muendlich, (NotenTableHeader) this.table_tab2_muendl.getTableHeader());
-		this.saveOneTable(model_tab2_schriftl, (NotenTableHeader) this.table_tab2_schriftl.getTableHeader());
+		this.addNewLeistungenToSchuelerFromTable(model_tab2_muendlich, (NotenTableHeader) this.table_tab2_muendl.getTableHeader());
+		this.addNewLeistungenToSchuelerFromTable(model_tab2_schriftl, (NotenTableHeader) this.table_tab2_schriftl.getTableHeader());
 		
-		for(Schueler s : schueler)
+		boolean b = this.checkAllTablesForCorrectValues();
+		if(b)
 		{
-			s.speichern(this.lehrer);
+			for(Schueler s : schueler)
+			{
+				s.speichern(this.lehrer);
+			}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Speichern abgebrochen! Fehlerhafte Werte in den Tabellen vorhanden.");
 		}
 	}
 	
@@ -626,7 +686,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		}
 		else if(e.getSource() == this.btn_speichern)
 		{
-			this.getDatenAusMaske();			
+			this.getDatenAusMaske();	
+			
+			if(JOptionPane.showConfirmDialog(this, "Speichern erfolgreich! Bearbeitung beenden?") == JOptionPane.YES_OPTION)
+				this.dispose();
 		}		
 	}	
 }
