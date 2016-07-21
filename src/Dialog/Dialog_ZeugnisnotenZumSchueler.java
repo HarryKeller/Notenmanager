@@ -216,15 +216,27 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 			int count = 0;
 			for(Zeugnisart zar: zartlist)
 			{
-				zarten[count] = zar.getZeugnisart();
-				count++;
+				boolean flag = false;
+				for(Zeugnis tzeug:zeugnislist)
+				{
+					if(tzeug.getZeugnisart().equals(zar))
+					{
+						flag=true;
+					}
+				}
+				if(flag==false)
+				{
+					zarten[count] = zar.getZeugnisart();
+					count++;
+				}
+				
 			}
 			Zeugnis z = new Zeugnis();
 			DatumSJ sj = new DatumSJ(LocalDate.now());
 			z.setSchuljahr(sj);
 			z.setSchueler(this.getSchueler());
 			String zart= null;
-			while((zart=(String)JOptionPane.showInputDialog(this, "Bitte eine Zeugnisart auswählen","Achtung!", JOptionPane.QUESTION_MESSAGE, null, zarten, zarten[0]))==null);
+			while((zart=(String)JOptionPane.showInputDialog(this, "Der Schüler besitzt noch kein gültiges Zeugnis für diesen Zeitraum. Bitte wählen sie eine gültige Zeugnisart aus!","Achtung!", JOptionPane.QUESTION_MESSAGE, null, zarten, zarten[0]))==null);
 			for(Zeugnisart zar: zartlist)
 			{
 				if(zar.getZeugnisart().equals(zart))
