@@ -85,31 +85,53 @@ public class Unterrichtsfach {
 	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
 	{
 
+	//Unterrichtsfächer die ein Lehrer in einer Klasse unterrichtet
 		
-		String hql =
-				"uf "
-			    +"INNER JOIN Zeugnisfach zf "
-				+"ON zf.id = uf.zfach.id "
-			    +"INNER JOIN Klasse k "
-			    +"ON k.id = zf.klasse.id "
-			    +"INNER JOIN UFachLehrer ufl "
-			    +"ON ufl.lehrer.id = "+lehrer.getId()+" "
-			    +"AND ufl.ufach.id = uf.id "
-			    +"Where k.id = "+klasse.getid()+" "
-			    +" AND ufl.austrittsdatum > "+"'"+ausgangsdatum+"'";
+		
+		//Aus stackoverflow
+//		You can fix the issue by joining the collection instead of dereferencing it:
+//
+//			SELECT count(*) 
+//			  FROM BillDetails        bd 
+//			  JOIN bd.billProductSet  bps 
+//			 WHERE bd.client.id       = 1
+//			   AND bps.product.id     = 1002
+		
+		//+"On lz.id = "+klasse.getid()+" "
+		
+		String hql = " uf "
+				+"INNER JOIN UFachLehrer ufl "
+				+"ON ufl.lehrer.id = "+lehrer.getId()+" "
+				+"AND ufl.ufach.id = uf.id "
+				+"INNER JOIN Klasse k "
+				+"ON k.id = "+klasse.getId()+" "
+							
+				+"WHERE ufl.austrittsdatum > "+"'"+ausgangsdatum+"' ";
+		
 		
 		ArrayList<Object[]> al = new ArrayList<>();
+	
 		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
 		
 		ArrayList<Unterrichtsfach>ret = new ArrayList<>();
 		
+		
 		for(Object[] o:al)
 		{
-			ret.add((Unterrichtsfach)o[0]);
-		}
-		
-		
-		
+			boolean vorhanden = false;
+			for(Unterrichtsfach uf : ret)
+			{
+				if(  ((Unterrichtsfach)o[0]).equals(uf)   )
+				{
+					vorhanden = true;
+				}
+			}
+			if(!vorhanden)
+			{
+				ret.add((Unterrichtsfach)o[0]);
+			}
+			
+		}			
 		return ret;
 	}
 	

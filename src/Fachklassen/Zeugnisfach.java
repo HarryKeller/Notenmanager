@@ -144,16 +144,27 @@ public class Zeugnisfach {
 	public static ArrayList<Zeugnisfach>alleLesen(Klasse k)
 	{
 		
-		String hql="WHERE zf.klasse.id = "+k.getid();
+		String hql="zf "
+				+ "INNER JOIN zf.lstklassen k "
+				+ "ON k.id = "+k.getid() ;
 		
-		ArrayList<Zeugnisfach>al = new ArrayList<Zeugnisfach>();
-		DBZugriff.alleLesen("Zeugnisfach zf", al, hql);
-		return al;
+		ArrayList<Zeugnisfach>ret = new ArrayList<Zeugnisfach>();
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
+		DBZugriff.alleLesen("Zeugnisfach ", al, hql);
+		
+		for(Object[]o:al)
+		{
+			ret.add((Zeugnisfach)o[0]);
+		}
+		
+		
+		
+		return ret;
 	}
 	public static ArrayList<Zeugnisfach>alleLesen()
 	{
 		ArrayList<Zeugnisfach>al = new ArrayList<Zeugnisfach>();
-		DBZugriff.alleLesen("Zeugnisfach zf", al, "");
+		DBZugriff.alleLesen("Zeugnisfach", al, "");
 		return al;
 	}
 	

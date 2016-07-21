@@ -54,6 +54,77 @@ public class Klasse
 	
 	
 	
+	public int getId()
+	{
+		return id;
+	}
+
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+
+	public Schule getSchule()
+	{
+		return schule;
+	}
+
+
+	public void setSchule(Schule schule)
+	{
+		this.schule = schule;
+	}
+
+
+	public Lehrer getKlassenleiter()
+	{
+		return klassenleiter;
+	}
+
+
+	public void setKlassenleiter(Lehrer klassenleiter)
+	{
+		this.klassenleiter = klassenleiter;
+	}
+
+
+	public Lehrer getStvklassenleiter()
+	{
+		return stvklassenleiter;
+	}
+
+
+	public void setStvklassenleiter(Lehrer stvklassenleiter)
+	{
+		this.stvklassenleiter = stvklassenleiter;
+	}
+
+
+	public Set<Schueler> getSchuelerlist()
+	{
+		return schuelerlist;
+	}
+
+
+	public void setSchuelerlist(Set<Schueler> schuelerlist)
+	{
+		this.schuelerlist = schuelerlist;
+	}
+
+
+	public List<Zeugnisfach> getLstzeugnisfach()
+	{
+		return lstzeugnisfach;
+	}
+
+
+	public void setLstzeugnisfach(List<Zeugnisfach> lstzeugnisfach)
+	{
+		this.lstzeugnisfach = lstzeugnisfach;
+	}
+
 	//Liste aller Schüler der Klasse
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="klasse_id")
