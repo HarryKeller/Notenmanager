@@ -1,6 +1,7 @@
 package Fachklassen;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 
 
 
@@ -45,12 +47,12 @@ public class Klasse
 	private Ausbildungszweig ausbildungszweig;
 	
 	//Liste aller Zeugnisfächer
-	@ManyToMany(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.DETACH,fetch = FetchType.EAGER)
 	@JoinTable(name="zeugnisfach_klasse",
 				joinColumns = @JoinColumn(name="klasse_id"),
 				inverseJoinColumns=@JoinColumn(name="zeugnisfach_id")	
 			)
-	private List<Zeugnisfach> lstzeugnisfach = new ArrayList<Zeugnisfach>();
+	private Set<Zeugnisfach> lstzeugnisfach = new HashSet<Zeugnisfach>();
 	
 	
 	
@@ -114,13 +116,13 @@ public class Klasse
 	}
 
 
-	public List<Zeugnisfach> getLstzeugnisfach()
+	public Set<Zeugnisfach> getLstzeugnisfach()
 	{
 		return lstzeugnisfach;
 	}
 
 
-	public void setLstzeugnisfach(List<Zeugnisfach> lstzeugnisfach)
+	public void setLstzeugnisfach(Set<Zeugnisfach> lstzeugnisfach)
 	{
 		this.lstzeugnisfach = lstzeugnisfach;
 	}
@@ -285,7 +287,7 @@ public class Klasse
 	{
 		return this.schuelerlist;
 	}
-	public List<Zeugnisfach> getlstzeugnisfach()
+	public Set<Zeugnisfach> getlstzeugnisfach()
 	{
 		return this.lstzeugnisfach;
 	}
