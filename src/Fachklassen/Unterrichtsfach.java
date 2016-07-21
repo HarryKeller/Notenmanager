@@ -82,7 +82,7 @@ public class Unterrichtsfach {
 		this.gewichtungSchriftlich = uf.getGewichtungSchriftlich();	//int
 	}
 	
-	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
+	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
 	{
 
 	//Unterrichtsfächer die ein Lehrer in einer Klasse unterrichtet
@@ -135,7 +135,55 @@ public class Unterrichtsfach {
 		return ret;
 	}
 	
-	public static ArrayList<Unterrichtsfach>AlleLesen(Zeugnisfach zf)
+	public static ArrayList<Unterrichtsfach>alleLesen(Schueler s)
+	{
+		
+		
+		//SQL:
+//		SELECT DISTINCT (Unterrichtsfach.bez)
+//		FROM Unterrichtsfach
+//		INNER JOIN Schueler
+//		ON Schueler.id = 4/*Parameter*/
+//		INNER JOIN Klasse
+//		ON Klasse.id = Schueler.klasse_id
+//		INNER JOIN zeugnisfach_klasse
+//		ON zeugnisfach_klasse.klasse_id = Klasse.id
+//		INNER JOIN Zeugnisfach
+//		ON zeugnisfach_klasse.zeugnisfach_id = Zeugnisfach.id
+//		WHERE Unterrichtsfach.zfach_id = Zeugnisfach.id
+		
+		
+		
+//		String hql = "uf "
+//				+"INNER JOIN Schueler s "
+//				+"ON s.id = "+s.getId()+" "
+//				+"INNER JOIN Klasse k "
+//				+"ON k.id = s.klasse.id ";	
+		
+		//Dieser hql befehl bringt mir die Klasse des Schuelers
+		String hql2 = " k "
+				+"INNER JOIN k.lstzeugnisfach lst "
+				+"INNER JOIN Zeugnisfach zf "
+				+"ON zf.id = lst.id "
+				+"INNER JOIN Unterrichtsfach uf "
+				+"ON uf.zfach.id = zf.id "
+				+"WHERE k.id = "+s.getKlasse().getId();
+				
+				
+				
+		ArrayList<Object[]>al = new ArrayList<Object[]>();		
+		DBZugriff.alleLesen("Klasse", al, hql2);
+		
+		ArrayList<Unterrichtsfach>ret = new ArrayList<Unterrichtsfach>();
+		for(Object[]o :al)
+		{
+			ret.add((Unterrichtsfach)o[3]);
+		}
+				
+		return ret;
+	}
+	
+	public static ArrayList<Unterrichtsfach>alleLesen(Zeugnisfach zf)
 	{
 		String hql = " uf WHERE uf.zfach.id = "+zf.getId();
 		ArrayList<Unterrichtsfach>al = new ArrayList<Unterrichtsfach>();
@@ -143,7 +191,7 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
-	public static ArrayList<Unterrichtsfach>AlleLesen(Lehrer lehrer,LocalDate ausgangsdatum)
+	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer,LocalDate ausgangsdatum)
 	{
 		String hql= "uf "
 				+"INNER JOIN UFachLehrer ufl "
