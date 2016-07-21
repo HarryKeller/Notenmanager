@@ -36,22 +36,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 	
 	private Zeugnisfach zeugnisfach;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Dialog_adm_Zeugnisfach_Bearbeiten dialog = new Dialog_adm_Zeugnisfach_Bearbeiten();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public Dialog_adm_Zeugnisfach_Bearbeiten() 
 	{
 		initGUI();

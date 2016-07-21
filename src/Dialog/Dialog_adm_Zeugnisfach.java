@@ -36,22 +36,7 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 	
 	private JList<Zeugnisfach> list_Zeugnisfach;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Dialog_adm_Zeugnisfach frame = new Dialog_adm_Zeugnisfach();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Dialog_adm_Zeugnisfach() 
 	{
 		setTitle("Zeugnisfach");
