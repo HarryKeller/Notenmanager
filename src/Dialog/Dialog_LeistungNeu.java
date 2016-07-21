@@ -186,7 +186,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		NotenTableModel model;
 		NotenTableHeader header;
 		
-		if(this.checkDate())
+		if(this.checkDate(i))
 		{
 			if(i == 0)
 			{
@@ -258,13 +258,17 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	}
 	
 	//Überprüft ob das Leistungserhebungsdatum der neuen Leistung nicht leer ist, richtiges Format hat usw.
-	private boolean checkDate()
+	private boolean checkDate(int selectedIndex)
 	{
+		DatumSJ sj = new DatumSJ(LocalDate.now());
+		
 		boolean ret = false;
 		CharSequence cs = new StringBuffer('-');		
 		
 		String s = this.txt_erhebungsdatum.getText();
 		String[] datumteile = s.split("-");
+		
+		LocalDate dt = LocalDate.parse(s);
 		
 		if(s.isEmpty())
 		{
@@ -282,9 +286,19 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		{
 			JOptionPane.showMessageDialog(this, "Datum muss im Format yyyy-mm-dd geschrieben sein!");
 		}
-		else if(Integer.parseInt(datumteile[2]) < 2000)
+		else if(dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getEnde()))
 		{
-			JOptionPane.showMessageDialog(this, "Datum auf ein Sinnvolles Jahr begrenzen.");
+			JOptionPane.showMessageDialog(this, "Datum muss im Schuljahr liegen.");
+		}
+		else if(selectedIndex == 0  && dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()) || selectedIndex == 1
+				&& dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()))
+		{			
+			JOptionPane.showMessageDialog(this, "Sie haben Erstes Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
+		}
+		else if(selectedIndex == 2  && dt.isBefore(sj.getHalbjahr()) || dt.isAfter(sj.getEnde()) || selectedIndex == 3
+				&& dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()))
+		{
+			JOptionPane.showMessageDialog(this, "Sie haben Zweits Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
 		}
 		else
 		{
