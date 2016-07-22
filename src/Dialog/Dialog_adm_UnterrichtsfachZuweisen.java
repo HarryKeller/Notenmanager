@@ -46,7 +46,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 	private JList<Unterrichtsfach> list_UFach;
 	private JPanel panel_buttons;
 	private JButton btnSpeichern;
-	private JButton btnVerwerfen;
+	private JButton btnZurueck;
 	private DefaultListModel<Unterrichtsfach> model = new DefaultListModel<Unterrichtsfach>();
 	private JButton btnHinzufuegen;
 	private JButton btnEntfernen;
@@ -205,14 +205,14 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		gbc_btnSpeichern.gridy = 0;
 		this.panel_buttons.add(this.btnSpeichern, gbc_btnSpeichern);
 		
-		this.btnVerwerfen = new JButton("Verwerfen");
-		this.btnVerwerfen.addActionListener(this);
-		GridBagConstraints gbc_btnVerwerfen = new GridBagConstraints();
-		gbc_btnVerwerfen.insets = new Insets(5, 5, 5, 5);
-		gbc_btnVerwerfen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnVerwerfen.gridx = 1;
-		gbc_btnVerwerfen.gridy = 0;
-		this.panel_buttons.add(this.btnVerwerfen, gbc_btnVerwerfen);
+		this.btnZurueck = new JButton("Zur\u00FCck");
+		this.btnZurueck.addActionListener(this);
+		GridBagConstraints gbc_btnZurueck = new GridBagConstraints();
+		gbc_btnZurueck.insets = new Insets(5, 5, 5, 5);
+		gbc_btnZurueck.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnZurueck.gridx = 1;
+		gbc_btnZurueck.gridy = 0;
+		this.panel_buttons.add(this.btnZurueck, gbc_btnZurueck);
 	}
 
 	public void setDatenInMaske()
@@ -231,7 +231,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 			speichern();
 			this.dispose();			
 		}
-		if(arg0.getActionCommand().equals(btnVerwerfen.getActionCommand()))
+		if(arg0.getActionCommand().equals(btnZurueck.getActionCommand()))
 		{
 			this.dispose();
 		}		

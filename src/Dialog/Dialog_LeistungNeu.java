@@ -259,7 +259,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	
 	//Überprüft ob das Leistungserhebungsdatum der neuen Leistung nicht leer ist, richtiges Format hat usw.
 	private boolean checkDate(int selectedIndex)
-	{
+	{		
 		DatumSJ sj = new DatumSJ(LocalDate.now());
 		
 		boolean ret = false;
