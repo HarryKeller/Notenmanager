@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridBagLayout;
@@ -64,6 +65,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 			{
 				try
 				{
+					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 					Dialog_Login frame = new Dialog_Login();
 					frame.setVisible(true);
 					
