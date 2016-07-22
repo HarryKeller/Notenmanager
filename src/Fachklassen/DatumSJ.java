@@ -54,6 +54,13 @@ public class DatumSJ
 	
 	}
 	
+	public static ArrayList<DatumSJ>alleLesen()
+	{
+		ArrayList<DatumSJ>al = new ArrayList<DatumSJ>();
+		DBZugriff.alleLesen("DatumSJ", al, "");
+		return al;
+	}
+	
 	public DatumSJ (int id)
 	{
 		DBZugriff.lesen(this, id);
