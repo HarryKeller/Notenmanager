@@ -240,7 +240,14 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		Lehrer l = new Lehrer(lehrer.get(0).getId());
 		login = new Login(l.getId());
 		
-		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && login.isAdmin() == true)
+		System.out.println();
+		System.out.println(l.isArbeitetAnDieserSchule());
+		
+		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && l.isArbeitetAnDieserSchule() == false)
+		{
+			JOptionPane.showMessageDialog(null, "Der Lehrer arbeitet nicht mehr an der Schule! Login verweigert!" , "Login verweigert!", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && login.isAdmin() == true)
 		{
 			Dialog_Klassenauswahl dlg_klassenauswahl = new Dialog_Klassenauswahl(l,true);
 			dlg_klassenauswahl.setVisible(true);
@@ -252,6 +259,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 			dlg_klassenauswahl.setVisible(true);
 			this.dispose();
 		}
+		
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Das eingegebene Passwort ist falsch!" , "Login fehlgeschlagen", JOptionPane.ERROR_MESSAGE);
