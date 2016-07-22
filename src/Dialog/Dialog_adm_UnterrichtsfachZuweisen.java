@@ -255,7 +255,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		comboBox_UFach.removeAllItems();
 		model.removeAllElements();
 		
-		ufach = Unterrichtsfach.AlleLesen((Lehrer) comboBox_Lehrer.getSelectedItem(), LocalDate.now());
+		ufach = Unterrichtsfach.alleLesen((Lehrer) comboBox_Lehrer.getSelectedItem(), LocalDate.now());
 		
 		for(Unterrichtsfach u : Unterrichtsfach.AlleLesen())
 		{
