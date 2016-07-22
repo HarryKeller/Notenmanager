@@ -84,54 +84,29 @@ public class Unterrichtsfach {
 	
 	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
 	{
-
-	//Unterrichtsfächer die ein Lehrer in einer Klasse unterrichtet
-		
-		
-		//Aus stackoverflow
-//		You can fix the issue by joining the collection instead of dereferencing it:
-//
-//			SELECT count(*) 
-//			  FROM BillDetails        bd 
-//			  JOIN bd.billProductSet  bps 
-//			 WHERE bd.client.id       = 1
-//			   AND bps.product.id     = 1002
-		
-		//+"On lz.id = "+klasse.getid()+" "
-		
-		String hql = " uf "
+		String hql= " uf "
 				+"INNER JOIN UFachLehrer ufl "
-				+"ON ufl.lehrer.id = "+lehrer.getId()+" "
-				+"AND ufl.ufach.id = uf.id "
-				+"INNER JOIN Klasse k "
-				+"ON k.id = "+klasse.getId()+" "
-							
-				+"WHERE ufl.austrittsdatum > "+"'"+ausgangsdatum+"' ";
+				+"ON ufl.ufach.id = uf.id "
+				+"AND ufl.lehrer.id = "+lehrer.getId()+" "
+				+"WHERE ufl.austrittsdatum > '"+ausgangsdatum+"' ";
 		
-		
-		ArrayList<Object[]> al = new ArrayList<>();
-	
+		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
+		ArrayList<Unterrichtsfach>ret = new ArrayList<Unterrichtsfach>();
 		
-		ArrayList<Unterrichtsfach>ret = new ArrayList<>();
-		
-		
-		for(Object[] o:al)
+		for(Object[]o : al)
 		{
-			boolean vorhanden = false;
-			for(Unterrichtsfach uf : ret)
+			for(Zeugnisfach zf:klasse.getlstzeugnisfach())
 			{
-				if(  ((Unterrichtsfach)o[0]).equals(uf)   )
+				//System.out.println(  zf.getId()+"           "+((Unterrichtsfach)o[0]).getZfach().getId() );
+				if(zf.equals(((Unterrichtsfach)o[0]).getZfach()))
 				{
-					vorhanden = true;
+					ret.add((Unterrichtsfach) o[0]);
 				}
 			}
-			if(!vorhanden)
-			{
-				ret.add((Unterrichtsfach)o[0]);
-			}
-			
-		}			
+		}
+		
+		
 		return ret;
 	}
 	
