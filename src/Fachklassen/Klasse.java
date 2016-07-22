@@ -234,11 +234,11 @@ public class Klasse
 		this.bez = bez;
 	}
 
-	public DatumSJ setdatumSJ() {
+	public DatumSJ getSj() {
 		return datumSJ;
 	}
 
-	public void datumSJ(DatumSJ sj) {
+	public void setSj(DatumSJ sj) {
 		this.datumSJ = sj;
 	}
 
