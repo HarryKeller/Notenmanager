@@ -74,6 +74,16 @@ public class Lehrer
 	{
 		
 	}
+	public static ArrayList<Lehrer> alleLesen(boolean gekuendigt)
+	{
+		
+		String hql = "l WHERE l.arbeitetAnDieserSchule = "+gekuendigt;	
+		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
+		DBZugriff.alleLesen("Lehrer", al, hql);
+		return al;
+		
+	}
+	
 	
 	public static  ArrayList<Lehrer> alleLesen()
 	{
