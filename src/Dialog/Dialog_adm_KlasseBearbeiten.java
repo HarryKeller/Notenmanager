@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Fachklassen.Ausbildungszweig;
+import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -47,8 +49,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	private JComboBox<Lehrer> comboBox_Klassenleiter_1;
 	private JComboBox<Lehrer> comboBox_Klassenleiter_2;
 	private JComboBox<Ausbildungszweig> comboBox_Ausbildungszweig;
+	private DefaultComboBoxModel<DatumSJ> cbmodel = new DefaultComboBoxModel<DatumSJ>();
+	private JComboBox<DatumSJ> comboBox_SJ;
 	private JTextField textField_bez;
-	private JTextField textField_Schuljahr;
 	private JList<Schueler> list;
 	private DefaultListModel<Schueler> klasse_schueler_model = new DefaultListModel<Schueler>();
 	private JList<Zeugnisfach> list_zeugnisfach;
@@ -117,13 +120,13 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		
 		comboBox_Schule = new JComboBox<Schule>();
 		comboBox_Schule.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.gridwidth = 3;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.BOTH;
-		gbc_comboBox.gridx = 2;
-		gbc_comboBox.gridy = 1;
-		getContentPane().add(comboBox_Schule, gbc_comboBox);
+		GridBagConstraints gbc_comboBox_Schuljahr = new GridBagConstraints();
+		gbc_comboBox_Schuljahr.gridwidth = 3;
+		gbc_comboBox_Schuljahr.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox_Schuljahr.fill = GridBagConstraints.BOTH;
+		gbc_comboBox_Schuljahr.gridx = 2;
+		gbc_comboBox_Schuljahr.gridy = 1;
+		getContentPane().add(comboBox_Schule, gbc_comboBox_Schuljahr);
 		
 		JLabel lblKlasenleiter = new JLabel("1. Klassenleiter:");
 		lblKlasenleiter.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -213,19 +216,15 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_lblSchuljahr1.gridy = 6;
 		contentPane.add(lblSchuljahr, gbc_lblSchuljahr1);
 		
-		textField_Schuljahr = new JTextField();
-		textField_Schuljahr.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_textField1 = new GridBagConstraints();
-		gbc_textField1.gridwidth = 3;
-		gbc_textField1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField1.fill = GridBagConstraints.BOTH;
-		gbc_textField1.gridx = 2;
-		gbc_textField1.gridy = 6;
-		contentPane.add(textField_Schuljahr, gbc_textField1);
-		textField_Schuljahr.setColumns(10);
-		
-		JButton btnZurck = new JButton("Zur\u00FCck");
-		btnZurck.addActionListener(this);
+		JComboBox<DatumSJ> comboBox_SJ = new JComboBox<DatumSJ>(cbmodel);
+		GridBagConstraints gbc_comboBox_SJ;
+		gbc_comboBox_SJ = new GridBagConstraints();
+		gbc_comboBox_SJ.gridwidth = 3;
+		gbc_comboBox_SJ.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox_SJ.fill = GridBagConstraints.BOTH;
+		gbc_comboBox_SJ.gridx = 2;
+		gbc_comboBox_SJ.gridy = 6;
+		this.contentPane.add(comboBox_SJ, gbc_comboBox_SJ);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Schüler der Klasse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -282,13 +281,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		
 		list_zeugnisfach = new JList<Zeugnisfach>();
 		scrollPane_1.setViewportView(list_zeugnisfach);
-		btnZurck.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_btnZurck = new GridBagConstraints();
-		gbc_btnZurck.fill = GridBagConstraints.BOTH;
-		gbc_btnZurck.insets = new Insets(0, 0, 5, 5);
-		gbc_btnZurck.gridx = 1;
-		gbc_btnZurck.gridy = 9;
-		getContentPane().add(btnZurck, gbc_btnZurck);
 		
 		JButton btnVerwerfen = new JButton("Verwerfen");
 		btnVerwerfen.addActionListener(this);
@@ -296,6 +288,16 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		JButton btnZeugnisfcherBearbeiten = new JButton("Zeugnisf\u00E4cher bearbeiten");
 		btnZeugnisfcherBearbeiten.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnZeugnisfcherBearbeiten.addActionListener(this);
+		
+		JButton btnSpeichern = new JButton("Speichern");
+		btnSpeichern.addActionListener(this);
+		btnSpeichern.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
+		gbc_btnSpeichern.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSpeichern.fill = GridBagConstraints.BOTH;
+		gbc_btnSpeichern.gridx = 1;
+		gbc_btnSpeichern.gridy = 9;
+		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
 		GridBagConstraints gbc_btnZeugnisfcherBearbeiten = new GridBagConstraints();
 		gbc_btnZeugnisfcherBearbeiten.fill = GridBagConstraints.BOTH;
 		gbc_btnZeugnisfcherBearbeiten.insets = new Insets(0, 0, 5, 5);
@@ -310,15 +312,15 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_btnVerwerfen.gridy = 9;
 		getContentPane().add(btnVerwerfen, gbc_btnVerwerfen);
 		
-		JButton btnSpeichern = new JButton("Speichern");
-		btnSpeichern.addActionListener(this);
-		btnSpeichern.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
-		gbc_btnSpeichern.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSpeichern.fill = GridBagConstraints.BOTH;
-		gbc_btnSpeichern.gridx = 4;
-		gbc_btnSpeichern.gridy = 9;
-		getContentPane().add(btnSpeichern, gbc_btnSpeichern);
+		JButton btnZurck = new JButton("Zur\u00FCck");
+		btnZurck.addActionListener(this);
+		btnZurck.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GridBagConstraints gbc_btnZurck = new GridBagConstraints();
+		gbc_btnZurck.fill = GridBagConstraints.BOTH;
+		gbc_btnZurck.insets = new Insets(0, 0, 5, 5);
+		gbc_btnZurck.gridx = 4;
+		gbc_btnZurck.gridy = 9;
+		getContentPane().add(btnZurck, gbc_btnZurck);
 		
 		setDatenToMaske();
 	}
@@ -330,7 +332,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		klasse.setIdStvKlassenleiter((Lehrer)comboBox_Klassenleiter_2.getSelectedItem());
 		klasse.setAusbildungszweig((Ausbildungszweig)comboBox_Ausbildungszweig.getSelectedItem());
 		klasse.setBez(textField_bez.getText());
-		klasse.setSj(Integer.parseInt(textField_Schuljahr.getText()));
+		klasse.setSj((DatumSJ)cbmodel.getSelectedItem());
 	}
 	
 	
@@ -397,7 +399,17 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			}
 			
 			textField_bez.setText(klasse.getBez());
-			textField_Schuljahr.setText(Integer.toString(klasse.getSj()));
+			
+			cbmodel.addElement(klasse.getSj());
+			for(DatumSJ dsj : DatumSJ.alleLesen())
+			{
+				if(!((DatumSJ)cbmodel.getElementAt(0)).getsj().equals(dsj.getsj()))
+				{
+					cbmodel.addElement(dsj);
+				}
+				
+			}
+			
 			klasse_schueler_model.clear();
 			for(Schueler s:klasse.getSchueler())
 			{
@@ -464,7 +476,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			}
 			else
 			{
-				if(klasse.getBez()!=""&&klasse.getIdKlassenleiter()!=null&&klasse.getIdStvKlassenleiter()!=null&&klasse.getSj()!=0)
+				if(klasse.getBez()!=""&&klasse.getIdKlassenleiter()!=null&&klasse.getIdStvKlassenleiter()!=null&&klasse.getSj()!= null)
 				{
 					klasse.speichern();
 					this.dispose();
@@ -499,15 +511,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	public void setKlasse(Klasse klasse) {
 		this.klasse = klasse;
 	}
-
-	public JTextField getTextField_Schuljahr() {
-		return textField_Schuljahr;
-	}
-
-	public void setTextField_Schuljahr(JTextField textField_Schuljahr) {
-		this.textField_Schuljahr = textField_Schuljahr;
-	}
-
 
 	public DefaultListModel<Schueler> getKlasse_schueler_model() {
 		return klasse_schueler_model;
