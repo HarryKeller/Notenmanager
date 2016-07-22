@@ -455,7 +455,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		comboBox_Klassen.setEnabled(true);
 		btnFachuebersicht.setEnabled(false);
 		
-		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
+		for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
 			this.comboBox_Klassen.addItem(k);		
 		}				
