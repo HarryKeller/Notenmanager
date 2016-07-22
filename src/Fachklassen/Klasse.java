@@ -32,7 +32,8 @@ public class Klasse
 	private int id;
 	
 	private String bez;
-	private DatumSJ sj;
+	@ManyToOne
+	private DatumSJ datumSJ;
 	
 	@ManyToOne
 	private Schule schule;			//FS
@@ -233,12 +234,12 @@ public class Klasse
 		this.bez = bez;
 	}
 
-	public DatumSJ getSj() {
-		return sj;
+	public DatumSJ setdatumSJ() {
+		return datumSJ;
 	}
 
-	public void setSj(DatumSJ sj) {
-		this.sj = sj;
+	public void datumSJ(DatumSJ sj) {
+		this.datumSJ = sj;
 	}
 
 	public Schule getIdSchule() {
@@ -267,7 +268,7 @@ public class Klasse
 	
 	public String toString()
 	{
-		return this.bez + " " + this.sj;
+		return this.bez + " " + this.datumSJ;
 	}
 	public boolean equals(Klasse k)
 	{
