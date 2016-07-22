@@ -463,7 +463,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		if(comboBox_Klassen.getSelectedItem() != null)
 		{
 			comboBox_Faecher.setEnabled(true);
-			for(Unterrichtsfach f : Unterrichtsfach.AlleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
+			for(Unterrichtsfach f : Unterrichtsfach.alleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
 			{
 				this.comboBox_Faecher.addItem(f);
 			}			
