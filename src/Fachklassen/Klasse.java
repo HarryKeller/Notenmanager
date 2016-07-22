@@ -30,7 +30,7 @@ public class Klasse
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	 
 	private String bez;
 	@ManyToOne
 	private DatumSJ datumSJ;
@@ -147,7 +147,7 @@ public class Klasse
 		DBZugriff.lesen(this, sid);
 	}
 	
-	public static ArrayList<Klasse> AlleLesen(Lehrer lehrer, Schule schule)
+	public static ArrayList<Klasse> alleLesen(Lehrer lehrer, Schule schule)
 	{
 		Integer schuleid = schule.getID();
 		Integer lehrerid = lehrer.getId();
