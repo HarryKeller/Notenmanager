@@ -19,6 +19,7 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import java.awt.Font;
 
@@ -64,6 +65,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 			{
 				try
 				{
+					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 					Dialog_Login frame = new Dialog_Login();
 					frame.setVisible(true);
 					
