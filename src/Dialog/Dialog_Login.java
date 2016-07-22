@@ -63,7 +63,7 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		{
 			public void run()
 			{
-				try
+				try // Thanks to JTattoo @ http://www.jtattoo.net/
 				{
 					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 					Dialog_Login frame = new Dialog_Login();
