@@ -33,9 +33,10 @@ public class Login
 	}
 	public Login(Lehrer l)
 	{
-		String hql = " l WHERE l.lehrer.id ="+lehrer.getId();
+		String hql = " l WHERE l.lehrer.id ="+l.getId();
 		ArrayList<Login>al = new ArrayList<Login>();
 		DBZugriff.alleLesen("Login", al, hql);
+		
 		if(al.size() == 0) return;
 		this.id = (al.get(0).getId());
 		this.kuerzel = (al.get(0).getKuerzel());
