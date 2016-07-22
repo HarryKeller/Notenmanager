@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Schueler;
-import Persistenz.DBZugriff;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -40,21 +39,26 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	private JPanel panel;
 	private JLabel lblList1;
 	private JLabel lblList2;
-	private DefaultListModel<Schueler> model = new DefaultListModel<Schueler>();
+	
 	private JList<Schueler> list_schueler;
-	private JComboBox<Klasse> comboBox_Klassen;
+	private JList<Schueler> list_neueSchueler;
+	
+	private DefaultListModel<Schueler> schuelermodel = new DefaultListModel<Schueler>();
+	private DefaultListModel<Schueler> neuschuelermodel = new DefaultListModel<Schueler>();
+	
+	private JComboBox<Klasse> comboBox_rechts = new JComboBox<Klasse>();
+	private DefaultComboBoxModel<Klasse> cmodel_rechts = new DefaultComboBoxModel<Klasse>();
+	private JComboBox<Klasse> comboBox_links = new JComboBox<Klasse>();
+	private DefaultComboBoxModel<Klasse> cmodel_links = new DefaultComboBoxModel<Klasse>();
+	
 	private JPanel panel_buttons;
 	private JButton btnSpeichern;
 	private Lehrer l;
 	private JScrollPane scrollPane;
-	private DefaultListModel<Schueler> model_neu = new DefaultListModel<Schueler>();
-	private JList<Schueler> list_neueSchueler;
 	private JScrollPane scrollPane_1;
-	private DefaultComboBoxModel<Klasse> model_cb_aklasse = new DefaultComboBoxModel<Klasse>();
-	private JComboBox<Klasse> comboBox_alteKlasse;
 	private JButton btnZurueck;
 	
-
+	private boolean schranke = false;
 	
 	public Dialog_KlassenWechseln(Lehrer l)
 	{
@@ -101,12 +105,8 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		gbc_lblList1.gridx = 0;
 		gbc_lblList1.gridy = 0;
 		this.panel.add(this.lblList1, gbc_lblList1);
-		
-		this.comboBox_Klassen = new JComboBox<Klasse>();
-		this.comboBox_Klassen.addItemListener(this);
-		
-		this.comboBox_alteKlasse = new JComboBox<Klasse>(model_cb_aklasse);
-		this.comboBox_alteKlasse.addItemListener(this);
+		this.comboBox_rechts.addItemListener(this);
+		this.comboBox_links.addItemListener(this);
 		
 		this.lblList2 = new JLabel("Sch\u00FCler der neuen Klasse :");
 		GridBagConstraints gbc_lblList2 = new GridBagConstraints();
@@ -115,18 +115,18 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		gbc_lblList2.gridx = 1;
 		gbc_lblList2.gridy = 0;
 		this.panel.add(this.lblList2, gbc_lblList2);
-		GridBagConstraints gbc_comboBox_alteKlasse = new GridBagConstraints();
-		gbc_comboBox_alteKlasse.insets = new Insets(5, 5, 5, 5);
-		gbc_comboBox_alteKlasse.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_alteKlasse.gridx = 0;
-		gbc_comboBox_alteKlasse.gridy = 1;
-		this.panel.add(this.comboBox_alteKlasse, gbc_comboBox_alteKlasse);
-		GridBagConstraints gbc_comboBox_Klassen = new GridBagConstraints();
-		gbc_comboBox_Klassen.insets = new Insets(5, 5, 5, 0);
-		gbc_comboBox_Klassen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_Klassen.gridx = 1;
-		gbc_comboBox_Klassen.gridy = 1;
-		this.panel.add(this.comboBox_Klassen, gbc_comboBox_Klassen);
+		GridBagConstraints gbc_comboBox_links = new GridBagConstraints();
+		gbc_comboBox_links.insets = new Insets(5, 5, 5, 5);
+		gbc_comboBox_links.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_links.gridx = 0;
+		gbc_comboBox_links.gridy = 1;
+		this.panel.add(this.comboBox_links, gbc_comboBox_links);
+		GridBagConstraints gbc_comboBox_rechts = new GridBagConstraints();
+		gbc_comboBox_rechts.insets = new Insets(5, 5, 5, 0);
+		gbc_comboBox_rechts.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_rechts.gridx = 1;
+		gbc_comboBox_rechts.gridy = 1;
+		this.panel.add(this.comboBox_rechts, gbc_comboBox_rechts);
 		
 		this.scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -138,7 +138,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		gbc_scrollPane.gridy = 2;
 		this.panel.add(this.scrollPane, gbc_scrollPane);
 		
-		this.list_schueler = new JList<Schueler>(model);
+		this.list_schueler = new JList<Schueler>(schuelermodel);
 		this.scrollPane.setViewportView(this.list_schueler);
 		
 		this.scrollPane_1 = new JScrollPane();
@@ -151,7 +151,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		gbc_scrollPane_1.gridy = 2;
 		this.panel.add(this.scrollPane_1, gbc_scrollPane_1);
 		
-		this.list_neueSchueler = new JList<Schueler>(model_neu);
+		this.list_neueSchueler = new JList<Schueler>(neuschuelermodel);
 		this.list_neueSchueler.setEnabled(false);
 		this.scrollPane_1.setViewportView(this.list_neueSchueler);
 		
@@ -192,84 +192,133 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 
 	private void setDatenInMaske()
 	{
-		model.removeAllElements();
-		model_neu.removeAllElements();	
+		schranke = false;
+		schuelermodel.removeAllElements();
+		neuschuelermodel.removeAllElements();
+		cmodel_links.removeAllElements();
+		cmodel_rechts.removeAllElements();
 		
 		for(Klasse ka : Klasse.alleLesen())
 		{		
-//			comboBox_alteKlasse.addItem(ka);
-			model_cb_aklasse.addElement(ka);
+			cmodel_links.addElement(ka);
 		}
-		setDatenComboBoxKlasse();			
-	}
-	
-	private void setDatenComboBoxKlasse()
-	{
-		comboBox_Klassen.removeAllItems();	
-		for(Klasse kl : Klasse.alleLesen())
-		{						
-			if(!((Klasse) comboBox_alteKlasse.getSelectedItem()).getBez().equals(kl.getBez()))
-			{
-				comboBox_Klassen.addItem(kl);
-			}			
-		}	
-					
-	}
-	
-	public void itemStateChanged(ItemEvent arg0) 
-	{																
-		if(arg0.getSource().equals(comboBox_alteKlasse))
+		int i = cmodel_links.getSize();
+		for(int count=0; count < i;count++)
 		{
-			model.removeAllElements();						
-			setDatenComboBoxKlasse();
-			if(comboBox_alteKlasse.getSelectedItem() != null)
+			if(!cmodel_links.getElementAt(count).equals(cmodel_links.getSelectedItem()))
 			{
-				for(Schueler s : ((Klasse) comboBox_alteKlasse.getSelectedItem()).getSchueler())
-				{
-					model.addElement(s);					
-				} 
-			}		
-		}
-		
-		else if(arg0.getSource().equals(comboBox_Klassen))
-		{
-			model_neu.removeAllElements();
-			
-			if(comboBox_Klassen.getSelectedItem() != null)
-			{
-				for(Schueler schueler : ((Klasse) comboBox_Klassen.getSelectedItem()).getSchueler())
-				{
-					model_neu.addElement(schueler);
-				}
+				cmodel_rechts.addElement(cmodel_links.getElementAt(count));
 			}
-		}				
+		}
+		comboBox_links.setModel(cmodel_links);
+		comboBox_rechts.setModel(cmodel_rechts);
+		setSchuelerLeftRight();
+		schranke = true;
 	}
 	
-	public void actionPerformed(ActionEvent arg0) 
+	
+
+	
+	public void itemStateChanged(ItemEvent e) 
 	{
-		if(arg0.getActionCommand().equals(btnSpeichern.getActionCommand()))
-		{			
+			if(e.getSource().equals(comboBox_links)&&e.getStateChange()== ItemEvent.SELECTED&&schranke == true)
+			{
+					if(((Klasse)comboBox_rechts.getSelectedItem()).getid()==((Klasse)comboBox_links.getSelectedItem()).getId())
+					{
+						schranke = false;
+						cmodel_rechts.removeAllElements();
+						for(Klasse k: Klasse.alleLesen())
+						{
+							if(k.getId()!=((Klasse)cmodel_links.getSelectedItem()).getId())
+							{
+								cmodel_rechts.addElement(k);
+							}
+						}
+						comboBox_rechts.setModel(cmodel_rechts);
+						schranke = true;
+						
+					}	
+					setSchuelerLeftRight();
+			}
+			else if(e.getSource().equals(comboBox_rechts)&&e.getStateChange()== ItemEvent.SELECTED&&schranke == true)
+			{
+					if(((Klasse)comboBox_rechts.getSelectedItem()).getid()==((Klasse)comboBox_links.getSelectedItem()).getId())
+					{
+						schranke = false;
+						cmodel_links.removeAllElements();
+						for(Klasse k: Klasse.alleLesen())
+						{
+							if(k.getId()!=((Klasse)cmodel_rechts.getSelectedItem()).getId())
+							{
+								cmodel_links.addElement(k);
+							}
+						}
+						comboBox_links.setModel(cmodel_links);
+						schranke = true;
+						
+					}
+					setSchuelerLeftRight();
+			}
+		
+	}
+	
+	private void setSchuelerLeftRight()
+	{
+		schranke = false;
+		schuelermodel.clear();
+		neuschuelermodel.clear();
+		for(Schueler s:((Klasse)cmodel_links.getSelectedItem()).getSchuelerlist())
+		{
+			schuelermodel.addElement(s);
+		}
+		for(Schueler s:((Klasse)cmodel_rechts.getSelectedItem()).getSchuelerlist())
+		{
+			neuschuelermodel.addElement(s);
+		}
+		list_schueler.setModel(schuelermodel);
+		list_neueSchueler.setModel(neuschuelermodel);
+		schranke = true;
+	}
+	
+	
+	
+	
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getActionCommand().equals(btnSpeichern.getActionCommand()))
+		{	
+			schranke = false;
 			List<Schueler> selectedSchueler = new ArrayList<Schueler>();
 			selectedSchueler = this.list_schueler.getSelectedValuesList();
 			for(Schueler s : selectedSchueler)
 			{
-				s.setKlasseid((Klasse)comboBox_Klassen.getSelectedItem());
+				s.setKlasseid((Klasse)comboBox_rechts.getSelectedItem());
 				s.speichern(l);	
-				model_neu.addElement(s);
-				model.removeElement(s);
-			}	
-//			setDatenInMaske();
-			
-//			for(int i = 0; i<comboBox_alteKlasse.getItemCount(); i++)
-//			{
-//				comboBox_alteKlasse.removeItem(comboBox_alteKlasse.getItemAt(i));
-//				comboBox_alteKlasse.addItem(new Klasse (i+1));
-//			}			
-//			comboBox_alteKlasse.removeItem(comboBox_alteKlasse.getSelectedItem());
+				((Klasse)comboBox_rechts.getSelectedItem()).getSchuelerlist().add(s);
+				((Klasse)comboBox_links.getSelectedItem()).getSchuelerlist().remove(s);
+			}
+			schranke = true;
+			setDatenInMaske();
 		}
 		else
 		{
 			this.dispose();
 		}
+	}
+
+	public DefaultComboBoxModel<Klasse> getCmodel_rechts() {
+		return cmodel_rechts;
+	}
+
+	public void setCmodel_rechts(DefaultComboBoxModel<Klasse> cmodel_rechts) {
+		this.cmodel_rechts = cmodel_rechts;
+	}
+
+	public DefaultComboBoxModel<Klasse> getCmodel_links() {
+		return cmodel_links;
+	}
+
+	public void setCmodel_links(DefaultComboBoxModel<Klasse> cmodel_links) {
+		this.cmodel_links = cmodel_links;
 	}
 }

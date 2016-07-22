@@ -50,7 +50,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	private JComboBox<Lehrer> comboBox_Klassenleiter_2;
 	private JComboBox<Ausbildungszweig> comboBox_Ausbildungszweig;
 	private DefaultComboBoxModel<DatumSJ> cbmodel = new DefaultComboBoxModel<DatumSJ>();
-	private JComboBox<DatumSJ> comboBox_SJ;
 	private JTextField textField_bez;
 	private JList<Schueler> list;
 	private DefaultListModel<Schueler> klasse_schueler_model = new DefaultListModel<Schueler>();

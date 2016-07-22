@@ -143,7 +143,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		{
 			try
 			{
-			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich löschen?", "Warnung!", JOptionPane.YES_NO_OPTION))
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich kündigen?", "Warnung!", JOptionPane.YES_NO_OPTION))
 			{
 				if(!UFachLehrer.unterrichtetNoch(this.list_Lehrer.getSelectedValue()))
 				{
@@ -160,7 +160,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Lehrer konnte nicht gelöscht werden, eventuell besitzt er noch Verbindungen die nicht getrennt werden können \n" + e.getMessage());
+				JOptionPane.showMessageDialog(null, "Lehrer konnte nicht gekündigt werden, eventuell besitzt er noch Verbindungen die nicht getrennt werden können \n" + e.getMessage());
 			}
 		}
 		if(arg0.getActionCommand().equals(this.button_Zurueck.getActionCommand()))
