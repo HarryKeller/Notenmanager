@@ -43,8 +43,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	private JTextField txt_erhebungsdatum;
 	private JPanel panel_buttons;
 	private JButton btn_anlegen;
-	private JButton btn_abbrechen;
-	private JButton btn_verwerfen;
+	private JButton btn_abbrechen;	
 	private Dialog_NotenausgabeKlasse notenausgabe;
 	
 	private DefaultComboBoxModel model_tables;
@@ -153,14 +152,8 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		gbc_btn_abbrechen.insets = new Insets(0, 0, 0, 5);
 		gbc_btn_abbrechen.gridx = 1;
 		gbc_btn_abbrechen.gridy = 0;
-		this.panel_buttons.add(this.btn_abbrechen, gbc_btn_abbrechen);
+		this.panel_buttons.add(this.btn_abbrechen, gbc_btn_abbrechen);		
 		
-		this.btn_verwerfen = new JButton("Verwerfen");
-		this.btn_verwerfen.addActionListener(this);
-		GridBagConstraints gbc_btn_verwerfen = new GridBagConstraints();
-		gbc_btn_verwerfen.gridx = 2;
-		gbc_btn_verwerfen.gridy = 0;
-		this.panel_buttons.add(this.btn_verwerfen, gbc_btn_verwerfen);
 	}
 	
 	private void setDateninMaske()
@@ -268,7 +261,16 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		String s = this.txt_erhebungsdatum.getText();
 		String[] datumteile = s.split("-");
 		
-		LocalDate dt = LocalDate.parse(s);
+		LocalDate dt = null;
+		
+		try
+		{
+			dt = LocalDate.parse(s);	
+		}
+		catch(Exception e)
+		{		
+				
+		}
 		
 		if(s.isEmpty())
 		{
@@ -286,7 +288,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		{
 			JOptionPane.showMessageDialog(this, "Datum muss im Format yyyy-mm-dd geschrieben sein!");
 		}
-		else if(dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getEnde()))
+		else if(dt != null && dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getEnde()))
 		{
 			JOptionPane.showMessageDialog(this, "Datum muss im Schuljahr liegen.");
 		}
