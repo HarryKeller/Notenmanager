@@ -32,7 +32,7 @@ public class Klasse
 	private int id;
 	
 	private String bez;
-	private int sj;
+	private DatumSJ sj;
 	
 	@ManyToOne
 	private Schule schule;			//FS
@@ -233,11 +233,11 @@ public class Klasse
 		this.bez = bez;
 	}
 
-	public int getSj() {
+	public DatumSJ getSj() {
 		return sj;
 	}
 
-	public void setSj(int sj) {
+	public void setSj(DatumSJ sj) {
 		this.sj = sj;
 	}
 
