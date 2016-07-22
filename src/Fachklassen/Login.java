@@ -51,6 +51,10 @@ public class Login
 		DBZugriff.alleLesen("Lehrer", al, "WHERE kuerzel = '" + kuerzel + "'") ;
 		return al;
 	}
+	public void speichern()
+	{
+		DBZugriff.speichern(this);
+	}
 	
 	public String getKuerzel()
 	{
