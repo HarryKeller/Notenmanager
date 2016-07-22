@@ -58,13 +58,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JMenuBar menuBar;
 	private JMenu menuBenutzer;
 	private JMenuItem mitemBenutzerWechseln;
-	private JPanel panel_admin;
-	private JLabel lblAdmin;
-	private JSeparator separator_3;
-	private JButton btnSchuelerBearbeiten;
-	private JButton btnLehrerBearbeiten;
-	private JButton btnKlasseBearbeiten;
-	private JButton btnFaecherAnlegen;
 	private JMenu menuStammdaten;
 	private JMenuItem mitemSchuelerBearbeiten;
 	private JMenuItem mitemLehrerBearbeiten;
@@ -84,14 +77,17 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		this.lehrer = lehrer;					
 		initGUI();
-		panel_admin.setVisible(false);
 		
 		ArrayList<Klasse> al = Klasse.alleLesen();
 		boolean found = false;
 
 		if(admin == true)
 		{
-			panel_admin.setVisible(true);
+			menuStammdaten.setVisible(true);
+		}
+		else
+		{
+			menuStammdaten.setVisible(false);
 		}
 		
 		for(Klasse k : al)
@@ -99,7 +95,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			if(k.getIdKlassenleiter().getId() == this.lehrer.getId())
 			{
 				panel_klassenleiter.setVisible(true);
-				menuStammdaten.setVisible(true);
+				
 				separator_1.setVisible(true);
 				this.btnKlassenuebersicht.setEnabled(true);
 				this.btnKlassenWechseln.setEnabled(true);
@@ -108,7 +104,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			else if (k.getIdKlassenleiter().getId() != this.lehrer.getId() && found == false)
 			{
 				panel_klassenleiter.setVisible(false);
-				menuStammdaten.setVisible(false);
 				separator_1.setVisible(false);
 				this.btnKlassenuebersicht.setEnabled(false);
 				this.pack();
@@ -261,72 +256,6 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		gbc_btnKlassenWechseln.gridy = 3;
 		this.panel_klassenleiter.add(this.btnKlassenWechseln, gbc_btnKlassenWechseln);
 		
-		this.panel_admin = new JPanel();
-		GridBagConstraints gbc_panel_admin = new GridBagConstraints();
-		gbc_panel_admin.gridheight = 2;
-		gbc_panel_admin.fill = GridBagConstraints.BOTH;
-		gbc_panel_admin.gridx = 0;
-		gbc_panel_admin.gridy = 4;
-		this.panel_klassenleiter.add(this.panel_admin, gbc_panel_admin);
-		GridBagLayout gbl_panel_admin = new GridBagLayout();
-		gbl_panel_admin.columnWidths = new int[]{0, 0};
-		gbl_panel_admin.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_admin.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_admin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		this.panel_admin.setLayout(gbl_panel_admin);
-		
-		this.lblAdmin = new JLabel("Admin Bereich");
-		this.lblAdmin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GridBagConstraints gbc_lblAdmin = new GridBagConstraints();
-		gbc_lblAdmin.insets = new Insets(10, 0, 5, 0);
-		gbc_lblAdmin.gridx = 0;
-		gbc_lblAdmin.gridy = 0;
-		this.panel_admin.add(this.lblAdmin, gbc_lblAdmin);
-		
-		this.separator_3 = new JSeparator();
-		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
-		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
-		gbc_separator_3.fill = GridBagConstraints.BOTH;
-		gbc_separator_3.gridx = 0;
-		gbc_separator_3.gridy = 1;
-		this.panel_admin.add(this.separator_3, gbc_separator_3);
-		
-		this.btnSchuelerBearbeiten = new JButton("Sch\u00FCler bearbeiten");
-		this.btnSchuelerBearbeiten.addActionListener(this);
-		GridBagConstraints gbc_btnSchuelerBearbeiten = new GridBagConstraints();
-		gbc_btnSchuelerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSchuelerBearbeiten.insets = new Insets(0, 5, 5, 5);
-		gbc_btnSchuelerBearbeiten.gridx = 0;
-		gbc_btnSchuelerBearbeiten.gridy = 2;
-		this.panel_admin.add(this.btnSchuelerBearbeiten, gbc_btnSchuelerBearbeiten);
-		
-		this.btnLehrerBearbeiten = new JButton("Lehrer bearbeiten");
-		this.btnLehrerBearbeiten.addActionListener(this);
-		GridBagConstraints gbc_btnLehrerBearbeiten = new GridBagConstraints();
-		gbc_btnLehrerBearbeiten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLehrerBearbeiten.insets = new Insets(0, 5, 5, 5);
-		gbc_btnLehrerBearbeiten.gridx = 0;
-		gbc_btnLehrerBearbeiten.gridy = 3;
-		this.panel_admin.add(this.btnLehrerBearbeiten, gbc_btnLehrerBearbeiten);
-		
-		this.btnKlasseBearbeiten = new JButton("Klassen bearbeiten");
-		this.btnKlasseBearbeiten.addActionListener(this);
-		GridBagConstraints gbc_btnKlasseBearbeiten = new GridBagConstraints();
-		gbc_btnKlasseBearbeiten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnKlasseBearbeiten.insets = new Insets(0, 5, 5, 5);
-		gbc_btnKlasseBearbeiten.gridx = 0;
-		gbc_btnKlasseBearbeiten.gridy = 4;
-		this.panel_admin.add(this.btnKlasseBearbeiten, gbc_btnKlasseBearbeiten);
-		
-		this.btnFaecherAnlegen = new JButton("F\u00E4cher anlegen");
-		this.btnFaecherAnlegen.addActionListener(this);
-		GridBagConstraints gbc_btnFaecherAnlegen = new GridBagConstraints();
-		gbc_btnFaecherAnlegen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFaecherAnlegen.insets = new Insets(0, 5, 5, 5);
-		gbc_btnFaecherAnlegen.gridx = 0;
-		gbc_btnFaecherAnlegen.gridy = 5;
-		this.panel_admin.add(this.btnFaecherAnlegen, gbc_btnFaecherAnlegen);
-		
 		this.panel_button = new JPanel();
 		GridBagConstraints gbc_panel_button = new GridBagConstraints();
 		gbc_panel_button.insets = new Insets(0, 0, 0, 5);
@@ -421,22 +350,22 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnFaecherAnlegen.getActionCommand()) || e.getActionCommand() == "Fächer anlegen")
+		if(e.getActionCommand() == "Fächer anlegen")
 		{
 			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
 			dlg_adm_fach.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnLehrerBearbeiten.getActionCommand()) || e.getActionCommand() == "Lehrer bearbeiten")
+		if(e.getActionCommand() == "Lehrer bearbeiten")
 		{
 			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
 			dlg_adm_lehrer.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnKlasseBearbeiten.getActionCommand()) || e.getActionCommand() == "Klassen bearbeiten")
+		if(e.getActionCommand() == "Klassen bearbeiten")
 		{
 			Dialog_adm_KlasseAnsicht dlg_adm_klasse = new Dialog_adm_KlasseAnsicht();
 			dlg_adm_klasse.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnSchuelerBearbeiten.getActionCommand()) || e.getActionCommand() == "Schüler bearbeiten")
+		if(e.getActionCommand() == "Schüler bearbeiten")
 		{
 			
 		}
@@ -455,7 +384,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		comboBox_Klassen.setEnabled(true);
 		btnFachuebersicht.setEnabled(false);
 		
-		for(Klasse k:Klasse.AlleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
+		for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
 		{
 			this.comboBox_Klassen.addItem(k);		
 		}				

@@ -30,9 +30,10 @@ public class Klasse
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	 
 	private String bez;
-	private int sj;
+	@ManyToOne
+	private DatumSJ datumSJ;
 	
 	@ManyToOne
 	private Schule schule;			//FS
@@ -146,7 +147,7 @@ public class Klasse
 		DBZugriff.lesen(this, sid);
 	}
 	
-	public static ArrayList<Klasse> AlleLesen(Lehrer lehrer, Schule schule)
+	public static ArrayList<Klasse> alleLesen(Lehrer lehrer, Schule schule)
 	{
 		Integer schuleid = schule.getID();
 		Integer lehrerid = lehrer.getId();
@@ -233,12 +234,12 @@ public class Klasse
 		this.bez = bez;
 	}
 
-	public int getSj() {
-		return sj;
+	public DatumSJ getSj() {
+		return datumSJ;
 	}
 
-	public void setSj(int sj) {
-		this.sj = sj;
+	public void setSj(DatumSJ sj) {
+		this.datumSJ = sj;
 	}
 
 	public Schule getIdSchule() {
@@ -267,7 +268,7 @@ public class Klasse
 	
 	public String toString()
 	{
-		return this.bez + " " + this.sj;
+		return this.bez + " " + this.datumSJ;
 	}
 	public boolean equals(Klasse k)
 	{

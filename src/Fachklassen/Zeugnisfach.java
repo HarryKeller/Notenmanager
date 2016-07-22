@@ -247,5 +247,10 @@ public class Zeugnisfach {
 	{
 		this.unterrichtsfaecher.add(uf);
 	}
+	public boolean equals(Zeugnisfach zf)
+	{
+		if(zf.getId() == this.getId()) return true;
+		else return false;
+	}
 	
 }
