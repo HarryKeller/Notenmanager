@@ -43,10 +43,11 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private JButton btnZurck;
 	private JLabel lbl_lehrer;
 	private JLabel lbl_klasse;
-	public ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
+	public ArrayList<Unterrichtsfach> fach = new ArrayList<Unterrichtsfach>();
 
 	public Dialog_Notenblatt(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl) 
 	{
+		fach = Unterrichtsfach.alleLesen(schueler);
 		this.schueler = schueler;
 		this.schuelerwahl = Schuelerwahl;
 		initGUI();
@@ -144,6 +145,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	}
 	private void setDatenInMaske()
 	{
+		
 		this.lblSchler.setText(this.schueler.getNachname() + " " + this.schueler.getVorname());
 		this.lbl_lehrer.setText("Lehrer: " + this.schuelerwahl.lehrer.getNachname() + " " + this.schuelerwahl.lehrer.getVorname());
 		this.lbl_klasse.setText("Klasse: " + this.schueler.getKlasseid().getBez());
