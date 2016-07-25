@@ -367,7 +367,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand() == "Schüler bearbeiten")
 		{
-			
+
 		}
 		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
 		{

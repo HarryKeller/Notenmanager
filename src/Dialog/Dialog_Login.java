@@ -241,9 +241,6 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		Lehrer l = new Lehrer(lehrer.get(0).getId());
 		login = new Login(l.getId());
 		
-		System.out.println();
-		System.out.println(l.isArbeitetAnDieserSchule());
-		
 		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && l.isArbeitetAnDieserSchule() == false)
 		{
 			JOptionPane.showMessageDialog(null, "Der Lehrer arbeitet nicht mehr an der Schule! Login verweigert!" , "Login verweigert!", JOptionPane.ERROR_MESSAGE);

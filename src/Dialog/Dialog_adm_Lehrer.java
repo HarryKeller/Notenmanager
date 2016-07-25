@@ -37,26 +37,6 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 	private final JButton btnLehrerKndigen = new JButton("Lehrer k\u00FCndigen");
 	private final JButton button_Zurueck = new JButton("Zur\u00FCck");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		try
-		{
-			Dialog_adm_Lehrer dialog = new Dialog_adm_Lehrer();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public Dialog_adm_Lehrer()
 	{
 		setTitle("Lehrer - Auswahl");
@@ -123,7 +103,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		
 		
 		DBZugriff.initDB();
-		this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen()));
+		this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
 	}
 
 	
@@ -143,15 +123,11 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		{
 			try
 			{
-			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich kündigen?", "Warnung!", JOptionPane.YES_NO_OPTION))
-			{
-				if(!UFachLehrer.unterrichtetNoch(this.list_Lehrer.getSelectedValue()))
+				if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich kündigen?", "Warnung!", JOptionPane.YES_NO_OPTION))
 				{
 					this.list_Lehrer.getSelectedValue().setArbeitetAnDieserSchule(false);
 					this.list_Lehrer.getSelectedValue().speichern();
-					this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen()));
-				}
-				
+					this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));			
 				}
 				else
 				{
