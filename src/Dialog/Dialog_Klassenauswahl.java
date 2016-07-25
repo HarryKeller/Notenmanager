@@ -334,56 +334,56 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());
 			dlg_notenausgabeKlasse.setVisible(true);
 		}		
-		if(e.getActionCommand().equals(btnSchließen.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
-		{
-			this.dispose();
-			DBZugriff.closeDB();			
-		}
-		if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Button Klassenuebersicht gedrückt wurde
+		else if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Button Klassenuebersicht gedrückt wurde
 		{
 			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
 			dlg_schueler.setVisible(true);
 		}
-		if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
+		else if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
 		{
 			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln(lehrer);
 			dlg_klassenw.setVisible(true);
 		}				
-		if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
+		else if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
 		{
 			this.dispose();
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		if(e.getActionCommand() == "Fächer anlegen")
+		else if(e.getActionCommand() == "Fächer anlegen")
 		{
 			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
 			dlg_adm_fach.setVisible(true);
 		}
-		if(e.getActionCommand() == "Lehrer bearbeiten")
+		else if(e.getActionCommand() == "Lehrer bearbeiten")
 		{
 			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
 			dlg_adm_lehrer.setVisible(true);
 		}
-		if(e.getActionCommand() == "Klassen bearbeiten")
+		else if(e.getActionCommand() == "Klassen bearbeiten")
 		{
 			Dialog_adm_KlasseAnsicht dlg_adm_klasse = new Dialog_adm_KlasseAnsicht();
 			dlg_adm_klasse.setVisible(true);
 		}
-		if(e.getActionCommand() == "Schüler bearbeiten")
+		else if(e.getActionCommand() == "Schüler bearbeiten")
 		{
 			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
 			dlg_schueler.setVisible(true);
 		}
-		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
+		else if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
 		{
 			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
 			dlg_adm_fachz.setVisible(true);
 		}
-		if(e.getActionCommand() == "Zeugnisnote bearbeiten")
+		else if(e.getActionCommand() == "Zeugnisnote bearbeiten")
 		{
 			Dialog_adm_Zeugnisfach dlg_zeug = new Dialog_adm_Zeugnisfach();
 			dlg_zeug.setVisible(true);
+		}
+		else
+		{
+			this.dispose();
+			DBZugriff.closeDB();
 		}
 		
 		
