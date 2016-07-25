@@ -44,12 +44,25 @@ public class Login
 		this.lehrer = (al.get(0).getLehrer());
 		this.admin = (al.get(0).isAdmin());	
 	}
-
+	
 	public ArrayList<Lehrer> alleLesen(String kuerzel)
 	{	
 		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
 		DBZugriff.alleLesen("Lehrer", al, "WHERE kuerzel = '" + kuerzel + "'") ;
 		return al;
+	}
+	public static boolean mehrAlsEinLehrerAdmin()
+	{
+		ArrayList<Login> al = new ArrayList<Login>();
+		DBZugriff.alleLesen("Login", al, "");
+		int anz = 0;
+		for(Login l: al)
+		{
+			if(l.isAdmin()) anz++;
+		}
+		if(anz > 1) return true;	//Wenn mehr als ein Lehrer vorhanden ist
+		
+		else return false;
 	}
 	public void speichern()
 	{
