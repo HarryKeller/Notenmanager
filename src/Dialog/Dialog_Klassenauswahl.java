@@ -323,6 +323,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.menuStammdaten.add(this.mitemUnterrichtsfaecherZuweisen);
 		
 		this.mntmZeugnisnoteBearbeiten = new JMenuItem("Zeugnisnote bearbeiten");
+		this.mntmZeugnisnoteBearbeiten.addActionListener(this);
 		this.menuStammdaten.add(this.mntmZeugnisnoteBearbeiten);
 	}
 	
@@ -379,7 +380,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
 			dlg_adm_fachz.setVisible(true);
 		}
-		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
+		if(e.getActionCommand() == "Zeugnisnote bearbeiten")
 		{
 			Dialog_adm_ZeugnisfachZurKlasseUebersicht dlg_zeug = new Dialog_adm_ZeugnisfachZurKlasseUebersicht(klasse);
 			dlg_zeug.setVisible(true);

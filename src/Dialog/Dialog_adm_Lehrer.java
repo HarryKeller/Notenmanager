@@ -23,6 +23,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class Dialog_adm_Lehrer extends JFrame implements ActionListener
@@ -58,6 +59,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		gbc_scrollPane.gridy = 1;
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		contentPanel.add(scrollPane, gbc_scrollPane);
+		list_Lehrer.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list_Lehrer);
 		
 		GridBagConstraints gbc_panel = new GridBagConstraints();
