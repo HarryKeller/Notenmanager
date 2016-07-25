@@ -44,7 +44,7 @@ public class Zeugnisnote
 	{
 		this.schueler = schueler;
 	}
-	
+	//TÖTET ES BEVOR ES EIER LEGT!!!!!!!!!!!!!
 	public Zeugnisnote(int id,Schueler schueler)
 	{
 		this.schueler = schueler;
