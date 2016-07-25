@@ -32,9 +32,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 {
 	private static final long serialVersionUID = 1L;
 	private JTable table = new JTable();
-	private DefaultTableModel model = new DefaultTableModel(){/**
-		 * 
-		 */
+	private DefaultTableModel model = new DefaultTableModel(){
 		private static final long serialVersionUID = 1L;
 
 	@Override
@@ -49,6 +47,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	       }
 	       
 	    }};
+	    
 	private List<Zeugnisnote> spnoten = new ArrayList<Zeugnisnote>();
 	private JButton btnSpeichern = new JButton("Speichern");
 	private List<Zeugnisnote> zfachnoten;
@@ -340,7 +339,9 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		this.schueler = schueler;
 	}
 
-	//Überschriebene Methode des ActionListener
+	/**
+	 * Überschriebene Methode des ActionListener
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand()=="Zur\u00FCck")

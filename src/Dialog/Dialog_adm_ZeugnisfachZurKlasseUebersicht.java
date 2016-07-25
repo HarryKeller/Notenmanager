@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -40,9 +41,13 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 	private JComboBox<Zeugnisfach> comboBox_neuzfaecher;
 	private Klasse klasse;
 
+	/**
+	 * Konstruktor mit zu übergebendem Klassen-Objekt, damit die GUI mit den Zeugnisfächern der Klasse gefüllt wird.
+	 * @param k
+	 * Klasse-Objekt
+	 */
 	public Dialog_adm_ZeugnisfachZurKlasseUebersicht(Klasse k)
 	{
-		setTitle("Dialog - Zeugnisf\u00E4cher der Klasse bearbeiten");
 		setKlasse(k);
 		initGUI();
 	}
@@ -57,6 +62,7 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 	{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setTitle("Dialog - Zeugnisf\u00E4cher der Klasse bearbeiten");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -158,6 +164,9 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 		setDatenInMaske();
 	}
 	
+	/**
+	 * Füllt die GUI mit den Daten aus der Klasse, die dem Konstruktor übergeben wurde.
+	 */
 	public void setDatenInMaske()
 	{
 		listmodel_zfaecher.clear();
@@ -188,8 +197,9 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 
 
 
-
-	@Override
+	/**
+	 * Überschriebene Methode des ActionListeners, um auf Buttons zu reagieren.
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand()=="Zur\u00FCck")
@@ -206,14 +216,30 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 		}
 		else if(e.getActionCommand()=="L\u00F6schen")
 		{
-			listmodel_zfaecher.remove(list_zfaecher.getSelectedIndex());
+			try
+			{
+				listmodel_zfaecher.remove(list_zfaecher.getSelectedIndex());
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, "Bitte ein Fach auswählen!","Achtung!", JOptionPane.OK_OPTION);
+			}
+			
 		}
 		else if(e.getActionCommand()=="Hinzuf\u00FCgen")
 		{
-			tmp_zfaecher.add((Zeugnisfach)comboBox_neuzfaecher.getSelectedItem());
-			listmodel_zfaecher.addElement((Zeugnisfach)comboBox_neuzfaecher.getSelectedItem());
-			comboBox_neuzfaecher.removeItemAt(comboBox_neuzfaecher.getSelectedIndex());
-			list_zfaecher.setModel(listmodel_zfaecher);
+			try
+			{
+				tmp_zfaecher.add((Zeugnisfach)comboBox_neuzfaecher.getSelectedItem());
+				listmodel_zfaecher.addElement((Zeugnisfach)comboBox_neuzfaecher.getSelectedItem());
+				comboBox_neuzfaecher.removeItemAt(comboBox_neuzfaecher.getSelectedIndex());
+				list_zfaecher.setModel(listmodel_zfaecher);
+			}
+			catch(Exception ex)
+			{
+				JOptionPane.showMessageDialog(null, "Es sind keine Fächer zum hinzufügen mehr verfügbar!","Achtung!", JOptionPane.OK_OPTION);
+			}
+			
 		}
 		else if(e.getActionCommand()=="Speichern")
 		{

@@ -28,11 +28,15 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	private JPanel contentPane;
 	private JList<Klasse> list = new JList<Klasse>();
 	private DefaultListModel<Klasse> klistmodel = new DefaultListModel<Klasse>();
+	
 	public Dialog_adm_KlasseAnsicht()
 	{
 		initFrame();
 	}
 
+	/**
+	 * Zeig die GUI an.
+	 */
 	public  void initFrame()
 	{
 		setTitle("Admin - Klassenverwaltung");
@@ -101,6 +105,9 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		setDatenToMaske();
 	}
 	
+	/**
+	 * Füllt die Maske mit allen Klassen aus der Datenbank.
+	 */
 	public void setDatenToMaske()
 	{
 		klistmodel.clear();
@@ -111,7 +118,9 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		list.setModel(klistmodel);
 	}
 
-	@Override
+	/**
+	 * Überschriebene Methode des ActionListeners, um auf Buttons zu reagieren.
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand()=="Klasse bearbeiten")

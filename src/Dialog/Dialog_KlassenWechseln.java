@@ -58,6 +58,10 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	private JScrollPane scrollPane_1;
 	private JButton btnZurueck;
 	
+	/**
+	 * Boolean-Flag, damit ItemListener in der überschriebenen Methode
+	 * nicht durchkommt, bevor es wieder true gesetzt wurde.
+	 */
 	private boolean schranke = false;
 	
 	public Dialog_KlassenWechseln(Lehrer l)
@@ -67,6 +71,9 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		setDatenInMaske();
 	}
 	
+	/**
+	 * Lädt die GUI.
+	 */
 	private void initGUI() 
 	{
 		setExtendedState(MAXIMIZED_BOTH);
@@ -190,6 +197,9 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		this.panel_buttons.add(this.btnZurueck, gbc_btnZurueck);
 	}
 
+	/**
+	 * Setzt die Daten in die Maske. Diese Methode holt sich dafür die Daten frisch aus der Datenbank.
+	 */
 	private void setDatenInMaske()
 	{
 		schranke = false;
@@ -217,8 +227,12 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	}
 	
 	
-
-	
+	/**
+	 * Sobald sich etwas in der Combobox ändert, wird diese Methode aufgerufen und vergleicht, welche Combobox
+	 * das Event gefeuert hat. Es wird überprüft, ob das ausgewählte Element der Combobox dem der anderen 
+	 * entspricht. Wenn dies der Fall ist, wird die andere Combobox neu geladen und das Element, welches in der
+	 * selectierten Combobox ausgewählt ist, ausgelassen.
+	 */
 	public void itemStateChanged(ItemEvent e) 
 	{
 			if(e.getSource().equals(comboBox_links)&&e.getStateChange()== ItemEvent.SELECTED&&schranke == true)
@@ -262,6 +276,9 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		
 	}
 	
+	/**
+	 * Füllt die Listboxen unterhalb der Comboboxen mit den jeweiligen Schülern der ausgewählten Klassen.
+	 */
 	private void setSchuelerLeftRight()
 	{
 		schranke = false;
@@ -280,9 +297,9 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		schranke = true;
 	}
 	
-	
-	
-	
+	/**
+	 * Wird aufgerufen, sobald ein Button gedrückt wird.
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand().equals(btnSpeichern.getActionCommand()))

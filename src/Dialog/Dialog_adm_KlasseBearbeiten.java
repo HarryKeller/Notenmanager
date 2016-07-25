@@ -58,21 +58,28 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	
 	private Klasse klasse = null;
 	
-
 	/**
-	 * @wbp.parser.constructor
+	 * Konstruktor, wenn eine neue Klasse erstellt werden soll.
 	 */
 	public Dialog_adm_KlasseBearbeiten()
 	{
 		initFrame();
 	}
 	
+	/**
+	 * Konstruktor, wenn eine bereits vorhandene Klasse editiert werden soll.
+	 * @param k
+	 * type Klasse
+	 */
 	public Dialog_adm_KlasseBearbeiten(Klasse k)
 	{
 		this.setKlasse(k);
 		initFrame();
 	}
 	
+	/**
+	 * Zeig die GUI an.
+	 */
 	public void initFrame() 
 	{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -324,6 +331,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		setDatenToMaske();
 	}
 	
+	
+	/**
+	 * Holt sich die Daten aus der Maske und füllt die Attribute der Klasse mit den Daten.
+	 */
 	public void getDatenFromMaske()
 	{
 		klasse.setIdSchule((Schule)comboBox_Schule.getSelectedItem());
@@ -334,7 +345,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		klasse.setSj((DatumSJ)cbmodel.getSelectedItem());
 	}
 	
-	
+	/**
+	 * Wenn eine Klasse gegeben ist, werden die Werte der Klasse selectiert und die restlichen Werte mit eingefügt. 
+	 * Sollte die Klasse null sein, werden automatisch die Standartwerte selectiert.
+	 */
 	public void setDatenToMaske()
 	{
 		if(klasse!=null)
@@ -447,7 +461,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		}
 	}
 
-	@Override
+	/**
+	 * Überschriebene Methode des ActionListeners, um auf Buttons zu reagieren.
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getActionCommand()=="Zur\u00FCck")
