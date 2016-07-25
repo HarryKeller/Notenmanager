@@ -59,6 +59,12 @@ public class Schueler
 	public void setLeistung(Set<Leistung> leistung) {
 		this.leistung = leistung;
 	}
+	public static ArrayList<Schueler>alleLesen()
+	{
+		ArrayList<Schueler>al = new ArrayList<Schueler>();
+		DBZugriff.alleLesen("Schueler", al, "");
+		return al;
+	}
 	
 	@Deprecated
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach)
