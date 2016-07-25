@@ -14,6 +14,11 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import Fachklassen.DatumSJ;
 import Fachklassen.Leistung;
 import Fachklassen.Leistungsart;
@@ -26,6 +31,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
@@ -115,7 +121,25 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		gbc_label_1.gridy = 6;
 		getContentPane().add(this._label_1, gbc_label_1);
 		
-		this.txt_erhebungsdatum = new JTextField();
+		UtilDateModel model = new UtilDateModel();
+		//model.setDate(20,04,2014);
+		// Need this...
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		// Don't know about the formatter, but there it is...
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		GridBagConstraints gbc_datepicker = new GridBagConstraints();
+		gbc_datepicker.gridx = 0;
+		gbc_datepicker.gridy = 7;
+		gbc_datepicker.fill = GridBagConstraints.BOTH;
+		gbc_datepicker.anchor = GridBagConstraints.NORTH;
+		gbc_datepicker.insets = new Insets(0, 0, 5, 0);
+		this.getContentPane().add(datePicker, gbc_datepicker);
+		
+		/*this.txt_erhebungsdatum = new JTextField();
 		GridBagConstraints gbc_txt_erhebungsdatum = new GridBagConstraints();
 		gbc_txt_erhebungsdatum.insets = new Insets(0, 0, 5, 0);
 		gbc_txt_erhebungsdatum.anchor = GridBagConstraints.NORTH;
@@ -123,7 +147,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		gbc_txt_erhebungsdatum.gridx = 0;
 		gbc_txt_erhebungsdatum.gridy = 7;
 		getContentPane().add(this.txt_erhebungsdatum, gbc_txt_erhebungsdatum);
-		this.txt_erhebungsdatum.setColumns(10);
+		this.txt_erhebungsdatum.setColumns(10);*/
 		
 		this.panel_buttons = new JPanel();
 		GridBagConstraints gbc_panel_buttons = new GridBagConstraints();
@@ -168,7 +192,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			this.model_leistungsart.addElement(l.getBez());
 		}		
 		
-		this.txt_erhebungsdatum.setText(LocalDate.now().toString());
+		//this.txt_erhebungsdatum.setText(LocalDate.now().toString());
 	}
 	
 	//Legt neue Leistungen für jeweilige Tabellen an und fügt Dummy-Objekte ein für die 1:1 Abbildung der jeweiligen Tabelle
