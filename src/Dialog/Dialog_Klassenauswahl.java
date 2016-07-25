@@ -65,6 +65,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 	private JMenuItem mitemFaecherAnlegen;
 	private JMenuItem mitemUnterrichtsfaecherZuweisen;
 	private JButton btnKlassenWechseln;
+	private JMenuItem mntmZeugnisnoteBearbeiten;
 
 	/**
 	 * Create the dialog.
@@ -320,6 +321,9 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.mitemUnterrichtsfaecherZuweisen = new JMenuItem("Unterrichtsf\u00E4cher zuweisen");
 		this.mitemUnterrichtsfaecherZuweisen.addActionListener(this);
 		this.menuStammdaten.add(this.mitemUnterrichtsfaecherZuweisen);
+		
+		this.mntmZeugnisnoteBearbeiten = new JMenuItem("Zeugnisnote bearbeiten");
+		this.menuStammdaten.add(this.mntmZeugnisnoteBearbeiten);
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -367,12 +371,18 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand() == "Schüler bearbeiten")
 		{
-
+			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
+			dlg_schueler.setVisible(true);
 		}
 		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
 		{
 			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
 			dlg_adm_fachz.setVisible(true);
+		}
+		if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
+		{
+			Dialog_adm_ZeugnisfachZurKlasseUebersicht dlg_zeug = new Dialog_adm_ZeugnisfachZurKlasseUebersicht(klasse);
+			dlg_zeug.setVisible(true);
 		}
 		
 		
