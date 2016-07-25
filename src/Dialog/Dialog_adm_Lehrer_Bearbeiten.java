@@ -52,8 +52,12 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	public Dialog_adm_Lehrer_Bearbeiten(Lehrer lehrer)
 	{
 		this.lehrer = lehrer;
-		login = new Login(lehrer);
+		login = new Login(lehrer);				
 		initGUI();
+		if(!Login.isMehrAlsEinLehrerAdmin())
+		{
+			chkBox_adm.setEnabled(false);
+		}
 		setDatenInMaske();
 	}
 
