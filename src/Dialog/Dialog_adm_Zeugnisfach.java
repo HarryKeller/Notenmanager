@@ -1,8 +1,5 @@
 package Dialog;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
 
-import Fachklassen.Lehrer;
 import Fachklassen.Zeugnisfach;
 import Persistenz.DBZugriff;
 
@@ -27,14 +23,15 @@ import java.util.ArrayList;
 
 public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 
-	private JPanel contentPane;
+	private static final long serialVersionUID = 1L;
 
+	private JPanel contentPane;
 	private JButton button_Zeugnisfach_anlegen;
 	private JButton button_Zeugnisfach_bearbeiten;
 	private JButton button_Zeugnisfach_loeschen;
 	private JButton button_Zurueck;
 	
-	private JList<Zeugnisfach> list_Zeugnisfach;
+	private JList<Zeugnisfach> list_Zeugnisfach = new JList<Zeugnisfach>();
 	
 
 	public Dialog_adm_Zeugnisfach() 
@@ -75,7 +72,7 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 		gbc_scrollPane.gridy = 0;
 		panel.add(scrollPane, gbc_scrollPane);
 		
-		list_Zeugnisfach = new JList<Zeugnisfach>();
+		
 		scrollPane.setViewportView(list_Zeugnisfach);
 		
 		JPanel panel_1 = new JPanel();
@@ -133,21 +130,15 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 	{
 		if(e.getActionCommand().equals(this.button_Zeugnisfach_anlegen.getActionCommand()))
 		{
-			try
-			{
-				Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten();
-				dialog_zeugnisfach.setVisible(true);
-			}
-			catch(Exception exception)
-			{
-				JOptionPane.showMessageDialog(this, "Es wurde kein Zeugnisfach ausgewählt \n oder \n Das Zeugnisfach konnte nicht gelöscht werden");
-			}
+			this.dispose();
+			Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten();
+			dialog_zeugnisfach.setVisible(true);
 		}	
 		if(e.getActionCommand().equals(this.button_Zeugnisfach_bearbeiten.getActionCommand()))
 		{
 			try
 			{
-				Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten(this.list_Zeugnisfach.getSelectedValue());
+				Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten(list_Zeugnisfach.getSelectedValue());
 				dialog_zeugnisfach.setVisible(true);
 			}
 			catch(Exception exception)

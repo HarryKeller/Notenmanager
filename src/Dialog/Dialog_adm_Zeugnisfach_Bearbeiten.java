@@ -1,7 +1,5 @@
 package Dialog;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -23,6 +21,8 @@ import java.awt.event.ActionEvent;
 
 public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements ActionListener {
 
+
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField_Bezeichnung;
 	private JTextField textField_Fachart;
@@ -39,14 +39,13 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 
 	public Dialog_adm_Zeugnisfach_Bearbeiten() 
 	{
+		setZeugnisfach(new Zeugnisfach());
 		initGUI();
-		this.zeugnisfach = new Zeugnisfach();
 	}
 	public Dialog_adm_Zeugnisfach_Bearbeiten(Zeugnisfach zeugnisfach) 
 	{
+		setZeugnisfach(zeugnisfach);
 		initGUI();
-		
-		this.zeugnisfach = zeugnisfach;
 		setDatenInMaske();
 	}
 
@@ -128,7 +127,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			panel_2.add(textField_Fachart, gbc_textField_1);
 			textField_Fachart.setColumns(10);
 			
-			JCheckBox checkBox_Vorrueckungsfach = new JCheckBox("Vorr\u00FCckungsfach");
+			checkBox_Vorrueckungsfach = new JCheckBox("Vorr\u00FCckungsfach");
 			GridBagConstraints gbc_checkBox_Vorrueckungsfach = new GridBagConstraints();
 			gbc_checkBox_Vorrueckungsfach.fill = GridBagConstraints.HORIZONTAL;
 			gbc_checkBox_Vorrueckungsfach.insets = new Insets(0, 0, 5, 0);
@@ -136,7 +135,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbc_checkBox_Vorrueckungsfach.gridy = 2;
 			panel_2.add(checkBox_Vorrueckungsfach, gbc_checkBox_Vorrueckungsfach);
 			
-			JCheckBox checkBox_AbschliessendesFach = new JCheckBox("Abschlie\u00DFendes Fach");
+			checkBox_AbschliessendesFach = new JCheckBox("Abschlie\u00DFendes Fach");
 			GridBagConstraints gbc_checkBox_AbschliessendesFach = new GridBagConstraints();
 			gbc_checkBox_AbschliessendesFach.fill = GridBagConstraints.HORIZONTAL;
 			gbc_checkBox_AbschliessendesFach.gridx = 1;
@@ -156,7 +155,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			panel_1.setLayout(gbl_panel_1);
 			
-			JButton button_Speichern = new JButton("Speichern");
+			button_Speichern = new JButton("Speichern");
 			button_Speichern.addActionListener(this);
 			GridBagConstraints gbc_button_Speichern = new GridBagConstraints();
 			gbc_button_Speichern.fill = GridBagConstraints.HORIZONTAL;
@@ -165,7 +164,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbc_button_Speichern.gridy = 0;
 			panel_1.add(button_Speichern, gbc_button_Speichern);
 			
-			JButton button_Verwerfen = new JButton("Verwerfen");
+			button_Verwerfen = new JButton("Verwerfen");
 			button_Verwerfen.addActionListener(this);
 			GridBagConstraints gbc_button_Verwerfen = new GridBagConstraints();
 			gbc_button_Verwerfen.fill = GridBagConstraints.HORIZONTAL;
@@ -174,7 +173,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbc_button_Verwerfen.gridy = 0;
 			panel_1.add(button_Verwerfen, gbc_button_Verwerfen);
 			
-			JButton button_Leeren = new JButton("Leeren");
+			button_Leeren = new JButton("Leeren");
 			button_Leeren.addActionListener(this);
 			GridBagConstraints gbc_button_Leeren = new GridBagConstraints();
 			gbc_button_Leeren.fill = GridBagConstraints.HORIZONTAL;
@@ -183,7 +182,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbc_button_Leeren.gridy = 0;
 			panel_1.add(button_Leeren, gbc_button_Leeren);
 			
-			JButton button_Zurueck = new JButton("Zur\u00FCck");
+			button_Zurueck = new JButton("Zur\u00FCck");
 			button_Zurueck.addActionListener(this);
 			GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
 			gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
@@ -195,45 +194,56 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 
 	private void setDatenInMaske() 
 	{
-		this.textField_Bezeichnung.setText(this.zeugnisfach.getBez());
-		this.textField_Fachart.setText(this.zeugnisfach.getFachart());
-		this.checkBox_Vorrueckungsfach.setSelected(this.zeugnisfach.isVorrueckungsfach());
-		this.checkBox_AbschliessendesFach.setSelected(this.zeugnisfach.isAbschliessendesFach());
+		this.textField_Bezeichnung.setText(this.getZeugnisfach().getBez());
+		this.textField_Fachart.setText(this.getZeugnisfach().getFachart());
+		this.checkBox_Vorrueckungsfach.setSelected(this.getZeugnisfach().isVorrueckungsfach());
+		this.checkBox_AbschliessendesFach.setSelected(this.getZeugnisfach().isAbschliessendesFach());
 	}
 	private void getDatenInMaske() 
 	{
-		this.zeugnisfach.setBez(this.textField_Bezeichnung.getText());
-		this.zeugnisfach.setFachart(this.textField_Fachart.getText());
-		this.zeugnisfach.setAbschliessendesFach(this.checkBox_AbschliessendesFach.isSelected());
-		this.zeugnisfach.setVorrueckungsfach(this.checkBox_Vorrueckungsfach.isSelected());;
+		this.getZeugnisfach().setBez(this.textField_Bezeichnung.getText());
+		this.getZeugnisfach().setFachart(this.textField_Fachart.getText());
+		this.getZeugnisfach().setAbschliessendesFach(this.checkBox_AbschliessendesFach.isSelected());
+		this.getZeugnisfach().setVorrueckungsfach(this.checkBox_Vorrueckungsfach.isSelected());;
 	}
 	
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getActionCommand().equals(this.button_Speichern.getActionCommand()))
+		if(e.getSource().equals(button_Speichern))
 		{
-			if(!this.textField_Bezeichnung.getText().equals("") || this.textField_Bezeichnung.getText() != null ||
-		       !this.textField_Fachart.getText().equals("") || this.textField_Bezeichnung.getText() != null)
+			if(!this.textField_Bezeichnung.getText().equals("") && !this.textField_Fachart.getText().equals(""))
 			{
 				getDatenInMaske();
-				this.zeugnisfach.speichern();
+				getZeugnisfach().speichern();
 				this.dispose();
+				Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
+				dia.pack();
+				dia.setVisible(true);
 			}
 		}
-		if(e.getActionCommand().equals(this.button_Verwerfen.getActionCommand()))
+		else if(e.getSource().equals(button_Verwerfen))
 		{
 			setDatenInMaske();
 		}
-		if(e.getActionCommand().equals(this.button_Leeren.getActionCommand()))
+		else if(e.getSource().equals(button_Leeren))
 		{
-			this.textField_Bezeichnung.setText("");
-			this.textField_Fachart.setText("");
-			this.checkBox_Vorrueckungsfach.setSelected(false);
-			this.checkBox_AbschliessendesFach.setSelected(false);
+			textField_Bezeichnung.setText("");
+			textField_Fachart.setText("");
+			checkBox_Vorrueckungsfach.setSelected(false);
+			checkBox_AbschliessendesFach.setSelected(false);
 		}
-		if(e.getActionCommand().equals(this.button_Zurueck.getActionCommand()))
+		else if(e.getSource()==button_Zurueck)
 		{
-			this.dispose();
+			setVisible(false);
+			Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
+			dia.pack();
+			dia.setVisible(true);
 		}
+	}
+	private Zeugnisfach getZeugnisfach() {
+		return zeugnisfach;
+	}
+	private void setZeugnisfach(Zeugnisfach zeugnisfach) {
+		this.zeugnisfach = zeugnisfach;
 	}
 }
