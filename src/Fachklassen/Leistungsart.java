@@ -17,8 +17,11 @@ public class Leistungsart
 	
 	private String bez;
 	private double gewichtung;
-	private char gruppe;
-		
+	private char gruppe;	
+	//------------------------------------------
+	
+	//Konstruktoren
+	//------------------------------------------
 	public Leistungsart()
 	{
 		
@@ -27,6 +30,10 @@ public class Leistungsart
 	{
 		DBZugriff.lesen(this,id);
 	}
+	//------------------------------------------
+	
+	//Db-Methoden
+	//------------------------------------------
 	
 	public boolean speichern()
 	{
@@ -37,13 +44,21 @@ public class Leistungsart
 		DBZugriff.loeschen(this);
 	}
 	
+	//------------------------------------------
+	
+	//Alle Lesen 
+	//------------------------------------------
+	
 	public static ArrayList<Leistungsart>AlleLesen()
 	{
 		ArrayList<Leistungsart> al = new ArrayList<Leistungsart>();
 		DBZugriff.alleLesen("Leistungsart", al, "" );
 		return al;		
 	}
+	//------------------------------------------
 	
+	//Get-Set-Add
+	//------------------------------------------
 	public String getBez()
 	{
 		return bez;

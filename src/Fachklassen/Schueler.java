@@ -52,13 +52,7 @@ public class Schueler
 	
 
 
-	public Set<Leistung> getLeistung() {
-		return leistung;
-	}
-
-	public void setLeistung(Set<Leistung> leistung) {
-		this.leistung = leistung;
-	}
+	
 	public static ArrayList<Schueler>alleLesen()
 	{
 		ArrayList<Schueler>al = new ArrayList<Schueler>();
@@ -277,8 +271,24 @@ public class Schueler
 	// --- DATABASE -------------------------------------------------------------
 	// ---------------------------------------------------------------------------
 	
+	/**
+	 * Speichert alle hinzugefügten Leistungen des Schuelers 
+	 * und alle Änderungen die sonst an der Klasse gemacht wurden
+	 * der Parameter des Lehrer wird benötigt um in der Hisotire zu loggen
+	 */
 	public void speichern(Lehrer lehrer) // Speichern des Satzes
 	{
+		/*Folgende Problemstellung:
+			-Geänderte Leistungen sollen in der DB geloggt werden
+			-Hibernate speichert jedoch ohne zwischenwege in die DB
+			(Evntl bietet Hibernate eine eigene Log Funktion diese wurde jedoch nicht benutzt
+			Lösung:
+			-Alle hibzugefügten leistungen mit denen aus der Db vergleichen
+			-Unterschiede "perHand" löschen bzw. speichern über die Historie Klasse
+			-Wenn Hybernate danach die DbDaten mit denen in der leistungliste vergleicht
+				wird es feststellen, dass alle Daten bereits vorhanden sind 
+				->Hybernate speichert nichts selbstständig
+		*/
 		ArrayList<Leistung>al = new ArrayList<>();
 		
 		DBZugriff.alleLesen("Leistung", al, "l WHERE l.schueler.id = "+this.getId());
@@ -334,18 +344,36 @@ public class Schueler
 
 			
 	}
+	
+	/**
+	 * Löscht den Schüler, sollte nicht benutzt werden!!!!
+	 * Verursacht Inkonsistenz in der DB
+	 * 
+	 */
 	@Deprecated
 	public void loeschen() 	// Löschen des Satzes
 	{
 		DBZugriff.speichern(this);
 	}
 
+	//------------------------------------------
+	
+	//get-Set-Add
+	//------------------------------------------
+	
 	public Klasse getKlasseid() {
 		return klasse;
 	}
 
 	public void setKlasseid(Klasse klasse) {
 		this.klasse = klasse;
+	}
+	public Set<Leistung> getLeistung() {
+		return leistung;
+	}
+
+	public void setLeistung(Set<Leistung> leistung) {
+		this.leistung = leistung;
 	}
 
 	

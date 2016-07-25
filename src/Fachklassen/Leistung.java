@@ -31,7 +31,10 @@ public class Leistung
 	private Schueler schueler;
 		
 	private LocalDate letzteaenderung;
+	//----------------------------------------
 	
+	//konstuktoren
+	//----------------------------------------
 	public Leistung()
 	{
 		
@@ -41,6 +44,10 @@ public class Leistung
 	{
 		DBZugriff.lesen(this,id);
 	}
+	//----------------------------------------
+	
+	//Db-Methoden der Leistung
+	//----------------------------------------
 	
 	public boolean speichern(Lehrer lehrer)
 	{
@@ -51,7 +58,10 @@ public class Leistung
 	{
 		Historie.loeschen(this, l);
 	}
+	//----------------------------------------
 	
+	//Alle Lesen Methoden
+	//----------------------------------------
 	public static ArrayList<Leistung>AlleLesen()
 	{
 		ArrayList<Leistung> al = new ArrayList<Leistung>();
@@ -83,7 +93,6 @@ public class Leistung
 		return leistungliste;
 	}
 	
-	
 	public static ArrayList<Leistung> AlleLesen(Schueler schueler,Unterrichtsfach ufach,DatumSJ sj )
 	{
 		String sql = 
@@ -110,16 +119,13 @@ public class Leistung
 		return leistungliste;
 	}
 	
+	//----------------------------------------
 	
 	
+	//----------------------------------------
 	
-	
-	
-	
-	
-	
-	
-	
+	//Override Methoden
+	//----------------------------------------
 	
 	
 	public String toString()
@@ -135,7 +141,14 @@ public class Leistung
 		
 	}
 	
-	
+	public boolean equals(Leistung l)
+	{
+		if(this.id == l.getId() && this.notenstufe == l.notenstufe && this.tendenz == l.tendenz)return true;
+		return false;
+	}
+	//----------------------------------------
+	//Get-Set-Add Methoden
+	//----------------------------------------
 	public LocalDate getErhebungsdatum()
 	{
 		return erhebungsdatum;
@@ -199,10 +212,6 @@ public class Leistung
 	public void setUfachlehrer(UFachLehrer ufachlehrer) {
 		this.ufachlehrer = ufachlehrer;
 	}	
-	public boolean equals(Leistung l)
-	{
-		if(this.id == l.getId() && this.notenstufe == l.notenstufe && this.tendenz == l.tendenz)return true;
-		return false;
-	}
+	
 	
 }

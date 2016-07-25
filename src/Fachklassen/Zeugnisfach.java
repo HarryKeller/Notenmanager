@@ -28,26 +28,12 @@ public class Zeugnisfach {
 	private int id;
 	private String bez;
 	
-	
+	private boolean abschliessendesFach;
+	private String fachart;	
+	private boolean vorrueckungsfach;
 	
 	@ManyToMany(cascade = CascadeType.ALL ,mappedBy="lstzeugnisfach", fetch=FetchType.EAGER)
 	private Set<Klasse> lstklassen = new HashSet<Klasse>();
-
-	
-	
-	public Set<Klasse> getLstklassen()
-	{
-		return lstklassen;
-	}
-
-
-
-	public void setLstklassen(Set<Klasse> lstklassen)
-	{
-		this.lstklassen = lstklassen;
-	}
-
-
 
 	@ManyToMany(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
 	@JoinTable(name="zeugnisfach_ausbildungszweig",
@@ -56,51 +42,27 @@ public class Zeugnisfach {
 			)
 	private List<Ausbildungszweig> ausbildungszweig = new ArrayList<Ausbildungszweig>();
 	
-
+	//----------------------------------------------
 	
-	public List<Ausbildungszweig> getAusbildungszweig()
+	//Konstruktoren
+	//----------------------------------------------
+	public Zeugnisfach(){}
+		
+	public Zeugnisfach(int id)
 	{
-		return ausbildungszweig;
-	}
-
-
-
-	public void addAusbildungszweig(Ausbildungszweig az)
-	{
-		ausbildungszweig.add(az);
+		DBZugriff.lesen(this, id);		
 	}
 	
 
 
-	public void setAusbildungszweig(List<Ausbildungszweig> ausbildungszweig)
-	{
-		this.ausbildungszweig = ausbildungszweig;
-	}
-
-	public List<Unterrichtsfach> getUnterrichtsfaecher()
-	{
-		return unterrichtsfaecher;
-	}
-
-	public void setUnterrichtsfaecher(List<Unterrichtsfach> unterrichtsfaecher)
-	{
-		this.unterrichtsfaecher = unterrichtsfaecher;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-
-
-
-	private boolean abschliessendesFach;
-	private String fachart;
+	
+	//----------------------------------------------
 
 	
+	//------------------------------------------------------
 	
-	private boolean vorrueckungsfach;
-	
+	//Alle Lesen Methoden
+	//------------------------------------------------------
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "zfach_id")
 	private List<Unterrichtsfach> unterrichtsfaecher = new ArrayList<Unterrichtsfach>();
@@ -167,14 +129,59 @@ public class Zeugnisfach {
 		DBZugriff.alleLesen("Zeugnisfach", al, "");
 		return al;
 	}
+	//------------------------------------------------------
 	
 	
+	//override-Methoden
+	//------------------------------------------------------
 	public String toString()
 	{
 		return this.bez;
 	}
+
 	
+	public boolean equals(Zeugnisfach zf)
+	{
+		if(zf.getId() == this.getId()) return true;
+		else return false;
+	}
+		
+	//------------------------------------------------------
 	
+	//DB-Methoden
+	//------------------------------------------------------
+	public void speichern()
+	{
+		DBZugriff.speichern(this);
+	}
+	
+	public void loeschen()
+	{
+		DBZugriff.loeschen(this);
+	}
+	//------------------------------------------------------
+	
+	//Get-Set-Add-Methoden
+	//------------------------------------------------------
+		
+	public void addUnterrichtsfach(Unterrichtsfach uf)
+	{
+		this.unterrichtsfaecher.add(uf);
+	}
+	
+	public List<Unterrichtsfach> getUnterrichtsfaecher()
+	{
+		return unterrichtsfaecher;
+	}
+	
+	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
+		this.unterrichtsfaecher = unterrichtsfächer;
+	}
+	
+	public void setLstklassen(Set<Klasse> lstklassen)
+	{
+		this.lstklassen = lstklassen;
+	}
 	//Getter + Setter
 	public String getBez() {
 		return bez;
@@ -215,42 +222,38 @@ public class Zeugnisfach {
 	public int getId() {
 		return id;
 	}
-
-//	public Klasse getKlasse() {
-//		return klasse;
-//	}
-	public void setUnterrichtsfächer(List<Unterrichtsfach> unterrichtsfächer) {
-		this.unterrichtsfaecher = unterrichtsfächer;
+	public void setUnterrichtsfaecher(List<Unterrichtsfach> unterrichtsfaecher)
+	{
+		this.unterrichtsfaecher = unterrichtsfaecher;
 	}
 
-	
-	//Konstruktoren
-	public Zeugnisfach(){}
-	
-	public Zeugnisfach(int id)
+	public void setId(int id)
 	{
-		DBZugriff.lesen(this, id);		
+		this.id = id;
+	}
+
+	public Set<Klasse> getLstklassen()
+	{
+		return lstklassen;
 	}
 	
-	//Methoden
-	public void speichern()
+	public List<Ausbildungszweig> getAusbildungszweig()
 	{
-		DBZugriff.speichern(this);
+		return ausbildungszweig;
+	}
+
+	public void addAusbildungszweig(Ausbildungszweig az)
+	{
+		ausbildungszweig.add(az);
 	}
 	
-	public void loeschen()
+
+
+	public void setAusbildungszweig(List<Ausbildungszweig> ausbildungszweig)
 	{
-		DBZugriff.loeschen(this);
+		this.ausbildungszweig = ausbildungszweig;
 	}
-	
-	public void addUnterrichtsfach(Unterrichtsfach uf)
-	{
-		this.unterrichtsfaecher.add(uf);
-	}
-	public boolean equals(Zeugnisfach zf)
-	{
-		if(zf.getId() == this.getId()) return true;
-		else return false;
-	}
+
+
 	
 }

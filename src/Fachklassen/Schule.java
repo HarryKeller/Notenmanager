@@ -31,9 +31,76 @@ public class Schule
 	
 	private String schulleiter;
 	private String stvSchulleiter;
+	//-----------------------------------------------------
 	
+	//Konstruktoren
+	//-----------------------------------------------------
+	public Schule(){}
+		
+	public Schule(int s_id)
+	{
+		DBZugriff.lesen(this, s_id);
+	}
+	
+	public Schule(String neu_name)
+	{
+		setBez(neu_name);
+	}
+	//-----------------------------------------------------
 	
 
+	public String toString()
+	{
+		return this.bez;
+	}
+		
+	//-----------------------------------------------------
+
+	//DB-Methoden
+	//-----------------------------------------------------
+
+	public boolean speichern()
+	{
+		return DBZugriff.speichern(this);
+	}
+	
+	public void loeschen()
+	{
+		DBZugriff.loeschen(this);
+	}
+	
+	
+	public List<Klasse> getKlassen()
+	{
+		return klassenlist;
+	}
+	
+	public static ArrayList<Schule> alleLesen()
+	{
+		ArrayList<Schule> al = new ArrayList<Schule>();
+		DBZugriff.alleLesen("Schule", al, "");
+		return al;
+	}
+	//-----------------------------------------------------
+	
+	
+	
+	//Get-Set-Add
+	//-----------------------------------------------------
+	public int getID() //Rückgabe der ID der Schule
+	{
+		return id;
+	}
+	
+	//Getter und Setter für die Schulbezeichnung
+	public String getBez() 
+	{
+		return bez;
+	}
+	public void setBez(String bez) 
+	{
+		this.bez = bez;
+	}
 	public int getId()
 	{
 		return id;
@@ -73,68 +140,7 @@ public class Schule
 	{
 		this.stvSchulleiter = stvSchulleiter;
 	}
-
-	//Konstruktoren -----------------------------------------------------
-	public Schule(){}
 	
-	public Schule(int s_id)
-	{
-		DBZugriff.lesen(this, s_id);
-	}
-	
-	public Schule(String neu_name)
-	{
-		setBez(neu_name);
-	}
-	
-	//Methoden ----------------------------------------------------------
-	
-	
-	
-	
-	public boolean speichern()
-	{
-		return DBZugriff.speichern(this);
-	}
-	
-	public void loeschen()
-	{
-		DBZugriff.loeschen(this);
-	}
-	
-	
-	public List<Klasse> getKlassen()
-	{
-		return klassenlist;
-	}
-	
-	public static ArrayList<Schule> alleLesen()
-	{
-		ArrayList<Schule> al = new ArrayList<Schule>();
-		DBZugriff.alleLesen("Schule", al, "");
-		return al;
-	}
-	
-	
-	public int getID() //Rückgabe der ID der Schule
-	{
-		return id;
-	}
-	
-	//Getter und Setter für die Schulbezeichnung
-	public String getBez() 
-	{
-		return bez;
-	}
-	public void setBez(String bez) 
-	{
-		this.bez = bez;
-	}
-	
-	public String toString()
-	{
-		return this.bez;
-	}
 
 
 	

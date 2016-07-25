@@ -23,6 +23,65 @@ public class Lehrer
 	private String dienstbezeichnung;
 	private boolean arbeitetAnDieserSchule;
 
+	//----------------------------------------
+	
+	//Konstruktoren
+	//----------------------------------------
+	public Lehrer(int id)
+	{
+		DBZugriff.lesen(this, id);
+	}
+	
+	public Lehrer()
+	{
+		
+	}
+	//----------------------------------------
+	
+	//Alle Lesen Methoden
+	//----------------------------------------
+	public static ArrayList<Lehrer> alleLesen(boolean gekuendigt)
+	{
+		
+		String hql = "l WHERE l.arbeitetAnDieserSchule != "+gekuendigt;	
+		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
+		DBZugriff.alleLesen("Lehrer", al, hql);
+		return al;
+		
+	}
+	
+	
+	public static  ArrayList<Lehrer> alleLesen()
+	{
+		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
+		DBZugriff.alleLesen("Lehrer", al, "");
+		return al;
+	}
+	//----------------------------------------
+	
+	//Override Methoden
+	//----------------------------------------
+	public String toString()
+	{
+		return this.nachname +" " + this.vorname;
+	}
+	
+	//----------------------------------------
+	
+	//DB-Methoden des Lehrers
+	//----------------------------------------
+	public boolean speichern()
+	{
+		return DBZugriff.speichern(this);
+	}
+	public void loeschen()
+	{
+		DBZugriff.loeschen(this);
+	}
+	
+	//----------------------------------------
+	//Get-Set-add Methoden
+	//----------------------------------------
 	public int getId() {
 		return id;
 	}
@@ -62,42 +121,4 @@ public class Lehrer
 		this.arbeitetAnDieserSchule = arbeitetAnDieserSchule;
 	}
 	
-	public Lehrer(int id)
-	{
-		DBZugriff.lesen(this, id);
-	}
-	public void loeschen()
-	{
-		DBZugriff.loeschen(this);
-	}
-	public Lehrer()
-	{
-		
-	}
-	public static ArrayList<Lehrer> alleLesen(boolean gekuendigt)
-	{
-		
-		String hql = "l WHERE l.arbeitetAnDieserSchule != "+gekuendigt;	
-		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
-		DBZugriff.alleLesen("Lehrer", al, hql);
-		return al;
-		
-	}
-	
-	
-	public static  ArrayList<Lehrer> alleLesen()
-	{
-		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
-		DBZugriff.alleLesen("Lehrer", al, "");
-		return al;
-	}
-	public String toString()
-	{
-		return this.nachname +" " + this.vorname;
-	}
-	
-	public boolean speichern()
-	{
-		return DBZugriff.speichern(this);
-	}
 }

@@ -27,52 +27,24 @@ public class UFachLehrer
 	@ManyToOne
 	private Lehrer lehrer;
 	
-	public int getid() {
-		return id;
-	}
-	public void setid(int id) {
-		this.id = id;
-	}
-	public LocalDate geteintrittsdatum() {
-		return eintrittsdatum;
-	}
-	public void seteintrittsdatum(LocalDate edatum) {
-		this.eintrittsdatum = edatum;
-	}
-	public LocalDate getaustrittsdatum() {
-		return austrittsdatum;
-	}
-	public void setaustrittsdatum(LocalDate adatum) {
-		this.austrittsdatum = adatum;
-	}
-	public int getstunden() {
-		return stunden;
-	}
-	public void setstunden(int stunden) {
-		this.stunden = stunden;
-	}
+	//----------------------------------------
 	
-	public Unterrichtsfach getUfach() {
-		return ufach;
-	}
-	public void setUfach(Unterrichtsfach ufach) {
-		this.ufach = ufach;
-	}
-	public Lehrer getLehrer() {
-		return lehrer;
-	}
-	public void setLehrer(Lehrer lehrer) {
-		this.lehrer = lehrer;
-	}
+	//Konstuktoren
+	//-----------------------------------------------------
+	
 	public UFachLehrer(int id)
 	{
 		DBZugriff.lesen(this, id);
 	}
 	
+	
 	public UFachLehrer()
 	{
 		
 	}
+
+	//----------------------------------------
+	
 	public static boolean unterrichtetLehrerZurzeitFach(Lehrer lehrer,Unterrichtsfach ufach)
 	{
 		
@@ -115,6 +87,9 @@ public class UFachLehrer
 	
 	}
 	
+	//Alle-Lesen-Mehtoden
+	//----------------------------------------
+	
 	public static UFachLehrer unterrichtetzurzeit(Lehrer lehrer,Unterrichtsfach ufach,LocalDate aktuell) throws Exception
 	{
 
@@ -144,5 +119,47 @@ public class UFachLehrer
 	{
 		return DBZugriff.speichern(this);
 	}
+	//----------------------------------------
+	
+	//get-set-add
+	//----------------------------------------
+	public int getid() {
+		return id;
+	}
+	public void setid(int id) {
+		this.id = id;
+	}
+	public LocalDate geteintrittsdatum() {
+		return eintrittsdatum;
+	}
+	public void seteintrittsdatum(LocalDate edatum) {
+		this.eintrittsdatum = edatum;
+	}
+	public LocalDate getaustrittsdatum() {
+		return austrittsdatum;
+	}
+	public void setaustrittsdatum(LocalDate adatum) {
+		this.austrittsdatum = adatum;
+	}
+	public int getstunden() {
+		return stunden;
+	}
+	public void setstunden(int stunden) {
+		this.stunden = stunden;
+	}
+	
+	public Unterrichtsfach getUfach() {
+		return ufach;
+	}
+	public void setUfach(Unterrichtsfach ufach) {
+		this.ufach = ufach;
+	}
+	public Lehrer getLehrer() {
+		return lehrer;
+	}
+	public void setLehrer(Lehrer lehrer) {
+		this.lehrer = lehrer;
+	}
+	
 
 }

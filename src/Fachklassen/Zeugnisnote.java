@@ -36,6 +36,10 @@ public class Zeugnisnote
 	
 	//------------------------------------------------------
 	
+	//Konsturktoren
+	//------------------------------------------------------
+	
+	//WAS IST DAS?????ß
 	public Zeugnisnote(Schueler schueler)
 	{
 		this.schueler = schueler;
@@ -75,6 +79,14 @@ public class Zeugnisnote
 	return al;
 	}
 	
+	//------------------------------------------------------
+	//Override Methoden
+	//------------------------------------------------------
+	public String toString()
+	{
+		return this.zeugnisfach.getBez()+" "+this.noteErrechnet;
+	}
+	
 	public boolean equals(Zeugnisnote zn)
 	{
 		
@@ -87,12 +99,17 @@ public class Zeugnisnote
 			return false;
 		}		
 	}	
+	//------------------------------------------------------
 	
+	//Db-Methoden
+	//------------------------------------------------------
 	public boolean speichern()
 	{
 		return DBZugriff.speichern(this);
 	}
 	
+	
+	//------------------------------------------------------
 	public double berechneNote(Unterrichtsfach uf)
 	{
 		double muendlich = 0;
@@ -337,16 +354,14 @@ public class Zeugnisnote
 		return Math.round(note * 100)/100.0;
 	}
 	
-	//-------------------------
-	
-	public String toString()
-	{
-		return this.zeugnisfach.getBez()+" "+this.noteErrechnet;
-	}
+	//------------------------------------------------------
 	
 	
-	//-----------------------------------
 	
+	//------------------------------------------------------
+	
+	//get-Set-Add
+	//------------------------------------------------------
 	public int getNoteZeugnis() {
 		return noteZeugnis;
 	}

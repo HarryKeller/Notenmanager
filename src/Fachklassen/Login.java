@@ -10,6 +10,10 @@ import javax.persistence.ManyToOne;
 
 import Persistenz.DBZugriff;
 
+/**
+ * @author kellerh
+ *
+ */
 @Entity 
 public class Login
 {
@@ -22,6 +26,10 @@ public class Login
 	private Lehrer lehrer;
 	private boolean admin;
 	
+	//------------------------------------------
+	//Konsturktoren
+	
+	//------------------------------------------
 	public Login()
 	{
 		
@@ -31,6 +39,7 @@ public class Login
 	{
 		DBZugriff.lesen(this, id);
 	}
+	
 	public Login(Lehrer l)
 	{
 		String hql = " l WHERE l.lehrer.id ="+l.getId();
@@ -45,13 +54,33 @@ public class Login
 		this.admin = (al.get(0).isAdmin());	
 	}
 	
+	//------------------------------------------
+	
+	//DB-Methoden
+	//------------------------------------------
+	public void speichern()
+	{
+		DBZugriff.speichern(this);
+	}
+	//------------------------------------------
+	
+	//Alle Lesen Methode	
+	//------------------------------------------
 	public ArrayList<Lehrer> alleLesen(String kuerzel)
 	{	
 		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
 		DBZugriff.alleLesen("Lehrer", al, "WHERE kuerzel = '" + kuerzel + "'") ;
 		return al;
 	}
-	public static boolean mehrAlsEinLehrerAdmin()
+	
+	/**
+	 * 
+	 * Überprüft ob noch mindestens ein Lehrer als Admin eingetragen ist
+	 * Ansonsten könne es passieren, dass kein Admin mehr da ist, welcher
+	 * anderen Admins admin rechte geben kann -> Man sperrt sich selbst aus
+	 * dem Programm aus
+	 */
+	public static boolean isMehrAlsEinLehrerAdmin()
 	{
 		ArrayList<Login> al = new ArrayList<Login>();
 		DBZugriff.alleLesen("Login", al, "");
@@ -64,10 +93,11 @@ public class Login
 		
 		else return false;
 	}
-	public void speichern()
-	{
-		DBZugriff.speichern(this);
-	}
+	
+	//------------------------------------------
+	
+	//Get-Set-Add
+	//------------------------------------------
 	
 	public String getKuerzel()
 	{
