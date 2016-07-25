@@ -33,6 +33,7 @@ public class Historie {
 	private LocalDate eintragszeitpunkt;
 	//----------------------------------------------------------------------------------
 	
+	
 	//DefaultKonstruktor für hybernate
 	public Historie()
 	{
@@ -40,24 +41,29 @@ public class Historie {
 	}
 	
 	
-	
+	//Speichert ein Historien Object
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
 	
+	//-----------------------------------------------------
+	//Log-Methoden der Klasse Historie
+	//-----------------------------------------------------
+	
+	//Logt das Speichern einer Leistung mit dem verantworlichen Lehrer
 	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
 		h.setText("Text ohne genauere Funktion");
 		h.setTabelleName("Leistung");
 		h.setEintragszeitpunkt(LocalDate.now());
-		if(l.getId() == 0)
+		if(l.getId() == 0)	//Wenn eine Neue Leistung angelegt wurde
 		{
 			h.setIdDatensatz(DBZugriff.speichernAndGetId(l));
 			h.setIdLehere(lehrer);
 			h.setVorgangsart("Anlegen");
 		}
-		else
+		else		//Wenn eine Leistung nur geändert wurde
 		{
 			h.setIdDatensatz(l.getId());
 			h.setVorgangsart("Aendern");
@@ -67,6 +73,7 @@ public class Historie {
 		h.speichern();
 		return true;
 	}
+	//Logt das Loeschen einer Leistung und des verantworlichen Lehrers mit
 	public static boolean loeschen(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
@@ -88,8 +95,8 @@ public class Historie {
 		h.speichern();
 		return true;
 	}
-	
-	
+	//-----------------------------------------------------
+	//-----------------------------------------------------
 	//Get-set
 	public String getTabelleName() {
 		return tabelleName;

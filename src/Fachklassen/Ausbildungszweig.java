@@ -14,17 +14,23 @@ import javax.persistence.ManyToMany;
 
 import Persistenz.DBZugriff;
 
+
+
+//Der bestimmte Ausbildungszweig
+//Gedacht zur Unterscheidung der Verschiedenen Zeugnisfächer
+//Jetzt nurnoch eine Sicherheitsmasnahme, damit einer Kaufm. Klasse keine Anwendungsentwicklungunterrichtsfächer
+//zugewiesen können
 @Entity
 public class Ausbildungszweig
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int id;
-	
+	//Anwendung bzw. Kaufmann oder andere
 	private String ausbidldungsart;
 	
 	
-	
+	//ManyToMany zwischen Zeugnisfach und Ausbildungszweig (also this)
 	@ManyToMany(cascade = CascadeType.ALL ,mappedBy="ausbildungszweig", fetch=FetchType.EAGER)
 	private Set<Zeugnisfach> lstZeugnisfach = new HashSet<Zeugnisfach>();
 
@@ -36,6 +42,27 @@ public class Ausbildungszweig
 		return al;
 	}
 	
+	//Konstruktoren
+	//----------------------------------------------------------
+	public Ausbildungszweig()
+	{
+		//Defaultkonstruktor
+	}
+	public Ausbildungszweig(int id)
+	{
+		DBZugriff.lesen(this, id);
+	}
+	//--------------------------------------------------------
+	//Override Methods
+	//--------------------------------------------------------
+	public String toString()
+	{
+		return this.ausbidldungsart;
+	}
+	
+	//----------------------------------------------------
+	//Get- Set und Add
+	//----------------------------------------------------
 	public Set<Zeugnisfach> getLstzeugnisfach()
 	{
 		return lstZeugnisfach;
@@ -43,16 +70,6 @@ public class Ausbildungszweig
 	public void addAusbildungszweig(Zeugnisfach az)
 	{
 		lstZeugnisfach.add(az);
-	}
-	
-	
-	public Ausbildungszweig()
-	{
-		
-	}
-	public Ausbildungszweig(int id)
-	{
-		DBZugriff.lesen(this, id);
 	}
 	
 	public int getId()
@@ -71,8 +88,5 @@ public class Ausbildungszweig
 	{
 		this.ausbidldungsart = ausbidldungsart;
 	}
-	public String toString()
-	{
-		return this.ausbidldungsart;
-	}
+	
 }
