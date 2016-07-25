@@ -46,11 +46,12 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	private JLabel _label;
 	private JComboBox cmbBox_Leistungsart;
 	private JLabel _label_1;
-	private JTextField txt_erhebungsdatum;
+	private LocalDate erhebungsdatum;
 	private JPanel panel_buttons;
 	private JButton btn_anlegen;
 	private JButton btn_abbrechen;	
 	private Dialog_NotenausgabeKlasse notenausgabe;
+	private JDatePickerImpl datePicker;
 	
 	private DefaultComboBoxModel model_tables;
 	private DefaultComboBoxModel model_leistungsart;	
@@ -130,24 +131,16 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		// Don't know about the formatter, but there it is...
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.getJFormattedTextField().setText(LocalDate.now().toString());
+		
 		GridBagConstraints gbc_datepicker = new GridBagConstraints();
 		gbc_datepicker.gridx = 0;
 		gbc_datepicker.gridy = 7;
 		gbc_datepicker.fill = GridBagConstraints.BOTH;
 		gbc_datepicker.anchor = GridBagConstraints.NORTH;
 		gbc_datepicker.insets = new Insets(0, 0, 5, 0);
-		this.getContentPane().add(datePicker, gbc_datepicker);
-		
-		/*this.txt_erhebungsdatum = new JTextField();
-		GridBagConstraints gbc_txt_erhebungsdatum = new GridBagConstraints();
-		gbc_txt_erhebungsdatum.insets = new Insets(0, 0, 5, 0);
-		gbc_txt_erhebungsdatum.anchor = GridBagConstraints.NORTH;
-		gbc_txt_erhebungsdatum.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txt_erhebungsdatum.gridx = 0;
-		gbc_txt_erhebungsdatum.gridy = 7;
-		getContentPane().add(this.txt_erhebungsdatum, gbc_txt_erhebungsdatum);
-		this.txt_erhebungsdatum.setColumns(10);*/
+		this.getContentPane().add(datePicker, gbc_datepicker);		
 		
 		this.panel_buttons = new JPanel();
 		GridBagConstraints gbc_panel_buttons = new GridBagConstraints();
@@ -190,9 +183,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		for(Leistungsart l: Leistungsart.AlleLesen())
 		{
 			this.model_leistungsart.addElement(l.getBez());
-		}		
-		
-		//this.txt_erhebungsdatum.setText(LocalDate.now().toString());
+		}			
 	}
 	
 	//Legt neue Leistungen für jeweilige Tabellen an und fügt Dummy-Objekte ein für die 1:1 Abbildung der jeweiligen Tabelle
@@ -210,7 +201,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 				model = (NotenTableModel) this.notenausgabe.table_tab1_muendl.getModel();
 				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 				header = (NotenTableHeader) this.notenausgabe.table_tab1_muendl.getTableHeader();
-				header.addColumnTooltip(this.txt_erhebungsdatum.getText());		
+				header.addColumnTooltip(this.erhebungsdatum.toString());		
 				
 				for(Vector<Object> v : model.getSaveVector())
 				{
@@ -226,7 +217,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 				model = (NotenTableModel) this.notenausgabe.table_tab1_schriftl.getModel();
 				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 				header = (NotenTableHeader) this.notenausgabe.table_tab1_schriftl.getTableHeader();
-				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				header.addColumnTooltip(this.erhebungsdatum.toString());
 				
 				for(Vector<Object> v : model.getSaveVector())
 				{
@@ -242,7 +233,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 				model = (NotenTableModel) this.notenausgabe.table_tab2_muendl.getModel();
 				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 				header = (NotenTableHeader) this.notenausgabe.table_tab2_muendl.getTableHeader();
-				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				header.addColumnTooltip(this.erhebungsdatum.toString());
 				
 				for(Vector<Object> v : model.getSaveVector())
 				{
@@ -258,7 +249,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 				model = (NotenTableModel) this.notenausgabe.table_tab2_schriftl.getModel();
 				model.addColumn((String) this.cmbBox_Leistungsart.getSelectedItem());
 				header = (NotenTableHeader) this.notenausgabe.table_tab2_schriftl.getTableHeader();
-				header.addColumnTooltip(this.txt_erhebungsdatum.getText());
+				header.addColumnTooltip(this.erhebungsdatum.toString());
 				
 				for(Vector<Object> v : model.getSaveVector())
 				{
@@ -282,7 +273,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		boolean ret = false;
 		CharSequence cs = new StringBuffer('-');		
 		
-		String s = this.txt_erhebungsdatum.getText();
+		String s = this.datePicker.getJFormattedTextField().getText();		
 		String[] datumteile = s.split("-");
 		
 		LocalDate dt = null;
@@ -329,6 +320,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		else
 		{
 			ret = true;
+			this.erhebungsdatum = dt;
 		}
 		
 		return ret;
