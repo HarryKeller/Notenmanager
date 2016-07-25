@@ -59,6 +59,7 @@ public class Leistungsart
 	
 	//Get-Set-Add
 	//------------------------------------------
+	
 	public String getBez()
 	{
 		return bez;

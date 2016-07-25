@@ -22,7 +22,20 @@ public class Zeugnisart
 	{
 		return id;
 	}
-
+	//----------------------------------------------
+	
+	//Alle Lesen
+	//----------------------------------------------
+	public static ArrayList<Zeugnisart> alleLesen()
+	{
+		ArrayList<Zeugnisart> al= new ArrayList<Zeugnisart>();
+		DBZugriff.alleLesen("Zeugnisart", al, "");
+		return al;
+	}
+	//----------------------------------------------
+	
+	//get-Set-Add
+	//----------------------------------------------
 	public void setId(int id)
 	{
 		this.id = id;
@@ -37,13 +50,7 @@ public class Zeugnisart
 	{
 		Zeugnisart = zeugnisart;
 	}
-	public static ArrayList<Zeugnisart> alleLesen()
-	{
-		ArrayList<Zeugnisart> al= new ArrayList<Zeugnisart>();
-		DBZugriff.alleLesen("Zeugnisart", al, "");
-		return al;
-	}
-
-
+	
+	
 	
 }

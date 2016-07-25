@@ -33,6 +33,10 @@ public class DatumSJ
 	}
 	public DatumSJ(){/* Defaultkonstrucktor */}
 	
+	/**
+	 * 
+	 * Konstruktor der das DatumSj aufruft, in welchem das Übergebene Datum liegt
+	 */
 	public DatumSJ(LocalDate aktuell)
 	{
 		String hql = " d "
@@ -50,8 +54,7 @@ public class DatumSJ
 		this.beginn = temp.beginn;
 		this.halbjahr = temp.halbjahr;
 		this.ende = temp.ende;
-		
-	
+
 	}
 	
 	public static ArrayList<DatumSJ>alleLesen()
@@ -66,6 +69,7 @@ public class DatumSJ
 		DBZugriff.lesen(this, id);
 		
 	}
+	
 	//---------------------------------------------------------------------
 	//---------------------------------------------------------------------
 	//get-Set
