@@ -135,7 +135,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	}
 	
 	
-	
 	/**
 	* Liest durch eine Liste mit allen Zeugnisfächern der Klasse eines bestimmten
 	* Schülers und eine Liste mit allen Zeugnisfächern des Schülers. Zu jedem
@@ -249,8 +248,6 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		}
 	}
 	
-	
-
 	
 	
 	/**

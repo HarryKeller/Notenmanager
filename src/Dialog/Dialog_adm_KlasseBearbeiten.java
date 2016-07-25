@@ -353,8 +353,15 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	{
 		if(klasse!=null)
 		{
-			label_id.setText(Integer.toString(klasse.getid()));
 			comboBox_Schule.removeAllItems();
+			comboBox_Klassenleiter_1.removeAllItems();
+			comboBox_Klassenleiter_2.removeAllItems();
+			comboBox_Ausbildungszweig.removeAllItems();
+			klasse_schueler_model.clear();
+			klasse_zeugnisfach_model.clear();
+			
+			
+			label_id.setText(Integer.toString(klasse.getid()));
 			int count =0;
 			for(Schule s: Schule.alleLesen())
 			{
@@ -372,7 +379,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			
 			
 			ArrayList<Lehrer> llist = Lehrer.alleLesen();
-			comboBox_Klassenleiter_1.removeAllItems();
 			for(Lehrer l: llist)
 			{
 				comboBox_Klassenleiter_1.addItem(l);
@@ -384,7 +390,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 					comboBox_Klassenleiter_1.setSelectedIndex(i);
 				}
 			}
-			comboBox_Klassenleiter_2.removeAllItems();
+			
 			for(Lehrer l: llist)
 			{
 				comboBox_Klassenleiter_2.addItem(l);
@@ -398,7 +404,6 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			}
 			
 			ArrayList<Ausbildungszweig> alist = Ausbildungszweig.alleLesen();
-			comboBox_Ausbildungszweig.removeAllItems();
 			for(Ausbildungszweig l: alist)
 			{
 				comboBox_Ausbildungszweig.addItem(l);
@@ -423,14 +428,14 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 				
 			}
 			
-			klasse_schueler_model.clear();
+			
 			for(Schueler s:klasse.getSchueler())
 			{
 				klasse_schueler_model.addElement(s);
 			}
 			list.setModel(klasse_schueler_model);
 			
-			klasse_zeugnisfach_model.clear();
+			
 			for(Zeugnisfach z: Zeugnisfach.alleLesen(getKlasse()))
 			{
 				klasse_zeugnisfach_model.addElement(z);
@@ -445,6 +450,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			comboBox_Klassenleiter_1.removeAllItems();
 			comboBox_Klassenleiter_2.removeAllItems();
 			comboBox_Ausbildungszweig.removeAllItems();
+			
 			for(Schule s: Schule.alleLesen())
 			{
 				comboBox_Schule.addItem(s);
