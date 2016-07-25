@@ -382,7 +382,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		}
 		if(e.getActionCommand() == "Zeugnisnote bearbeiten")
 		{
-			Dialog_adm_ZeugnisfachZurKlasseUebersicht dlg_zeug = new Dialog_adm_ZeugnisfachZurKlasseUebersicht(klasse);
+			Dialog_adm_Zeugnisfach dlg_zeug = new Dialog_adm_Zeugnisfach();
 			dlg_zeug.setVisible(true);
 		}
 		
