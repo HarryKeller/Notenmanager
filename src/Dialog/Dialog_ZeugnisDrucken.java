@@ -14,10 +14,12 @@ import javax.swing.border.EmptyBorder;
 
 import Fachklassen.Ausbildungszweig;
 import Fachklassen.DatumSJ;
+import Fachklassen.Klasse;
 import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Schule;
 import Fachklassen.Unterrichtsfach;
+import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -34,9 +36,10 @@ public class Dialog_ZeugnisDrucken extends JFrame
 	Dialog_Schuelerwahl schuelerwahl;
 	private JButton btnZurck;
 	String bemerkung = "";
-	public ArrayList<Unterrichtsfach> fach = Unterrichtsfach.AlleLesen();
+	public ArrayList<Zeugnisfach> fach;
 	Ausbildungszweig a = new Ausbildungszweig();
 	Schule s = new Schule();
+	String noteschriftl = "";
 	public Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung)
 	{
 		this.bemerkung = bemerkung;
@@ -80,13 +83,14 @@ public class Dialog_ZeugnisDrucken extends JFrame
 			ArrayList<Map<String, ?>> al = new ArrayList<Map<String, ?>>();
 			//Einzelne Strings für jede mögliche Note anlegen
 		    Zeugnisnote zn = new Zeugnisnote(this.schueler);
-				for(Unterrichtsfach f : this.fach)
-				{
-					HashMap<String, String> hm = new HashMap<String, String>();
-					hm.put("fach", f.getBez());
-					hm.put("note", ""+zn.berechneNote(f));
-					al.add(hm);
-				}			
+		    fach = Zeugnisfach.alleLesen(new Klasse(this.schueler.getKlasse().getid()));
+			for(Zeugnisfach f : this.fach)
+			{	
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("fach", ""+f.getBez());
+				hm.put("note", ""+zn.berechneNote(f, this.schueler));
+				al.add(hm);
+			}	
 	
 			//Nach erfolgreicher Datensammlung, wird die ArrayList für den Report vorbereitet
 			JRMapCollectionDataSource ds = new JRMapCollectionDataSource(al);
