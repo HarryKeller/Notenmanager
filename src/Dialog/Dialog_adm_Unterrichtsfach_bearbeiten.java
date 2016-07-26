@@ -47,6 +47,8 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 		this.unterrichtsfach = new Unterrichtsfach();
 		setTitle("Unterrichtsfach anlegen");
 		initGUI();
+		
+		this.fillComboBox();
 	}
 	public Dialog_adm_Unterrichtsfach_bearbeiten(Unterrichtsfach ufach) 
 	{
@@ -219,19 +221,26 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 			panel_1.add(button_Zurueck, gbc_button_Zurueck);
 		}
 	}
-
+	
+	private void fillComboBox()
+	{
+		DefaultComboBoxModel model = (DefaultComboBoxModel) this.cmbBox_Zeugnisfach.getModel();
+		
+		for(Zeugnisfach z : Zeugnisfach.alleLesen())
+		{
+			model.addElement(z);
+		}
+	}
+	
 	private void setDatenInMaske() 
 	{
 		this.textField_Bezeichnung.setText(this.unterrichtsfach.getBez());
 		this.textField_Gewichtung.setText(String.valueOf(this.unterrichtsfach.getGewichtungSchriftlich()));		
 		this.textField_Stunden.setText(String.valueOf(this.unterrichtsfach.getStunden()));
 		
-		DefaultComboBoxModel model = (DefaultComboBoxModel) this.cmbBox_Zeugnisfach.getModel();
-		for(Zeugnisfach z : Zeugnisfach.alleLesen())
-		{
-			model.addElement(z);
-		}
+		this.fillComboBox();
 		
+		DefaultComboBoxModel model = (DefaultComboBoxModel) this.cmbBox_Zeugnisfach.getModel();
 		model.setSelectedItem(this.unterrichtsfach.getZfach());
 	}
 	private void getDatenInMaske() 
@@ -251,7 +260,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 				getDatenInMaske();
 				this.unterrichtsfach.speichern();
 				this.dispose();
-				Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
+				Dialog_adm_Unterrichtsfach dia = new Dialog_adm_Unterrichtsfach();
 				dia.pack();
 				dia.setVisible(true);
 			}
@@ -270,7 +279,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 		else if(e.getSource()==button_Zurueck)
 		{
 			setVisible(false);
-			Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
+			Dialog_adm_Unterrichtsfach dia = new Dialog_adm_Unterrichtsfach();
 			dia.pack();
 			dia.setVisible(true);
 		}

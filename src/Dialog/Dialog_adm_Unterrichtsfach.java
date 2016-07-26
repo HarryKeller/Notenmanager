@@ -130,8 +130,8 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 		if(e.getActionCommand().equals(this._btnUnterrichtsfachAnlegen.getActionCommand()))
 		{
 			this.dispose();
-			Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten();
-			dialog_zeugnisfach.setVisible(true);
+			Dialog_adm_Unterrichtsfach_bearbeiten dialog_unterrichtsfach = new Dialog_adm_Unterrichtsfach_bearbeiten();
+			dialog_unterrichtsfach.setVisible(true);
 		}	
 		if(e.getActionCommand().equals(this._btnUnterrichtsfachBearbeiten.getActionCommand()))
 		{
@@ -151,6 +151,8 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 			try
 			{
 				this.list_Unterrichtsfach.getSelectedValue().loeschen();
+				this.list_Unterrichtsfach.removeAll();
+				this.setList();
 			}
 			catch(Exception exception)
 			{

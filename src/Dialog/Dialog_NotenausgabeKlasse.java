@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.border.*;
 
+import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
@@ -21,15 +22,7 @@ import Persistenz.DBZugriff;
 
 import java.util.*;
 
-public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener {
-
-	private static DateTimeFormatter germanFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(
-													   Locale.GERMAN);
-
-	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
-	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
-	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("2016-08-01");
-	
+public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener {	
 	private Lehrer lehrer;
 	private Klasse klasse;
 	private Unterrichtsfach fach;
@@ -513,11 +506,13 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			this.model_tab2_schriftl.addRowToSaveVector();
 			this.model_tab2_schriftl.addSchuelerToSaveVector(s, this.model_tab2_schriftl.getRowCount() - 1);			
 			
+			DatumSJ sj = new DatumSJ(LocalDate.now());
+			
 			//Jede Tabelle mit Noten füllen
-			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));					
-			this.fillOneTable(header_tab1_schriftl, model_tab1_schriftl, s.getSchriftlich(this.fach,this.BEGINN_SCHULJAHR, this.BEGINN_HALBJAHR));			
-			this.fillOneTable(header_tab2_muendl, model_tab2_muendlich, s.getMuendlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
-			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, this.BEGINN_HALBJAHR, this.ENDE_SCHULJAHR));			
+			this.fillOneTable(header_tab1_muendl, model_tab1_muendlich, s.getMuendlich(this.fach, sj.getBeginn(), sj.getHalbjahr()));					
+			this.fillOneTable(header_tab1_schriftl, model_tab1_schriftl, s.getSchriftlich(this.fach, sj.getBeginn(), sj.getHalbjahr()));			
+			this.fillOneTable(header_tab2_muendl, model_tab2_muendlich, s.getMuendlich(this.fach, sj.getHalbjahr(), sj.getEnde()));			
+			this.fillOneTable(header_tab2_schriftl, model_tab2_schriftl, s.getSchriftlich(this.fach, sj.getHalbjahr(), sj.getEnde()));			
 			
 		}
 		
