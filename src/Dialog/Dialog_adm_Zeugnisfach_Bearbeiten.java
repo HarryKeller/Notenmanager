@@ -70,6 +70,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 
 	private void initGUI() 
 	{
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setTitle("Zeugnisfach bearbeiten");
 		setModal(true);
 		setResizable(false);
@@ -78,18 +79,18 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{25, 0, 25, 0};
-		gbl_contentPanel.rowHeights = new int[]{25, 0, 25, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[]{0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0};
+		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JPanel panel = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
+			gbc_panel.insets = new Insets(5, 5, 0, 0);
 			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 1;
-			gbc_panel.gridy = 1;
+			gbc_panel.gridx = 0;
+			gbc_panel.gridy = 0;
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{0, 0};
@@ -100,7 +101,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			
 			JPanel panel_2 = new JPanel();
 			GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-			gbc_panel_2.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_2.insets = new Insets(5, 5, 5, 5);
 			gbc_panel_2.fill = GridBagConstraints.BOTH;
 			gbc_panel_2.gridx = 0;
 			gbc_panel_2.gridy = 0;
@@ -115,14 +116,14 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			JLabel lblBezeichnung = new JLabel("Bezeichnung");
 			GridBagConstraints gbc_lblBezeichnung = new GridBagConstraints();
 			gbc_lblBezeichnung.anchor = GridBagConstraints.EAST;
-			gbc_lblBezeichnung.insets = new Insets(0, 0, 5, 5);
+			gbc_lblBezeichnung.insets = new Insets(5, 5, 5, 5);
 			gbc_lblBezeichnung.gridx = 0;
 			gbc_lblBezeichnung.gridy = 0;
 			panel_2.add(lblBezeichnung, gbc_lblBezeichnung);
 			
 			textField_Bezeichnung = new JTextField();
 			GridBagConstraints gbc_textField = new GridBagConstraints();
-			gbc_textField.insets = new Insets(0, 0, 5, 0);
+			gbc_textField.insets = new Insets(5, 5, 5, 5);
 			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField.gridx = 1;
 			gbc_textField.gridy = 0;
@@ -139,7 +140,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			
 			textField_Fachart = new JTextField();
 			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-			gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+			gbc_textField_1.insets = new Insets(5, 5, 5, 5);
 			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textField_1.gridx = 1;
 			gbc_textField_1.gridy = 1;
@@ -165,7 +166,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			panel_3.setBorder(new TitledBorder(null, "Ausbildungsrichtungen des Zeugnisfachs", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			GridBagConstraints gbc_panel_3 = new GridBagConstraints();
 			gbc_panel_3.fill = GridBagConstraints.BOTH;
-			gbc_panel_3.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_3.insets = new Insets(5, 5, 5, 5);
 			gbc_panel_3.gridx = 0;
 			gbc_panel_3.gridy = 1;
 			panel.add(panel_3, gbc_panel_3);
@@ -189,7 +190,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			panel_4.setBorder(new TitledBorder(null, "Verfügbare Ausbildungsrichtungen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			GridBagConstraints gbc_panel_4 = new GridBagConstraints();
 			gbc_panel_4.fill = GridBagConstraints.BOTH;
-			gbc_panel_4.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_4.insets = new Insets(5, 5, 5, 5);
 			gbc_panel_4.gridx = 0;
 			gbc_panel_4.gridy = 2;
 			panel.add(panel_4, gbc_panel_4);
@@ -211,6 +212,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			
 			JPanel panel_1 = new JPanel();
 			GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+			gbc_panel_1.insets = new Insets(5, 5, 5, 5);
 			gbc_panel_1.fill = GridBagConstraints.BOTH;
 			gbc_panel_1.gridx = 0;
 			gbc_panel_1.gridy = 3;
@@ -226,7 +228,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			button_Speichern.addActionListener(this);
 			GridBagConstraints gbc_button_Speichern = new GridBagConstraints();
 			gbc_button_Speichern.fill = GridBagConstraints.HORIZONTAL;
-			gbc_button_Speichern.insets = new Insets(0, 0, 0, 5);
+			gbc_button_Speichern.insets = new Insets(5, 5, 5, 5);
 			gbc_button_Speichern.gridx = 0;
 			gbc_button_Speichern.gridy = 0;
 			panel_1.add(button_Speichern, gbc_button_Speichern);
@@ -235,7 +237,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			button_Verwerfen.addActionListener(this);
 			GridBagConstraints gbc_button_Verwerfen = new GridBagConstraints();
 			gbc_button_Verwerfen.fill = GridBagConstraints.HORIZONTAL;
-			gbc_button_Verwerfen.insets = new Insets(0, 0, 0, 5);
+			gbc_button_Verwerfen.insets = new Insets(5, 5, 5, 5);
 			gbc_button_Verwerfen.gridx = 1;
 			gbc_button_Verwerfen.gridy = 0;
 			panel_1.add(button_Verwerfen, gbc_button_Verwerfen);
@@ -244,7 +246,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			button_Leeren.addActionListener(this);
 			GridBagConstraints gbc_button_Leeren = new GridBagConstraints();
 			gbc_button_Leeren.fill = GridBagConstraints.HORIZONTAL;
-			gbc_button_Leeren.insets = new Insets(0, 0, 0, 5);
+			gbc_button_Leeren.insets = new Insets(5, 5, 5, 5);
 			gbc_button_Leeren.gridx = 2;
 			gbc_button_Leeren.gridy = 0;
 			panel_1.add(button_Leeren, gbc_button_Leeren);
@@ -252,6 +254,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			button_Zurueck = new JButton("Zur\u00FCck");
 			button_Zurueck.addActionListener(this);
 			GridBagConstraints gbc_button_Zurueck = new GridBagConstraints();
+			gbc_button_Zurueck.insets = new Insets(5, 5, 5, 5);
 			gbc_button_Zurueck.fill = GridBagConstraints.HORIZONTAL;
 			gbc_button_Zurueck.gridx = 3;
 			gbc_button_Zurueck.gridy = 0;
