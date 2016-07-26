@@ -42,7 +42,7 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 	private void initGUI() 
 	{
 		setTitle("Sch\u00FCler auswahl");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
