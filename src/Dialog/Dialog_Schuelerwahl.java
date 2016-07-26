@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
@@ -63,17 +64,17 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{25, 267, 25, 0};
+		gbl_contentPanel.columnWidths = new int[]{267, 0};
 		gbl_contentPanel.rowHeights = new int[]{25, 10, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JPanel panel = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
 			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.insets = new Insets(0, 0, 5, 5);
-			gbc_panel.gridx = 1;
+			gbc_panel.insets = new Insets(5, 5, 5, 5);
+			gbc_panel.gridx = 0;
 			gbc_panel.gridy = 1;
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
@@ -125,29 +126,28 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-			gbc_scrollPane.gridwidth = 2;
 			gbc_scrollPane.fill = GridBagConstraints.BOTH;
-			gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-			gbc_scrollPane.gridx = 1;
+			gbc_scrollPane.insets = new Insets(5, 5, 5, 5);
+			gbc_scrollPane.gridx = 0;
 			gbc_scrollPane.gridy = 2;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				list_Schueler = new JList(dlm);
+				list_Schueler = new JList<Schueler>(dlm);
 				scrollPane.setViewportView(list_Schueler);
 			}
 		}
 		{
 			JPanel panel = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
-			gbc_panel.insets = new Insets(0, 0, 0, 5);
+			gbc_panel.insets = new Insets(5, 5, 0, 5);
 			gbc_panel.fill = GridBagConstraints.BOTH;
-			gbc_panel.gridx = 1;
+			gbc_panel.gridx = 0;
 			gbc_panel.gridy = 3;
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
+			gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0};
 			gbl_panel.rowHeights = new int[]{0, 0};
-			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+			gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 			gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			{
@@ -175,19 +175,19 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 				button_Zeugnis.addActionListener(this);
 				GridBagConstraints gbc_button_Zeugnis = new GridBagConstraints();
 				gbc_button_Zeugnis.fill = GridBagConstraints.HORIZONTAL;
+				gbc_button_Zeugnis.insets = new Insets(0, 0, 0, 5);
 				gbc_button_Zeugnis.gridx = 2;
 				gbc_button_Zeugnis.gridy = 0;
 				panel.add(button_Zeugnis, gbc_button_Zeugnis);
+				{
+					this.btnZurck = new JButton("Zur\u00FCck");
+					GridBagConstraints gbc_btnZurck = new GridBagConstraints();
+					gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
+					gbc_btnZurck.gridx = 3;
+					gbc_btnZurck.gridy = 0;
+					panel.add(this.btnZurck, gbc_btnZurck);
+				}
 			}
-		}
-		{
-			btnZurck = new JButton("Zur\u00FCck");
-			btnZurck.addActionListener(this);
-			GridBagConstraints gbc_btnZurck = new GridBagConstraints();
-			gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnZurck.gridx = 2;
-			gbc_btnZurck.gridy = 3;
-			contentPanel.add(btnZurck, gbc_btnZurck);
 		}
 	}
 	
