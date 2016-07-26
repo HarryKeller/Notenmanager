@@ -35,7 +35,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener, ItemListener
+public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, ItemListener
 
 {
 	private JPanel panel_combobox;
@@ -156,7 +156,18 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		this.panel_combobox.add(this.lblSchuleauswahl, gbc_lblSchuleauswahl);
 		
 		this.comboBox_Schule = new JComboBox<Schule>();
-		this.comboBox_Schule.addItemListener(this);
+		this.comboBox_Schule.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e)
+			{
+				
+				comboBox_Klassen.removeAllItems();
+				for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
+				{
+					comboBox_Klassen.addItem(k);		
+				}	
+				
+			}
+		});
 		GridBagConstraints gbc_comboBox_Schule = new GridBagConstraints();
 		gbc_comboBox_Schule.insets = new Insets(5, 10, 5, 10);
 		gbc_comboBox_Schule.fill = GridBagConstraints.BOTH;
@@ -174,6 +185,24 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		this.comboBox_Klassen = new JComboBox<Klasse>();
 		this.comboBox_Klassen.setEnabled(false);
+		this.comboBox_Klassen.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e)
+			{
+				
+				comboBox_Faecher.removeAllItems();
+				if(comboBox_Klassen.getSelectedItem() != null)
+				{
+					
+					for(Unterrichtsfach f : Unterrichtsfach.alleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
+					{
+						comboBox_Faecher.addItem(f);
+					}			
+				}
+				comboBox_Faecher.setEnabled(true);
+				comboBox_Klassen.setEnabled(true);
+				
+			}
+		});
 		GridBagConstraints gbc_comboBox_Klassen = new GridBagConstraints();
 		gbc_comboBox_Klassen.insets = new Insets(5, 10, 5, 10);
 		gbc_comboBox_Klassen.fill = GridBagConstraints.BOTH;
@@ -388,29 +417,31 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener, Ite
 		
 		
 	}
-	public void itemStateChanged(ItemEvent arg0) 
-	{
-		comboBox_Faecher.removeAllItems();
-		comboBox_Klassen.removeAllItems();
-		comboBox_Klassen.setEnabled(true);
-		btnFachuebersicht.setEnabled(false);
-		
-		for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
-		{
-			this.comboBox_Klassen.addItem(k);		
-		}				
-		
-		if(comboBox_Klassen.getSelectedItem() != null)
-		{
-			comboBox_Faecher.setEnabled(true);
-			for(Unterrichtsfach f : Unterrichtsfach.alleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
-			{
-				this.comboBox_Faecher.addItem(f);
-			}			
-		}
-		if(comboBox_Faecher.getSelectedItem() != null)
-		{
-			btnFachuebersicht.setEnabled(true);
-		}
-	}
+	//Verusch mit anonoymen Listenern damit events unterschieden werden können
+//	public void itemStateChanged(ItemEvent arg0) 
+//	{
+//		comboBox_Faecher.removeAllItems();
+//		comboBox_Klassen.removeAllItems();
+//		comboBox_Klassen.setEnabled(true);
+//		btnFachuebersicht.setEnabled(false);
+//		
+//		for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
+//		{
+//			this.comboBox_Klassen.addItem(k);		
+//		}				
+//		
+//		if(comboBox_Klassen.getSelectedItem() != null)
+//		{
+//			comboBox_Faecher.setEnabled(true);
+//			for(Unterrichtsfach f : Unterrichtsfach.alleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
+//			{
+//				this.comboBox_Faecher.addItem(f);
+//			}			
+//		}
+//		if(comboBox_Faecher.getSelectedItem() != null)
+//		{
+//			btnFachuebersicht.setEnabled(true);
+//		}
+//	}
+
 }
