@@ -73,7 +73,7 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		gbc_lblZeugnisbemerkung.gridx = 1;
 		gbc_lblZeugnisbemerkung.gridy = 0;
 		contentPane.add(lblZeugnisbemerkung, gbc_lblZeugnisbemerkung);
-		lblBitteGebenSie = new JLabel("Bitte geben sie eine Zugnisbemerkung ein:");
+		lblBitteGebenSie = new JLabel("Bitte geben sie eine Zeugnisbemerkung ein:");
 		lblBitteGebenSie.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 13));
 		GridBagConstraints gbc_lblBitteGebenSie = new GridBagConstraints();
 		gbc_lblBitteGebenSie.gridwidth = 3;

@@ -194,8 +194,10 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) 
 	{
+
 		if(e.getActionCommand().equals(this.button_Notenblatt.getActionCommand()))
 		{
+			
 			try
 			{
 				Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt((Schueler)this.list_Schueler.getSelectedValue(), this.lehrer);
@@ -209,6 +211,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnisnoten.getActionCommand()))
 		{
+
 			try
 			{
 				Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()),this);
@@ -222,6 +225,11 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 		}
 		if(e.getActionCommand().equals(this.button_Zeugnis.getActionCommand()))
 		{
+			if(this.list_Schueler.getSelectedValue() == null)
+			{
+				JOptionPane.showMessageDialog(null, "Es wurde kein Schueler ausgewählt oder ein anderer Fehler ist aufgetreten!", "Warnung!", JOptionPane.OK_OPTION);
+				return;
+			}
 			try
 			{
 				Dialog_ZeugnisBemerkung zb = new Dialog_ZeugnisBemerkung(((Schueler)this.list_Schueler.getSelectedValue()),this);
