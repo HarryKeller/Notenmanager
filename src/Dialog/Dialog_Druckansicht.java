@@ -73,7 +73,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 			parameter.put("namevorname", this.notenblatt.schueler.getNachname() + " " + this.notenblatt.schueler.getVorname());
 			parameter.put("geschlecht", this.notenblatt.schueler.getGeschl());
 			parameter.put("klasse", this.notenblatt.schueler.getKlasseid().getBez());
-			parameter.put("schuljahr", Dialog_Notenblatt.BEGINN_SCHULJAHR.getYear() + "/" + Dialog_Notenblatt.ENDE_SCHULJAHR.getYear());
+			parameter.put("schuljahr", notenblatt.date.getBeginn().getYear() + "/" + notenblatt.date.getEnde().getYear());
 			parameter.put("anschrift", "DLC für 19,99");
 			parameter.put("tel", "DLC für 19,99");
 			parameter.put("erziehung", "DLC für 19,99");
@@ -121,7 +121,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 						//Logische überprüfung in welche Spalte die Noten kommen müssen
 						if(f.getId() == l.getUfachlehrer().getUfach().getId())
 						{
-							if(l.getErhebungsdatum().isBefore(Dialog_Notenblatt.BEGINN_HALBJAHR))
+							if(l.getErhebungsdatum().isBefore(notenblatt.date.getHalbjahr()))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
@@ -132,7 +132,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 									schula1j = schula1j + "|" + l.getNotenstufe() + "|";
 								}
 							}
-							else if(l.getErhebungsdatum().isAfter(Dialog_Notenblatt.BEGINN_HALBJAHR))
+							else if(l.getErhebungsdatum().isAfter(notenblatt.date.getHalbjahr()))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
