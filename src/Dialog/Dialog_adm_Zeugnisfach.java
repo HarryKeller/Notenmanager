@@ -138,6 +138,7 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 		{
 			try
 			{
+				this.dispose();
 				Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten(list_Zeugnisfach.getSelectedValue());
 				dialog_zeugnisfach.setVisible(true);
 			}
