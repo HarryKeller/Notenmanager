@@ -1,11 +1,5 @@
 package Dialog;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,21 +22,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Properties;
 
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import java.awt.Choice;
 
 public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblZeugnisbemerkung;
 	private JLabel lblBitteGebenSie;
@@ -171,7 +160,8 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		{
 			 try 
 			 {
-		        BufferedReader FileReader=new BufferedReader(new FileReader(new java.io.File("textbausteine.csv")));
+		        @SuppressWarnings("resource")
+				BufferedReader FileReader=new BufferedReader(new FileReader(new java.io.File("textbausteine.csv")));
 		        
 		            String zeile="";
 		            String code = this.txtBsp.getText();

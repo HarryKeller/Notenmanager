@@ -1,9 +1,7 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +13,8 @@ import javax.swing.border.EmptyBorder;
 import Fachklassen.Ausbildungszweig;
 import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
-import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Schule;
-import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -33,6 +29,10 @@ import java.awt.event.ActionEvent;
 public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Schueler schueler;
 	Dialog_Schuelerwahl schuelerwahl;
