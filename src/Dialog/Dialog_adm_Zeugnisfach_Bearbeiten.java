@@ -1,5 +1,7 @@
 package Dialog;
 import java.awt.BorderLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,13 +15,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
+import Fachklassen.Ausbildungszweig;
 import Fachklassen.Zeugnisfach;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 
-public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements ActionListener {
+public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements ActionListener, MouseListener {
 
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +44,16 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 	private JButton button_Zurueck;
 	
 	private Zeugnisfach zeugnisfach;
+	
+	private JList<Ausbildungszweig> list_ausbildungszweig = new JList<Ausbildungszweig>();
+	private DefaultListModel<Ausbildungszweig> list_ausbildungszweig_model = new DefaultListModel<Ausbildungszweig>();
+	private JList<Ausbildungszweig> list_neuausbildungszweig = new JList<Ausbildungszweig>();
+	private DefaultListModel<Ausbildungszweig> list_neuausbildungszweig__model = new DefaultListModel<Ausbildungszweig>();
+	
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
+	private JPanel panel_3;
+	private JPanel panel_4;
 	
 
 	public Dialog_adm_Zeugnisfach_Bearbeiten() 
@@ -54,7 +73,7 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 		setTitle("Zeugnisfach bearbeiten");
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 480, 240);
+		setBounds(100, 100, 481, 519);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -74,9 +93,9 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			contentPanel.add(panel, gbc_panel);
 			GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{0, 0};
-			gbl_panel.rowHeights = new int[]{0, 0, 0};
+			gbl_panel.rowHeights = new int[]{127, 119, 106, 0, 0};
 			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			
 			JPanel panel_2 = new JPanel();
@@ -142,11 +161,59 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 			gbc_checkBox_AbschliessendesFach.gridy = 3;
 			panel_2.add(checkBox_AbschliessendesFach, gbc_checkBox_AbschliessendesFach);
 			
+			panel_3 = new JPanel();
+			panel_3.setBorder(new TitledBorder(null, "Ausbildungsrichtungen des Zeugnisfachs", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+			gbc_panel_3.fill = GridBagConstraints.BOTH;
+			gbc_panel_3.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_3.gridx = 0;
+			gbc_panel_3.gridy = 1;
+			panel.add(panel_3, gbc_panel_3);
+			GridBagLayout gbl_panel_3 = new GridBagLayout();
+			gbl_panel_3.columnWidths = new int[]{0, 0};
+			gbl_panel_3.rowHeights = new int[]{119, 0};
+			gbl_panel_3.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel_3.setLayout(gbl_panel_3);
+			list_ausbildungszweig.addMouseListener(this);
+			
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 0;
+			gbc_scrollPane.gridy = 0;
+			panel_3.add(scrollPane, gbc_scrollPane);
+			scrollPane.setViewportView(list_ausbildungszweig);
+			
+			panel_4 = new JPanel();
+			panel_4.setBorder(new TitledBorder(null, "Verfügbare Ausbildungsrichtungen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+			gbc_panel_4.fill = GridBagConstraints.BOTH;
+			gbc_panel_4.insets = new Insets(0, 0, 5, 0);
+			gbc_panel_4.gridx = 0;
+			gbc_panel_4.gridy = 2;
+			panel.add(panel_4, gbc_panel_4);
+			GridBagLayout gbl_panel_4 = new GridBagLayout();
+			gbl_panel_4.columnWidths = new int[]{0, 0};
+			gbl_panel_4.rowHeights = new int[]{106, 0};
+			gbl_panel_4.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel_4.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel_4.setLayout(gbl_panel_4);
+			list_neuausbildungszweig.addMouseListener(this);
+			
+			scrollPane_1 = new JScrollPane();
+			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane_1.gridx = 0;
+			gbc_scrollPane_1.gridy = 0;
+			panel_4.add(scrollPane_1, gbc_scrollPane_1);
+			scrollPane_1.setViewportView(list_neuausbildungszweig);
+			
 			JPanel panel_1 = new JPanel();
 			GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 			gbc_panel_1.fill = GridBagConstraints.BOTH;
 			gbc_panel_1.gridx = 0;
-			gbc_panel_1.gridy = 1;
+			gbc_panel_1.gridy = 3;
 			panel.add(panel_1, gbc_panel_1);
 			GridBagLayout gbl_panel_1 = new GridBagLayout();
 			gbl_panel_1.columnWidths = new int[]{100, 100, 100, 100, 0};
@@ -198,13 +265,53 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 		this.textField_Fachart.setText(this.getZeugnisfach().getFachart());
 		this.checkBox_Vorrueckungsfach.setSelected(this.getZeugnisfach().isVorrueckungsfach());
 		this.checkBox_AbschliessendesFach.setSelected(this.getZeugnisfach().isAbschliessendesFach());
+		list_ausbildungszweig_model.removeAllElements();
+		list_neuausbildungszweig__model.removeAllElements();
+		for(Ausbildungszweig z : getZeugnisfach().getAusbildungszweig())
+		{
+			list_ausbildungszweig_model.addElement(z);
+		}
+		list_ausbildungszweig.setModel(list_ausbildungszweig_model);
+		for(Ausbildungszweig z : Ausbildungszweig.alleLesen())
+		{
+			boolean flag = false;
+			for(Ausbildungszweig e :getZeugnisfach().getAusbildungszweig())
+			{
+				if(z.getAusbidldungsart().equals(e.getAusbidldungsart()))
+				{
+					flag = true;
+				}
+			}
+			if(flag!=true)
+			{
+				list_neuausbildungszweig__model.addElement(z);
+			}
+		}
+		list_neuausbildungszweig.setModel(list_neuausbildungszweig__model);
 	}
 	private void getDatenInMaske() 
 	{
 		this.getZeugnisfach().setBez(this.textField_Bezeichnung.getText());
 		this.getZeugnisfach().setFachart(this.textField_Fachart.getText());
 		this.getZeugnisfach().setAbschliessendesFach(this.checkBox_AbschliessendesFach.isSelected());
-		this.getZeugnisfach().setVorrueckungsfach(this.checkBox_Vorrueckungsfach.isSelected());;
+		this.getZeugnisfach().setVorrueckungsfach(this.checkBox_Vorrueckungsfach.isSelected());
+		
+		for(int i=  0; i<list_ausbildungszweig_model.getSize();i++)
+		{
+			boolean flag = false;
+			for(Ausbildungszweig z: getZeugnisfach().getAusbildungszweig())
+			{
+				if(z.getAusbidldungsart().equals(list_ausbildungszweig_model.getElementAt(i)))
+				{
+					flag = true;
+				}
+			}
+			if(flag!=true)
+			{
+				getZeugnisfach().getAusbildungszweig().add(list_ausbildungszweig_model.getElementAt(i));
+			}
+			
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -245,5 +352,68 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 	}
 	private void setZeugnisfach(Zeugnisfach zeugnisfach) {
 		this.zeugnisfach = zeugnisfach;
+	}
+	public DefaultListModel<Ausbildungszweig> getList_ausbildungszweig_model() {
+		return list_ausbildungszweig_model;
+	}
+	public void setList_ausbildungszweig_model(
+			DefaultListModel<Ausbildungszweig> list_ausbildungszweig_model) {
+		this.list_ausbildungszweig_model = list_ausbildungszweig_model;
+	}
+	public DefaultListModel<Ausbildungszweig> getList_neuausbildungszweig__model() {
+		return list_neuausbildungszweig__model;
+	}
+	public void setList_neuausbildungszweig__model(
+			DefaultListModel<Ausbildungszweig> list_neuausbildungszweig__model) {
+		this.list_neuausbildungszweig__model = list_neuausbildungszweig__model;
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource()==list_ausbildungszweig)
+		{
+			if ( e.getClickCount() == 2 ) 
+			{
+				list_neuausbildungszweig__model.addElement(list_ausbildungszweig.getSelectedValue());
+				list_neuausbildungszweig.setModel(list_neuausbildungszweig__model);
+				list_ausbildungszweig_model.remove(list_ausbildungszweig.getSelectedIndex());
+				list_ausbildungszweig.setModel(list_ausbildungszweig_model);
+			}
+		}
+		else if(e.getSource()==list_neuausbildungszweig)
+		{
+			if ( e.getClickCount() == 2 ) 
+			{
+			    list_ausbildungszweig_model.addElement(list_neuausbildungszweig.getSelectedValue());
+			    list_ausbildungszweig.setModel(list_ausbildungszweig_model);
+			    list_neuausbildungszweig__model.remove(list_neuausbildungszweig.getSelectedIndex());
+				list_neuausbildungszweig.setModel(list_neuausbildungszweig__model);
+			}
+		}
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
