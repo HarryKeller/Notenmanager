@@ -306,22 +306,28 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		else if(dt != null && dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getEnde()))
 		{
 			JOptionPane.showMessageDialog(this, "Datum muss im Schuljahr liegen.");
-		}
-		else if(selectedIndex == 0  && dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()) || selectedIndex == 1
-				&& dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()))
-		{			
-			JOptionPane.showMessageDialog(this, "Sie haben Erstes Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
-		}
-		else if(selectedIndex == 2  && dt.isBefore(sj.getHalbjahr()) || dt.isAfter(sj.getEnde()) || selectedIndex == 3
-				&& dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()))
+		}		
+		else if(selectedIndex == 0 || selectedIndex == 1)
 		{
-			JOptionPane.showMessageDialog(this, "Sie haben Zweits Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
+			if(dt.isBefore(sj.getBeginn()) || dt.isAfter(sj.getHalbjahr()))
+				JOptionPane.showMessageDialog(this, "Sie haben Erstes Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
+			else
+			{
+				ret = true;
+				this.erhebungsdatum = dt;
+			}
+				
 		}
-		else
+		else if(selectedIndex == 2 || selectedIndex == 3)
 		{
-			ret = true;
-			this.erhebungsdatum = dt;
-		}
+			if(dt.isBefore(sj.getHalbjahr()) || dt.isAfter(sj.getEnde()))
+				JOptionPane.showMessageDialog(this, "Sie haben Zweites Halbjahr gewählt, aber ihr Erhebungsdatum liegt nicht in diesem.");
+			else
+			{
+				ret = true;
+				this.erhebungsdatum = dt;
+			}
+		}		
 		
 		return ret;
 	}
