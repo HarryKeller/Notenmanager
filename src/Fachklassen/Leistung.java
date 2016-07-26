@@ -99,13 +99,13 @@ public class Leistung
 				"l "
 				+"INNER JOIN UFachLehrer ufl "
 				+"ON ufl.ufach.id = "+ufach.getId()+" "
-				+ "INNER JOIN Unterrichtsfach uf "
-				+ "ON uf.id = ufl.id "
-				+ "WHERE l.schueler.id = "+schueler.getId()+" "
-				+ "AND l.ufachlehrer.id = ufl.id "
-				+ "AND l.erhebungsdatum > "+ "'"+sj.getBeginn()+"'"
-				+ "AND l.erhebungsdatum < "+ "'"+sj.getEnde()+"'"
-				+ "ORDER BY l.erhebungsdatum";
+				+"INNER JOIN Unterrichtsfach uf "
+				+"ON uf.id = ufl.ufach.id "
+				+"WHERE l.schueler.id = "+schueler.getId()+" "
+				+"AND l.ufachlehrer.id = ufl.id "
+				+"AND l.erhebungsdatum > "+ "'"+sj.getBeginn()+"'"
+				+"AND l.erhebungsdatum < "+ "'"+sj.getEnde()+"'"
+				+"ORDER BY l.erhebungsdatum";
 							
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Leistung", al,sql );
