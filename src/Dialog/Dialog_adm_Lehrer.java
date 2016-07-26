@@ -37,6 +37,10 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 
 	public Dialog_adm_Lehrer()
 	{
+		initGUI();
+	}
+	private void initGUI() {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Lehrer - Auswahl");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
