@@ -263,7 +263,7 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	public boolean ShowDialog()
 	{
 		initGUI();
-		if(!Login.isMehrAlsEinLehrerAdmin())
+		if(!Login.isMehrAlsEinLehrerAdmin()&& login.isAdmin())
 		{
 			chkBox_adm.setEnabled(false);
 		}
