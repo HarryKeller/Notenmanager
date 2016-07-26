@@ -32,8 +32,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	public Schueler schueler;
-	Dialog_Schuelerwahl schuelerwahl;
-	private DatumSJ date = new DatumSJ(LocalDate.now());
+	private Dialog_Schuelerwahl schuelerwahl;
+	public DatumSJ date = new DatumSJ(LocalDate.now());
 	private JLabel lblNotenblattDesSchlers;
 	private JLabel label;
 	private JLabel label_1;
