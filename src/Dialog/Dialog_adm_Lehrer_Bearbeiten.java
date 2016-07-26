@@ -47,8 +47,6 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	{
 		this.lehrer = new Lehrer();
 		login = new Login(lehrer);
-		initGUI();
-		setDatenInMaske();
 	}
 
 	public Dialog_adm_Lehrer_Bearbeiten(Lehrer lehrer)
