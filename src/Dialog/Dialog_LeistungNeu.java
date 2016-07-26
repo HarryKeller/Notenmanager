@@ -114,7 +114,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 		
 		this.cmbbox_tables.addItemListener(this);
 		
-		this._label_1 = new JLabel("Erhebungsdatum (Eingabe)");
+		this._label_1 = new JLabel("Erhebungsdatum (Datepicker)");
 		this._label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 5, 0);
