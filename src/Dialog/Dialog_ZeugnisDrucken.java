@@ -42,8 +42,10 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 	Ausbildungszweig a = new Ausbildungszweig();
 	Schule s = new Schule();
 	String noteschriftl = "";
-	public Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung)
+	String datum;
+	public Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung, String localDate)
 	{
+		this.datum = localDate;
 		this.bemerkung = bemerkung;
 		this.schueler = schueler;
 		this.schuelerwahl = Schuelerwahl;
@@ -82,6 +84,7 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 			parameter.put("datum", "");
 			parameter.put("schulleiter", ""+s.getSchulleiter());
 			parameter.put("lehrer", ""+this.schueler.getKlasse().getIdKlassenleiter());
+			parameter.put("datum", datum);
 			//Arraylist für die Zusammenfassung aller Daten für die Notentabelle erzeugen
 			ArrayList<Map<String, ?>> al = new ArrayList<Map<String, ?>>();
 			//Einzelne Strings für jede mögliche Note anlegen
