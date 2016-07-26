@@ -641,7 +641,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	}
 	
 	//Daten auslesen und Speichern
-	private void getDatenAusMaske()
+	private boolean getDatenAusMaske()
 	{	
 		this.addNewLeistungenToSchuelerFromTable(model_tab1_muendlich, (NotenTableHeader) this.table_tab1_muendl.getTableHeader());
 		this.addNewLeistungenToSchuelerFromTable(model_tab1_schriftl, (NotenTableHeader) this.table_tab1_schriftl.getTableHeader()); 
@@ -660,7 +660,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		else
 		{
 			JOptionPane.showMessageDialog(this, "Speichern abgebrochen! Fehlerhafte Werte in den Tabellen vorhanden.");
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -681,10 +684,11 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		}
 		else if(e.getSource() == this.btn_speichern)
 		{
-			this.getDatenAusMaske();	
-			
-			if(JOptionPane.showConfirmDialog(this, "Speichern erfolgreich! Bearbeitung beenden?") == JOptionPane.YES_OPTION)
-				this.dispose();
+			if(this.getDatenAusMaske())
+			{
+				if(JOptionPane.showConfirmDialog(this, "Speichern erfolgreich! Bearbeitung beenden?") == JOptionPane.YES_OPTION)
+					this.dispose();
+			}			
 		}		
 	}	
 
