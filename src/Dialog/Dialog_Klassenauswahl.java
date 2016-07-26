@@ -343,7 +343,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		this.mitemKlassenBearbeiten.addActionListener(this);
 		this.menuStammdaten.add(this.mitemKlassenBearbeiten);
 		
-		this.mitemFaecherAnlegen = new JMenuItem("F\u00E4cher anlegen");
+		this.mitemFaecherAnlegen = new JMenuItem("F\u00E4cher bearbeiten");
 		this.mitemFaecherAnlegen.addActionListener(this);
 		this.menuStammdaten.add(this.mitemFaecherAnlegen);
 		
@@ -379,9 +379,9 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		else if(e.getActionCommand() == "Fächer anlegen")
+		else if(e.getActionCommand() == "Fächer bearbeiten")
 		{
-			Dialog_adm_FachAnlegen dlg_adm_fach = new Dialog_adm_FachAnlegen();
+			Dialog_adm_Unterrichtsfach dlg_adm_fach = new Dialog_adm_Unterrichtsfach();
 			dlg_adm_fach.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Lehrer bearbeiten")
