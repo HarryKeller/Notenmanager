@@ -1,7 +1,5 @@
 package Dialog;
 
-import javafx.scene.control.DatePicker;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -28,7 +26,6 @@ import org.jdatepicker.impl.UtilDateModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Properties;
 
 @SuppressWarnings("serial")
@@ -58,6 +55,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 	private JTextField textField_erzber;
 	private JLabel lblGeburtsdatum;
 	private UtilDateModel model;
+	private JDatePickerImpl datePicker;
 
 	public Dialog_adm_Schueler_Bearbeiten()
 	{
@@ -272,7 +270,6 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		this.panel.add(this.lblGeburtsdatum, gbc_lblGeburtsdatum);
 		
 		model = new UtilDateModel();
-		//model.setDate(20,04,2014);
 		// Need this...
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -280,8 +277,10 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		// Don't know about the formatter, but there it is...
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		GridBagConstraints gbc_datepicker = new GridBagConstraints();
+		
+		
 		gbc_datepicker.insets = new Insets(5,5,5,5);
 		gbc_datepicker.gridwidth = 2;
 		gbc_datepicker.gridx = 1;
@@ -300,7 +299,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		this.textField_Anschrift.setText(schueler.getAnschrift());
 		this.textField_Telefon.setText(schueler.getTelnr());
 		this.textField_erzber.setText(schueler.getErziehungsberechtigte());			
-		this.model.setValue(new Date(schueler.getGebdat().getYear()+schueler.getGebdat().getMonthValue()+schueler.getGebdat().getDayOfMonth()));
+		datePicker.getJFormattedTextField().setText(schueler.getGebdat().toString());
 		
 		if(schueler.getGeschl().equals("m"))
 		{
