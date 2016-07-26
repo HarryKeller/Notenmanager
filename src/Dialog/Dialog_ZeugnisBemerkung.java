@@ -22,8 +22,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDate;
+import java.util.Properties;
 
 import javax.swing.JTextArea;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 {
@@ -46,6 +52,10 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 	String erg;
 	private JTextArea textField;
 	private JLabel lblDatum;
+	private UtilDateModel model;
+	private JDatePickerImpl datePicker;
+	private String datum;
+	private JLabel lblAushndigung;
 
 	public Dialog_ZeugnisBemerkung(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl)
 	{
@@ -61,9 +71,9 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		lblZeugnisbemerkung = new JLabel("Zeugnisbemerkung");
 		lblZeugnisbemerkung.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
@@ -84,8 +94,8 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		lblCode = new JLabel("Code:");
 		lblCode.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 13));
 		GridBagConstraints gbc_lblCode = new GridBagConstraints();
-		gbc_lblCode.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCode.anchor = GridBagConstraints.EAST;
+		gbc_lblCode.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCode.gridx = 0;
 		gbc_lblCode.gridy = 2;
 		contentPane.add(lblCode, gbc_lblCode);
@@ -118,18 +128,48 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 3;
 		contentPane.add(textField, gbc_textField);
-		lblDatum = new JLabel("Datum:");
+		lblDatum = new JLabel("Datum der");
 		lblDatum.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 13));
 		GridBagConstraints gbc_lblDatum = new GridBagConstraints();
+		gbc_lblDatum.anchor = GridBagConstraints.EAST;
 		gbc_lblDatum.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatum.gridx = 0;
 		gbc_lblDatum.gridy = 4;
 		contentPane.add(lblDatum, gbc_lblDatum);
+		
+		model = new UtilDateModel();
+		// Need this...
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		// Don't know about the formatter, but there it is...
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		GridBagConstraints gbc_datepicker = new GridBagConstraints();
+				
+		gbc_datepicker.insets = new Insets(5,5,5,5);
+		gbc_datepicker.gridwidth = 2;
+		gbc_datepicker.gridx = 1;
+		gbc_datepicker.gridy = 5;
+		gbc_datepicker.fill = GridBagConstraints.BOTH;
+		gbc_datepicker.anchor = GridBagConstraints.NORTH;
+		this.contentPane.add(datePicker, gbc_datepicker);
+		lblAushndigung = new JLabel("Aush\u00E4ndigung:");
+		lblAushndigung.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 13));
+		GridBagConstraints gbc_lblAushndigung = new GridBagConstraints();
+		gbc_lblAushndigung.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAushndigung.gridx = 0;
+		gbc_lblAushndigung.gridy = 5;
+		contentPane.add(lblAushndigung, gbc_lblAushndigung);
+		
+		
 		GridBagConstraints gbc_btnWeiter = new GridBagConstraints();
+		gbc_btnWeiter.gridwidth = 2;
 		gbc_btnWeiter.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnWeiter.insets = new Insets(0, 0, 0, 5);
-		gbc_btnWeiter.gridx = 1;
-		gbc_btnWeiter.gridy = 5;
+		gbc_btnWeiter.gridx = 0;
+		gbc_btnWeiter.gridy = 6;
 		contentPane.add(btnWeiter, gbc_btnWeiter);
 		btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(this);
@@ -137,7 +177,7 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		gbc_btnAbbrechen.gridwidth = 2;
 		gbc_btnAbbrechen.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAbbrechen.gridx = 2;
-		gbc_btnAbbrechen.gridy = 5;
+		gbc_btnAbbrechen.gridy = 6;
 		contentPane.add(btnAbbrechen, gbc_btnAbbrechen);
 	}
 
@@ -147,7 +187,8 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		if(action.equals("Weiter"))
 		{
 			this.bemerkung = this.textField.getText();
-			Dialog_ZeugnisDrucken dzd = new Dialog_ZeugnisDrucken(schueler, schuelerwahl, bemerkung);
+			datum=model.getDay()+"."+model.getMonth()+"."+model.getYear();
+			Dialog_ZeugnisDrucken dzd = new Dialog_ZeugnisDrucken(schueler, schuelerwahl, bemerkung, datum);
 			dzd.setVisible(true);
 			this.dispose();
 		}
