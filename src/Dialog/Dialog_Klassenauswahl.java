@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -35,7 +36,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, ItemListener
+public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, ItemListener
 
 {
 	private JPanel panel_combobox;
@@ -124,6 +125,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 	
 	private void initGUI() 
 	{
+		this.setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 525, 325);
 		GridBagLayout gridBagLayout = new GridBagLayout();
