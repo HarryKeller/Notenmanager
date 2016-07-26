@@ -358,6 +358,8 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		else
 		{
 			this.dispose();
+			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
+			dlg_schueler.setVisible(true);
 		}
 	}
 }
