@@ -387,7 +387,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		else if(e.getActionCommand() == "Lehrer bearbeiten")
 		{
 			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
-			dlg_adm_lehrer.setVisible(true);
+			dlg_adm_lehrer.setVisible(true);	
 		}
 		else if(e.getActionCommand() == "Klassen bearbeiten")
 		{
