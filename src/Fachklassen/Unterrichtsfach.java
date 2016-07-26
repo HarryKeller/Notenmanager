@@ -65,9 +65,9 @@ public class Unterrichtsfach {
 	
 	//AlleLesen Methoden
 	//-------------------------------------------
-	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer , Klasse klasse,LocalDate ausgangsdatum)
+	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer , Klasse klasse, LocalDate ausgangsdatum)
 	{
-		String hql= " uf "
+		String hql= " uf "	//Alle Unterrichtsfächer einer Klasse
 				+"INNER JOIN UFachLehrer ufl "
 				+"ON ufl.ufach.id = uf.id "
 				+"AND ufl.lehrer.id = "+lehrer.getId()+" "
@@ -76,9 +76,11 @@ public class Unterrichtsfach {
 		ArrayList<Object[]>al = new ArrayList<Object[]>();
 		DBZugriff.alleLesen("Unterrichtsfach", al, hql);
 		ArrayList<Unterrichtsfach>ret = new ArrayList<Unterrichtsfach>();
-		
+			
 		for(Object[]o : al)
 		{
+				
+			
 			for(Zeugnisfach zf:klasse.getlstzeugnisfach())
 			{
 				//System.out.println(  zf.getId()+"           "+((Unterrichtsfach)o[0]).getZfach().getId() );
@@ -87,6 +89,7 @@ public class Unterrichtsfach {
 					ret.add((Unterrichtsfach) o[0]);
 				}
 			}
+			
 		}
 		
 		
