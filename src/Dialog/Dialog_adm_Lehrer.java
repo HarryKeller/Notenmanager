@@ -2,7 +2,6 @@ package Dialog;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,8 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import Fachklassen.Lehrer;
-import Fachklassen.UFachLehrer;
-import Persistenz.DBZugriff;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
