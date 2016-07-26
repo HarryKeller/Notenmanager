@@ -134,6 +134,7 @@ public class Zeugnisfach {
 	
 	//override-Methoden
 	//------------------------------------------------------
+	@Override
 	public String toString()
 	{
 		return this.bez;
