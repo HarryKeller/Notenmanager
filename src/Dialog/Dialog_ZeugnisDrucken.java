@@ -1,9 +1,7 @@
 package Dialog;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +13,8 @@ import javax.swing.border.EmptyBorder;
 import Fachklassen.Ausbildungszweig;
 import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
-import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Schule;
-import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisfach;
 import Fachklassen.Zeugnisnote;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,10 +23,16 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Dialog_ZeugnisDrucken extends JFrame
+public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Schueler schueler;
 	Dialog_Schuelerwahl schuelerwahl;
@@ -50,6 +52,7 @@ public class Dialog_ZeugnisDrucken extends JFrame
 		JRViewer viewer = new JRViewer(p);
 		contentPane.add(viewer);
 		btnZurck = new JButton("Zur\u00FCck");
+		btnZurck.addActionListener(this);
 		contentPane.add(btnZurck, BorderLayout.SOUTH);
 	}
 	
@@ -82,13 +85,19 @@ public class Dialog_ZeugnisDrucken extends JFrame
 			//Arraylist für die Zusammenfassung aller Daten für die Notentabelle erzeugen
 			ArrayList<Map<String, ?>> al = new ArrayList<Map<String, ?>>();
 			//Einzelne Strings für jede mögliche Note anlegen
-		    Zeugnisnote zn = new Zeugnisnote(this.schueler);
+		    ArrayList<Zeugnisnote> zn = Zeugnisnote.alleLesen(this.schueler, LocalDate.now());
 		    fach = Zeugnisfach.alleLesen(new Klasse(this.schueler.getKlasse().getid()));
 			for(Zeugnisfach f : this.fach)
 			{	
 				HashMap<String, String> hm = new HashMap<String, String>();
 				hm.put("fach", ""+f.getBez());
-				hm.put("note", ""+zn.berechneNote(f, this.schueler));
+				for(Zeugnisnote z : zn)
+				{
+					if(z.getZeugnisfach().getBez().equals(f.getBez()))
+					{
+						hm.put("note", ""+z.getNoteZeugnis());
+					}
+				}
 				al.add(hm);
 			}	
 	
@@ -107,4 +116,13 @@ public class Dialog_ZeugnisDrucken extends JFrame
 		return null;
 	}
 
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		String action = arg0.getActionCommand();
+		if(action.equals("Zurück"))
+		{
+			this.dispose();
+			this.schuelerwahl.setVisible(true);
+		}
+	}
 }

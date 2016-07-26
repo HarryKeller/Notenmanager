@@ -103,8 +103,6 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		button_Zurueck.addActionListener(this);
 		panel.add(button_Zurueck, gbc_button_Zurueck);
 		
-		
-		DBZugriff.initDB();
 		this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
 	}
 
@@ -114,12 +112,18 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		if(arg0.getActionCommand().equals(this.button_Lehrer_Anlegen.getActionCommand()))
 		{
 			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten();
-			dialog_lehrer.setVisible(true);
+			if(dialog_lehrer.ShowDialog())
+			{
+				this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
+			}
 		}
 		if(arg0.getActionCommand().equals(this.button_Lehrer_bearbeiten.getActionCommand()))
 		{
 			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten(((Lehrer)this.list_Lehrer.getSelectedValue()));
-			dialog_lehrer.setVisible(true);
+			if(dialog_lehrer.ShowDialog())
+			{
+				this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
+			}
 		}
 		if(arg0.getActionCommand().equals(this.btnLehrerKndigen.getActionCommand()))
 		{
