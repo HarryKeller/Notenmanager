@@ -41,6 +41,8 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	private JLabel lblAdmin;
 	private JCheckBox chkBox_adm;
 	private Login login;
+	private boolean gesichert;
+	
 	public Dialog_adm_Lehrer_Bearbeiten()
 	{
 		this.lehrer = new Lehrer();
@@ -53,12 +55,6 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	{
 		this.lehrer = lehrer;
 		login = new Login(lehrer);				
-		initGUI();
-		if(!Login.isMehrAlsEinLehrerAdmin())
-		{
-			chkBox_adm.setEnabled(false);
-		}
-		setDatenInMaske();
 	}
 
 	public void initGUI()
@@ -266,6 +262,19 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 		this.login.setAdmin(chkBox_adm.isSelected());
 		
 	}
+	public boolean ShowDialog()
+	{
+		initGUI();
+		if(!Login.isMehrAlsEinLehrerAdmin())
+		{
+			chkBox_adm.setEnabled(false);
+		}
+		setDatenInMaske();
+		
+		this.setVisible(true);
+		
+		return this.gesichert;
+	}
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
@@ -276,8 +285,12 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 				if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich speichern?", "Achtung!", JOptionPane.YES_NO_OPTION))
 				{
 					getDatenInMaske();
+					lehrer.setArbeitetAnDieserSchule(true);
 					lehrer.speichern();
 					login.speichern();
+					
+					this.gesichert = true;
+					
 					this.dispose();
 				}
 				else
