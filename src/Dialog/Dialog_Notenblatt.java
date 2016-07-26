@@ -9,6 +9,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
+import Fachklassen.DatumSJ;
 import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
@@ -16,6 +17,7 @@ import Fachklassen.Unterrichtsfach;
 import java.awt.Color;
 
 import javax.swing.JScrollPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
@@ -30,10 +32,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	public Schueler schueler;
-	Dialog_Schuelerwahl schuelerwahl;
-	public final static LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");
-	public final static LocalDate BEGINN_HALBJAHR = LocalDate.parse("2016-02-25");
-	public final static LocalDate ENDE_SCHULJAHR = LocalDate.parse("2016-08-01");
+	private Dialog_Schuelerwahl schuelerwahl;
+	public DatumSJ date = new DatumSJ(LocalDate.now());
 	private JLabel lblNotenblattDesSchlers;
 	private JLabel label;
 	private JLabel label_1;
@@ -168,11 +168,11 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 			zeile[4] = "";
 			zeile[0] = f.getBez();
 			//Leistungen für das Jeweilige Fach des Schülers lesen
-			for(Leistung l : Leistung.AlleLesen(schueler, f))
+			for(Leistung l : Leistung.AlleLesen(schueler, f, date))
 			{
 				if(f.getId() == l.getUfachlehrer().getUfach().getId())
 				{
-					if(l.getErhebungsdatum().isBefore(BEGINN_HALBJAHR))
+					if(l.getErhebungsdatum().isBefore(this.date.getHalbjahr()))
 					{
 						if(l.getLeistungsart().getGewichtung() == 1)
 						{
@@ -183,7 +183,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 							zeile[2] += " | "+l.getNotenstufe()+" | ";
 						}
 					}
-					else if(l.getErhebungsdatum().isAfter(BEGINN_HALBJAHR))
+					else if(l.getErhebungsdatum().isAfter(this.date.getHalbjahr()))
 					{
 						if(l.getLeistungsart().getGewichtung() == 1)
 						{
