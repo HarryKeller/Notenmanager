@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import Fachklassen.DatumSJ;
+import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
 import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
@@ -32,7 +33,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	public Schueler schueler;
-	private Dialog_Schuelerwahl schuelerwahl;
+	private Lehrer lehrer;
 	public DatumSJ date = new DatumSJ(LocalDate.now());
 	private JLabel lblNotenblattDesSchlers;
 	private JLabel label;
@@ -45,11 +46,11 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private JLabel lbl_klasse;
 	public ArrayList<Unterrichtsfach> fach = new ArrayList<Unterrichtsfach>();
 
-	public Dialog_Notenblatt(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl) 
+	public Dialog_Notenblatt(Schueler schueler, Lehrer lehrer) 
 	{
 		fach = Unterrichtsfach.alleLesen(schueler);
 		this.schueler = schueler;
-		this.schuelerwahl = Schuelerwahl;
+		this.lehrer = lehrer;
 		initGUI();
 		this.setDatenInMaske();	
 	}
@@ -133,7 +134,6 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		String action = e.getActionCommand();
 		if(action.equals("Zurück"))
 		{
-			this.schuelerwahl.setVisible(true);
 			this.dispose();
 		}
 		else if(action.equals("noton"))
@@ -147,7 +147,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	{
 		
 		this.lblSchler.setText(this.schueler.getNachname() + " " + this.schueler.getVorname());
-		this.lbl_lehrer.setText("Lehrer: " + this.schuelerwahl.lehrer.getNachname() + " " + this.schuelerwahl.lehrer.getVorname());
+		this.lbl_lehrer.setText("Lehrer: " + this.lehrer.getNachname() + " " + this.lehrer.getVorname());
 		this.lbl_klasse.setText("Klasse: " + this.schueler.getKlasseid().getBez());
 		filltable();
 	}
