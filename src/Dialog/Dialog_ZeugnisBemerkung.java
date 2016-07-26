@@ -186,11 +186,13 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		                	if(this.schueler.getGeschl().equals("m"))
 		                	{
 		                		erg=split[1];
+		                		erg.substring(1);
 		                	    this.textField.setText(this.textField.getText() + " " + split[1]);
 		                	}
 		                	else
 		                	{
 		                		erg=split[2];
+		                		erg.substring(1);
 		                		this.textField.setText(this.textField.getText() + " " + split[2]);
 		                	}
 		                }
