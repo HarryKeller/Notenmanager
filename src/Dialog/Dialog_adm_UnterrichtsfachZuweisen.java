@@ -67,7 +67,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 	private void initGUI() 
 	{
 		setTitle("Unterrichtsf\u00E4cher zuweisen");
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 375);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

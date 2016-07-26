@@ -181,6 +181,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 				panel.add(button_Zeugnis, gbc_button_Zeugnis);
 				{
 					this.btnZurck = new JButton("Zur\u00FCck");
+					this.btnZurck.addActionListener(this);
 					GridBagConstraints gbc_btnZurck = new GridBagConstraints();
 					gbc_btnZurck.fill = GridBagConstraints.HORIZONTAL;
 					gbc_btnZurck.gridx = 3;
