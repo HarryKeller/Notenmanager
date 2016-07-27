@@ -1,27 +1,16 @@
 package Dialog;
 
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import org.apache.poi.util.StringUtil;
-
 import Fachklassen.Leistung;
 import Fachklassen.Leistungsart;
-import antlr.StringUtils;
 
 public class NotenPropertyChangeListener implements PropertyChangeListener, Runnable
 {
