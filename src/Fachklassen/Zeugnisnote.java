@@ -67,6 +67,9 @@ public class Zeugnisnote
 	/**
 	 * Liest alle Zeugnisnoten eines Schülers für ein Ausgewähltes jahr
 	 * diese Methode scheint zu funktioneren, sollte jedoch noch einmal getestet werden
+	 * @param Schueler
+	 * @param DatumSJ
+	 * @return
 	 */
 	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,DatumSJ jahr)
 	{		
@@ -124,7 +127,7 @@ public class Zeugnisnote
 	 * Da Diese Methode mit LocalDate.now() arbeitet, können Leistungen,welche ein Schüler in einem Fach erbracht hat
 	 * nicht im Jahr darauf(also in einem neuen Schuljahr) erneut berechnetn werden.
 	 * hierfür wäre eine weiter übergabeparameter z.B. DatumSJ nötig
-	 * @param Unterrichtsfach uf
+	 * @param Unterrichtsfach 
 	 * @return
 	 */
 	public double berechneNote(Unterrichtsfach uf)
@@ -206,7 +209,7 @@ public class Zeugnisnote
 	 * Berechnet die Zeugnisnote für ein Zeugnisfach aus den und den üebrgebene Schüler
 	 * Da dies keine static Methode ist und zeugnisnote eine Schüler als instanvariable hat
 	 * ergibt das übergeben eines Schülers heir keine Sinn!
-	 * @param zf
+	 * @param Zeugnisfach
 	 * @param schueler
 	 * @return
 	 */
@@ -303,7 +306,7 @@ public class Zeugnisnote
 	 * Aus dem Methodennamen geht nicht hervor was diese Methode macht, 
 	 * deshalbt kann ich sie auch nicht weiter kommentieren...........Danny Lemke für mehr fragen
 	 * genau wie bei allem anderen der Zeugnisnote
-	 * @param uf
+	 * @param Unterrichtsfach
 	 * @return
 	 */
 	public double berechneZZNote(Unterrichtsfach uf)
