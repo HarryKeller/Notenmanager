@@ -141,8 +141,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 			this.dispose();
 		}
 		else if(action.equals("noton"))
-		{
-			Dialog_Druckansicht.initGui();
+		{	
+			Dialog_Druckansicht.initGui(this.schueler,this.fach,this.date);
 			Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
 			this.setVisible(false);
 		}

@@ -151,7 +151,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			panel.setLayout(gbl_panel);
 			{
-				button_Notenblatt = new JButton("Notenblatt anzeigen");
+				button_Notenblatt = new JButton("Notenübersicht anzeigen");
 				button_Notenblatt.addActionListener(this);
 				GridBagConstraints gbc_button_Notenblatt = new GridBagConstraints();
 				gbc_button_Notenblatt.fill = GridBagConstraints.HORIZONTAL;
@@ -201,7 +201,6 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			try
 			{
 				Dialog_Notenblatt.initDialog((Schueler)this.list_Schueler.getSelectedValue(), this.lehrer);
-				this.setVisible(false);
 				Dialog_Klassenauswahl.dlg_Notenblatt.setVisible(true);
 			}
 			catch(Exception ex)

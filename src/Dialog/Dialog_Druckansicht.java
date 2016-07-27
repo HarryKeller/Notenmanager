@@ -17,8 +17,12 @@ import javax.swing.border.EmptyBorder;
 
 
 
+
+
+import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
 import Fachklassen.Leistung;
+import Fachklassen.Schueler;
 import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisnote;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -36,15 +40,18 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-    Dialog_Notenblatt notenblatt;
-    ArrayList<Unterrichtsfach> fach;
+    private ArrayList<Unterrichtsfach> fach;
+    private DatumSJ date;
+    private Schueler schueler;
     private JButton btnZurck;
+    
 	
-	private Dialog_Druckansicht( )
+	private Dialog_Druckansicht(Schueler s,ArrayList<Unterrichtsfach> uf,DatumSJ date)
 	{
 		//Notenblatt DialogDaten der JTable übernehmen, um an Daten für Notenblatt Jasperreport zu kommen
-		this.notenblatt = notenblatt;
-		this.fach = notenblatt.fach;
+		this.fach = uf;
+		this.schueler = s;
+		this.date = date;
 		//GUI erstellen
 		initGUI();
 		//Jasperprint für JRViewer erzeugen
@@ -74,15 +81,15 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 			//HashMap für Parameterbelegung im Report
 			HashMap<String, Object> parameter = new HashMap<String, Object>();
 			//Parameter belegen
-			parameter.put("namevorname", this.notenblatt.schueler.getNachname() + " " + this.notenblatt.schueler.getVorname());
-			parameter.put("geschlecht", this.notenblatt.schueler.getGeschl());
-			parameter.put("klasse", this.notenblatt.schueler.getKlasseid().getBez());
-			parameter.put("schuljahr", notenblatt.date.getBeginn().getYear() + "/" + notenblatt.date.getEnde().getYear());
+			parameter.put("namevorname", this.schueler.getNachname() + " " + this.schueler.getVorname());
+			parameter.put("geschlecht", this.schueler.getGeschl());
+			parameter.put("klasse", this.schueler.getKlasseid().getBez());
+			parameter.put("schuljahr", date.getBeginn().getYear() + "/" + date.getEnde().getYear());
 			parameter.put("anschrift", "DLC für 19,99");
 			parameter.put("tel", "DLC für 19,99");
 			parameter.put("erziehung", "DLC für 19,99");
-			parameter.put("gebdatum", this.notenblatt.schueler.getGebdat().getDayOfMonth() + "." + this.notenblatt.schueler.getGebdat().getMonth() + "." + this.notenblatt.schueler.getGebdat().getYear());
-			parameter.put("bekenntnis", this.notenblatt.schueler.getKonfession());
+			parameter.put("gebdatum", this.schueler.getGebdat().getDayOfMonth() + "." + this.schueler.getGebdat().getMonth() + "." + this.schueler.getGebdat().getYear());
+			parameter.put("bekenntnis", this.schueler.getKonfession());
 			parameter.put("fehl_z_t", "8");
 			parameter.put("fehl_z_s", "2");
 			parameter.put("fehl_z_u", "2");
@@ -96,8 +103,8 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 			String schula1j = "";
 			String mündl2j = "";
 			String schula2j = "";
-		    Zeugnisnote zn = new Zeugnisnote(notenblatt.schueler);
-		    Zeugnisnote zzn = new Zeugnisnote(notenblatt.schueler);
+		    Zeugnisnote zn = new Zeugnisnote(schueler);
+		    Zeugnisnote zzn = new Zeugnisnote(schueler);
 		    double zz = 0.00;
 		    double jz = 0.00;
 				for(Unterrichtsfach f : this.fach)
@@ -120,12 +127,12 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 					{
 						hm.put("zz", ""+zzn.berechneZZNote(f));
 					}
-					for(Leistung l : Leistung.AlleLesen(this.notenblatt.schueler, f))
+					for(Leistung l : Leistung.AlleLesen(this.schueler, f))
 					{
 						//Logische überprüfung in welche Spalte die Noten kommen müssen
 						if(f.getId() == l.getUfachlehrer().getUfach().getId())
 						{
-							if(l.getErhebungsdatum().isBefore(notenblatt.date.getHalbjahr()))
+							if(l.getErhebungsdatum().isBefore(this.date.getHalbjahr()))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
@@ -136,7 +143,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 									schula1j = schula1j + "|" + l.getNotenstufe() + "|";
 								}
 							}
-							else if(l.getErhebungsdatum().isAfter(notenblatt.date.getHalbjahr()))
+							else if(l.getErhebungsdatum().isAfter(this.date.getHalbjahr()))
 							{
 								if(l.getLeistungsart().getGewichtung() == 1)
 								{
@@ -175,9 +182,9 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 	{
 		this.dispose();
 	}
-	public static void initGui()
+	public static void initGui(Schueler s,ArrayList<Unterrichtsfach> uf,DatumSJ date)
 	{
-		Dialog_Klassenauswahl.dlg_druckansicht = new Dialog_Druckansicht();
+		Dialog_Klassenauswahl.dlg_druckansicht = new Dialog_Druckansicht(s, uf, date);
 		
 		Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
 		Dialog_Klassenauswahl.dlg_druckansicht.toFront();
