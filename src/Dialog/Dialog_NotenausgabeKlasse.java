@@ -73,8 +73,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	
 	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
 	{
-		this.setExtendedState(MAXIMIZED_BOTH);
-		
+		//this.setExtendedState(MAXIMIZED_BOTH);
 		this.lehrer = l;
 		this.klasse = k;
 		this.fach = f;
@@ -84,7 +83,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.setDatenInMaske();
 	}
 	
-	private void initGUI() {			
+	private void initGUI() {	
 		setTitle("Klassen Noten\u00FCbersicht");
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
