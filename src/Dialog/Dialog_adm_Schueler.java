@@ -33,12 +33,14 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 	private DefaultListModel<Schueler> model = new DefaultListModel<Schueler>();
 	private JList<Schueler> list_schueler;
 
+	//Konstruktor
 	public Dialog_adm_Schueler()
 	{
 		initGUI();
 		setDatenInMaske();
 	}
 		
+	//Aufbauen der GUI
 	private void initGUI() 
 	{
 		setTitle("Sch\u00FCler auswahl");
@@ -120,6 +122,7 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 		this.panel_buttons.add(this.btnZurueck, gbc_btnZurueck);
 	}
 
+	//Alle Schüler lesen und in model/Liste speichern
 	private void setDatenInMaske()
 	{
 		for(Schueler s : Schueler.alleLesen())
@@ -128,20 +131,24 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 		}
 	}
 	
+	//Sobald Event ausgelöst wird...
 	public void actionPerformed(ActionEvent arg0) 
 	{
+		//... ruft neuen Dialog Schüler Bearbeiten mit Selectierten Schüler auf
 		if(arg0.getActionCommand().equals(btnSchuelerBearbeiten.getActionCommand()))
 		{
 			Dialog_adm_Schueler_Bearbeiten dlg_schueler = new Dialog_adm_Schueler_Bearbeiten(list_schueler.getSelectedValue());
 			dlg_schueler.setVisible(true);
 			this.dispose();
 		}
+		//... ruft neuen Dialog Schüler Bearbeiten zum neuanlegen auf
 		else if(arg0.getActionCommand().equals(btnSchuelerAnlegen.getActionCommand()))
 		{
 			Dialog_adm_Schueler_Bearbeiten dlg_schueler = new Dialog_adm_Schueler_Bearbeiten();
 			dlg_schueler.setVisible(true);
 			this.dispose();
 		}
+		// schließt den Dialog
 		else
 		{
 			this.dispose();
