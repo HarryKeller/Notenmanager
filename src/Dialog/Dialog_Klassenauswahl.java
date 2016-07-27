@@ -240,6 +240,21 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 				{
 					btnFachuebersicht.setEnabled(true);
 				}
+				
+				//Sollte der Lehrer nicht der Klassenleiter oder Stv Klassenleiter sein:
+				if(comboBox_Klassen.getItemCount() == 0) return;
+				if(((Klasse)comboBox_Klassen.getSelectedItem()).getKlassenleiter().getId() == lehrer.getId()
+						|| ((Klasse)comboBox_Klassen.getSelectedItem()).getStvklassenleiter().getId() == lehrer.getId() )
+				{
+					btnKlassenuebersicht.setEnabled(true);
+				}
+				else
+				{
+					btnKlassenuebersicht.setEnabled(false);
+				}
+				
+				
+				
 				comboBox_Faecher.setEnabled(true);
 				comboBox_Klassen.setEnabled(true);
 				
