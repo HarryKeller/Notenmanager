@@ -16,10 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import Fachklassen.Lehrer;
+import Fachklassen.UFachLehrer;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ListSelectionModel;
@@ -136,6 +138,11 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 				if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Wollen sie den Lehrer wirklich kündigen?", "Warnung!", JOptionPane.YES_NO_OPTION))
 				{
 					this.list_Lehrer.getSelectedValue().setArbeitetAnDieserSchule(false);
+					for(UFachLehrer ufl: UFachLehrer.alleLesen(this.list_Lehrer.getSelectedValue()))
+					{
+						ufl.setaustrittsdatum(LocalDate.now());
+						ufl.speichern();
+					}
 					this.list_Lehrer.getSelectedValue().speichern();
 					this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));			
 				}

@@ -66,6 +66,23 @@ public class UFachLehrer
 		else return true;
 	
 	}
+	/**
+	 * Alle Sätze in UFachLehrer, in denen der Lehrer zurzeit noch unterrichtet
+	 * @param l
+	 * @return
+	 */
+	public static ArrayList<UFachLehrer>alleLesen(Lehrer l)
+	{
+		String hql=" ufl "
+				+"WHERE ufl.lehrer.id = "+l.getId() +" "
+				+"AND ufl.austrittsdatum> '"+LocalDate.now()+"'";
+		ArrayList<UFachLehrer>al = new ArrayList<UFachLehrer>();
+		DBZugriff.alleLesen("UFachLehrer", al, hql);
+		return al;
+		
+	}
+	
+	
 	public static boolean unterrichtetNoch(Lehrer lehrer)
 	{
 		
@@ -114,7 +131,17 @@ public class UFachLehrer
 		return al.get(0);
 		
 	}
+	//-----------------------------------------
 	
+	//Override Methoden
+	public String toString()
+	{
+		return ""+this.id;
+	}
+	
+	
+	//DB-Methoden
+	//------------------------------------------
 	public boolean speichern()
 	{
 		return DBZugriff.speichern(this);
