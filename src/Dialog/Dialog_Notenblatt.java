@@ -48,9 +48,11 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 
 	public Dialog_Notenblatt(Schueler schueler, Lehrer lehrer) 
 	{
+		//Fach-Array füllen und restliche Parameter in Klasse speichern
 		fach = Unterrichtsfach.alleLesen(schueler);
 		this.schueler = schueler;
 		this.lehrer = lehrer;
+		//GUI-Aufbauen
 		initGUI();
 		this.setDatenInMaske();	
 	}
@@ -131,6 +133,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		
 	public void actionPerformed(ActionEvent e) 
 	{
+		//Button-Abfrage
 		String action = e.getActionCommand();
 		if(action.equals("Zurück"))
 		{
@@ -145,7 +148,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	}
 	private void setDatenInMaske()
 	{
-		
+		//Label mit Daten füllen
 		this.lblSchler.setText(this.schueler.getNachname() + " " + this.schueler.getVorname());
 		this.lbl_lehrer.setText("Lehrer: " + this.lehrer.getNachname() + " " + this.lehrer.getVorname());
 		this.lbl_klasse.setText("Klasse: " + this.schueler.getKlasseid().getBez());
@@ -153,12 +156,13 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	}
 	private void filltable()
 	{			
-		//Array mit Fächern füllen
-
+		//Tabellenüberschriften erstellen (Multidimensionales String-Array)
 		String[] spaltenNamen = { "Fach", "Mündlich 1. Halbjahr", "Schriftlich 1. Halbjahr", "Mündlich 2. Halbjahr", "Schriftlich 2. Halbjahr"};
 		String[] zeile = new String[5];
 		int i = 0;
+		//Multidimensionales Object-Array erstellen, um Spalten der Tabelle zu füllen
 		Object[][] daten = new Object[fach.size()][5];
+		//Über jedes Fach schleifen
 		for(Unterrichtsfach f : fach)
 		{
 			zeile[0] = "";
@@ -167,13 +171,16 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 			zeile[3] = "";
 			zeile[4] = "";
 			zeile[0] = f.getBez();
-			//Leistungen für das Jeweilige Fach des Schülers lesen
+			//Über jede Leistung, welche für den Schüler, bzw für das Fach vorhanden ist, schleifen
 			for(Leistung l : Leistung.AlleLesen(schueler, f, date))
 			{
+				//Passendes Fach finden
 				if(f.getId() == l.getUfachlehrer().getUfach().getId())
 				{
+					//Prüfen ob Note im ersten Halbjahr liegt
 					if(l.getErhebungsdatum().isBefore(this.date.getHalbjahr()))
 					{
+						//Gewichtung prüfen
 						if(l.getLeistungsart().getGewichtung() == 1)
 						{
 							zeile[1] += " | "+l.getNotenstufe()+" | ";
@@ -183,8 +190,10 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 							zeile[2] += " | "+l.getNotenstufe()+" | ";
 						}
 					}
+					//Prüfen ob Note im zweiten Halbjahr liegt
 					else if(l.getErhebungsdatum().isAfter(this.date.getHalbjahr()))
 					{
+						//Gewichtung prüfen
 						if(l.getLeistungsart().getGewichtung() == 1)
 						{
 							zeile[3] += " | "+l.getNotenstufe()+" | ";
@@ -196,6 +205,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 					}
 				}
 			}
+			//Zeilen in Daten-Objekt speichern + Abfrage ob Noten vorhanden sind
 			daten[i][0] = zeile[0];
 			if(zeile[1] != "")
 			{
