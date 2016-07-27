@@ -50,7 +50,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	{
 		//Fach-Array füllen und restliche Parameter in Klasse speichern
 		fach = Unterrichtsfach.alleLesen(schueler);
-		this.schueler = schueler;
+		this.schueler = new Schueler(schueler.getId());
 		this.lehrer = lehrer;
 		//GUI-Aufbauen
 		initGUI();

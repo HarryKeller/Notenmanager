@@ -124,6 +124,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		this.panel.add(this.lblUFach, gbc_lblUFach);
 		
 		this.comboBox_UFach = new JComboBox<Unterrichtsfach>();
+		this.comboBox_UFach.setMaximumRowCount(20);
 		this.comboBox_UFach.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_comboBox_UFach = new GridBagConstraints();
 		gbc_comboBox_UFach.gridwidth = 2;

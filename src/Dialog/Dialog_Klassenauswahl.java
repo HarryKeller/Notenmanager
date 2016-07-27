@@ -58,15 +58,15 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 	public static Dialog_adm_Zeugnisfach dlg_adm_Zeugnisfach = null;	
 	public static Dialog_adm_ZeugnisfachZurKlasseUebersicht dlg_adm_ZeugnisfachZurKlasseUebersicht = null;
 	public static Dialog_Druckansicht dlg_druckansicht = null;		
-	public static Dialog_Klassenauswahl dlg_Klassenauswahl = null;			//Hautpdialog
-	public static Dialog_KlassenWechseln dlg_KlassenWechsel = null;		//fertig
-	public static Dialog_LeistungNeu dlg_LeistungNeu = null;		//Fertig
-	public static Dialog_NotenausgabeKlasse dlg_NotenausgabeKlasse = null;	//fertig
-	public static Dialog_Notenblatt dlg_Notenblatt = null;	//Fertig
-	public static Dialog_Schuelerwahl dlg_Schuelerwahl = null;	//Fertig
-	public static Dialog_ZeugnisBemerkung dlg_Zeugnisbemerkung = null;	//Fertig
-	public static Dialog_ZeugnisDrucken dlg_ZeugnisDrucken = null;		//fertig
-	public static Dialog_ZeugnisnotenZumSchueler dlg_ZeugnisnotenZumSchueler = null;//Fertig
+	public static Dialog_Klassenauswahl dlg_Klassenauswahl = null;			
+	public static Dialog_KlassenWechseln dlg_KlassenWechsel = null;		
+	public static Dialog_LeistungNeu dlg_LeistungNeu = null;		
+	public static Dialog_NotenausgabeKlasse dlg_NotenausgabeKlasse = null;	
+	public static Dialog_Notenblatt dlg_Notenblatt = null;	
+	public static Dialog_Schuelerwahl dlg_Schuelerwahl = null;	
+	public static Dialog_ZeugnisBemerkung dlg_Zeugnisbemerkung = null;	
+	public static Dialog_ZeugnisDrucken dlg_ZeugnisDrucken = null;		
+	public static Dialog_ZeugnisnotenZumSchueler dlg_ZeugnisnotenZumSchueler = null;
 	//--------------------------------------------------------------------------------------
 	
 	
@@ -232,6 +232,14 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 						comboBox_Faecher.addItem(f);
 					}			
 				}
+				if(comboBox_Faecher.getItemCount() == 0)
+				{
+					btnFachuebersicht.setEnabled(false);
+				}
+				else
+				{
+					btnFachuebersicht.setEnabled(true);
+				}
 				comboBox_Faecher.setEnabled(true);
 				comboBox_Klassen.setEnabled(true);
 				
@@ -334,7 +342,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		gbl_panel_button.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		this.panel_button.setLayout(gbl_panel_button);
 		
-		this.btnFachuebersicht = new JButton("Fach\u00FCbersicht");
+		this.btnFachuebersicht = new JButton("Notenblatt");
 		this.btnFachuebersicht.addActionListener(this);
 		GridBagConstraints gbc_btnFachuebersicht = new GridBagConstraints();
 		gbc_btnFachuebersicht.fill = GridBagConstraints.HORIZONTAL;
