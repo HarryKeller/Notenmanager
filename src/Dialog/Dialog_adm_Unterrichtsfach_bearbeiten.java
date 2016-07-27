@@ -267,6 +267,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 		}
 		else if(e.getSource().equals(button_Verwerfen))
 		{
+			this.cmbBox_Zeugnisfach.removeAllItems();
 			setDatenInMaske();
 		}
 		else if(e.getSource().equals(button_Leeren))
