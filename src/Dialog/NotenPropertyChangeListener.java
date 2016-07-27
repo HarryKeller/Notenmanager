@@ -17,8 +17,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import org.apache.poi.util.StringUtil;
+
 import Fachklassen.Leistung;
 import Fachklassen.Leistungsart;
+import antlr.StringUtils;
 
 public class NotenPropertyChangeListener implements PropertyChangeListener, Runnable
 {
@@ -90,7 +93,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 			}			
 			
 			//Notenstufe auf 100 setzen bei ungültiger Note umd späteren Datenbankzugriff zu verhindern durch
-			//bewusst falschen Wert
+			//bewusst falschen Wert			
 			if(Math.abs(Integer.parseInt(newVal.toString())) > 6 || Math.abs(Integer.parseInt(newVal.toString())) < 1)
 			{
 				JOptionPane.showMessageDialog(this.table, "Ungültige Note eingegeben! Die Note muss zwischen 1 und 6 liegen.");
@@ -163,7 +166,7 @@ public class NotenPropertyChangeListener implements PropertyChangeListener, Runn
 		}
 		catch(Exception ex)
 		{
-			
+			JOptionPane.showMessageDialog(this.table, "Nur numerische Zeichen für die Noteneingabe zulässig!");
 		}
 		
 		this.button.setEnabled(true);

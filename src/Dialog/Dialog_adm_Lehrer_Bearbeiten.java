@@ -45,8 +45,7 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	
 	public Dialog_adm_Lehrer_Bearbeiten()
 	{
-		this.lehrer = new Lehrer();
-		login = new Login(lehrer);
+		initGUI();
 	}
 
 	public Dialog_adm_Lehrer_Bearbeiten(Lehrer lehrer)
@@ -57,6 +56,11 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 
 	public void initGUI()
 	{
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		this.lehrer = new Lehrer();
+		login = new Login(lehrer);
+		
+		
 		setTitle("Lehrer - Bearbeiten");
 		setModal(true);
 		setResizable(false);

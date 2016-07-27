@@ -78,7 +78,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	{
 		setExtendedState(MAXIMIZED_BOTH);
 		setTitle("Klasse wechseln");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -178,7 +178,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 		gbl_panel_buttons.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		this.panel_buttons.setLayout(gbl_panel_buttons);
 		
-		this.btnSpeichern = new JButton("Speichern");
+		this.btnSpeichern = new JButton("Ausgewählte Schüler andere Klasse zuteilen");
 		this.btnSpeichern.addActionListener(this);
 		GridBagConstraints gbc_btnSpeichern = new GridBagConstraints();
 		gbc_btnSpeichern.fill = GridBagConstraints.HORIZONTAL;

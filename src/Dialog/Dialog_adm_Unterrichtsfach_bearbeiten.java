@@ -44,6 +44,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 
 	public Dialog_adm_Unterrichtsfach_bearbeiten() 
 	{
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.unterrichtsfach = new Unterrichtsfach();
 		setTitle("Unterrichtsfach anlegen");
 		initGUI();
@@ -52,8 +53,8 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 	}
 	public Dialog_adm_Unterrichtsfach_bearbeiten(Unterrichtsfach ufach) 
 	{
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.unterrichtsfach = ufach;
-		
 		setTitle("Unterrichtsfach bearbeiten");
 		initGUI();
 		setDatenInMaske();

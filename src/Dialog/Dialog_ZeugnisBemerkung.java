@@ -64,7 +64,7 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		initGUI();
 	}
 	private void initGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 617, 439);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,7 +83,7 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		gbc_lblZeugnisbemerkung.gridx = 1;
 		gbc_lblZeugnisbemerkung.gridy = 0;
 		contentPane.add(lblZeugnisbemerkung, gbc_lblZeugnisbemerkung);
-		lblBitteGebenSie = new JLabel("Bitte geben sie eine Zugnisbemerkung ein:");
+		lblBitteGebenSie = new JLabel("Bitte geben sie eine Zeugnisbemerkung ein:");
 		lblBitteGebenSie.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 13));
 		GridBagConstraints gbc_lblBitteGebenSie = new GridBagConstraints();
 		gbc_lblBitteGebenSie.gridwidth = 3;

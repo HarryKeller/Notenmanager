@@ -70,6 +70,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		setDatenInMaske();
 	}
 	private void initGUI() {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Sch\u00FCler verwalten");
 		setBounds(100, 100, 450, 375);
 		this.contentPane = new JPanel();
@@ -358,6 +359,8 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		else
 		{
 			this.dispose();
+			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
+			dlg_schueler.setVisible(true);
 		}
 	}
 }

@@ -63,6 +63,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	 */
 	public Dialog_adm_KlasseBearbeiten()
 	{
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		initFrame();
 	}
 	
