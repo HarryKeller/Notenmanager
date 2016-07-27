@@ -92,6 +92,7 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 		    fach = Zeugnisfach.alleLesen(new Klasse(this.schueler.getKlasse().getid()));
 			for(Zeugnisfach f : this.fach)
 			{	
+				//Jedes Fach + Note herausfinden + in Hashmap speichern!
 				HashMap<String, String> hm = new HashMap<String, String>();
 				hm.put("fach", ""+f.getBez());
 				for(Zeugnisnote z : zn)
@@ -101,6 +102,7 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 						hm.put("note", ""+z.getNoteZeugnis());
 					}
 				}
+				//Hashmap in ArrayList speichern
 				al.add(hm);
 			}	
 	

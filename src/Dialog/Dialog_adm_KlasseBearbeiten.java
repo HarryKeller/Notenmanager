@@ -49,7 +49,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	private JComboBox<Lehrer> comboBox_Klassenleiter_1;
 	private JComboBox<Lehrer> comboBox_Klassenleiter_2;
 	private JComboBox<Ausbildungszweig> comboBox_Ausbildungszweig;
-	private DefaultComboBoxModel<DatumSJ> cbmodel = new DefaultComboBoxModel<DatumSJ>();
+	private JComboBox<DatumSJ> comboBox_SJ = new JComboBox<DatumSJ>();
 	private JTextField textField_bez;
 	private JList<Schueler> list;
 	private DefaultListModel<Schueler> klasse_schueler_model = new DefaultListModel<Schueler>();
@@ -63,7 +63,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	 */
 	public Dialog_adm_KlasseBearbeiten()
 	{
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
 		initFrame();
 	}
 	
@@ -84,6 +84,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	public void initFrame() 
 	{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -223,7 +224,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		gbc_lblSchuljahr1.gridy = 6;
 		contentPane.add(lblSchuljahr, gbc_lblSchuljahr1);
 		
-		JComboBox<DatumSJ> comboBox_SJ = new JComboBox<DatumSJ>(cbmodel);
+		
 		GridBagConstraints gbc_comboBox_SJ;
 		gbc_comboBox_SJ = new GridBagConstraints();
 		gbc_comboBox_SJ.gridwidth = 3;
@@ -343,7 +344,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		klasse.setIdStvKlassenleiter((Lehrer)comboBox_Klassenleiter_2.getSelectedItem());
 		klasse.setAusbildungszweig((Ausbildungszweig)comboBox_Ausbildungszweig.getSelectedItem());
 		klasse.setBez(textField_bez.getText());
-		klasse.setSj((DatumSJ)cbmodel.getSelectedItem());
+		klasse.setSj((DatumSJ)comboBox_SJ.getSelectedItem());
 	}
 	
 	/**
@@ -360,6 +361,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			comboBox_Ausbildungszweig.removeAllItems();
 			klasse_schueler_model.clear();
 			klasse_zeugnisfach_model.clear();
+			comboBox_SJ.removeAllItems();
 			
 			
 			label_id.setText(Integer.toString(klasse.getid()));
@@ -419,14 +421,18 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			
 			textField_bez.setText(klasse.getBez());
 			
-			cbmodel.addElement(klasse.getSj());
-			for(DatumSJ dsj : DatumSJ.alleLesen())
+			
+			ArrayList<DatumSJ> dlist = DatumSJ.alleLesen();
+			for(DatumSJ l: dlist)
 			{
-				if(!((DatumSJ)cbmodel.getElementAt(0)).getsj().equals(dsj.getsj()))
+				comboBox_SJ.addItem(l);
+			}
+			for(int i=0; i< comboBox_SJ.getItemCount()-1;i++)
+			{
+				if(comboBox_SJ.getItemAt(i).getId() == klasse.getSj().getId())
 				{
-					cbmodel.addElement(dsj);
+					comboBox_SJ.setSelectedIndex(i);
 				}
-				
 			}
 			
 			
@@ -498,7 +504,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			}
 			else
 			{
-				if(klasse.getBez()!=""&&klasse.getIdKlassenleiter()!=null&&klasse.getIdStvKlassenleiter()!=null&&klasse.getSj()!= null)
+				if(!klasse.getBez().equals("")&&klasse.getIdKlassenleiter()!=null&&klasse.getIdStvKlassenleiter()!=null&&klasse.getSj()!= null&&klasse.getAusbildungszweig()!=null&&klasse.getSchule()!=null)
 				{
 					klasse.speichern();
 					this.dispose();

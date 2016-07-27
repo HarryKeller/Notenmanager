@@ -57,18 +57,22 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 	private UtilDateModel model;
 	private JDatePickerImpl datePicker;
 
+	//Konstruktor für Schüler neuanlegen
 	public Dialog_adm_Schueler_Bearbeiten()
 	{
 		schueler = new Schueler();
 		initGUI();	
 	}
 	
+	//Konstruktor für Schüler Bearbeiten
 	public Dialog_adm_Schueler_Bearbeiten(Schueler schueler)
 	{
 		this.schueler = schueler;
 		initGUI();
 		setDatenInMaske();
 	}
+	
+	//Aufbauen der GUI
 	private void initGUI() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Sch\u00FCler verwalten");
@@ -291,7 +295,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		this.panel.add(datePicker, gbc_datepicker);
 	}
 
-
+	//Setzt alle Werte der Textfelder beim Schueler Bearbeiten
 	private void setDatenInMaske()
 	{
 		this.textField_Vorname.setText(schueler.getVorname());
@@ -312,6 +316,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		}
 	}
 	
+	//holt sich alle Werte aus den Textfeldern
 	private void getDatenAusMaske()
 	{		
 		this.schueler.setVorname(this.textField_Vorname.getText());
@@ -346,8 +351,11 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 		
 	}
 	
+	//Sobald event ausgelöst wird...
 	public void actionPerformed(ActionEvent arg0) 
 	{
+		//...holt sich die Daten aus der Maske und speichert die Werte für den Schüler
+		//	 ruft danach wieder Dialog Schüler auf
 		if(arg0.getActionCommand().equals(btnSpeichern.getActionCommand()))
 		{
 			getDatenAusMaske();
@@ -356,6 +364,7 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
 			dlg_schueler.setVisible(true);
 		}
+		//... schließt Dialog und ruft Dialog Schueler auf
 		else
 		{
 			this.dispose();
