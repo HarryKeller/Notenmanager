@@ -45,7 +45,6 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 	private JButton btnAbbrechen;
 	String bemerkung = "";
 	Schueler schueler;
-	Dialog_Schuelerwahl schuelerwahl;
 	private JTextField txtBsp;
 	private JButton btnNewButton;
 	private JLabel lblCode;
@@ -57,10 +56,9 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 	private String datum;
 	private JLabel lblAushndigung;
 
-	private Dialog_ZeugnisBemerkung(Schueler schueler, Dialog_Schuelerwahl schuelerwahl)
+	private Dialog_ZeugnisBemerkung(Schueler schueler )
 	{
 		this.schueler = schueler;
-		this.schuelerwahl = schuelerwahl;
 		initGUI();
 	}
 	private void initGUI() {
@@ -187,14 +185,14 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		if(action.equals("Weiter"))
 		{
 			this.bemerkung = this.textField.getText();
-			datum=model.getDay()+"."+model.getMonth()+"."+model.getYear();
-			Dialog_ZeugnisDrucken.initGui(schueler, schuelerwahl, bemerkung, datum);
+			datum=model.getDay()+"."+(model.getMonth()+1)+"."+model.getYear();
+			
+			Dialog_ZeugnisDrucken.initGui(schueler, bemerkung, datum);
 			Dialog_Klassenauswahl.dlg_ZeugnisDrucken.setVisible(true);
 			this.dispose();
 		}
 		else if(action.equals("Abbrechen"))
 		{
-			this.schuelerwahl.setVisible(true);
 			this.dispose();
 		}
 		else if(action.equals("Einfügen"))
@@ -239,10 +237,10 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 			 }
 		}
 	}
-	public static void initGui(Schueler schueler, Dialog_Schuelerwahl schuelerwahl)
+	public static void initGui(Schueler schueler )
 	{
-		if(Dialog_Klassenauswahl.dlg_Zeugnisbemerkung == null)
-			Dialog_Klassenauswahl.dlg_Zeugnisbemerkung = new Dialog_ZeugnisBemerkung(schueler, schuelerwahl);
+		
+		Dialog_Klassenauswahl.dlg_Zeugnisbemerkung = new Dialog_ZeugnisBemerkung(schueler);
 		
 		Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.setVisible(true);
 		Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.toFront();

@@ -232,7 +232,7 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			}
 			try
 			{
-				Dialog_ZeugnisBemerkung.initGui(((Schueler)this.list_Schueler.getSelectedValue()),this);
+				Dialog_ZeugnisBemerkung.initGui(((Schueler)this.list_Schueler.getSelectedValue()));
 				Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.setVisible(true);
 			}
 			catch(Exception ex)

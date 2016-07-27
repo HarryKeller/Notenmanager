@@ -48,6 +48,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 
 	private Dialog_Notenblatt(Schueler schueler, Lehrer lehrer) 
 	{
+		setResizable(false);
 		//Fach-Array füllen und restliche Parameter in Klasse speichern
 		fach = Unterrichtsfach.alleLesen(schueler);
 		this.schueler = new Schueler(schueler.getId());
@@ -141,7 +142,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		}
 		else if(action.equals("noton"))
 		{
-			Dialog_Druckansicht.initGui(this);
+			Dialog_Druckansicht.initGui();
 			Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
 			this.setVisible(false);
 		}

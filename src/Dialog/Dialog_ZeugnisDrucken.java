@@ -36,7 +36,6 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Schueler schueler;
-	Dialog_Schuelerwahl schuelerwahl;
 	private JButton btnZurck;
 	String bemerkung = "";
 	public ArrayList<Zeugnisfach> fach;
@@ -44,12 +43,11 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 	Schule s = new Schule();
 	String noteschriftl = "";
 	String datum;
-	private Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung, String localDate)
+	private Dialog_ZeugnisDrucken(Schueler schueler, String bemerkung, String localDate)
 	{
 		this.datum = localDate;
 		this.bemerkung = bemerkung;
 		this.schueler = schueler;
-		this.schuelerwahl = Schuelerwahl;
 		initGUI();
 		JasperPrint p = erzeugeReport();
 		JRViewer viewer = new JRViewer(p);
@@ -128,13 +126,12 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 		if(action.equals("Zurück"))
 		{
 			this.dispose();
-			this.schuelerwahl.setVisible(true);
 		}
 	}
-	public static void initGui(Schueler schueler, Dialog_Schuelerwahl schuelerwahl, String bemerkung, String localDate)
+	public static void initGui(Schueler schueler, String bemerkung, String localDate)
 	{
-		if(Dialog_Klassenauswahl.dlg_ZeugnisDrucken == null)
-			Dialog_Klassenauswahl.dlg_ZeugnisDrucken = new Dialog_ZeugnisDrucken(schueler,schuelerwahl,bemerkung,localDate);
+	
+			Dialog_Klassenauswahl.dlg_ZeugnisDrucken = new Dialog_ZeugnisDrucken(schueler,bemerkung,localDate);
 		
 		Dialog_Klassenauswahl.dlg_ZeugnisDrucken.setVisible(true);
 		Dialog_Klassenauswahl.dlg_ZeugnisDrucken.toFront();

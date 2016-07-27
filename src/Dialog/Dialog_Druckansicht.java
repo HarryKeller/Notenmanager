@@ -40,7 +40,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
     ArrayList<Unterrichtsfach> fach;
     private JButton btnZurck;
 	
-	private Dialog_Druckansicht(Dialog_Notenblatt notenblatt)
+	private Dialog_Druckansicht( )
 	{
 		//Notenblatt DialogDaten der JTable übernehmen, um an Daten für Notenblatt Jasperreport zu kommen
 		this.notenblatt = notenblatt;
@@ -173,13 +173,11 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		this.notenblatt.setVisible(true);
 		this.dispose();
 	}
-	public static void initGui(Dialog_Notenblatt notenblatt)
+	public static void initGui()
 	{
-		if(Dialog_Klassenauswahl.dlg_druckansicht == null)
-			Dialog_Klassenauswahl.dlg_druckansicht = new Dialog_Druckansicht(notenblatt);
+		Dialog_Klassenauswahl.dlg_druckansicht = new Dialog_Druckansicht();
 		
 		Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
 		Dialog_Klassenauswahl.dlg_druckansicht.toFront();
