@@ -54,9 +54,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 	private ArrayList<Unterrichtsfach> kopie = new ArrayList<Unterrichtsfach>();
 	private ArrayList<Unterrichtsfach> ufach;
 
-	/**
-	 * Create the frame.
-	 */
+	//Konstruktor
 	public Dialog_adm_UnterrichtsfachZuweisen()
 	{	
 		setExtendedState(MAXIMIZED_BOTH);
@@ -64,6 +62,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		setDatenInMaske();		
 	}
 	
+	//Erstellt die GUI
 	private void initGUI() 
 	{
 		setTitle("Unterrichtsf\u00E4cher zuweisen");
@@ -215,6 +214,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		this.panel_buttons.add(this.btnZurueck, gbc_btnZurueck);
 	}
 
+	//Liest alle Lehrer und füllt die comboBox damit
 	public void setDatenInMaske()
 	{
 		for(Lehrer l : Lehrer.alleLesen())
@@ -223,24 +223,24 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		}		
 	}
 	
+	//Sobald Event ausgelöst wird...
 	public void actionPerformed(ActionEvent arg0) 
 	{
+		//... speichert die Auswahl
 		if(arg0.getActionCommand().equals(btnSpeichern.getActionCommand())) 
 		{								
 			entfernen();			
 			speichern();
 			this.dispose();			
 		}
-		if(arg0.getActionCommand().equals(btnZurueck.getActionCommand()))
-		{
-			this.dispose();
-		}		
-		if(arg0.getActionCommand().equals(btnHinzufuegen.getActionCommand())) 
+		//... fügt das ausgewählte Fach der Liste hinzu und entfernt es aus der ComboBox
+		else if(arg0.getActionCommand().equals(btnHinzufuegen.getActionCommand())) 
 		{
 			model.addElement((Unterrichtsfach) comboBox_UFach.getSelectedItem());
 			comboBox_UFach.removeItemAt(comboBox_UFach.getSelectedIndex());
-		}		
-		if(arg0.getActionCommand().equals(btnEntfernen.getActionCommand())) 
+		}	
+		//... entfernt das ausgewählte Fach aus der Liste und fügt es der comboBox hinzu
+		else if(arg0.getActionCommand().equals(btnEntfernen.getActionCommand())) 
 		{
 			if(list_UFach.getSelectedValue() != null)
 			{
@@ -248,6 +248,12 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 				model.removeElement(list_UFach.getSelectedValue());
 			}			
 		}
+		//... schließt das Fenster
+		else
+		{
+			this.dispose();
+		}		
+		
 	}
 	
 	public void itemStateChanged(ItemEvent e) 
@@ -308,6 +314,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		}
 	}
 	
+	//speichert die neuen UFächher des Lehrers
 	private void speichern()
 	{
 		boolean unterrichtetfach = false;						
