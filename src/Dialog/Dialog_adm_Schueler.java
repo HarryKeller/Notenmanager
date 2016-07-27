@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
 import Fachklassen.Schueler;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -33,8 +34,9 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 	private DefaultListModel<Schueler> model = new DefaultListModel<Schueler>();
 	private JList<Schueler> list_schueler;
 
+
 	//Konstruktor
-	public Dialog_adm_Schueler()
+	private Dialog_adm_Schueler()
 	{
 		initGUI();
 		setDatenInMaske();
@@ -137,15 +139,15 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 		//... ruft neuen Dialog Schüler Bearbeiten mit Selectierten Schüler auf
 		if(arg0.getActionCommand().equals(btnSchuelerBearbeiten.getActionCommand()))
 		{
-			Dialog_adm_Schueler_Bearbeiten dlg_schueler = new Dialog_adm_Schueler_Bearbeiten(list_schueler.getSelectedValue());
-			dlg_schueler.setVisible(true);
+			Dialog_adm_Schueler_Bearbeiten.initGui(list_schueler.getSelectedValue());
+			Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
 			this.dispose();
 		}
 		//... ruft neuen Dialog Schüler Bearbeiten zum neuanlegen auf
 		else if(arg0.getActionCommand().equals(btnSchuelerAnlegen.getActionCommand()))
 		{
-			Dialog_adm_Schueler_Bearbeiten dlg_schueler = new Dialog_adm_Schueler_Bearbeiten();
-			dlg_schueler.setVisible(true);
+			Dialog_adm_Schueler_Bearbeiten.initGui(list_schueler.getSelectedValue());
+			Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
 			this.dispose();
 		}
 		// schließt den Dialog
@@ -153,6 +155,14 @@ public class Dialog_adm_Schueler extends JFrame implements ActionListener
 		{
 			this.dispose();
 		}
+	}
+	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_Schueler == null)
+			Dialog_Klassenauswahl.dlg_adm_Schueler = new Dialog_adm_Schueler();
 		
+		Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_Schueler.toFront();
 	}
 }

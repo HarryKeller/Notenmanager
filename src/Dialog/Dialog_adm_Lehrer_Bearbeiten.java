@@ -43,12 +43,12 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 	private Login login;
 	private boolean gesichert;
 	
-	public Dialog_adm_Lehrer_Bearbeiten()
+	private  Dialog_adm_Lehrer_Bearbeiten()
 	{
 		initGUI();
 	}
 
-	public Dialog_adm_Lehrer_Bearbeiten(Lehrer lehrer)
+	private Dialog_adm_Lehrer_Bearbeiten(Lehrer lehrer)
 	{
 		this.lehrer = lehrer;
 		login = new Login(lehrer);				
@@ -322,4 +322,23 @@ public class Dialog_adm_Lehrer_Bearbeiten extends JDialog implements ActionListe
 			this.dispose();
 		}
 	}
+	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten = new Dialog_adm_Lehrer_Bearbeiten();
+		
+		Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.toFront();
+	}
+	public static void initGui(Lehrer l)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten = new Dialog_adm_Lehrer_Bearbeiten(l);
+		
+		Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.toFront();
+	}
+	
+	
 }

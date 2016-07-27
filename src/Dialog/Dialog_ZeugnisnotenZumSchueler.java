@@ -56,7 +56,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	private Dialog_Schuelerwahl swahl;
 	private Zeugnis zeugnis;
 	
-	public Dialog_ZeugnisnotenZumSchueler(Schueler s, Dialog_Schuelerwahl sw) 
+	private Dialog_ZeugnisnotenZumSchueler(Schueler s, Dialog_Schuelerwahl sw) 
 	{
 		setSchueler(s);
 		setSwahl(sw);
@@ -383,6 +383,13 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 	public void setZeugnis(Zeugnis zeugnis) {
 		this.zeugnis = zeugnis;
 	}
-	
+	public static void initGui(Schueler s, Dialog_Schuelerwahl sw)
+	{
+		if(Dialog_Klassenauswahl.dlg_ZeugnisnotenZumSchueler == null)
+			Dialog_Klassenauswahl.dlg_ZeugnisnotenZumSchueler = new Dialog_ZeugnisnotenZumSchueler(s,sw);
+		
+		Dialog_Klassenauswahl.dlg_ZeugnisnotenZumSchueler.setVisible(true);
+		Dialog_Klassenauswahl.dlg_ZeugnisnotenZumSchueler.toFront();
+	}
 	
 }

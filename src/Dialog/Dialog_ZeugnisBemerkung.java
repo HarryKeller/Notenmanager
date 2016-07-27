@@ -57,10 +57,10 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 	private String datum;
 	private JLabel lblAushndigung;
 
-	public Dialog_ZeugnisBemerkung(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl)
+	private Dialog_ZeugnisBemerkung(Schueler schueler, Dialog_Schuelerwahl schuelerwahl)
 	{
 		this.schueler = schueler;
-		this.schuelerwahl = Schuelerwahl;
+		this.schuelerwahl = schuelerwahl;
 		initGUI();
 	}
 	private void initGUI() {
@@ -188,8 +188,8 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		{
 			this.bemerkung = this.textField.getText();
 			datum=model.getDay()+"."+model.getMonth()+"."+model.getYear();
-			Dialog_ZeugnisDrucken dzd = new Dialog_ZeugnisDrucken(schueler, schuelerwahl, bemerkung, datum);
-			dzd.setVisible(true);
+			Dialog_ZeugnisDrucken.initGui(schueler, schuelerwahl, bemerkung, datum);
+			Dialog_Klassenauswahl.dlg_ZeugnisDrucken.setVisible(true);
 			this.dispose();
 		}
 		else if(action.equals("Abbrechen"))
@@ -238,5 +238,13 @@ public class Dialog_ZeugnisBemerkung extends JFrame implements ActionListener
 		        e.printStackTrace();
 			 }
 		}
+	}
+	public static void initGui(Schueler schueler, Dialog_Schuelerwahl schuelerwahl)
+	{
+		if(Dialog_Klassenauswahl.dlg_Zeugnisbemerkung == null)
+			Dialog_Klassenauswahl.dlg_Zeugnisbemerkung = new Dialog_ZeugnisBemerkung(schueler, schuelerwahl);
+		
+		Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.setVisible(true);
+		Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.toFront();
 	}
 }

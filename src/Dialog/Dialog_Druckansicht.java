@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 
 
+
+import Fachklassen.Klasse;
 import Fachklassen.Leistung;
 import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisnote;
@@ -23,7 +25,9 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -36,7 +40,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
     ArrayList<Unterrichtsfach> fach;
     private JButton btnZurck;
 	
-	public Dialog_Druckansicht(Dialog_Notenblatt notenblatt)
+	private Dialog_Druckansicht(Dialog_Notenblatt notenblatt)
 	{
 		//Notenblatt DialogDaten der JTable übernehmen, um an Daten für Notenblatt Jasperreport zu kommen
 		this.notenblatt = notenblatt;
@@ -52,7 +56,7 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 		btnZurck.addActionListener(this);
 		contentPane.add(btnZurck, BorderLayout.SOUTH);
 	}
-	public void initGUI()
+	private void initGUI()
 	{
 		this.setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,5 +175,13 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 	{
 		this.notenblatt.setVisible(true);
 		this.dispose();
+	}
+	public static void initGui(Dialog_Notenblatt notenblatt)
+	{
+		if(Dialog_Klassenauswahl.dlg_druckansicht == null)
+			Dialog_Klassenauswahl.dlg_druckansicht = new Dialog_Druckansicht(notenblatt);
+		
+		Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
+		Dialog_Klassenauswahl.dlg_druckansicht.toFront();
 	}
 }

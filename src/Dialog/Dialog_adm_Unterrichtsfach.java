@@ -33,7 +33,7 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 	private JList<Unterrichtsfach> list_Unterrichtsfach = new JList<Unterrichtsfach>();
 	
 
-	public Dialog_adm_Unterrichtsfach() 
+	private Dialog_adm_Unterrichtsfach() 
 	{
 		setTitle("Unterrichtsfach");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -130,16 +130,16 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 		if(e.getActionCommand().equals(this._btnUnterrichtsfachAnlegen.getActionCommand()))
 		{
 			this.dispose();
-			Dialog_adm_Unterrichtsfach_bearbeiten dialog_unterrichtsfach = new Dialog_adm_Unterrichtsfach_bearbeiten();
-			dialog_unterrichtsfach.setVisible(true);
+			Dialog_adm_Unterrichtsfach_bearbeiten.initGui();
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
 		}	
 		if(e.getActionCommand().equals(this._btnUnterrichtsfachBearbeiten.getActionCommand()))
 		{
 			try
 			{
 				this.dispose();
-				Dialog_adm_Unterrichtsfach_bearbeiten dialog_unterichtsfach = new Dialog_adm_Unterrichtsfach_bearbeiten(list_Unterrichtsfach.getSelectedValue());
-				dialog_unterichtsfach.setVisible(true);
+				Dialog_adm_Unterrichtsfach_bearbeiten.initGui(list_Unterrichtsfach.getSelectedValue());
+				Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
 			}
 			catch(Exception exception)
 			{
@@ -182,5 +182,13 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 		}
 		
 		return llist;
+	}
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_unterrichtsfach == null)
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach = new Dialog_adm_Unterrichtsfach();
+		
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.toFront();
 	}
 }

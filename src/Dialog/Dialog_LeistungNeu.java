@@ -3,14 +3,19 @@ package Dialog;
 import java.awt.EventQueue;
 
 import javax.swing.JDialog;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
+
 import javax.swing.JComboBox;
+
 import java.awt.Insets;
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +31,7 @@ import Fachklassen.Leistungsart;
 import javax.swing.JPanel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -56,7 +62,7 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 	private DefaultComboBoxModel model_tables;
 	private DefaultComboBoxModel model_leistungsart;	
 	
-	public Dialog_LeistungNeu(Dialog_NotenausgabeKlasse n)
+	private Dialog_LeistungNeu(Dialog_NotenausgabeKlasse n)
 	{		
 		this.notenausgabe = n;
 		initGUI();
@@ -361,4 +367,13 @@ public class Dialog_LeistungNeu extends JDialog implements ActionListener, ItemL
 			this.model_leistungsart.addElement(l.getBez());
 		}
 	}
+	public static void initGui(Dialog_NotenausgabeKlasse n)
+	{
+		if(Dialog_Klassenauswahl.dlg_LeistungNeu == null)
+			Dialog_Klassenauswahl.dlg_LeistungNeu = new Dialog_LeistungNeu(n);
+		
+		Dialog_Klassenauswahl.dlg_LeistungNeu.setVisible(true);
+		Dialog_Klassenauswahl.dlg_LeistungNeu.toFront();
+	}
+	
 }

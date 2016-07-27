@@ -45,11 +45,11 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 	Klasse klasse;
 	private JButton btnZurck;
 	
-	public Dialog_Schuelerwahl() 
+	private Dialog_Schuelerwahl() 
 	{
 		initGUI();
 	}
-	public Dialog_Schuelerwahl(Lehrer lehrer, Klasse klasse) 
+	private Dialog_Schuelerwahl(Lehrer lehrer, Klasse klasse) 
 	{
 		initGUI();
 		this.lehrer = lehrer;
@@ -200,9 +200,9 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			
 			try
 			{
-				Dialog_Notenblatt dlg_notenblatt = new Dialog_Notenblatt((Schueler)this.list_Schueler.getSelectedValue(), this.lehrer);
+				Dialog_Notenblatt.initDialog((Schueler)this.list_Schueler.getSelectedValue(), this.lehrer);
 				this.setVisible(false);
-				dlg_notenblatt.setVisible(true);
+				Dialog_Klassenauswahl.dlg_Notenblatt.setVisible(true);
 			}
 			catch(Exception ex)
 			{
@@ -214,9 +214,9 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 
 			try
 			{
-				Dialog_ZeugnisnotenZumSchueler dlg_zeugnisnoten = new Dialog_ZeugnisnotenZumSchueler(((Schueler)this.list_Schueler.getSelectedValue()),this);
+				Dialog_ZeugnisnotenZumSchueler.initGui(((Schueler)this.list_Schueler.getSelectedValue()),this); 
 				this.setVisible(false);
-				dlg_zeugnisnoten.setVisible(true);
+				Dialog_Klassenauswahl.dlg_ZeugnisnotenZumSchueler.setVisible(true);
 			}
 			catch(Exception ex)
 			{
@@ -232,9 +232,8 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
 			}
 			try
 			{
-				Dialog_ZeugnisBemerkung zb = new Dialog_ZeugnisBemerkung(((Schueler)this.list_Schueler.getSelectedValue()),this);
-				this.setVisible(false);
-				zb.setVisible(true);
+				Dialog_ZeugnisBemerkung.initGui(((Schueler)this.list_Schueler.getSelectedValue()),this);
+				Dialog_Klassenauswahl.dlg_Zeugnisbemerkung.setVisible(true);
 			}
 			catch(Exception ex)
 			{
@@ -262,5 +261,24 @@ public class Dialog_Schuelerwahl extends JFrame implements ActionListener {
         {
         	this.dlm.addElement(s);
         }
+	}
+	
+	public static void initDialog ()
+	{
+		if(Dialog_Klassenauswahl.dlg_Schuelerwahl == null)
+		{
+			Dialog_Klassenauswahl.dlg_Schuelerwahl = new Dialog_Schuelerwahl();
+		}
+		Dialog_Klassenauswahl.dlg_Schuelerwahl.setVisible(true);
+		Dialog_Klassenauswahl.dlg_Schuelerwahl.toFront();
+	}
+	public static void initDialog (Lehrer lehrer, Klasse klasse)
+	{
+		if(Dialog_Klassenauswahl.dlg_Schuelerwahl == null)
+		{
+			Dialog_Klassenauswahl.dlg_Schuelerwahl = new Dialog_Schuelerwahl(lehrer, klasse);
+		}
+		Dialog_Klassenauswahl.dlg_Schuelerwahl.setVisible(true);
+		Dialog_Klassenauswahl.dlg_Schuelerwahl.toFront();
 	}
 }

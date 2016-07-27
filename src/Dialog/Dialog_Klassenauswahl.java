@@ -35,10 +35,43 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+
+
+
 @SuppressWarnings("serial")
-public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, ItemListener
+public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, ItemListener
 
 {
+	//Instanzen sämtlicher Dialoge
+	
+	public static Dialog_adm_FachAnlegen dlg_adm_FachAnlegen = null;		
+	public static Dialog_adm_KlasseAnsicht dlg_adm_KlasseAnsicht = null;	
+	public static Dialog_adm_KlasseBearbeiten dlg_adm_KlasseBearbeiten = null;	
+	public static Dialog_adm_Lehrer_Bearbeiten dlg_adm_LehrerBearbeiten = null;	
+	public static Dialog_adm_Lehrer dlg_adm_Lehrer = null;		
+	public static Dialog_adm_Schueler_Bearbeiten dlg_adm_SchuelerBearbeiten = null;	
+	public static Dialog_adm_Schueler dlg_adm_Schueler = null;	
+	public static Dialog_adm_Unterrichtsfach_bearbeiten dlg_adm_unterrichtsfach_bearbeiten= null;	
+	public static Dialog_adm_Unterrichtsfach dlg_adm_unterrichtsfach = null;	
+	public static Dialog_adm_UnterrichtsfachZuweisen dlg_adm_UnterrichtsfachZuweisen = null;	
+	public static Dialog_adm_Zeugnisfach_Bearbeiten dlg_adm_ZeugnisfachBearbeiten = null;	
+	public static Dialog_adm_Zeugnisfach dlg_adm_Zeugnisfach = null;	
+	public static Dialog_adm_ZeugnisfachZurKlasseUebersicht dlg_adm_ZeugnisfachZurKlasseUebersicht = null;
+	public static Dialog_Druckansicht dlg_druckansicht = null;		
+	public static Dialog_Klassenauswahl dlg_Klassenauswahl = null;			//Hautpdialog
+	public static Dialog_KlassenWechseln dlg_KlassenWechsel = null;		//fertig
+	public static Dialog_LeistungNeu dlg_LeistungNeu = null;		//Fertig
+	public static Dialog_NotenausgabeKlasse dlg_NotenausgabeKlasse = null;	//fertig
+	public static Dialog_Notenblatt dlg_Notenblatt = null;	//Fertig
+	public static Dialog_Schuelerwahl dlg_Schuelerwahl = null;	//Fertig
+	public static Dialog_ZeugnisBemerkung dlg_Zeugnisbemerkung = null;	//Fertig
+	public static Dialog_ZeugnisDrucken dlg_ZeugnisDrucken = null;		//fertig
+	public static Dialog_ZeugnisnotenZumSchueler dlg_ZeugnisnotenZumSchueler = null;//Fertig
+	//--------------------------------------------------------------------------------------
+	
+	
+	
+	
 	private JPanel panel_combobox;
 	private JPanel panel_button;
 	private JPanel panel_klassenleiter;
@@ -125,7 +158,6 @@ public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, 
 	
 	private void initGUI() 
 	{
-		this.setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 525, 325);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -364,25 +396,21 @@ public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, 
 		if(e.getActionCommand().equals(btnFachuebersicht.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
 			
-			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());		
-			this.setVisible(false);
-			dlg_notenausgabeKlasse.setVisible(true);
-			this.setVisible(true);
+			Dialog_NotenausgabeKlasse.initDialog(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());		
+			
 		}		
 		else if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Button Klassenuebersicht gedrückt wurde
 		{
 			
-			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
-			this.setVisible(false);
-			dlg_schueler.setVisible(true);
+			Dialog_Schuelerwahl.initDialog(lehrer,(Klasse)comboBox_Klassen.getSelectedItem()); 
+			this.dlg_Schuelerwahl.setVisible(true);
 			
 		}
 		else if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
 		{
 		
-			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln(lehrer);
-			this.setVisible(false);
-			dlg_klassenw.setVisible(true);
+			Dialog_KlassenWechseln.initGui(lehrer); 
+			this.dlg_KlassenWechsel.setVisible(true); 
 		}				
 		else if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
 		{
@@ -392,46 +420,37 @@ public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, 
 		}
 		else if(e.getActionCommand() == "Fächer bearbeiten")
 		{
-			
-			Dialog_adm_Unterrichtsfach dlg_adm_fach = new Dialog_adm_Unterrichtsfach();
-			this.setVisible(false);
-			dlg_adm_fach.setVisible(true);
-			
+			Dialog_adm_FachAnlegen.initGui();
 		}
 		else if(e.getActionCommand() == "Lehrer bearbeiten")
 		{
 
-			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
-			this.setVisible(false);
-			dlg_adm_lehrer.setVisible(true);	
+			Dialog_adm_Lehrer.initGui(); 
+			this.dlg_adm_Lehrer.setVisible(true);
 			
 		}
 		else if(e.getActionCommand() == "Klassen bearbeiten")
 		{
 			
-			Dialog_adm_KlasseAnsicht dlg_adm_klasse = new Dialog_adm_KlasseAnsicht();
-			this.setVisible(false);
-			dlg_adm_klasse.setVisible(true);
+			Dialog_adm_KlasseAnsicht.initGui(); 
+			this.dlg_adm_KlasseAnsicht.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Schüler bearbeiten")
 		{
 			
-			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
-			this.setVisible(false);
-			dlg_schueler.setVisible(true);
+			Dialog_adm_Schueler.initGui(); 
+			this.dlg_adm_Schueler.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
 		{
-			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
-			this.setVisible(false);
-			dlg_adm_fachz.setVisible(true);
+			Dialog_adm_UnterrichtsfachZuweisen.initGui(); 
+			this.dlg_adm_UnterrichtsfachZuweisen.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Zeugnisfächer bearbeiten")
 		{
-		
-			Dialog_adm_Zeugnisfach dlg_zeug = new Dialog_adm_Zeugnisfach();
-			this.setVisible(false);
-			dlg_zeug.setVisible(true);
+			
+			Dialog_adm_Zeugnisfach.initGui();
+			this.dlg_adm_Zeugnisfach.setVisible(true);
 		}
 		else
 		{

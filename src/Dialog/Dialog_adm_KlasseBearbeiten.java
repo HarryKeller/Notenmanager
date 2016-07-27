@@ -61,7 +61,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	/**
 	 * Konstruktor, wenn eine neue Klasse erstellt werden soll.
 	 */
-	public Dialog_adm_KlasseBearbeiten()
+	private  Dialog_adm_KlasseBearbeiten()
 	{
 
 		initFrame();
@@ -72,7 +72,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	 * @param k
 	 * type Klasse
 	 */
-	public Dialog_adm_KlasseBearbeiten(Klasse k)
+	private  Dialog_adm_KlasseBearbeiten(Klasse k)
 	{
 		this.setKlasse(k);
 		initFrame();
@@ -81,7 +81,7 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 	/**
 	 * Zeig die GUI an.
 	 */
-	public void initFrame() 
+	private void initFrame() 
 	{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -482,9 +482,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		if(e.getActionCommand()=="Zur\u00FCck")
 		{
 			this.dispose();
-			Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
-			an.pack();
-			an.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.initGui();
+			Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.pack();
+			Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setVisible(true);
 		}
 		else if(e.getActionCommand()=="Verwerfen")
 		{
@@ -497,10 +497,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			{
 				klasse.speichern();
 				this.dispose();
-				Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
-				an.setDatenToMaske();
-				an.pack();
-				an.setVisible(true);
+				Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.initGui();
+				Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setDatenToMaske();
+				Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.pack();
+				Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setVisible(true);
 			}
 			else
 			{
@@ -508,10 +508,10 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 				{
 					klasse.speichern();
 					this.dispose();
-					Dialog_adm_KlasseAnsicht an = new Dialog_adm_KlasseAnsicht();
-					an.setDatenToMaske();
-					an.pack();
-					an.setVisible(true);
+					Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.initGui();
+					Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setDatenToMaske();
+					Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.pack();
+					Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setVisible(true);
 				}
 			}
 		}
@@ -520,9 +520,9 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 			if(klasse.getid()!=0)
 			{
 				this.dispose();
-				Dialog_adm_ZeugnisfachZurKlasseUebersicht sicht = new Dialog_adm_ZeugnisfachZurKlasseUebersicht(getKlasse());
-				sicht.pack();
-				sicht.setVisible(true);
+				Dialog_adm_ZeugnisfachZurKlasseUebersicht.initGui(getKlasse());
+				Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht.pack();
+				Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht.setVisible(true);
 			}
 			else
 			{
@@ -556,5 +556,23 @@ public class Dialog_adm_KlasseBearbeiten extends JFrame implements ActionListene
 		this.klasse_zeugnisfach_model = klasse_zeugnisfach_model;
 	}
 
+	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten = new Dialog_adm_KlasseBearbeiten();
+		
+		Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.toFront();
+	}
+	public static void initGui(Klasse k)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten = new Dialog_adm_KlasseBearbeiten(k);
+		
+		Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.toFront();
+	}
+	
 
 }

@@ -56,12 +56,12 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 	private JPanel panel_4;
 	
 
-	public Dialog_adm_Zeugnisfach_Bearbeiten() 
+	private Dialog_adm_Zeugnisfach_Bearbeiten() 
 	{
 		setZeugnisfach(new Zeugnisfach());
 		initGUI();
 	}
-	public Dialog_adm_Zeugnisfach_Bearbeiten(Zeugnisfach zeugnisfach) 
+	private Dialog_adm_Zeugnisfach_Bearbeiten(Zeugnisfach zeugnisfach) 
 	{
 		setZeugnisfach(zeugnisfach);
 		initGUI();
@@ -326,9 +326,9 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 				getDatenInMaske();
 				getZeugnisfach().speichern();
 				this.dispose();
-				Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
-				dia.pack();
-				dia.setVisible(true);
+				Dialog_adm_Zeugnisfach.initGui();
+				Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.pack();
+				Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
 			}
 		}
 		else if(e.getSource().equals(button_Verwerfen))
@@ -345,9 +345,9 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 		else if(e.getSource()==button_Zurueck)
 		{
 			setVisible(false);
-			Dialog_adm_Zeugnisfach dia = new Dialog_adm_Zeugnisfach();
-			dia.pack();
-			dia.setVisible(true);
+			Dialog_adm_Zeugnisfach.initGui();
+			Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.pack();
+			Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
 		}
 	}
 	private Zeugnisfach getZeugnisfach() {
@@ -416,7 +416,25 @@ public class Dialog_adm_Zeugnisfach_Bearbeiten extends JDialog implements Action
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten = new Dialog_adm_Zeugnisfach_Bearbeiten();
+		
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten.toFront();
+	}
+	public static void initGui(Zeugnisfach zf)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten = new Dialog_adm_Zeugnisfach_Bearbeiten(zf);
+		
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachBearbeiten.toFront();
+	}
+	
+	
+	
 }

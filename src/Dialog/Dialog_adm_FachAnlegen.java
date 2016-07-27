@@ -1,6 +1,7 @@
 package Dialog;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
+public class Dialog_adm_FachAnlegen extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtBezeichnung;
@@ -42,7 +43,7 @@ public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 	private JButton btnAbbrechen;
 
 
-	public Dialog_adm_FachAnlegen() 
+	private Dialog_adm_FachAnlegen() 
 	{
 		initGUI();
 		fillDatenInMaske();
@@ -229,4 +230,13 @@ public class Dialog_adm_FachAnlegen extends JDialog implements ActionListener {
 			this.dispose();
 		}							
 	}
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_FachAnlegen == null)
+			Dialog_Klassenauswahl.dlg_adm_FachAnlegen = new Dialog_adm_FachAnlegen();
+		
+		Dialog_Klassenauswahl.dlg_adm_FachAnlegen.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_FachAnlegen.toFront();
+	}
+	
 }

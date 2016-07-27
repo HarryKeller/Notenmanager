@@ -1,6 +1,7 @@
 package Dialog;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
 import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
@@ -35,7 +37,7 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 	private final JButton btnLehrerKndigen = new JButton("Lehrer k\u00FCndigen");
 	private final JButton button_Zurueck = new JButton("Zur\u00FCck");
 
-	public Dialog_adm_Lehrer()
+	private  Dialog_adm_Lehrer()
 	{
 		initGUI();
 	}
@@ -112,16 +114,17 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 	{
 		if(arg0.getActionCommand().equals(this.button_Lehrer_Anlegen.getActionCommand()))
 		{
-			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten();
-			if(dialog_lehrer.ShowDialog())
+			
+			Dialog_adm_Lehrer_Bearbeiten.initGui(); 
+			if(Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.ShowDialog())
 			{
 				this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
 			}
 		}
 		if(arg0.getActionCommand().equals(this.button_Lehrer_bearbeiten.getActionCommand()))
 		{
-			Dialog_adm_Lehrer_Bearbeiten dialog_lehrer = new Dialog_adm_Lehrer_Bearbeiten(((Lehrer)this.list_Lehrer.getSelectedValue()));
-			if(dialog_lehrer.ShowDialog())
+			Dialog_adm_Lehrer_Bearbeiten.initGui(((Lehrer)this.list_Lehrer.getSelectedValue())); 
+			if(Dialog_Klassenauswahl.dlg_adm_LehrerBearbeiten.ShowDialog())
 			{
 				this.list_Lehrer.setListData(ErzeugeLehrerArrayAusArrayList(Lehrer.alleLesen(false)));
 			}
@@ -162,4 +165,14 @@ public class Dialog_adm_Lehrer extends JFrame implements ActionListener
 		
 		return llist;
 	}
+	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_Lehrer == null)
+			Dialog_Klassenauswahl.dlg_adm_Lehrer = new Dialog_adm_Lehrer();
+		
+		Dialog_Klassenauswahl.dlg_adm_Lehrer.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_Lehrer.toFront();
+	}
+	
 }

@@ -57,15 +57,22 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 	private UtilDateModel model;
 	private JDatePickerImpl datePicker;
 
+
+
+
 	//Konstruktor für Schüler neuanlegen
-	public Dialog_adm_Schueler_Bearbeiten()
+	private Dialog_adm_Schueler_Bearbeiten()
+
 	{
 		schueler = new Schueler();
 		initGUI();	
 	}
 	
+
+
+
 	//Konstruktor für Schüler Bearbeiten
-	public Dialog_adm_Schueler_Bearbeiten(Schueler schueler)
+	private Dialog_adm_Schueler_Bearbeiten(Schueler schueler)
 	{
 		this.schueler = schueler;
 		initGUI();
@@ -361,15 +368,31 @@ public class Dialog_adm_Schueler_Bearbeiten extends JFrame implements ActionList
 			getDatenAusMaske();
 			schueler.speichern(new Lehrer(1)); //  Lehrer wird nur zum Loggen benutzt daher wird hier irgentein Lehrer verwendet
 			this.dispose();
-			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
-			dlg_schueler.setVisible(true);
+			Dialog_adm_Schueler.initGui(); 
+			Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
 		}
 		//... schließt Dialog und ruft Dialog Schueler auf
 		else
 		{
 			this.dispose();
-			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
-			dlg_schueler.setVisible(true);
+			Dialog_adm_Schueler.initGui(); 
+			Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
 		}
+	}
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten = new Dialog_adm_Schueler_Bearbeiten();
+		
+		Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten.toFront();
+	}
+	public static void initGui(Schueler s)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten = new Dialog_adm_Schueler_Bearbeiten(s);
+		
+		Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_SchuelerBearbeiten.toFront();
 	}
 }
