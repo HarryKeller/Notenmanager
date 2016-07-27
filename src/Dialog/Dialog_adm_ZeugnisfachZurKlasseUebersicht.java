@@ -46,7 +46,7 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 	 * @param k
 	 * Klasse-Objekt
 	 */
-	public Dialog_adm_ZeugnisfachZurKlasseUebersicht(Klasse k)
+	private Dialog_adm_ZeugnisfachZurKlasseUebersicht(Klasse k)
 	{
 		setKlasse(k);
 		initGUI();
@@ -205,9 +205,9 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 		if(e.getActionCommand()=="Zur\u00FCck")
 		{
 			this.dispose();
-			Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(getKlasse());
-			dia.pack();
-			dia.setVisible(true);
+			Dialog_adm_KlasseBearbeiten.initGui(getKlasse());
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.pack();
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
 		}
 		else if(e.getActionCommand()=="Verwerfen")
 		{
@@ -251,10 +251,11 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 			getKlasse().setLstzeugnisfach(zfach);
 			getKlasse().speichern();
 			this.dispose();
-			Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(getKlasse());
-			dia.pack();
-			dia.setDatenToMaske();
-			dia.setVisible(true);
+			
+			Dialog_adm_KlasseBearbeiten.initGui(getKlasse());// dia = new Dialog_adm_KlasseBearbeiten(getKlasse());
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.pack();
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setDatenToMaske();
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
 		}
 		
 	}
@@ -301,4 +302,14 @@ public class Dialog_adm_ZeugnisfachZurKlasseUebersicht extends JFrame implements
 		this.tmp_zfaecher = tmp_zfaecher;
 	}
 
+	public static void initGui(Klasse k)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht == null)
+			Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht = new Dialog_adm_ZeugnisfachZurKlasseUebersicht(k);
+		
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_ZeugnisfachZurKlasseUebersicht.toFront();
+	}
+	
+	
 }

@@ -34,7 +34,7 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 	private JList<Zeugnisfach> list_Zeugnisfach = new JList<Zeugnisfach>();
 	
 
-	public Dialog_adm_Zeugnisfach() 
+	private Dialog_adm_Zeugnisfach() 
 	{
 		setTitle("Zeugnisfach");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -133,16 +133,18 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 		if(e.getActionCommand().equals(this.button_Zeugnisfach_anlegen.getActionCommand()))
 		{
 			this.dispose();
-			Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten();
-			dialog_zeugnisfach.setVisible(true);
+			
+			Dialog_adm_Zeugnisfach_Bearbeiten.initGui(); 
+			Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
 		}	
 		if(e.getActionCommand().equals(this.button_Zeugnisfach_bearbeiten.getActionCommand()))
 		{
 			try
 			{
 				this.dispose();
-				Dialog_adm_Zeugnisfach_Bearbeiten dialog_zeugnisfach = new Dialog_adm_Zeugnisfach_Bearbeiten(list_Zeugnisfach.getSelectedValue());
-				dialog_zeugnisfach.setVisible(true);
+				Dialog_adm_Zeugnisfach_Bearbeiten.initGui(list_Zeugnisfach.getSelectedValue());
+				
+				Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
 			}
 			catch(Exception exception)
 			{
@@ -184,4 +186,13 @@ public class Dialog_adm_Zeugnisfach extends JFrame implements ActionListener {
 		
 		return llist;
 	}
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_Zeugnisfach == null)
+			Dialog_Klassenauswahl.dlg_adm_Zeugnisfach = new Dialog_adm_Zeugnisfach();
+		
+		Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.toFront();
+	}
+	
 }

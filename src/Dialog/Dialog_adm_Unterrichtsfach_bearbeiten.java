@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import Fachklassen.Unterrichtsfach;
 import Fachklassen.Zeugnisfach;
+
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
@@ -42,7 +43,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 	private JScrollPane _scrollPane;
 	
 
-	public Dialog_adm_Unterrichtsfach_bearbeiten() 
+	private Dialog_adm_Unterrichtsfach_bearbeiten() 
 	{
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.unterrichtsfach = new Unterrichtsfach();
@@ -51,7 +52,7 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 		
 		this.fillComboBox();
 	}
-	public Dialog_adm_Unterrichtsfach_bearbeiten(Unterrichtsfach ufach) 
+	private Dialog_adm_Unterrichtsfach_bearbeiten(Unterrichtsfach ufach) 
 	{
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.unterrichtsfach = ufach;
@@ -261,9 +262,10 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 				getDatenInMaske();
 				this.unterrichtsfach.speichern();
 				this.dispose();
-				Dialog_adm_Unterrichtsfach dia = new Dialog_adm_Unterrichtsfach();
-				dia.pack();
-				dia.setVisible(true);
+				
+				Dialog_adm_Unterrichtsfach.initGui();
+				Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.pack();
+				Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.setVisible(true);
 			}
 		}
 		else if(e.getSource().equals(button_Verwerfen))
@@ -281,11 +283,27 @@ public class Dialog_adm_Unterrichtsfach_bearbeiten extends JDialog implements Ac
 		else if(e.getSource()==button_Zurueck)
 		{
 			setVisible(false);
-			Dialog_adm_Unterrichtsfach dia = new Dialog_adm_Unterrichtsfach();
-			dia.pack();
-			dia.setVisible(true);
+			Dialog_adm_Unterrichtsfach.initGui();
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.pack();
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach.setVisible(true);
 		}
 	}	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten = new Dialog_adm_Unterrichtsfach_bearbeiten();
+		
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.toFront();
+	}
+	public static void initGui(Unterrichtsfach uf)
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten == null)
+			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten = new Dialog_adm_Unterrichtsfach_bearbeiten(uf);
+		
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.toFront();
+	}
 }
 
 

@@ -46,7 +46,7 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 	private JLabel lbl_klasse;
 	public ArrayList<Unterrichtsfach> fach = new ArrayList<Unterrichtsfach>();
 
-	public Dialog_Notenblatt(Schueler schueler, Lehrer lehrer) 
+	private Dialog_Notenblatt(Schueler schueler, Lehrer lehrer) 
 	{
 		//Fach-Array füllen und restliche Parameter in Klasse speichern
 		fach = Unterrichtsfach.alleLesen(schueler);
@@ -141,8 +141,8 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		}
 		else if(action.equals("noton"))
 		{
-			Dialog_Druckansicht dd = new Dialog_Druckansicht(this);
-			dd.setVisible(true);
+			Dialog_Druckansicht.initGui(this);
+			Dialog_Klassenauswahl.dlg_druckansicht.setVisible(true);
 			this.setVisible(false);
 		}
 	}
@@ -249,5 +249,14 @@ public class Dialog_Notenblatt extends JFrame implements ActionListener {
 		gbc_btnNotenblattDrucken.gridx = 1;
 		gbc_btnNotenblattDrucken.gridy = 5;
 		getContentPane().add(btnNotenblattDrucken, gbc_btnNotenblattDrucken);
+	}
+	public static void initDialog (Schueler schueler, Lehrer lehrer)
+	{
+		if(Dialog_Klassenauswahl.dlg_Notenblatt == null)
+		{
+			Dialog_Klassenauswahl.dlg_Notenblatt = new Dialog_Notenblatt(schueler, lehrer);
+		}
+		Dialog_Klassenauswahl.dlg_Notenblatt.setVisible(true);
+		Dialog_Klassenauswahl.dlg_Notenblatt.toFront();
 	}
 }

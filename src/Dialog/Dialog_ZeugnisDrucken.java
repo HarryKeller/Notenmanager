@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -43,7 +44,7 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 	Schule s = new Schule();
 	String noteschriftl = "";
 	String datum;
-	public Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung, String localDate)
+	private Dialog_ZeugnisDrucken(Schueler schueler, Dialog_Schuelerwahl Schuelerwahl, String bemerkung, String localDate)
 	{
 		this.datum = localDate;
 		this.bemerkung = bemerkung;
@@ -129,5 +130,13 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 			this.dispose();
 			this.schuelerwahl.setVisible(true);
 		}
+	}
+	public static void initGui(Schueler schueler, Dialog_Schuelerwahl schuelerwahl, String bemerkung, String localDate)
+	{
+		if(Dialog_Klassenauswahl.dlg_ZeugnisDrucken == null)
+			Dialog_Klassenauswahl.dlg_ZeugnisDrucken = new Dialog_ZeugnisDrucken(schueler,schuelerwahl,bemerkung,localDate);
+		
+		Dialog_Klassenauswahl.dlg_ZeugnisDrucken.setVisible(true);
+		Dialog_Klassenauswahl.dlg_ZeugnisDrucken.toFront();
 	}
 }

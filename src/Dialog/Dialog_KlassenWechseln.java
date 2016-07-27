@@ -64,7 +64,7 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	 */
 	private boolean schranke = false;
 	
-	public Dialog_KlassenWechseln(Lehrer l)
+	private Dialog_KlassenWechseln(Lehrer l)
 	{
 		this.l = l;
 		initGUI();
@@ -338,4 +338,14 @@ public class Dialog_KlassenWechseln extends JFrame implements ItemListener, Acti
 	public void setCmodel_links(DefaultComboBoxModel<Klasse> cmodel_links) {
 		this.cmodel_links = cmodel_links;
 	}
+	
+	public static void initGui(Lehrer l)
+	{
+		if(Dialog_Klassenauswahl.dlg_KlassenWechsel == null)
+			Dialog_Klassenauswahl.dlg_KlassenWechsel = new Dialog_KlassenWechseln(l);
+		
+		Dialog_Klassenauswahl.dlg_KlassenWechsel.setVisible(true);
+		Dialog_Klassenauswahl.dlg_KlassenWechsel.toFront();
+	}
+	
 }

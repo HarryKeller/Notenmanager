@@ -22,6 +22,7 @@ import Persistenz.DBZugriff;
 
 import java.util.*;
 
+
 public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener {	
 	private Lehrer lehrer;
 	private Klasse klasse;
@@ -66,12 +67,12 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 	private JButton btn_speichern;
 	private JLabel _label_3;
 	
-	public Dialog_NotenausgabeKlasse() {
+	private Dialog_NotenausgabeKlasse() {
 		
 		initGUI();
 	}
 	
-	public Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
+	private Dialog_NotenausgabeKlasse(Lehrer l, Klasse k, Unterrichtsfach f)
 	{
 		//this.setExtendedState(MAXIMIZED_BOTH);
 		this.lehrer = l;
@@ -672,8 +673,9 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		}
 		else if(e.getSource() == this.btn_neueLeistung)
 		{
-			Dialog_LeistungNeu dln = new Dialog_LeistungNeu(this);
-			dln.setVisible(true);
+			
+			Dialog_LeistungNeu.initGui(this); 
+			Dialog_Klassenauswahl.dlg_LeistungNeu.setVisible(true);
 		}
 		else if(e.getSource() == this.btn_verwerfen)
 		{
@@ -690,5 +692,26 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 			}			
 		}		
 	}	
+	
+	//Init Methoden
+	public static void initDialog (Lehrer l, Klasse k, Unterrichtsfach f)
+	{
+		if(Dialog_Klassenauswahl.dlg_NotenausgabeKlasse == null)
+		{
+			Dialog_Klassenauswahl.dlg_NotenausgabeKlasse = new Dialog_NotenausgabeKlasse(l,k,f);
+		}
+		Dialog_Klassenauswahl.dlg_NotenausgabeKlasse.setVisible(true);
+		Dialog_Klassenauswahl.dlg_NotenausgabeKlasse.toFront();
+	}
+	public static void initDialog ()
+	{
+		if(Dialog_Klassenauswahl.dlg_NotenausgabeKlasse == null)
+		{
+			Dialog_Klassenauswahl.dlg_NotenausgabeKlasse = new Dialog_NotenausgabeKlasse();
+		}
+		Dialog_Klassenauswahl.dlg_NotenausgabeKlasse.setVisible(true);
+		Dialog_Klassenauswahl.dlg_NotenausgabeKlasse.toFront();
+	}
+	
 
 }

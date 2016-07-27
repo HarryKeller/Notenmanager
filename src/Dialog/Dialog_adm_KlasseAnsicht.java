@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Fachklassen.Klasse;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridBagLayout;
@@ -29,7 +30,7 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	private JList<Klasse> list = new JList<Klasse>();
 	private DefaultListModel<Klasse> klistmodel = new DefaultListModel<Klasse>();
 	
-	public Dialog_adm_KlasseAnsicht()
+	private  Dialog_adm_KlasseAnsicht()
 	{
 		initFrame();
 	}
@@ -127,10 +128,10 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		{
 			if(list.isSelectionEmpty()!=true)
 			{
-				Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten(list.getSelectedValue());
-				dia.pack();
+				Dialog_adm_KlasseBearbeiten.initGui(list.getSelectedValue());
+				Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.pack();
 				this.setVisible(false);
-				dia.setVisible(true);
+				Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
 			}
 			else
 			{
@@ -139,10 +140,10 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 		}
 		else if(e.getActionCommand()=="Klasse hinzuf\u00FCgen")
 		{
-			Dialog_adm_KlasseBearbeiten dia = new Dialog_adm_KlasseBearbeiten();
-			dia.pack();
+			Dialog_adm_KlasseBearbeiten.initGui();
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.pack();
 			this.setVisible(false);
-			dia.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_KlasseBearbeiten.setVisible(true);
 		}
 		else if(e.getActionCommand()=="Klasse l\u00F6schen")
 		{
@@ -172,5 +173,15 @@ public class Dialog_adm_KlasseAnsicht extends JFrame implements ActionListener
 	public void setKlistmodel(DefaultListModel<Klasse> klistmodel) {
 		this.klistmodel = klistmodel;
 	}
+	
+	public static void initGui()
+	{
+		if(Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht == null)
+			Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht = new Dialog_adm_KlasseAnsicht();
+		
+		Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setVisible(true);
+		Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.toFront();
+	}
+	
 
 }
