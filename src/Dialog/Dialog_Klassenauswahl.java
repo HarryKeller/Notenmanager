@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -35,7 +36,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
-public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, ItemListener
+public class Dialog_Klassenauswahl extends JDialog implements ActionListener//, ItemListener
 
 {
 	private JPanel panel_combobox;
@@ -124,6 +125,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 	
 	private void initGUI() 
 	{
+		this.setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 525, 325);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -358,19 +360,28 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 	
 	public void actionPerformed(ActionEvent e) 
 	{
+		
 		if(e.getActionCommand().equals(btnFachuebersicht.getActionCommand())) // Abfrage auf Drücken des Login-Buttons "button_Login"
 		{
-			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());
+			
+			Dialog_NotenausgabeKlasse dlg_notenausgabeKlasse = new Dialog_NotenausgabeKlasse(lehrer,(Klasse)comboBox_Klassen.getSelectedItem(),(Unterrichtsfach)comboBox_Faecher.getSelectedItem());		
+			this.setVisible(false);
 			dlg_notenausgabeKlasse.setVisible(true);
+			this.setVisible(true);
 		}		
 		else if(e.getActionCommand().equals(btnKlassenuebersicht.getActionCommand())) // Abfrage ob Button Klassenuebersicht gedrückt wurde
 		{
+			
 			Dialog_Schuelerwahl dlg_schueler = new Dialog_Schuelerwahl(lehrer,(Klasse)comboBox_Klassen.getSelectedItem());
+			this.setVisible(false);
 			dlg_schueler.setVisible(true);
+			
 		}
 		else if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
 		{
+		
 			Dialog_KlassenWechseln dlg_klassenw = new Dialog_KlassenWechseln(lehrer);
+			this.setVisible(false);
 			dlg_klassenw.setVisible(true);
 		}				
 		else if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
@@ -381,32 +392,45 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		}
 		else if(e.getActionCommand() == "Fächer bearbeiten")
 		{
+			
 			Dialog_adm_Unterrichtsfach dlg_adm_fach = new Dialog_adm_Unterrichtsfach();
+			this.setVisible(false);
 			dlg_adm_fach.setVisible(true);
+			
 		}
 		else if(e.getActionCommand() == "Lehrer bearbeiten")
 		{
+
 			Dialog_adm_Lehrer dlg_adm_lehrer = new Dialog_adm_Lehrer();
+			this.setVisible(false);
 			dlg_adm_lehrer.setVisible(true);	
+			
 		}
 		else if(e.getActionCommand() == "Klassen bearbeiten")
 		{
+			
 			Dialog_adm_KlasseAnsicht dlg_adm_klasse = new Dialog_adm_KlasseAnsicht();
+			this.setVisible(false);
 			dlg_adm_klasse.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Schüler bearbeiten")
 		{
+			
 			Dialog_adm_Schueler dlg_schueler = new Dialog_adm_Schueler();
+			this.setVisible(false);
 			dlg_schueler.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
 		{
 			Dialog_adm_UnterrichtsfachZuweisen dlg_adm_fachz = new Dialog_adm_UnterrichtsfachZuweisen();
+			this.setVisible(false);
 			dlg_adm_fachz.setVisible(true);
 		}
 		else if(e.getActionCommand() == "Zeugnisfächer bearbeiten")
 		{
+		
 			Dialog_adm_Zeugnisfach dlg_zeug = new Dialog_adm_Zeugnisfach();
+			this.setVisible(false);
 			dlg_zeug.setVisible(true);
 		}
 		else
@@ -414,10 +438,10 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 			this.dispose();
 			DBZugriff.closeDB();
 		}
-		
+
 		
 	}
-	//Verusch mit anonoymen Listenern damit events unterschieden werden können
+	//Verusch mit anonoymen Listenern damit events unterschieden werden können, deshalb dies hier auskommentiert
 //	public void itemStateChanged(ItemEvent arg0) 
 //	{
 //		comboBox_Faecher.removeAllItems();
