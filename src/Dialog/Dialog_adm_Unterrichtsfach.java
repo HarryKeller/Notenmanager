@@ -131,15 +131,13 @@ public class Dialog_adm_Unterrichtsfach extends JFrame implements ActionListener
 		{
 			this.dispose();
 			Dialog_adm_Unterrichtsfach_bearbeiten.initGui();
-			Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
 		}	
 		if(e.getActionCommand().equals(this._btnUnterrichtsfachBearbeiten.getActionCommand()))
 		{
 			try
 			{
-				this.dispose();
+				
 				Dialog_adm_Unterrichtsfach_bearbeiten.initGui(list_Unterrichtsfach.getSelectedValue());
-				Dialog_Klassenauswahl.dlg_adm_unterrichtsfach_bearbeiten.setVisible(true);
 			}
 			catch(Exception exception)
 			{

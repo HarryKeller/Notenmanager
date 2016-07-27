@@ -352,6 +352,7 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		this.panel_button.add(this.btnFachuebersicht, gbc_btnFachuebersicht);
 		
 		this.btnSchließen = new JButton("Schlie\u00DFen");
+		this.btnSchließen.setActionCommand("Schließen");
 		this.btnSchließen.addActionListener(this);
 		GridBagConstraints gbc_btnSchließen = new GridBagConstraints();
 		gbc_btnSchließen.insets = new Insets(5, 10, 5, 10);
@@ -411,14 +412,14 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		{
 			
 			Dialog_Schuelerwahl.initDialog(lehrer,(Klasse)comboBox_Klassen.getSelectedItem()); 
-			this.dlg_Schuelerwahl.setVisible(true);
+			Dialog_Klassenauswahl.dlg_Schuelerwahl.setVisible(true);
 			
 		}
 		else if(e.getActionCommand().equals(btnKlassenWechseln.getActionCommand()))
 		{
 		
 			Dialog_KlassenWechseln.initGui(lehrer); 
-			this.dlg_KlassenWechsel.setVisible(true); 
+			Dialog_Klassenauswahl.dlg_KlassenWechsel.setVisible(true); 
 		}				
 		else if(e.getActionCommand().equals(mitemBenutzerWechseln.getActionCommand())) // Abfrage ob Menueitem gedrückt wurde
 		{
@@ -426,41 +427,41 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 			Dialog_Login dlg_login = new Dialog_Login();
 			dlg_login.setVisible(true);
 		}
-		else if(e.getActionCommand() == "Fächer bearbeiten")
+		else if(e.getActionCommand().equals( "Fächer bearbeiten"))
 		{
-			Dialog_adm_FachAnlegen.initGui();
+			Dialog_adm_Unterrichtsfach.initGui();
 		}
-		else if(e.getActionCommand() == "Lehrer bearbeiten")
+		else if(e.getActionCommand().equals("Lehrer bearbeiten"))
 		{
 
 			Dialog_adm_Lehrer.initGui(); 
-			this.dlg_adm_Lehrer.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_Lehrer.setVisible(true);
 			
 		}
-		else if(e.getActionCommand() == "Klassen bearbeiten")
+		else if(e.getActionCommand().equals("Klassen bearbeiten"))
 		{
 			
 			Dialog_adm_KlasseAnsicht.initGui(); 
-			this.dlg_adm_KlasseAnsicht.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_KlasseAnsicht.setVisible(true);
 		}
-		else if(e.getActionCommand() == "Schüler bearbeiten")
+		else if(e.getActionCommand().equals("Schüler bearbeiten"))
 		{
 			
 			Dialog_adm_Schueler.initGui(); 
-			this.dlg_adm_Schueler.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_Schueler.setVisible(true);
 		}
-		else if(e.getActionCommand() == "Unterrichtsfächer zuweisen")
+		else if(e.getActionCommand().equals("Unterrichtsfächer zuweisen"))
 		{
 			Dialog_adm_UnterrichtsfachZuweisen.initGui(); 
-			this.dlg_adm_UnterrichtsfachZuweisen.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_UnterrichtsfachZuweisen.setVisible(true);
 		}
-		else if(e.getActionCommand() == "Zeugnisfächer bearbeiten")
+		else if(e.getActionCommand().equals("Zeugnisfächer bearbeiten"))
 		{
 			
 			Dialog_adm_Zeugnisfach.initGui();
-			this.dlg_adm_Zeugnisfach.setVisible(true);
+			Dialog_Klassenauswahl.dlg_adm_Zeugnisfach.setVisible(true);
 		}
-		else
+		else if( e.getActionCommand().equals("Schließen"))
 		{
 			DBZugriff.closeDB();
 			this.dispose();	
@@ -468,31 +469,5 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 
 		
 	}
-	//Verusch mit anonoymen Listenern damit events unterschieden werden können, deshalb dies hier auskommentiert
-//	public void itemStateChanged(ItemEvent arg0) 
-//	{
-//		comboBox_Faecher.removeAllItems();
-//		comboBox_Klassen.removeAllItems();
-//		comboBox_Klassen.setEnabled(true);
-//		btnFachuebersicht.setEnabled(false);
-//		
-//		for(Klasse k:Klasse.alleLesen(lehrer, (Schule)comboBox_Schule.getSelectedItem()))
-//		{
-//			this.comboBox_Klassen.addItem(k);		
-//		}				
-//		
-//		if(comboBox_Klassen.getSelectedItem() != null)
-//		{
-//			comboBox_Faecher.setEnabled(true);
-//			for(Unterrichtsfach f : Unterrichtsfach.alleLesen(lehrer, (Klasse)comboBox_Klassen.getSelectedItem(),LocalDate.now()))
-//			{
-//				this.comboBox_Faecher.addItem(f);
-//			}			
-//		}
-//		if(comboBox_Faecher.getSelectedItem() != null)
-//		{
-//			btnFachuebersicht.setEnabled(true);
-//		}
-//	}
 
 }
