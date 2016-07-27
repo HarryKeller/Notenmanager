@@ -44,7 +44,14 @@ public class Zeugnisnote
 	{
 		this.schueler = schueler;
 	}
-	//TÖTET ES BEVOR ES EIER LEGT!!!!!!!!!!!!!
+	/**
+	 * Ich hab keine Ahnung zu was hier der schueler übergeben wird
+	 * Er ist kein auswahlkriterium und durch das lesen über die id
+	 * wird er sowieso überschrieben.
+	 * Sollte dieser Konsturkor einen Sinn haben, so erschließt sich dieser mir nicht....
+	 * @param id
+	 * @param schueler
+	 */
 	public Zeugnisnote(int id,Schueler schueler)
 	{
 		this.schueler = schueler;
@@ -57,18 +64,19 @@ public class Zeugnisnote
 	}
 	
 	//------------------------------------------------------
-	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,LocalDate jahr)
+	/**
+	 * Liest alle Zeugnisnoten eines Schülers für ein Ausgewähltes jahr
+	 * diese Methode scheint zu funktioneren, sollte jedoch noch einmal getestet werden
+	 */
+	public static ArrayList<Zeugnisnote> alleLesen(Schueler s,DatumSJ jahr)
 	{		
-		int jbegin = jahr.getYear()-1;
-		int jende = jahr.getYear();
-		
 	
 		String hql =
 				"zn "		
 						//2015-10-10 > 2015-9-1
-				+"WHERE zn.aenderungszeitpunkt between '"+jbegin+"-9-1 '"	//Ab September des vorherigen Jahres	
+				+"WHERE zn.aenderungszeitpunkt between '"+jahr.getBeginn()+ "'"	
 						//2015-10-10 < 2016-8-1
-				+"AND '"+jende+"-8-1 '"		//Bis August des aktuellen Jahres
+				+"AND '"+jahr.getEnde()+"'"		
 				+ "AND zn.schueler.id =	" +s.getId()+" ";
 		
 			System.out.println(hql);	
@@ -110,6 +118,15 @@ public class Zeugnisnote
 	
 	
 	//------------------------------------------------------
+	/**
+	 * Berechnet die Note des übergebenen Unterrichtsfachs
+	 * den dazugehörigen Schüler bekommt es aus den instanzvariablen genau wie alles andere
+	 * Da Diese Methode mit LocalDate.now() arbeitet, können Leistungen,welche ein Schüler in einem Fach erbracht hat
+	 * nicht im Jahr darauf(also in einem neuen Schuljahr) erneut berechnetn werden.
+	 * hierfür wäre eine weiter übergabeparameter z.B. DatumSJ nötig
+	 * @param Unterrichtsfach uf
+	 * @return
+	 */
 	public double berechneNote(Unterrichtsfach uf)
 	{
 		double muendlich = 0;
@@ -185,7 +202,14 @@ public class Zeugnisnote
 				
 		return Math.round(note * 100)/100.0;
 	}
-	
+	/**
+	 * Berechnet die Zeugnisnote für ein Zeugnisfach aus den und den üebrgebene Schüler
+	 * Da dies keine static Methode ist und zeugnisnote eine Schüler als instanvariable hat
+	 * ergibt das übergeben eines Schülers heir keine Sinn!
+	 * @param zf
+	 * @param schueler
+	 * @return
+	 */
 	public double berechneNote(Zeugnisfach zf,Schueler schueler)
 	{
 		double muendlich = 0;
@@ -275,6 +299,13 @@ public class Zeugnisnote
 		return Math.round((znote / gewichtung * 100))/100.0;
 	}
 	
+	/** 
+	 * Aus dem Methodennamen geht nicht hervor was diese Methode macht, 
+	 * deshalbt kann ich sie auch nicht weiter kommentieren...........Danny Lemke für mehr fragen
+	 * genau wie bei allem anderen der Zeugnisnote
+	 * @param uf
+	 * @return
+	 */
 	public double berechneZZNote(Unterrichtsfach uf)
 	{
 		final LocalDate BEGINN_SCHULJAHR = LocalDate.parse("2015-09-01");

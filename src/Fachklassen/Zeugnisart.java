@@ -26,6 +26,10 @@ public class Zeugnisart
 	
 	//Alle Lesen
 	//----------------------------------------------
+	/**
+	 * Liest stumpf alle Zeugnisarten die in der Db Existieren
+	 * @return
+	 */
 	public static ArrayList<Zeugnisart> alleLesen()
 	{
 		ArrayList<Zeugnisart> al= new ArrayList<Zeugnisart>();

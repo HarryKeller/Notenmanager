@@ -48,7 +48,10 @@ public class Leistungsart
 	
 	//Alle Lesen 
 	//------------------------------------------
-	
+	/**
+	 * Liest stump alle Leistungsarten die in der Db Existieren
+	 * @return
+	 */
 	public static ArrayList<Leistungsart>AlleLesen()
 	{
 		ArrayList<Leistungsart> al = new ArrayList<Leistungsart>();

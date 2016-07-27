@@ -49,7 +49,10 @@ public class Schueler
 	
 
 
-	
+	/**
+	 * Liest stumpf alle Schueler die in der DB existieren
+	 * @return
+	 */
 	public static ArrayList<Schueler>alleLesen()
 	{
 		ArrayList<Schueler>al = new ArrayList<Schueler>();
@@ -57,6 +60,11 @@ public class Schueler
 		return al;
 	}
 	
+	/** Liest alle Schriftlichen leistungen des Schuelers von dem Übergebenen Fach aus der DB
+	 *  Diese Methode sollte nicht benutzt werden, da sie auch leistungen von vergangen jahren ausgibt
+	 * @param ufach
+	 * @return
+	 */
 	@Deprecated
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach)
 	{
@@ -74,6 +82,11 @@ public class Schueler
 		}
 		return ret;//Rückgabe der verbliebenen, also der Schriftlichen Arbeiten
 	}
+	/** Liest alle mündlichen leistungen des Schuelers von dem Übergebenen Fach aus der DB
+	 *  Diese Methode sollte nicht benutzt werden, da sie auch leistungen von vergangen jahren ausgibt
+	 * @param ufach
+	 * @return
+	 */
 	@Deprecated
 	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach)
 	{
@@ -91,7 +104,23 @@ public class Schueler
 	
 	
 	
-	
+	/**
+	 * Gibt alle schrifltichen Leistungen eines Schülers im angegebenen Zeitraum aus
+	 * Methoden die zu einem späteren Zeitpunkt erstellt wurden, wird nur noch ein DatumSj objekt übergeben
+	 * Diese Methode sollte im Programmcode im idealfall wie folgt aufgerufen werden:
+	 * 
+	 *Irgendow im Programm:
+	 *	DatumSJ sj = new DatumSJ(Parameterundso meistens LocalDate.now() für das aktuelle Schuljahr)
+	 *...
+	 *...
+	 *al = Schueler.getSchriftlich(ufach, sj.getbeginn(), sk.getEnde() );
+	 *Mit dieser zeile werden alle Zeilen des jewiligen schuljahres gelesen
+	 * 
+	 * @param ufach
+	 * @param von
+	 * @param bis
+	 * @return
+	 */
 	public ArrayList<Leistung> getSchriftlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
 	{
 			//Alle Leistungen des Schülers für ein Fach lesen
@@ -111,6 +140,23 @@ public class Schueler
 				return ret;	//Rückgabe der verbliebenen, also der Mündlich
 	}
 	
+	/**
+	 * Gibt alle mündlichen Leistungen eines Schülers im angegebenen Zeitraum aus
+	 * Methoden die zu einem späteren Zeitpunkt erstellt wurden, wird nur noch ein DatumSj objekt übergeben
+	 * Diese Methode sollte im Programmcode im idealfall wie folgt aufgerufen werden:
+	 * 
+	 *Irgendow im Programm:
+	 *	DatumSJ sj = new DatumSJ(Parameterundso meistens LocalDate.now() für das aktuelle Schuljahr)
+	 *...
+	 *...
+	 *al = Schueler.getSchriftlich(ufach, sj.getbeginn(), sk.getEnde() );
+	 *Mit dieser zeile werden alle Zeilen des jewiligen schuljahres gelesen
+	 * 
+	 * @param ufach
+	 * @param von
+	 * @param bis
+	 * @return
+	 */
 	public ArrayList<Leistung> getMuendlich(Unterrichtsfach ufach,LocalDate von, LocalDate bis)
 	{
 			//Alle Leistungen des Schülers für ein Fach lesen
@@ -137,7 +183,15 @@ public class Schueler
 	{
 		DBZugriff.lesen(this, id);
 	}
-	
+	/**
+	 * Kopierkonstruktor
+	 * Ginge auch mit Klonen aber Koppierkonstukroten schreib kann ich, also diese Variante :p
+	 * @param vorname
+	 * @param nachname
+	 * @param gebdat
+	 * @param geschl
+	 * @param konfession
+	 */
 	public Schueler(String vorname, String nachname, LocalDate gebdat, String geschl, String konfession)
 	{
 		this.nachname = nachname;

@@ -40,6 +40,11 @@ public class Lehrer
 	
 	//Alle Lesen Methoden
 	//----------------------------------------
+	/**
+	 * Liest alle Lehrer, welche in der DB Existieren und noch arbeiten
+	 * @param gekuendigt
+	 * @return
+	 */
 	public static ArrayList<Lehrer> alleLesen(boolean gekuendigt)
 	{
 		
@@ -50,7 +55,10 @@ public class Lehrer
 		
 	}
 	
-	
+	/**
+	 * Liest stumpf alle Lehrer, die in der DB existieren
+	 * @return
+	 */
 	public static  ArrayList<Lehrer> alleLesen()
 	{
 		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
@@ -64,6 +72,11 @@ public class Lehrer
 	public String toString()
 	{
 		return this.nachname +" " + this.vorname;
+	}
+	public boolean equals(Lehrer l)
+	{
+		if(this.id == l.getId())return true;
+		else return false;
 	}
 	
 	//----------------------------------------

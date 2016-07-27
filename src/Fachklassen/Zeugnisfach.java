@@ -67,6 +67,21 @@ public class Zeugnisfach {
 	@JoinColumn(name = "zfach_id")
 	private List<Unterrichtsfach> unterrichtsfaecher = new ArrayList<Unterrichtsfach>();
 	
+	/**
+	 * Diese Methode liefert alle abschliesenden Fächer für alle angegeben Klassen zurück
+	 * Dieser methode kann 1+n argumente übergeben werden
+	 * z.B. Zeugnisfach.alleLesen(k1);
+	 * ODER:
+	 * z.B. Zeugnisfach.alleLesen(k1,k2,k3,k3);
+	 * Ob es elegant ist diese Methode zu benutzen ist fraglich.
+	 * Besser wäre es einfach alle Abschliessenden Fächer eines Schülers über den Ausbildungszweig zu holen,
+	 * da dies jedoch ebenso unsicher ist, da die Architektur zurzeit nicht 100Prozentig steht, wird dieser 
+	 * unelegante Weg empfohlen. 
+	 * Hier ist es möglich die Klassen in denen nach abschliessenden Fächern gesucht werden soll anzugeben
+	 * @param aktuelle
+	 * @param values
+	 * @return
+	 */
 	public static ArrayList<Zeugnisfach>alleLesenAbschliesendeFaecher(Klasse aktuelle,Klasse... values)
 	{
 		
@@ -103,6 +118,11 @@ public class Zeugnisfach {
 		return zf;
 	}
 	
+	/**
+	 * Liest alle Zeugnisfächer der übergebenen klasse
+	 * @param k
+	 * @return
+	 */
 	public static ArrayList<Zeugnisfach>alleLesen(Klasse k)
 	{
 		
@@ -123,6 +143,10 @@ public class Zeugnisfach {
 		
 		return ret;
 	}
+	/**
+	 * Liest alle Zeugnisfächer, welche in der DB existieren
+	 * @return
+	 */
 	public static ArrayList<Zeugnisfach>alleLesen()
 	{
 		ArrayList<Zeugnisfach>al = new ArrayList<Zeugnisfach>();

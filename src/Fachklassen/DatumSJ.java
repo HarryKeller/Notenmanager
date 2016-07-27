@@ -57,6 +57,10 @@ public class DatumSJ
 
 	}
 	
+	/**
+	 * Liest alle Schuljahre, welche in der DB vermerkt sind
+	 * @return
+	 */
 	public static ArrayList<DatumSJ>alleLesen()
 	{
 		ArrayList<DatumSJ>al = new ArrayList<DatumSJ>();

@@ -48,12 +48,21 @@ public class Leistung
 	
 	//Db-Methoden der Leistung
 	//----------------------------------------
-	
+	/**
+	 * Speichert die Leistung und loggt diese in der DB zusammen mit dem übergebenen Lehrer
+	 * (Der übergebene Lehrer sollte der Lehrer sein, welcher die Note ändert (offensichtlicher weise!!) )
+	 * @param lehrer
+	 * @return
+	 */
 	public boolean speichern(Lehrer lehrer)
 	{
 		return Historie.speichern(this, lehrer);
 	}
 
+	/**
+	 * Löscht eine z.B. falsch angelegte leistung physisch aus der Db, allerdings wird dies in der historie 
+	 * zusammen mit dem Lehrer der dies getan hat vermerkt
+	 */
 	public void loeschen(Lehrer l)
 	{
 		Historie.loeschen(this, l);
@@ -62,13 +71,24 @@ public class Leistung
 	
 	//Alle Lesen Methoden
 	//----------------------------------------
+	/**
+	 * liest stump alle Leistungen die Existieren
+	 * @return
+	 */
 	public static ArrayList<Leistung>AlleLesen()
 	{
 		ArrayList<Leistung> al = new ArrayList<Leistung>();
 		DBZugriff.alleLesen("Leistung", al, "" );
 		return al;	
 	}
-	
+	/**
+	 * Liest alle Leistungen, die ein Schüler in diesem Unterrichtsfach erbracht hat
+	 * Diese Methode ist mit vorsicht zu geniesen, da z.B. beim wiederholen einer Klasse
+	 * sich die Noten "vermischen" könnten
+	 * @param schueler
+	 * @param ufach
+	 * @return
+	 */
 	public static ArrayList<Leistung> AlleLesen(Schueler schueler,Unterrichtsfach ufach )
 	{
 		String sql = 
@@ -93,6 +113,15 @@ public class Leistung
 		return leistungliste;
 	}
 	
+	/**
+	 * Sichere version von alleLesen(Schueler,Unterrichtsfach).
+	 * Liest alle Leistungen, die ein Schüler in diesem Unterrichtsfach erbracht hat in diesem Schuljahr
+	 * Damit können sich leistungen nicht "vermischen" falls ein Schüler die Klasse wiederholt
+	 * @param schueler
+	 * @param ufach
+	 * @param sj
+	 * @return
+	 */
 	public static ArrayList<Leistung> AlleLesen(Schueler schueler,Unterrichtsfach ufach,DatumSJ sj )
 	{
 		String sql = 
@@ -140,7 +169,12 @@ public class Leistung
 		}
 		
 	}
-	
+	/**
+	 * vergleich zwei Leistungen anhand der Id -> zwei neu angelegte Leistungen zu vergleichen ist nicht Sinnvoll,
+	 * da diese beide die id 0 haben
+	 * @param l
+	 * @return
+	 */
 	public boolean equals(Leistung l)
 	{
 		if(this.id == l.getId() && this.notenstufe == l.notenstufe && this.tendenz == l.tendenz)return true;

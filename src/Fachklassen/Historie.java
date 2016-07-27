@@ -34,14 +34,18 @@ public class Historie {
 	//----------------------------------------------------------------------------------
 	
 	
-	//DefaultKonstruktor für hybernate
+	/**
+	 * DefaultKonstruktor für hybernate
+	 */
 	public Historie()
 	{
 		
 	}
 	
 	
-	//Speichert ein Historien Object
+	/**
+	 * Speichert ein Historien Object
+	 */
 	public void speichern(){
 		DBZugriff.speichern(this);
 	}
@@ -50,7 +54,12 @@ public class Historie {
 	//Log-Methoden der Klasse Historie
 	//-----------------------------------------------------
 	
-	//Logt das Speichern einer Leistung mit dem verantworlichen Lehrer
+	/**
+	 * Logt das Speichern einer Leistung mit dem verantworlichen Lehrer
+	 * @param l
+	 * @param lehrer
+	 * @return
+	 */
 	public static boolean speichern(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();
@@ -73,7 +82,12 @@ public class Historie {
 		h.speichern();
 		return true;
 	}
-	//Logt das Loeschen einer Leistung und des verantworlichen Lehrers mit
+	/**
+	 * Logt das Loeschen einer Leistung und des verantworlichen Lehrers mit
+	 * @param l Die zu speichernde Leistung
+	 * @param lehrer der Lehrer, welche die Leistung angelegt bzw geändert hat
+	 * @return
+	 */
 	public static boolean loeschen(Leistung l,Lehrer lehrer)
 	{
 		Historie h = new Historie();

@@ -37,7 +37,7 @@ public class Unterrichtsfach {
 	}
 	/**
 	 * Kopierkonstruktor
-	 * @param uf
+	 * @param Unterrichtsfach uf
 	 */
 	public Unterrichtsfach(Unterrichtsfach uf)
 	{
@@ -65,6 +65,14 @@ public class Unterrichtsfach {
 	
 	//AlleLesen Methoden
 	//-------------------------------------------
+	/**
+	 * 
+	 * Liest alle Unterrichtsfächer, die der Lehrer zum angegeben Datum unterrichtet
+	 * @param lehrer
+	 * @param klasse
+	 * @param ausgangsdatum
+	 * @return
+	 */
 	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer , Klasse klasse, LocalDate ausgangsdatum)
 	{
 		String hql= " uf "	//Alle Unterrichtsfächer einer Klasse
@@ -83,7 +91,6 @@ public class Unterrichtsfach {
 			
 			for(Zeugnisfach zf:klasse.getlstzeugnisfach())
 			{
-				//System.out.println(  zf.getId()+"           "+((Unterrichtsfach)o[0]).getZfach().getId() );
 				if(zf.equals(((Unterrichtsfach)o[0]).getZfach()))
 				{
 					ret.add((Unterrichtsfach) o[0]);
@@ -95,7 +102,14 @@ public class Unterrichtsfach {
 		
 		return ret;
 	}
-			
+	/**
+	 * Es werden alle Unterrichtsfächer des Schülers gelesen, dass dieser in der aktuellen klasse hat
+	 * Wenn z.B. ein Schüler in der 10Klasse office hatte und jetzt in der 11 ist und dieses fach jetzt nciht mehr aht,
+	 * wird office nicht in der Liste zufinden sein.
+	 * 
+	 * @param Schueler s
+	 * @return
+	 */
 	public static ArrayList<Unterrichtsfach>alleLesen(Schueler s)
 	{
 		
@@ -143,7 +157,11 @@ public class Unterrichtsfach {
 				
 		return ret;
 	}
-	
+	/**
+	 * Liest alle Unterrichtsfächer, welche zu einem zeugnisfach gehören
+	 * @param Zeugnisfach zf
+	 * @return
+	 */
 	public static ArrayList<Unterrichtsfach>alleLesen(Zeugnisfach zf)
 	{
 		String hql = " uf WHERE uf.zfach.id = "+zf.getId();
@@ -152,6 +170,12 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
+	/**
+	 * Liefert alle Unterrichtsfächer zurück, welcher der Lehrer zum angegebenen Zeitpunkt unterrichtet
+	 * @param lehrer
+	 * @param ausgangsdatum
+	 * @return
+	 */
 	public static ArrayList<Unterrichtsfach>alleLesen(Lehrer lehrer,LocalDate ausgangsdatum)
 	{
 		String hql= "uf "
@@ -172,8 +196,11 @@ public class Unterrichtsfach {
 		
 		return al;
 	}
-	
-	public static ArrayList<Unterrichtsfach> AlleLesen()
+	/**
+	 * Liest stump alle Unterrichtsfächer, welche in der DB Existieren
+	 * @return
+	 */
+	public static ArrayList<Unterrichtsfach> alleLesen()
 	{
 		ArrayList<Unterrichtsfach> al = new ArrayList<Unterrichtsfach>();
 		DBZugriff.alleLesen("Unterrichtsfach", al, "");
@@ -181,7 +208,15 @@ public class Unterrichtsfach {
 		return al;
 	}
 	
-	public static ArrayList<Unterrichtsfach> AlleLesen(Lehrer lehrer)
+	/**
+	 * Liest alle Unterrichtsfächer, welche ein Lehrer zurzeit Unterrichtet bzw unterrichtet hat
+	 * Diese Methode ist mit vorsicht zu geniesen, da auch Unterrichtfächer die der Lehrer iwann
+	 * einmal unterrichtet hat zurückgegeben werden.
+	 * alleLesen(Lehrer l, LocalDate ausgangsdatum) ist in i.d.R. die besser Wahl
+	 * @param lehrer
+	 * @return
+	 */
+	public static ArrayList<Unterrichtsfach> alleLesen(Lehrer lehrer)
 	{
 		String hql= "uf "
 				+"INNER JOIN UFachLehrer ufl "
@@ -203,6 +238,11 @@ public class Unterrichtsfach {
 	
 	//Override-Methoden
 	//-------------------------------------------
+	/**Vergleich zwei Unterrichtsfächer anhand ihrer id
+	 * Zwei neu angelegte unterrichtsfächer zu vergleichen ist da bei diesen die id 0 wäre nicht sinvoll
+	 * @param Unterrichtsfach uf
+	 * @return
+	 */
 	public boolean equals(Unterrichtsfach uf)
 	{
 		if(uf.id == this.getId())

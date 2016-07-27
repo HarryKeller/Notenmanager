@@ -81,13 +81,17 @@ public class Klasse
 	//--------------------------------------------------
 	//Alle Lesen methoden
 	//--------------------------------------------------
+	/**
+	 * Liest alle Klassen, die der Lehrer unterrichtet an der gewählten Schule
+	 * Diese Methode funktionert nicht. Es wird nur unterschieden, ob die Klasse zu der Schule gehört
+	 * @param lehrer	
+	 * @param schule
+	 * @return
+	 */
 	public static ArrayList<Klasse> alleLesen(Lehrer lehrer, Schule schule)
 	{
 		Integer schuleid = schule.getID();
 		Integer lehrerid = lehrer.getId();
-		System.out.println("lehrerid : "+lehrerid);
-		System.out.println("Schuelid : "+schuleid);
-		
 		
 //		SELECT DISTINCT Klasse.bez
 //		FROM Klasse
@@ -137,7 +141,12 @@ public class Klasse
 		
 		return klassenliste;
 	}
+
 	
+	/**
+	 * Liest einfach Stumpf alle Klassen, die in der DB Existieren
+	 * @return
+	 */
 	public static ArrayList<Klasse> alleLesen()
 	{
 		ArrayList<Klasse> al = new ArrayList<Klasse>();
@@ -151,6 +160,13 @@ public class Klasse
 	{
 		return this.bez + " " + this.datumSJ;
 	}
+	/**
+	 * Vergleich zwei klassen anhand ihrer Id in der Db
+	 * Zwei nicht in der Db gespeicherten Klassen haben jewils die ID 0, daher ist ein vergleich
+	 * von zwei neu angelegten Klassen nicht Sinnvoll
+	 * @param k
+	 * @return
+	 */
 	public boolean equals(Klasse k)
 	{
 		if(k.getid() == this.getid())
@@ -167,11 +183,18 @@ public class Klasse
 	//--------------------------------------------------	
 	//Speichern und loeschen von Schuelern
 	//--------------------------------------------------
-	
+	/**
+	 * Speichern ädnerugnen in der DB
+	 * @return
+	 */
 	public boolean speichern()
 	{
 		return DBZugriff.speichern(this);
 	}
+	/**
+	 * löscht die Klasse in der DB
+	 * Es wird nicht abgefangen, ob Schüler noch auf diese Klasse referenziert sind!!!
+	 */
 	public void loeschen()
 	{
 		DBZugriff.loeschen(this);

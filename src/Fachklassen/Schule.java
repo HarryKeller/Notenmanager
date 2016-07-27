@@ -73,7 +73,10 @@ public class Schule
 	{
 		return klassenlist;
 	}
-	
+	/**
+	 * Liest stumpf alle Schulen, die in der DB existieren
+	 * @return
+	 */
 	public static ArrayList<Schule> alleLesen()
 	{
 		ArrayList<Schule> al = new ArrayList<Schule>();

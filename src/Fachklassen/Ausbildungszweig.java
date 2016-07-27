@@ -16,10 +16,14 @@ import Persistenz.DBZugriff;
 
 
 
-//Der bestimmte Ausbildungszweig
-//Gedacht zur Unterscheidung der Verschiedenen Zeugnisfächer
-//Jetzt nurnoch eine Sicherheitsmasnahme, damit einer Kaufm. Klasse keine Anwendungsentwicklungunterrichtsfächer
-//zugewiesen können
+ /**Der bestimmte Ausbildungszweig
+ *	Gedacht zur Unterscheidung der Verschiedenen Zeugnisfächer
+ *	Jetzt nurnoch eine Sicherheitsmasnahme, damit einer Kaufm. Klasse keine Anwendungsentwicklungunterrichtsfächer
+ *	zugewiesen können
+ * 
+ * @author kellerh
+ *
+ */
 @Entity
 public class Ausbildungszweig
 {
@@ -34,7 +38,10 @@ public class Ausbildungszweig
 	@ManyToMany(cascade = CascadeType.ALL ,mappedBy="ausbildungszweig", fetch=FetchType.EAGER)
 	private Set<Zeugnisfach> lstZeugnisfach = new HashSet<Zeugnisfach>();
 
-	
+	/**
+	 * Liest stumpf alle Ausbildungszweige, die in der DB Existieren
+	 * @return
+	 */
 	public static ArrayList<Ausbildungszweig> alleLesen()
 	{
 		ArrayList<Ausbildungszweig>al = new ArrayList<Ausbildungszweig>();

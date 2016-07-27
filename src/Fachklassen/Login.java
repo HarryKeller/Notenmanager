@@ -40,6 +40,12 @@ public class Login
 		DBZugriff.lesen(this, id);
 	}
 	
+	/**
+	 * Erstellt ein Login Objekt zu den übergebenen Lehrer
+	 * Es kracht wenn dieser Lehrer nicht in der Db Existiert
+	 * Hybernate schmeist eine Object not found exception oder so. Diese wird nicht abgefangen :p
+	 * @param l
+	 */
 	public Login(Lehrer l)
 	{
 		String hql = " l WHERE l.lehrer.id ="+l.getId();
@@ -58,6 +64,9 @@ public class Login
 	
 	//DB-Methoden
 	//------------------------------------------
+	/**
+	 * Speichert die Login Instanz in der Db
+	 */
 	public void speichern()
 	{
 		DBZugriff.speichern(this);
@@ -66,11 +75,17 @@ public class Login
 	
 	//Alle Lesen Methode	
 	//------------------------------------------
-	public ArrayList<Lehrer> alleLesen(String kuerzel)
+	/**
+	 * Liest den Lehrer zu dem Das kürzel gehört, returnt null, wenn kein Lehrer zu diesem krüzel vorhanden ist
+	 * @param kuerzel
+	 * @return
+	 */
+	public Lehrer getLehrerZuKuerzel(String kuerzel)
 	{	
 		ArrayList<Lehrer> al = new ArrayList<Lehrer>();
 		DBZugriff.alleLesen("Lehrer", al, "WHERE kuerzel = '" + kuerzel + "'") ;
-		return al;
+		if(al.size() == 0) return null;
+		return al.get(0);
 	}
 	
 	/**

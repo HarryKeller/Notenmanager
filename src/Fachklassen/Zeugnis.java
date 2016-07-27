@@ -45,7 +45,16 @@ public class Zeugnis
 	public Zeugnis(int id){
 		DBZugriff.lesen(this, id);
 	}
-	
+	/**
+	 * Offenstichlich ein konstruktor in dem jeder Scheiß angegeben werden kann.
+	 * Auser die ID, welche autonmatisch von der Db vergeben wird
+	 * @param bemerkung
+	 * @param zeugnisart
+	 * @param fehltageGanztags
+	 * @param fehltageGanztagsUnentschuldigt
+	 * @param fehltageStundenweise
+	 * @param fehltageStundenweiseUnentschuldigt
+	 */
 	public Zeugnis(String bemerkung, Zeugnisart zeugnisart, int fehltageGanztags,
 			int fehltageGanztagsUnentschuldigt, int fehltageStundenweise,
 			int fehltageStundenweiseUnentschuldigt)
@@ -80,7 +89,13 @@ public class Zeugnis
 	
 	
 	//Alle-Lesen-Methoden
-	
+	/**
+	 * Liest alle Zeugnisse eines Schülers für das angegebene Schuljahr
+	 * Ist kein zeugnis vorhanden, so wird eine ArrayList ohne einträge zurückgegeben 
+	 * @param d
+	 * @param s
+	 * @return
+	 */
 	public static ArrayList<Zeugnis> alleLesen(DatumSJ d, Schueler s)
 	{
 		//Zeugnisse des Schülers aus diesem Schuljahr

@@ -44,7 +44,14 @@ public class UFachLehrer
 	}
 
 	//----------------------------------------
-	
+	/**
+	 * Die Methode gibt einen boolean zurück, welcher besagt, ob der übergebene lehrer das unterrichtsfach
+	 * zurzeit unterrichtet
+	 * ZURZEIT UNTERRICHTET, nicht iwann einmal unterrichtet hat. ZURZEIT UNTERRICHTET!!!!
+	 * @param lehrer
+	 * @param ufach
+	 * @returnn true, wenn der Lehrer das unterrichtsfach zurzeit unterrichtet, ansonsten false
+	 */
 	public static boolean unterrichtetLehrerZurzeitFach(Lehrer lehrer,Unterrichtsfach ufach)
 	{
 		
@@ -67,9 +74,10 @@ public class UFachLehrer
 	
 	}
 	/**
-	 * Alle Sätze in UFachLehrer, in denen der Lehrer zurzeit noch unterrichtet
-	 * @param l
-	 * @return
+	 * Liest alle Sätze in der DB, in denen der übergebene Lehrere ZURZEIT!!! unterrichtet
+	 * 
+	 * @param l	Lehrer
+	 * @return	liste von Typ UFachLehrer
 	 */
 	public static ArrayList<UFachLehrer>alleLesen(Lehrer l)
 	{
@@ -82,7 +90,11 @@ public class UFachLehrer
 		
 	}
 	
-	
+	/**
+	 * Gibt zurück, ob der Lehrer zurzeit noch ein Fach unterrichtet,
+	 * sollte z.B. vor dem Löschen eines Lehrer geprüft werden, er noch unterrichtet,
+	 * bietet sich diese Methode an
+	 */
 	public static boolean unterrichtetNoch(Lehrer lehrer)
 	{
 		
@@ -106,7 +118,18 @@ public class UFachLehrer
 	
 	//Alle-Lesen-Mehtoden
 	//----------------------------------------
-	
+	/**
+	 * Sollte der übergebene Lehrer dieses  Fach zum angegebenen Zeitpunkt unterrichten,
+	 *  wird das dazugehörige UFachLeher objekt zurückgegeben
+	 * 
+	 * @param lehrer
+	 * @param ufach	
+	 * @param aktuell	
+	 * @return
+	 * @throws Exception wird geworfen wenn der übergebene Lehrer das gewählte Fach zurzeit nicht unterrichtet
+	 * 		   Das ist eine der wenigen Exceptions, die zurzeit geworden werden, konsequenter im vergleich zu
+	 * 			den anderen Fachklassen wäre in diesem Fall das zurückegeben von null.
+	 */
 	public static UFachLehrer unterrichtetzurzeit(Lehrer lehrer,Unterrichtsfach ufach,LocalDate aktuell) throws Exception
 	{
 
