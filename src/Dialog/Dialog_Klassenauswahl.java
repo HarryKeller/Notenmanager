@@ -454,8 +454,8 @@ public class Dialog_Klassenauswahl extends JFrame implements ActionListener//, I
 		}
 		else
 		{
-			this.dispose();
 			DBZugriff.closeDB();
+			this.dispose();	
 		}
 
 		
