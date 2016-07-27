@@ -163,7 +163,7 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 		}
 		if(getZeugnis()!=null)
 		{
-			zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), LocalDate.now());
+			zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), new DatumSJ(LocalDate.now()));
 			zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
 			for(Zeugnisfach zfach:zfaecher)
 			{

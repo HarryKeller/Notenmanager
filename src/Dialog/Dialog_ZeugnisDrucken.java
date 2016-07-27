@@ -87,7 +87,7 @@ public class Dialog_ZeugnisDrucken extends JFrame implements ActionListener
 			//Arraylist für die Zusammenfassung aller Daten für die Notentabelle erzeugen
 			ArrayList<Map<String, ?>> al = new ArrayList<Map<String, ?>>();
 			//Einzelne Strings für jede mögliche Note anlegen
-		    ArrayList<Zeugnisnote> zn = Zeugnisnote.alleLesen(this.schueler, LocalDate.now());
+		    ArrayList<Zeugnisnote> zn = Zeugnisnote.alleLesen(this.schueler, new DatumSJ(LocalDate.now()));
 		    fach = Zeugnisfach.alleLesen(new Klasse(this.schueler.getKlasse().getid()));
 			for(Zeugnisfach f : this.fach)
 			{	

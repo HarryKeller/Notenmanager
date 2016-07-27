@@ -236,8 +236,8 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 		String passString = new String(password);
 		
 		Login login = new Login();
-		ArrayList<Lehrer> lehrer = login.alleLesen(benutzername);
-		Lehrer l = new Lehrer(lehrer.get(0).getId());
+		Lehrer lehrer = login.getLehrerZuKuerzel(benutzername);
+		Lehrer l = new Lehrer(lehrer.getId());
 		login = new Login(l.getId());
 		
 		if(benutzername.equals(l.getKuerzel()) && passString.equals(login.getPw()) && l.isArbeitetAnDieserSchule() == false)

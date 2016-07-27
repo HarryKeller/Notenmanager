@@ -258,7 +258,7 @@ public class Dialog_adm_UnterrichtsfachZuweisen extends JFrame implements Action
 		
 		ufach = Unterrichtsfach.alleLesen((Lehrer) comboBox_Lehrer.getSelectedItem(), LocalDate.now());
 		
-		for(Unterrichtsfach u : Unterrichtsfach.AlleLesen())
+		for(Unterrichtsfach u : Unterrichtsfach.alleLesen())
 		{
 			comboBox_UFach.addItem(u);	
 			
