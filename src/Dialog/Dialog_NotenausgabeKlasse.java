@@ -3,23 +3,16 @@ package Dialog;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.border.*;
 
 import Fachklassen.DatumSJ;
 import Fachklassen.Klasse;
 import Fachklassen.Lehrer;
 import Fachklassen.Leistung;
-import Fachklassen.Leistungsart;
 import Fachklassen.Schueler;
 import Fachklassen.UFachLehrer;
 import Fachklassen.Unterrichtsfach;
-import Persistenz.DBZugriff;
-
 import java.util.*;
 
 
@@ -180,7 +173,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.tab1_contentPanel.setLayout(gbl_tab1_contentPanel);
 		
 		this._panel = new JPanel();		
-		this._panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		this._panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
@@ -217,10 +210,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab1_muendl = new NotenTable();		
 		this.model_tab1_muendlich = new NotenTableModel();
 		this.table_tab1_muendl.setModel(this.model_tab1_muendlich);
-		this._scrollPane.setViewportView(this.table_tab1_muendl);
+		
 		
 		this._panel_1 = new JPanel();		
-		this._panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		this._panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
@@ -256,7 +249,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab1_schriftl = new NotenTable();		
 		this.model_tab1_schriftl = new NotenTableModel();
 		this.table_tab1_schriftl.setModel(this.model_tab1_schriftl);
-		this._scrollPane_1.setViewportView(this.table_tab1_schriftl);
+		
 		
 		this.tab2_contentPanel = new JPanel();
 		this._tabbedPane.addTab("Zweites Halbjahr", null, this.tab2_contentPanel, null);
@@ -268,7 +261,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.tab2_contentPanel.setLayout(gbl_tab2_contentPanel);
 		
 		this._panel_5 = new JPanel();		
-		this._panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		this._panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
 		gbc_panel_5.weighty = 50.0;
 		gbc_panel_5.weightx = 50.0;
@@ -309,10 +302,10 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_muendl = new NotenTable();		
 		this.model_tab2_muendlich = new NotenTableModel();
 		this.table_tab2_muendl.setModel(model_tab2_muendlich);
-		this._scrollPane_3.setViewportView(this.table_tab2_muendl);
+		
 		
 		this._panel_6 = new JPanel();		
-		this._panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Schriftlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		this._panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "M\u00FCndlich", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
 		gbc_panel_6.weightx = 50.0;
 		gbc_panel_6.weighty = 50.0;
@@ -337,7 +330,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_schriftl = new NotenTable();		
 		this.model_tab2_schriftl = new NotenTableModel();
 		this.table_tab2_schriftl.setModel(model_tab2_schriftl);
-		this._scrollPane_2.setViewportView(this.table_tab2_schriftl);
+		
 		
 		this._label_3 = new JLabel("Bitte nach Noteneingabe mit Enter-Taste das Feld verlassen.");
 		GridBagConstraints gbc_label_3 = new GridBagConstraints();
@@ -380,7 +373,12 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		this.table_tab2_muendl.setColumnSelectionAllowed(false);
 		
 		this.table_tab2_schriftl.setRowSelectionAllowed(false);
-		this.table_tab2_schriftl.setColumnSelectionAllowed(false);				
+		this.table_tab2_schriftl.setColumnSelectionAllowed(false);		
+		
+		this._scrollPane.setViewportView(this.table_tab1_schriftl);
+		this._scrollPane_1.setViewportView(this.table_tab1_muendl);
+		this._scrollPane_3.setViewportView(this.table_tab2_schriftl);
+		this._scrollPane_2.setViewportView(this.table_tab2_muendl);
 	}
 	
 	//Prüft ob Spalten benötigt werden -1 = keine Spalte gefunden, 0 + aufwärts = Spaltenindex
