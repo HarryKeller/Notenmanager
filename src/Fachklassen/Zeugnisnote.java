@@ -126,7 +126,7 @@ public class Zeugnisnote
 	 * den dazugehörigen Schüler bekommt es aus den instanzvariablen genau wie alles andere
 	 * Da Diese Methode mit LocalDate.now() arbeitet, können Leistungen,welche ein Schüler in einem Fach erbracht hat
 	 * nicht im Jahr darauf(also in einem neuen Schuljahr) erneut berechnetn werden.
-	 * hierfür wäre eine weiter übergabeparameter z.B. DatumSJ nötig
+	 * hierfür wäre eine weiter übergabeparameter z.B. DatumSJ nötig. Dies sollte implementiert werden....
 	 * @param Unterrichtsfach 
 	 * @return
 	 */
@@ -205,6 +205,8 @@ public class Zeugnisnote
 				
 		return Math.round(note * 100)/100.0;
 	}
+	
+	
 	/**
 	 * Berechnet die Zeugnisnote für ein Zeugnisfach aus den und den üebrgebene Schüler
 	 * Da dies keine static Methode ist und zeugnisnote eine Schüler als instanvariable hat
