@@ -673,7 +673,7 @@ public class Dialog_NotenausgabeKlasse extends JFrame implements ActionListener 
 		{
 			
 			Dialog_LeistungNeu.initGui(this); 
-			Dialog_Klassenauswahl.dlg_LeistungNeu.setVisible(true);
+			//Dialog_Klassenauswahl.dlg_LeistungNeu.setVisible(true);
 		}
 		else if(e.getSource() == this.btn_verwerfen)
 		{
