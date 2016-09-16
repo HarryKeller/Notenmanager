@@ -161,49 +161,17 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				this.setZeugnis(z);
 			}
 		}
-		if(getZeugnis()!=null)
+		if(this.getZeugnis()!=null)
 		{
-			zfachnoten = Zeugnisnote.alleLesen(this.getSchueler(), new DatumSJ(LocalDate.now()));
+
 			zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
 			for(Zeugnisfach zfach:zfaecher)
 			{
-				boolean couldsorted = false;
-				String fachBez = zfach.getBez();
-				double errNote = 0;
-				int finalNote =  0;
-				for(Zeugnisnote znote: zfachnoten)
-				{
-					errNote = 0;
-					finalNote=0;
-					if(znote.getZeugnisfach().getBez().equals(zfach.getBez()))
-					{
-						znote.berechneNote(znote.getZeugnisfach(), this.getSchueler());
-						znote.speichern();
-						errNote = znote.getNoteErrechnet();
-						finalNote =  znote.getNoteZeugnis();
-						if(finalNote==0)
-						{
-							model.addRow(new Object[]{fachBez, errNote,""});
-						}
-						else
-						{
-							model.addRow(new Object[]{fachBez, errNote, finalNote});
-						}
-						couldsorted=true;
-					}
-				}
-				if(couldsorted==false)
-				{
-					Zeugnisnote zno = new Zeugnisnote();
-					zno.setAenderungszeitpunkt(LocalDate.now());
-					zno.setZeugnisfach(zfach);
-					zno.setSchueler(schueler);
-					zno.setNoteErrechnet(zno.berechneNote(zfach, schueler));
-					zno.speichern();
-					this.zfachnoten.add(zno);
-					model.addRow(new Object[]{fachBez, zno.getNoteErrechnet(),""});
-				}
 				
+				String fachBez = zfach.getBez();
+				double errNote = Zeugnisnote.berechneNote(zfach, this.schueler);
+				
+				model.addRow(new Object[]{fachBez, errNote,""});			
 			}
 			table.setModel(model);
 		}
@@ -269,63 +237,65 @@ public class Dialog_ZeugnisnotenZumSchueler extends JFrame implements ActionList
 				table.getCellEditor().stopCellEditing();
 			} 
 			catch(Exception e) {}
-			int counter = 0;
-			for(Zeugnisfach zfach:zfaecher)
+			
+			zfaecher = Zeugnisfach.alleLesen(this.getSchueler().getKlasseid());
+			
+			ArrayList<Zeugnisnote> znoten = Zeugnisnote.alleLesen(this.schueler, this.zeugnis.getSchuljahr());
+			
+			for(int i = 0;i < zfaecher.size();i++)
 			{
-				if(zfach.getBez().equals((table.getValueAt(counter, 0))))
+				//Schauen ob errechnet 0 ist, wenn dann wird die Schleife von neuem begonnen
+				if((Double)table.getValueAt(i, 1) == 0.00) continue;
+				
+				//2. Schaun ob der Schüler bereits eine Zeugnisnote hat für das jeweilige Fach, nicht dass
+				//evntl. zwei Noten für das selbe Fach angelegt werden
+				
+				boolean isZNoteVorhanden = false;
+				
+				for(Zeugnisnote zn : znoten)
 				{
-					try
+					if(zn.getZeugnisfach().getId() == zfaecher.get(i).getId())
 					{
-						for(Zeugnisnote znote: zfachnoten)
-						{
-							if(znote.getZeugnisfach().getBez().equals(model.getValueAt(counter, 0).toString())&&znote.getNoteErrechnet()!=0.0)
-							{
-								int wert =  (int)Math.round(Double.parseDouble(table.getValueAt(counter, 2).toString()));
-								boolean checksave = false;
-								if(wert>0&&wert<7)
-								{
-									checksave = true;
-								}
-								else
-								{
-									checksave = false;
-								}
-								if(checksave==true)
-								{
-									znote.setNoteZeugnis(wert);
-									spnoten.add(znote);
-								}
-								else
-								{
-									JOptionPane.showMessageDialog(null, "Die Note des Zeugnisfachs " +  znote.getZeugnisfach().getBez() + " hat einen ungültigen Wert!", "Warnung", JOptionPane.OK_OPTION);
-								}
-							}
-						}
+						isZNoteVorhanden = true;
+						zn.setAenderungszeitpunkt(LocalDate.now());
+						zn.setNoteZeugnis(Integer.valueOf((String) table.getValueAt(i, 2)));
+						zn.setNoteErrechnet((Double)table.getValueAt(i, 1));
+						zn.speichern();
+						break;
 					}
-					catch(Exception ex)
-					{
-						
-					}
-				}	
-				counter++;
+					
+				}
+				
+				
+				//3.1 Erstellen
+				if(!isZNoteVorhanden)
+				{
+					Zeugnisnote zn = new Zeugnisnote();
+					zn.setAenderungszeitpunkt(LocalDate.now());
+					zn.setNoteErrechnet((Double)table.getValueAt(i, 1));
+					zn.setNoteZeugnis(Integer.valueOf((String) table.getValueAt(i, 2)));
+					zn.setSchueler(this.schueler);
+					zn.setZeugnis(this.getZeugnis());
+					zn.setZeugnisfach(zfaecher.get(i));
+					zn.speichern();
+
+				}
+					
+					
+				
 			}
-			for(Zeugnisnote zn:spnoten)
-			{				
-				zn.speichern();
-			}
-			try
-			{
-				setDatenToMaske();
-			}
-			catch(Exception es)
-			{
-				JOptionPane.showMessageDialog(null, "Fehler beim Aktualisieren der Zeugnisnotenliste!", "Meldung", JOptionPane.OK_OPTION);
-			}
+				
+			
+			
+			
+			
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Speichern der Zeugnisnoten war nicht erfolgreich!", "Warnung", JOptionPane.OK_OPTION);
 		}
+
 	}
 	
 	

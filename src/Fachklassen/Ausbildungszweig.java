@@ -18,8 +18,10 @@ import Persistenz.DBZugriff;
 
  /**Der bestimmte Ausbildungszweig
  *	Gedacht zur Unterscheidung der Verschiedenen Zeugnisfächer
- *	Jetzt nurnoch eine Sicherheitsmasnahme, damit einer Kaufm. Klasse keine Anwendungsentwicklungunterrichtsfächer
- *	zugewiesen können
+ *	Jetzt nurnoch eine Sicherheitsmaßnahme, damit einer Kaufm. Klasse keine Anwendungsentwicklungunterrichtsfächer
+ *	zugewiesen können.
+ *	Ein Fach, das z.B. sowohl für Kaufmänner als auch für Anwendungsentwickler gedacht ist, dem müssen beide
+ *	Aubsildungszweige hinzugefügt weden.
  * 
  * @author kellerh
  *

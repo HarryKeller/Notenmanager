@@ -117,11 +117,11 @@ public class Dialog_Druckansicht extends JFrame implements ActionListener
 					//HashMap für Felde im Report anlegen
 					HashMap<String, String> hm = new HashMap<String, String>();
 					hm.put("Fach", f.getBez());
-					jz = zn.berechneNote(f);
+					jz = Zeugnisnote.berechneNote(f,this.schueler);
 					zz = zzn.berechneZZNote(f);
 					if(jz!=0.00)
 					{
-						hm.put("jz", ""+zn.berechneNote(f));
+						hm.put("jz", ""+Zeugnisnote.berechneNote(f,this.schueler));
 					}
 					if(zz!=0.00)
 					{

@@ -130,81 +130,46 @@ public class Zeugnisnote
 	 * @param Unterrichtsfach 
 	 * @return
 	 */
-	public double berechneNote(Unterrichtsfach uf)
+	public static double berechneNote(Unterrichtsfach uf, Schueler schueler)
 	{
-		double muendlich = 0;
-		double schriftlich = 0;
-		double kurzarbeit = 0;
-		double note = 0;
-		double ki = 0;
-		double mi = 0;
-		double si = 0;
-		ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, uf,new DatumSJ(LocalDate.now())));
-		for (Leistung l : leistungen )
-		{
-			if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
-			{
-				schriftlich = schriftlich + l.getNotenstufe();	
-				si++;
-			}
-			else if (l.getLeistungsart().getBez().equals("Kurzarbeit"))
-			{
-				kurzarbeit = kurzarbeit + l.getNotenstufe();
-				ki++;
-			}
-			else
-			{
-				muendlich = muendlich + l.getNotenstufe();
-				mi++;
-			}
-		}
-	
-		if(schriftlich != 0)
-		{
-			schriftlich = (schriftlich/si); //* uf.getGewichtungSchriftlich();			
-		}
-		if(kurzarbeit != 0)
-		{
-			kurzarbeit = (kurzarbeit/ki);		
-		}
-		if(muendlich != 0)
-		{
-			muendlich = muendlich/mi;
-		}
+		ArrayList<Leistung> muendlich = schueler.getMuendlich(uf, new DatumSJ(LocalDate.now()).getBeginn(), new DatumSJ(LocalDate.now()).getEnde() );
+		ArrayList<Leistung> schriftlich = schueler.getSchriftlich(uf, new DatumSJ(LocalDate.now()).getBeginn(),new DatumSJ(LocalDate.now()).getEnde());
+		
+		double durchschnittmuendlich = 0;
+		double durchschnittschriftlich = 0;
+		double anzmuendlichnoten = 0;
+		double anzschriftlichnoten = 0;
+		double muendlichsumme = 0;
+		double schriftlichsumme = 0;
+		double gesnote = 0;
 		
 		
 		
-		if(muendlich == 0 && kurzarbeit == 0)
+		for(Leistung l:muendlich)
 		{
-			note = schriftlich;
+			//Addiert alle muendliche Noten zusammen, Noten die Stärker gewichtet wurden zählen doppelt.
+			muendlichsumme += l.getNotenstufe()*l.getLeistungsart().getGewichtung();
+			anzmuendlichnoten += 1*l.getLeistungsart().getGewichtung();		
 		}
-		else if(muendlich == 0 && schriftlich == 0)
+		
+		for(Leistung l:schriftlich)
 		{
-			note = kurzarbeit;
-		}
-		else if(kurzarbeit == 0 && schriftlich == 0)
-		{
-			note = muendlich;
-		}
-		else if(muendlich == 0)
-		{
-			note = ((kurzarbeit + schriftlich) / 2);
-		}
-		else if(schriftlich == 0)
-		{
-			note = ((kurzarbeit + muendlich) / 2);
-		}
-		else if(kurzarbeit == 0)
-		{
-			note = ((muendlich + schriftlich) / 2);
-		}
-		else
-		{
-			note = ((muendlich + kurzarbeit + schriftlich) / 3 );
-		}	
-				
-		return Math.round(note * 100)/100.0;
+			//Addiert alle muendliche Noten zusammen, Noten die Stärker gewichtet wurden zählen doppelt.
+			schriftlichsumme += l.getNotenstufe()*l.getLeistungsart().getGewichtung();
+			anzschriftlichnoten += 1*l.getLeistungsart().getGewichtung();		
+		}		
+		if(anzmuendlichnoten == 0)anzmuendlichnoten = 1;
+		durchschnittmuendlich = muendlichsumme/anzmuendlichnoten;	
+		if(anzschriftlichnoten == 0) anzschriftlichnoten = 1;
+		durchschnittschriftlich = schriftlichsumme/anzschriftlichnoten;
+		
+		gesnote = (uf.getGewichtungSchriftlich()*durchschnittschriftlich + durchschnittmuendlich)/(uf.getGewichtungSchriftlich()+1);
+		
+		return gesnote;
 	}
+	
+	
+	
 	
 	
 	/**
@@ -215,93 +180,23 @@ public class Zeugnisnote
 	 * @param schueler
 	 * @return
 	 */
-	public double berechneNote(Zeugnisfach zf,Schueler schueler)
+	public static double berechneNote(Zeugnisfach zf,Schueler schueler)
 	{
-		double muendlich = 0;
-		double schriftlich = 0;
-		double kurzarbeit = 0;
-		double note = 0;
-		double ki = 0;
-		double mi = 0;
-		double si = 0;
+		double teiler = 0;
+		double summe = 0;
 		double znote = 0;
-		int gewichtung = 0;
-		
-		List<Unterrichtsfach> uf = Unterrichtsfach.alleLesen(zf);
-		
-		
-		for(Unterrichtsfach ufach : uf)
+		for(Unterrichtsfach uf : zf.getUnterrichtsfaecher())
 		{
-			note = 0;
-			ArrayList<Leistung>leistungen = new ArrayList<Leistung>(Leistung.AlleLesen(schueler, ufach));
-			for (Leistung l : leistungen )
-			{
-				if(l.getLeistungsart().getBez().equals("Schulaufgabe"))
-				{
-					schriftlich = schriftlich + l.getNotenstufe();	
-					si++;
-				}
-				else if (l.getLeistungsart().getBez().equals("Kurzarbeit"))
-				{
-					kurzarbeit = kurzarbeit + l.getNotenstufe();
-					ki++;
-				}
-				else
-				{
-					muendlich = muendlich + l.getNotenstufe();
-					mi++;
-				}
-			}
-			
-			if(schriftlich != 0)
-			{
-				schriftlich = (schriftlich/si); //* ufach.getGewichtungSchriftlich();			
-			}
-			if(kurzarbeit != 0)
-			{
-				kurzarbeit = (kurzarbeit/ki);		
-			}
-			if(muendlich != 0)
-			{
-				muendlich = muendlich/mi;
-			}
-			
-			
-			if(muendlich == 0 && kurzarbeit == 0)
-			{
-				note = (schriftlich/2) * ufach.getStunden();
-			}
-			else if(muendlich == 0 && schriftlich == 0)
-			{
-				note = kurzarbeit * ufach.getStunden();
-			}
-			else if(kurzarbeit == 0 && schriftlich == 0)
-			{
-				note = muendlich * ufach.getStunden();
-			}
-			else if(muendlich == 0)
-			{
-				note = ((kurzarbeit + schriftlich) / 2) * ufach.getStunden();
-			}
-			else if(schriftlich == 0)
-			{
-				note = ((kurzarbeit + muendlich) / 2) * ufach.getStunden();
-			}
-			else if(kurzarbeit == 0)
-			{
-				note = ((muendlich + schriftlich) / 2) * ufach.getStunden();
-			}
-			else
-			{
-				note = ((muendlich + kurzarbeit + schriftlich) / 3 ) * ufach.getStunden();
-			}									
-			
-			gewichtung = gewichtung + ufach.getStunden();
-			
-			znote = znote + note;
+			summe += Zeugnisnote.berechneNote(uf, schueler) * uf.getStunden();
+			teiler += uf.getStunden();
 		}
+		//Sollte keine einzige Note fpr das Zeugnisfach vorhanden sein
+		if(teiler == 0) return 0;	
+		znote = summe/teiler;
 		
-		return Math.round((znote / gewichtung * 100))/100.0;
+		System.out.println(znote);
+		
+		return znote;
 	}
 	
 	/** 
