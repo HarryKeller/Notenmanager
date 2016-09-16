@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import Persistenz.DBZugriff;
 
 @Entity
@@ -34,12 +37,13 @@ public class Schueler
 	@ManyToOne
 	private Klasse klasse;	//Fremdschlüssel
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="schueler_id")
 	private List<Zeugnisnote> zeugnisnoten = new ArrayList<Zeugnisnote>();
 	
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name="schueler_id") 
 	private Set<Leistung> leistung = new HashSet<Leistung>();
 	
