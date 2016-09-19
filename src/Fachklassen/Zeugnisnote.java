@@ -158,12 +158,24 @@ public class Zeugnisnote
 			schriftlichsumme += l.getNotenstufe()*l.getLeistungsart().getGewichtung();
 			anzschriftlichnoten += 1*l.getLeistungsart().getGewichtung();		
 		}		
-		if(anzmuendlichnoten == 0)anzmuendlichnoten = 1;
-		durchschnittmuendlich = muendlichsumme/anzmuendlichnoten;	
-		if(anzschriftlichnoten == 0) anzschriftlichnoten = 1;
-		durchschnittschriftlich = schriftlichsumme/anzschriftlichnoten;
+		if(anzmuendlichnoten != 0)
+			durchschnittmuendlich = muendlichsumme/anzmuendlichnoten;	
 		
-		gesnote = (uf.getGewichtungSchriftlich()*durchschnittschriftlich + durchschnittmuendlich)/(uf.getGewichtungSchriftlich()+1);
+		
+		if(anzschriftlichnoten != 0) 
+			durchschnittschriftlich = schriftlichsumme/anzschriftlichnoten;
+		if(anzschriftlichnoten == 0 )
+		{
+			gesnote = durchschnittmuendlich;
+		}else if(anzmuendlichnoten == 0)
+		{
+			gesnote = durchschnittschriftlich;
+		}
+		else
+		{
+			gesnote = (uf.getGewichtungSchriftlich()*durchschnittschriftlich + durchschnittmuendlich)/(uf.getGewichtungSchriftlich()+1);
+		}
+		
 		
 		return gesnote;
 	}
