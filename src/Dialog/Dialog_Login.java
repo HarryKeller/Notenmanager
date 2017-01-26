@@ -7,12 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.Hibernate;
+
 import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.SplashScreen;
 
 import javax.swing.JSeparator;
 
@@ -22,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
+import java.awt.Graphics2D;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -29,11 +33,14 @@ import javax.swing.JButton;
 import Fachklassen.Lehrer;
 import Fachklassen.Login;
 import Persistenz.DBZugriff;
+import Splashscreen.Splashscreen;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.net.URL;
 import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
@@ -52,30 +59,37 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	private JPanel panel_2;
 	private JLabel label_Titel;
 	private JSeparator separator;
-
+	private Thread loadingthread;
+	private static Splashscreen s;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args)
 	{		
+		s = new Splashscreen("res/loadingscreen.gif");
 		
 		EventQueue.invokeLater(new Runnable()
-		{
+		{	
+			Dialog_Login frame = null;
 			public void run()
-			{
+			{	
+				
 				try // Thanks to JTattoo @ http://www.jtattoo.net/
-				{
-					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-					Dialog_Login frame = new Dialog_Login();
-					frame.setVisible(true);
-					
+				{					
+					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");	
+					frame = new Dialog_Login();
+					frame.setVisible(true);									
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-		});
+		}		
+		);
+		
+		
 	}
 
 	/**
@@ -286,12 +300,14 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	}
 	
 	public void windowActivated(WindowEvent arg0) {
+		
 	}
 	public void windowClosed(WindowEvent arg0) 
 	{
 		//DBZugriff.closeDB();
 	}	
 	public void windowClosing(WindowEvent arg0) {
+		
 	}
 	public void windowDeactivated(WindowEvent arg0) {
 	}
@@ -300,7 +316,19 @@ public class Dialog_Login extends JFrame implements ActionListener, WindowListen
 	public void windowIconified(WindowEvent arg0) {
 	}
 	public void windowOpened(WindowEvent arg0) 
-	{
-		DBZugriff.initDB();									
+	{		
+		loadingthread = new Thread(new Runnable(){			
+			public void run()
+			{
+				if(!s.isVisible())
+					s.setVisible(true);
+				
+				DBZugriff.initDB();	
+				s.dispose();
+			}
+				
+		});	
+		
+		loadingthread.start();	
 	}
 }

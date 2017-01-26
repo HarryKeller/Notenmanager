@@ -1,6 +1,7 @@
 package Persistenz;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -33,8 +34,7 @@ public class DBZugriff
 		
 		// Datenbankverbindung konfigurieren 
 		// (hibernate.cfg.xml wird eingelesen)
-		sessionFactory = new Configuration().configure().buildSessionFactory();
-		
+		sessionFactory = new Configuration().configure().buildSessionFactory();		
 		
     // Mittels der Session-Factory können Sessions erzeugt werden
     // Eine (Hibernate)Session ist für den Entwickler die primäre Schnittstelle
